@@ -1,5 +1,11 @@
 helm:
   parameters:
+  - name: ui.apiServerEndpoint
+    value: https://demo.testkube.io/results/v1
+    forcestring: false
+  - name: ui.rootRoute
+    value: localhost
+    forcestring: false
   - name: image.name
     value: kubeshop/testkube-cloud-ui
     forcestring: true
