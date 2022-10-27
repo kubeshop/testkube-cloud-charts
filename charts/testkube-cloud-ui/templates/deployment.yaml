@@ -37,6 +37,11 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+          env:
+            - name: REACT_APP_API_SERVER_ENDPOINT
+              value: {{ .Values.ui.apiServerEndpoint }}
+            - name: REACT_APP_API_ROOT_ROUTE
+              value: {{ .Values.ui.rootRoute }}
           livenessProbe:
             httpGet:
               path: /
@@ -45,6 +50,9 @@ spec:
             httpGet:
               path: /
               port: http
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -56,6 +64,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.tolerations }}
+      volumes:
+        - emptyDir: {}
+          name: tmp
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

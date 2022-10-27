@@ -8,12 +8,16 @@ image:
   repository: kubeshop/testkube-cloud-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.4"
+  tag: "0.0.5"
 
 imagePullSecrets:
   - name: testkube-cloud-creds
 nameOverride: ""
 fullnameOverride: ""
+
+ui:
+  apiServerEndpoint: ""
+  rootRoute: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
