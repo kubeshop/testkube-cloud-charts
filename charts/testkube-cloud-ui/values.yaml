@@ -10,8 +10,7 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.0.5"
 
-imagePullSecrets:
-  - name: testkube-cloud-creds
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
