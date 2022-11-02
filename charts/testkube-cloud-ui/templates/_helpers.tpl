@@ -46,6 +46,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "testkube-cloud-api.selectorLabels" -}}
+app: testkube-cloud-ui
 app.kubernetes.io/name: {{ include "testkube-cloud-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

@@ -33,6 +33,11 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: API_MONGO_DSN
+              value: {{ .Values.api.mongoDsn }}
+            - name: API_MONGO_DB
+              value: {{ .Values.api.mongoDb }}
           ports:
             - name: http
               containerPort: 8088

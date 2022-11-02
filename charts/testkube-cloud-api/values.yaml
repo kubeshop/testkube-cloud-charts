@@ -10,10 +10,13 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.2.1"
 
-imagePullSecrets:
-  - name: testkube-cloud-creds
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+api:
+  mongoDsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
+  mongoDb: "testkubecloud"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -42,16 +45,14 @@ service:
   port: 8088
 
 ingress:
-  enabled: false
-  className: ""
+  enabled: true
+  className: "nginx"
+  labels:
+    kubernetes.io/ingress.class: nginx
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
+  hosts: []
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -75,6 +76,13 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
+
+prometheus:
+  enabled: false
+  labels: {}
+  scrapeInterval: 15s
+  port: metrics
+  path: /metrics
 
 nodeSelector: {}
 
