@@ -34,8 +34,16 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            {{- if .Values.api.mongoDsnSecretRef }}
+            - name: API_MONGO_DSN
+              valueFrom:
+                secretKeyRef:
+                  key: MONGO_DSN
+                  name: {{ .Values.api.mongoDsnSecretRef }}
+            {{- else }}
             - name: API_MONGO_DSN
               value: {{ .Values.api.mongoDsn }}
+            {{- end }}
             - name: API_MONGO_DB
               value: {{ .Values.api.mongoDb }}
           ports:

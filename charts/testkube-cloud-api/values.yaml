@@ -15,6 +15,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 api:
+  mongoDsnSecretRef: mongo-dsn
   mongoDsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
   mongoDb: "testkubecloud"
 
