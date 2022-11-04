@@ -44,6 +44,7 @@ securityContext:
 service:
   type: ClusterIP
   port: 8088
+  grpcPort: 8089
 
 ingress:
   enabled: false
