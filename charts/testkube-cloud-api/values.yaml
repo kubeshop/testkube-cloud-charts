@@ -59,6 +59,7 @@ ingress:
   #    paths:
   #      - path: /
   #        pathType: Prefix
+  #        svcPort: 8088
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
