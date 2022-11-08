@@ -42,6 +42,10 @@ spec:
               value: {{ .Values.ui.apiServerEndpoint }}
             - name: REACT_APP_API_ROOT_ROUTE
               value: {{ .Values.ui.rootRoute }}
+            {{- if .Values.ui.oauth.clientId }}
+            - name: REACT_APP_OAUTH_CLIENT_ID
+              value: {{ .Values.ui.oauth.clientId }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /

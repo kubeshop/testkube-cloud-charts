@@ -17,6 +17,8 @@ fullnameOverride: ""
 ui:
   apiServerEndpoint: ""
   rootRoute: ""
+  oauth:
+    clientId: """
 
 serviceAccount:
   # Specifies whether a service account should be created
