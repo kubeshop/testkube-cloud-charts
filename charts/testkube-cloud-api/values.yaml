@@ -18,6 +18,12 @@ api:
   mongoDsnSecretRef: mongo-dsn
   mongoDsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
   mongoDb: "testkubecloud"
+  oauth:
+    clientId: ""
+    clientSecret: ""
+    issuerUrl: ""
+    redirectUri: ""
+    masterRedirectUri: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
