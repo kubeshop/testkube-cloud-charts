@@ -19,6 +19,7 @@ api:
   mongoDsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
   mongoDb: "testkubecloud"
   oauth:
+    secretRef: ""
     clientId: ""
     clientSecret: ""
     issuerUrl: ""
