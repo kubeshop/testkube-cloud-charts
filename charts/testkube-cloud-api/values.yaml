@@ -18,6 +18,7 @@ api:
   mongoDsnSecretRef: mongo-dsn
   mongoDsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
   mongoDb: "testkubecloud"
+  natsUri: "nats://nats.messaging.svc.cluster.local:4222"
   oauth:
     secretRef: ""
     clientId: ""

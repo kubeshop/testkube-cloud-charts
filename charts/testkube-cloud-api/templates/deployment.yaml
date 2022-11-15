@@ -86,6 +86,8 @@ spec:
             {{- end }}
             - name: OAUTH_MASTER_REDIRECT_URI
               value: {{ .Values.api.oauth.masterRedirectUri }}
+            - name: NATS_URI
+              value: {{ .Values.api.natsUri }}
           ports:
             - name: http
               containerPort: 8088
