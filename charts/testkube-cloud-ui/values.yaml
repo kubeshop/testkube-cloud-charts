@@ -15,10 +15,10 @@ nameOverride: ""
 fullnameOverride: ""
 
 ui:
+  # -- API Server endpoint URL
   apiServerEndpoint: ""
+  # -- The URL on which UI is served
   rootRoute: ""
-  oauth:
-    clientId: """
 
 serviceAccount:
   # Specifies whether a service account should be created

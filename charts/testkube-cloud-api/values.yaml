@@ -15,16 +15,26 @@ nameOverride: ""
 fullnameOverride: ""
 
 api:
+  # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN)
   mongoDsnSecretRef: mongo-dsn
+  # -- if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string
   mongoDsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
+  # -- Mongo database name
   mongoDb: "testkubecloud"
+  # -- NATS URI
   natsUri: "nats://nats.messaging.svc.cluster.local:4222"
   oauth:
+    # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI)
     secretRef: ""
+    # -- if oauth.secretRef is empty (""), then oauth.clientId field will be used for the OAuth client ID
     clientId: ""
+    # -- if oauth.secretRef is empty (""), then oauth.clientSecret field will be used for the OAuth client secret
     clientSecret: ""
+    # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL
     issuerUrl: ""
+    # -- if oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
     redirectUri: ""
+    # -- Master redirect from backend to UI on successful auth (redirect should be formatted as '<frontend>/auth/success')
     masterRedirectUri: ""
 
 serviceAccount:
