@@ -15,5 +15,11 @@ spec:
       targetPort: grpc
       protocol: TCP
       name: grpc
+    {{- if .Values.prometheus.enabled }}
+    - port: {{ .Values.service.metricsPort }}
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+    {{- end }}
   selector:
     {{- include "testkube-cloud-api.selectorLabels" . | nindent 4 }}

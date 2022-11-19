@@ -63,6 +63,7 @@ service:
   type: ClusterIP
   port: 8088
   grpcPort: 8089
+  metricsPort: 9000
 
 ingress:
   enabled: false
