@@ -34,8 +34,10 @@ api:
     issuerUrl: ""
     # -- if oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
     redirectUri: ""
-    # -- Master redirect from backend to UI on successful auth (redirect should be formatted as '<frontend>/auth/success')
-    masterRedirectUri: ""
+    # -- default external redirect URI redirect from backend to the frontend service on successful auth
+    defaultExternalRedirectURI: "https://api.testkube.xyz"
+    # -- Comma-separated list of allowed external redirect URIs
+    allowedExternalRedirectURIs: "https://cloud.testkube.xyz"
 
 serviceAccount:
   # Specifies whether a service account should be created

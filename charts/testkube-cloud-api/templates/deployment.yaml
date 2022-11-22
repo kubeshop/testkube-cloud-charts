@@ -88,6 +88,10 @@ spec:
               value: {{ .Values.api.oauth.masterRedirectUri }}
             - name: NATS_URI
               value: {{ .Values.api.natsUri }}
+            - name: DEFAULT_EXTERNAL_REDIRECT_URI
+              value: {{ .Values.api.oauth.defaultExternalRedirectURI }}
+            - name: ALLOWED_EXTERNAL_REDIRECT_URIS
+              value: {{ .Values.api.oauth.allowedExternalRedirectURIs }}
           ports:
             - name: http
               containerPort: 8088
