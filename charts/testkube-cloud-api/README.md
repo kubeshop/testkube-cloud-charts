@@ -13,12 +13,14 @@ A Helm chart for Testkube Cloud API
 | api.mongoDsn | string | `"mongodb://mongodb.testkube.svc.cluster.local:27017"` | if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string |
 | api.mongoDsnSecretRef | string | `"mongo-dsn"` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) |
 | api.natsUri | string | `"nats://nats.messaging.svc.cluster.local:4222"` | NATS URI |
+| api.oauth.allowedExternalRedirectURIs | string | `"https://cloud.testkube.xyz"` | Comma-separated list of allowed external redirect URIs |
 | api.oauth.clientId | string | `""` | if oauth.secretRef is empty (""), then oauth.clientId field will be used for the OAuth client ID |
 | api.oauth.clientSecret | string | `""` | if oauth.secretRef is empty (""), then oauth.clientSecret field will be used for the OAuth client secret |
 | api.oauth.issuerUrl | string | `""` | if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL |
-| api.oauth.masterRedirectUri | string | `""` | Master redirect from backend to UI on successful auth (redirect should be formatted as '<frontend>/auth/success') |
 | api.oauth.redirectUri | string | `""` | if oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI |
 | api.oauth.secretRef | string | `""` | OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) |
+| api.sendgrid.apiKey | string | `""` | Sendgrid API key |
+| api.sendgrid.secretRef | string | `""` | Name of secret which contains SENDGRID_API_KEY key |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -56,6 +58,7 @@ A Helm chart for Testkube Cloud API
 | securityContext.runAsNonRoot | bool | `true` |  |
 | securityContext.runAsUser | int | `1000` |  |
 | service.grpcPort | int | `8089` |  |
+| service.metricsPort | int | `9000` |  |
 | service.port | int | `8088` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |

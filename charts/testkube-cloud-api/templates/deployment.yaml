@@ -34,6 +34,16 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            {{- if .Values.api.sendgrid.secretRef }}
+            - name: SENDGRID_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: SENDGRID_API_KEY
+                  name: {{ .Values.api.sendgrid.secretRef }}
+            {{- else }}
+            - name: SENDGRID_API_KEY
+              value: {{ .Values.api.sendgrid.apiKey }}
+            {{- end }}
             {{- if .Values.api.mongoDsnSecretRef }}
             - name: API_MONGO_DSN
               valueFrom:
@@ -84,12 +94,8 @@ spec:
             - name: OAUTH_REDIRECT_URI
               value: {{ .Values.api.oauth.redirectUri }}
             {{- end }}
-            - name: OAUTH_MASTER_REDIRECT_URI
-              value: {{ .Values.api.oauth.masterRedirectUri }}
             - name: NATS_URI
               value: {{ .Values.api.natsUri }}
-            - name: DEFAULT_EXTERNAL_REDIRECT_URI
-              value: {{ .Values.api.oauth.defaultExternalRedirectURI }}
             - name: ALLOWED_EXTERNAL_REDIRECT_URIS
               value: {{ .Values.api.oauth.allowedExternalRedirectURIs }}
           ports:

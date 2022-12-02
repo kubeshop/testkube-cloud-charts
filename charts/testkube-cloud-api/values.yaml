@@ -23,6 +23,11 @@ api:
   mongoDb: "testkubecloud"
   # -- NATS URI
   natsUri: "nats://nats.messaging.svc.cluster.local:4222"
+  sendgrid:
+    # -- Sendgrid API key
+    apiKey: ""
+    # -- Name of secret which contains SENDGRID_API_KEY key
+    secretRef: ""
   oauth:
     # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI)
     secretRef: ""
@@ -34,8 +39,6 @@ api:
     issuerUrl: ""
     # -- if oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
     redirectUri: ""
-    # -- default external redirect URI redirect from backend to the frontend service on successful auth
-    defaultExternalRedirectURI: "https://api.testkube.xyz"
     # -- Comma-separated list of allowed external redirect URIs
     allowedExternalRedirectURIs: "https://cloud.testkube.xyz"
 
