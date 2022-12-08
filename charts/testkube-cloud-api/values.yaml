@@ -14,6 +14,12 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+analytics:
+  segmentio:
+    writeKey: ""
+    secretRef: "testkube-cloud-analytics-secret"
+
+
 api:
   # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN)
   mongoDsnSecretRef: mongo-dsn
@@ -139,3 +145,4 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+

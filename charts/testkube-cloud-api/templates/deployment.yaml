@@ -34,24 +34,31 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            {{- if .Values.api.sendgrid.secretRef }}
+            - name: SEGMENTIO_WRITE_KEY
+            {{- if .Values.analytics.segmentio.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: SEGMENTIO_WRITE_KEY
+                  name: {{ .Values.analytics.segmentio.secretRef }}
+            {{- else }}
+              value: {{ .Values.analytics.segmentio.writeKey }}
+            {{- end }}
             - name: SENDGRID_API_KEY
+            {{- if .Values.api.sendgrid.secretRef }}
               valueFrom:
                 secretKeyRef:
                   key: SENDGRID_API_KEY
                   name: {{ .Values.api.sendgrid.secretRef }}
             {{- else }}
-            - name: SENDGRID_API_KEY
               value: {{ .Values.api.sendgrid.apiKey }}
             {{- end }}
-            {{- if .Values.api.mongoDsnSecretRef }}
             - name: API_MONGO_DSN
+            {{- if .Values.api.mongoDsnSecretRef }}
               valueFrom:
                 secretKeyRef:
                   key: MONGO_DSN
                   name: {{ .Values.api.mongoDsnSecretRef }}
             {{- else }}
-            - name: API_MONGO_DSN
               value: {{ .Values.api.mongoDsn }}
             {{- end }}
             - name: API_MONGO_DB
