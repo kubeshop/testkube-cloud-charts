@@ -41,7 +41,7 @@ spec:
                   key: SEGMENTIO_WRITE_KEY
                   name: {{ .Values.analytics.segmentio.secretRef }}
             {{- else }}
-              value: {{ .Values.analytics.segmentio.writeKey }}
+              value: {{ .Values.analytics.segmentio.apiKey }}
             {{- end }}
             - name: SENDGRID_API_KEY
             {{- if .Values.api.sendgrid.secretRef }}
