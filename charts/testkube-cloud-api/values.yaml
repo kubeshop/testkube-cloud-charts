@@ -17,7 +17,7 @@ fullnameOverride: ""
 analytics:
   segmentio:
     writeKey: ""
-    secretRef: "analytics-secret"
+    secretRef: "testkube-cloud-analytics-secret"
 
 
 api:
