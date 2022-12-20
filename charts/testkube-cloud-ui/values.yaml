@@ -20,8 +20,8 @@ ui:
   # -- The URL on which UI is served
   rootRoute: ""
   segment: 
-    secretName: segmentio-key
-    secretKey: write-key
+    secretName: testkube-cloud-analytics-secret
+    secretKey: REACT_APP_SEGMENT_WRITE_KEY
 
 serviceAccount:
   # Specifies whether a service account should be created
