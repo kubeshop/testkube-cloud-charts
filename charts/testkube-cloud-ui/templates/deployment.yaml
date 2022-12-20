@@ -38,6 +38,8 @@ spec:
               containerPort: 8080
               protocol: TCP
           env:
+            - name: REACT_APP_SEGMENT_WRITE_KEY
+              value: {{ .Values.ui.segmentIoWriteKey }}
             - name: REACT_APP_API_SERVER_ENDPOINT
               value: {{ .Values.ui.apiServerEndpoint }}
             - name: REACT_APP_API_ROOT_ROUTE
