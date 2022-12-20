@@ -19,6 +19,9 @@ ui:
   apiServerEndpoint: ""
   # -- The URL on which UI is served
   rootRoute: ""
+  segment: 
+    secretName: segmentio-key
+    secretKey: write-key
 
 serviceAccount:
   # Specifies whether a service account should be created
