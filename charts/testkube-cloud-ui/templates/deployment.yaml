@@ -39,7 +39,10 @@ spec:
               protocol: TCP
           env:
             - name: REACT_APP_SEGMENT_WRITE_KEY
-              value: {{ .Values.ui.segmentIoWriteKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ui.segment.secretName }}
+                  key: {{ .Values.ui.segment.secretKey }}            
             - name: REACT_APP_API_SERVER_ENDPOINT
               value: {{ .Values.ui.apiServerEndpoint }}
             - name: REACT_APP_API_ROOT_ROUTE
