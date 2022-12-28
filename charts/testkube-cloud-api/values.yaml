@@ -34,6 +34,10 @@ api:
     apiKey: ""
     # -- Name of secret which contains SENDGRID_API_KEY key
     secretRef: ""
+  agent:
+    hide: false
+    url: ""
+    port: ""
   oauth:
     # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI)
     secretRef: ""

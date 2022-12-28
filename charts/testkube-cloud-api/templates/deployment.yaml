@@ -105,6 +105,18 @@ spec:
               value: {{ .Values.api.natsUri }}
             - name: ALLOWED_EXTERNAL_REDIRECT_URIS
               value: {{ .Values.api.oauth.allowedExternalRedirectURIs }}
+            {{- if .Values.api.agent.hide }}
+            - name: HIDE_AGENT_HOST 
+              value: {{ .Values.api.agent.hide }}
+            {{- end }}
+            {{- if .Values.api.agent.url }}
+            - name: AGENT_HOST 
+              value: {{ .Values.api.agent.url }}
+            {{- end }}
+            {{- if .Values.api.agent.port }}
+            - name: AGENT_HOST 
+              value: {{ .Values.api.agent.port }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 8088
