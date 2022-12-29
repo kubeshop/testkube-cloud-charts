@@ -1,11 +1,8 @@
 helm:
   parameters:
-  - name: api.agent.hide
-    value: "true"
-    forcestring: false
   - name: image.name
     value: kubeshop/testkube-cloud-api
     forcestring: true
   - name: image.tag
-    value: 0.2.74
+    value: 0.2.75
     forcestring: true
