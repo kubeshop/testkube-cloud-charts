@@ -19,8 +19,22 @@ analytics:
     writeKey: ""
     secretRef: "testkube-cloud-analytics-secret"
 
-
 api:
+  tls:
+    # -- Toggle whether to handle TLS in API
+    enabled: false
+    # -- API HTTPS port
+    apiPort: 9443
+    # -- Agent gRPCS port
+    agentPort: 8443
+    # -- tls secret name which ClusterIssuer will use to store certificate data
+    tlsSecret: testkube-cloud-api-tls
+    # -- cert-manager ClusterIssuer ref
+    issuerRef: letsencrypt-dev
+    # -- certificate domains
+    domains: []
+#      - api.testkube.xyz
+#      - agent.testkube.xyz
   # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN)
   mongoDsnSecretRef: mongo-dsn
   # -- if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string

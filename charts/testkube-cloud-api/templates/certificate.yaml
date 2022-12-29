@@ -1,0 +1,21 @@
+{{- if .Values.api.tls.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "testkube-cloud-api.fullname" . }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  secretName: {{ .Values.api.tls.tlsSecret }}
+  dnsNames:
+    {{- range .Values.api.tls.domains }}
+    - {{ . }}
+    {{- end }}
+  issuerRef:
+    name: {{ .Values.api.tls.issuerRef }}
+    # We can reference ClusterIssuers by changing the kind here.
+    # The default value is Issuer (i.e. a locally namespaced Issuer)
+    kind: Issuer
+    group: cert-manager.io
+{{- end }}

@@ -118,17 +118,29 @@ spec:
               value: {{ .Values.api.agent.port }}
             {{- end }}
           ports:
+            {{- if .Values.api.tls.enabled }}
+            - name: https
+              containerPort: {{ .Values.api.tls.apiPort }}
+              protocol: TCP
+            {{- else }}
             - name: http
               containerPort: 8090
               protocol: TCP
+            {{- end }}
             {{- if .Values.prometheus.enabled }}
             - name: metrics
               containerPort: 9000
               protocol: TCP
             {{- end }}
+            {{- if .Values.api.tls.enabled }}
+            - name: grpcs
+              containerPort:  {{ .Values.api.tls.agentPort }}
+              protocol: TCP
+            {{- else }}
             - name: grpc
               containerPort: 8089
               protocol: TCP
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /health
@@ -139,6 +151,17 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.api.tls.enabled }}
+          volumeMounts:
+            - mountPath: /tmp/serving-cert/crt.pem
+              readOnly: true
+              name: {{ .Values.api.tls.tlsSecret }}
+              subPath: tls.crt
+            - mountPath: /tmp/serving-cert/key.pem
+              readOnly: true
+              name: {{ .Values.api.tls.tlsSecret }}
+              subPath: tls.key
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -150,4 +173,10 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.api.tls.enabled }}
+      volumes:
+        - name: serving-cert
+          secret:
+            secretName: {{ .Values.api.tls.tlsSecret }}
       {{- end }}
