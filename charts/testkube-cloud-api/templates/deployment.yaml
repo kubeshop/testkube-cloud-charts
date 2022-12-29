@@ -111,11 +111,11 @@ spec:
             {{- end }}
             {{- if .Values.api.agent.url }}
             - name: AGENT_HOST
-              value: {{ .Values.api.agent.url }}
+              value: "{{ .Values.api.agent.url }}"
             {{- end }}
             {{- if .Values.api.agent.port }}
             - name: AGENT_PORT
-              value: {{ .Values.api.agent.port }}
+              value: "{{ .Values.api.agent.port }}"
             {{- end }}
           ports:
             - name: http
