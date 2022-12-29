@@ -35,7 +35,7 @@ api:
     # -- Name of secret which contains SENDGRID_API_KEY key
     secretRef: ""
   agent:
-    hide: false
+    hide: "false"
     url: ""
     port: ""
   oauth:
