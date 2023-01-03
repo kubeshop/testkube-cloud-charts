@@ -58,7 +58,9 @@ api:
     secretRef: ""
   agent:
     hide: "false"
-    url: ""
+    # -- Agent host (without protocol
+    host: ""
+    # -- Agent port (must be provided as string)
     port: ""
   oauth:
     # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI)
