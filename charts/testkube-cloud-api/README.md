@@ -9,6 +9,13 @@ A Helm chart for Testkube Cloud API
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| analytics.segmentio.secretRef | string | `"testkube-cloud-analytics-secret"` |  |
+| analytics.segmentio.writeKey | string | `""` |  |
+| api.agent.hide | bool | `false` |  |
+| api.agent.host | string | `"localhost"` | Agent host (without protocol |
+| api.agent.port | int | `8089` | Agent port |
+| api.apiAddress | string | `"localhost:8088"` | API address (used in invitation emails) |
+| api.dashboardAddress | string | `"localhost:3000"` | Dashboard address (used in invitation emails |
 | api.mongoDb | string | `"testkubecloud"` | Mongo database name |
 | api.mongoDsn | string | `"mongodb://mongodb.testkube.svc.cluster.local:27017"` | if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string |
 | api.mongoDsnSecretRef | string | `"mongo-dsn"` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) |
@@ -21,6 +28,14 @@ A Helm chart for Testkube Cloud API
 | api.oauth.secretRef | string | `""` | OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) |
 | api.sendgrid.apiKey | string | `""` | Sendgrid API key |
 | api.sendgrid.secretRef | string | `""` | Name of secret which contains SENDGRID_API_KEY key |
+| api.tls.agentPort | int | `8443` | Agent gRPCS port |
+| api.tls.apiPort | int | `9443` | API HTTPS port |
+| api.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | certificate path |
+| api.tls.domains | list | `[]` | certificate domains |
+| api.tls.enabled | bool | `false` | Toggle whether to handle TLS in API |
+| api.tls.issuerRef | string | `"letsencrypt-dev"` | cert-manager ClusterIssuer ref |
+| api.tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | certificate key path |
+| api.tls.tlsSecret | string | `"testkube-cloud-api-tls"` | tls secret name which ClusterIssuer will use to store certificate data |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -52,7 +67,10 @@ A Helm chart for Testkube Cloud API
 | prometheus.port | string | `"metrics"` |  |
 | prometheus.scrapeInterval | string | `"15s"` |  |
 | replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
+| resources.limits.cpu | string | `"100m"` |  |
+| resources.limits.memory | string | `"128Mi"` |  |
+| resources.requests.cpu | string | `"300m"` |  |
+| resources.requests.memory | string | `"320Mi"` |  |
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | securityContext.readOnlyRootFilesystem | bool | `true` |  |
 | securityContext.runAsNonRoot | bool | `true` |  |

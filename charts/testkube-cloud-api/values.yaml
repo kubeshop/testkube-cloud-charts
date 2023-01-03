@@ -57,11 +57,11 @@ api:
     # -- Name of secret which contains SENDGRID_API_KEY key
     secretRef: ""
   agent:
-    hide: "false"
+    hide: false
     # -- Agent host (without protocol
-    host: ""
-    # -- Agent port (must be provided as string)
-    port: ""
+    host: localhost
+    # -- Agent port
+    port: 8089
   oauth:
     # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI)
     secretRef: ""
