@@ -31,6 +31,10 @@ api:
     tlsSecret: testkube-cloud-api-tls
     # -- cert-manager ClusterIssuer ref
     issuerRef: letsencrypt-dev
+    # -- certificate path
+    certPath: /tmp/serving-cert/crt.pem
+    # -- certificate key path
+    keyPath: /tmp/serving-cert/key.pem
     # -- certificate domains
     domains: []
 #      - api.testkube.xyz

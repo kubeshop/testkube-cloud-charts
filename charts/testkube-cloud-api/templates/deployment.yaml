@@ -121,6 +121,12 @@ spec:
               value: "{{ .Values.api.apiAddress }}"
             - name: DASHBOARD_ADDRESS
               value: "{{ .Values.api.dashboardAddress }}"
+            - name: USE_TLS
+              value: "{{ .Values.api.tls.enabled }}"
+            - name: TLS_CERT
+              value: "{{ .Values.api.tls.certPath }}"
+            - name: TLS_KEY
+              value: "{{ .Values.api.tls.keyPath }}"
           ports:
             {{- if .Values.api.tls.enabled }}
             - name: https
