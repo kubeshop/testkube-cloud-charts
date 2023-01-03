@@ -12,10 +12,11 @@ spec:
     {{- range .Values.api.tls.domains }}
     - {{ . }}
     {{- end }}
+
   issuerRef:
     name: {{ .Values.api.tls.issuerRef }}
     # We can reference ClusterIssuers by changing the kind here.
     # The default value is Issuer (i.e. a locally namespaced Issuer)
-    kind: Issuer
+    kind: ClusterIssuer
     group: cert-manager.io
 {{- end }}
