@@ -35,6 +35,10 @@ api:
     domains: []
 #      - api.testkube.xyz
 #      - agent.testkube.xyz
+  # -- API address (used in invitation emails)
+  apiAddress: localhost:8088
+  # -- Dashboard address (used in invitation emails
+  dashboardAddress: localhost:3000
   # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN)
   mongoDsnSecretRef: mongo-dsn
   # -- if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string

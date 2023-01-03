@@ -117,6 +117,10 @@ spec:
             - name: AGENT_PORT
               value: "{{ .Values.api.agent.port }}"
             {{- end }}
+            - name: API_ADDRESS
+              value: "{{ .Values.api.apiAddress }}"
+            - name: DASHBOARD_ADDRESS
+              value: "{{ .Values.api.dashboardAddress }}"
           ports:
             {{- if .Values.api.tls.enabled }}
             - name: https
