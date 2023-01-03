@@ -163,7 +163,7 @@ spec:
               subPath: tls.crt
             - mountPath: /tmp/serving-cert/key.pem
               readOnly: true
-              name: {{ .Values.api.tls.tlsSecret }}
+              name: serving-cert
               subPath: tls.key
           {{- end }}
       {{- with .Values.nodeSelector }}
