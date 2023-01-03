@@ -154,10 +154,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /health
+              scheme: {{ if .Values.api.tls.enabled }}HTTPS{{ else }}HTTP{{ end }}
               port: {{ if .Values.api.tls.enabled }}https{{ else }}http{{ end }}
           readinessProbe:
             httpGet:
               path: /health
+              scheme: {{ if .Values.api.tls.enabled }}HTTPS{{ else }}HTTP{{ end }}
               port: {{ if .Values.api.tls.enabled }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
