@@ -109,14 +109,10 @@ spec:
             - name: HIDE_AGENT_HOST
               value: "{{ .Values.api.agent.hide }}"
             {{- end }}
-            {{- if .Values.api.agent.url }}
             - name: AGENT_HOST
               value: "{{ .Values.api.agent.host }}"
-            {{- end }}
-            {{- if .Values.api.agent.port }}
             - name: AGENT_PORT
               value: "{{ .Values.api.agent.port }}"
-            {{- end }}
             - name: API_ADDRESS
               value: "{{ .Values.api.apiAddress }}"
             - name: DASHBOARD_ADDRESS
