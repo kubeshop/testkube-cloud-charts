@@ -143,10 +143,10 @@ grpcIngress:
   #      - chart-example.local
 
 resources:
-  limits:
+  requests:
     cpu: 100m
     memory: 128Mi
-  requests:
+  limits:
     cpu: 300m
     memory: 320Mi
 
