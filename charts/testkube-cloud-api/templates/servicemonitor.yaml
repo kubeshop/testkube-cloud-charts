@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "testkube-cloud-api.name" . }}
+  name: {{ include "testkube-cloud-api.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "testkube-cloud-api.labels" . | nindent 4 -}}

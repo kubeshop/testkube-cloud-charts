@@ -2,13 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Cloud API is currently not scalable due to certain issues with Agent & gRPC connection
 replicaCount: 1
 
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.2.1"
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: "0.2.89"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -20,6 +21,11 @@ analytics:
     secretRef: "testkube-cloud-analytics-secret"
 
 api:
+  migrations:
+    # -- Toggle whether to apply migrations for MongoDB
+    enabled: false
+    image:
+      repository: kubeshop/testkube-cloud-api-migrations
   tls:
     # -- Toggle whether to handle TLS in API
     enabled: false
@@ -58,7 +64,7 @@ api:
     secretRef: ""
   agent:
     hide: false
-    # -- Agent host (without protocol
+    # -- Agent host (without protocol)
     host: localhost
     # -- Agent port
     port: 8089
