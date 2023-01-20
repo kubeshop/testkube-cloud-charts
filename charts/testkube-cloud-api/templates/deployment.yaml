@@ -34,6 +34,15 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: PAYMENTS_API_KEY
+            {{- if .Values.payments.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: PAYMENTS_API_KEY
+                  name: {{ .Values.payments.secretRef }}
+            {{- else }}
+              value: {{ .Values.payments.apiKey }}
+            {{- end }}
             - name: SEGMENTIO_WRITE_KEY
             {{- if .Values.analytics.segmentio.secretRef }}
               valueFrom:
