@@ -20,6 +20,10 @@ analytics:
     writeKey: ""
     secretRef: "testkube-cloud-analytics-secret"
 
+payments:
+  apiKey: ""
+  secretRef: "testkube-cloud-payments-secret"
+
 api:
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
@@ -43,8 +47,8 @@ api:
     keyPath: /tmp/serving-cert/key.pem
     # -- certificate domains
     domains: []
-#      - api.testkube.xyz
-#      - agent.testkube.xyz
+  #      - api.testkube.xyz
+  #      - agent.testkube.xyz
   # -- API address (used in invitation emails)
   apiAddress: localhost:8088
   # -- Dashboard address (used in invitation emails
@@ -93,13 +97,14 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
 securityContext:
   capabilities:
     drop:
-    - ALL
+      - ALL
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
@@ -115,7 +120,8 @@ ingress:
   className: "nginx"
   labels:
     kubernetes.io/ingress.class: nginx
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts: []
@@ -134,7 +140,8 @@ grpcIngress:
   className: "nginx"
   labels:
     kubernetes.io/ingress.class: nginx
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts: []
@@ -175,4 +182,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
