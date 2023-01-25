@@ -23,6 +23,7 @@ analytics:
 payments:
   apiKey: ""
   secretRef: "testkube-cloud-payments-secret"
+  endpointSecret: ""
 
 api:
   migrations:
