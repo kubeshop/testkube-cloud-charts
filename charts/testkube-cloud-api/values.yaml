@@ -21,9 +21,10 @@ analytics:
     secretRef: "testkube-cloud-analytics-secret"
 
 payments:
-  apiKey: ""
   secretRef: "testkube-cloud-payments-secret"
+  apiKey: ""
   endpointSecret: ""
+  portalConfigurationId: ""
 
 api:
   migrations:
