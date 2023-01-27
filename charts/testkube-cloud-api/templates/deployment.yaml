@@ -150,6 +150,8 @@ spec:
               value: "{{ .Values.api.tls.certPath }}"
             - name: TLS_KEY
               value: "{{ .Values.api.tls.keyPath }}"
+            - name: OUTPUTS_BUCKET
+              value: "{{ .Values.api.outputsBucket }}"
           ports:
             {{- if .Values.api.tls.enabled }}
             - name: https

@@ -51,6 +51,8 @@ api:
     domains: []
   #      - api.testkube.xyz
   #      - agent.testkube.xyz
+  # -- S3 bucket in which outputs are stored
+  outputsBucket: testkube-cloud-outputs
   # -- API address (used in invitation emails)
   apiAddress: localhost:8088
   # -- Dashboard address (used in invitation emails
