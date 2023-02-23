@@ -15,6 +15,18 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+gcp:
+  # -- GCP Project ID
+  projectId: ""
+
+externalSecrets:
+  # -- Enable SecretStore and ExternalSecret
+  enabled: true
+  # -- KV where envvar name is Key and GCP Secret Name is Value
+  secrets:
+    SENDGRID_API_KEY: sendgrid-api-key
+    SEGMENTIO_WRITE_KEY: backoffice-segmentio-write-key
+
 analytics:
   segmentio:
     writeKey: ""
