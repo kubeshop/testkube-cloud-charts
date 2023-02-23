@@ -22,6 +22,9 @@ ui:
   segment:
     secretName: testkube-cloud-analytics-secret
     secretKey: REACT_APP_SEGMENT_WRITE_KEY
+  sentry:
+    secretName: testkube-cloud-error-reporting
+    secretKey: REACT_APP_SENTRY_KEY
 
 serviceAccount:
   # Specifies whether a service account should be created
