@@ -4,6 +4,9 @@
 
 replicaCount: 1
 
+sentry:
+  url: ""
+
 image:
   repository: kubeshop/testkube-cloud-ui
   pullPolicy: IfNotPresent

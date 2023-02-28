@@ -42,11 +42,15 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.ui.segment.secretName }}
-                  key: {{ .Values.ui.segment.secretKey }}            
+                  key: {{ .Values.ui.segment.secretKey }}
             - name: REACT_APP_API_SERVER_ENDPOINT
               value: {{ .Values.ui.apiServerEndpoint }}
             - name: REACT_APP_API_ROOT_ROUTE
               value: {{ .Values.ui.rootRoute }}
+            {{- if .Values.sentry.url }}
+            - name: REACT_APP_SENTRY_KEY
+              value: {{ .Values.sentry.url }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /
