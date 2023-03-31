@@ -204,10 +204,10 @@ websocketsIngress:
 resources:
   requests:
     cpu: 100m
-    memory: 128Mi
+    memory: 1Gi
   limits:
     cpu: 300m
-    memory: 320Mi
+    memory: 2Gi
 
 autoscaling:
   enabled: false
