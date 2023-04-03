@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: kubeshop/testkube-cloud-ui
+    forcestring: true
+  - name: image.tag
+    value: 0.2.1-rc-58ca29d
+    forcestring: true
