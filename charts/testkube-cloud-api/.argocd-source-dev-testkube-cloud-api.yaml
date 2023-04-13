@@ -4,5 +4,5 @@ helm:
     value: kubeshop/testkube-cloud-api
     forcestring: true
   - name: image.tag
-    value: 1.1.0-dev-aa51dd4
+    value: 1.1.0-dev-e44c111
     forcestring: true
