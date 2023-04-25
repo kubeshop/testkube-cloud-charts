@@ -27,6 +27,16 @@ externalSecrets:
     SENDGRID_API_KEY: sendgrid-api-key
     SEGMENTIO_WRITE_KEY: backoffice-segmentio-write-key
 
+    PAYMENTS_API_KEY: stripe-api-key
+    PAYMENTS_ENDPOINT_SECRET: stripe-endpoint-secret
+    PAYMENTS_PORTAL_CONFIGURATION_ID: stripe-portal-configuration-id
+
+    OAUTH_CLIENT_SECRET: testkube-cloud-oauth-client-secret
+
+#-- Additional env vars to be added to the deployment
+additionalEnv: {}
+ # FOO: bar
+
 analytics:
   segmentio:
     writeKey: ""
@@ -66,9 +76,9 @@ api:
   # -- S3 bucket in which outputs are stored
   outputsBucket: testkube-cloud-outputs
   # -- API address (used in invitation emails)
-  apiAddress: localhost:8088
-  # -- Dashboard address (used in invitation emails
-  dashboardAddress: localhost:3000
+  apiAddress: https://api.testkube.xyz
+  # -- Dashboard address (used in invitation emails)
+  dashboardAddress: https://cloud.testkube.xyz
   # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN)
   mongoDsnSecretRef: mongo-dsn
   # -- if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string

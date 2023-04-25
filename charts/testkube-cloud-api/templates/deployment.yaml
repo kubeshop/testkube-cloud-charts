@@ -152,6 +152,10 @@ spec:
               value: "{{ .Values.api.tls.keyPath }}"
             - name: OUTPUTS_BUCKET
               value: "{{ .Values.api.outputsBucket }}"
+            {{- range $k, $v := .Values.additionalEnv }}
+            - name: {{ $k }}
+              value: {{ $v }}
+            {{- end}}
           ports:
             {{- if .Values.api.tls.enabled }}
             - name: https
