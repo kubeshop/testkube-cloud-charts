@@ -1,0 +1,18 @@
+global:
+  certManager:
+    issuerRef: "letsencrypt-edge"
+
+testkube-cloud-api:
+  imagePullSecrets:
+    - name: testkube-cloud-creds
+  api:
+    enterpriseMode: true
+  ingress:
+    annotations:
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+
+testkube-cloud-ui:
+  imagePullSecrets:
+    - name: testkube-cloud-creds
+  ingress:
+    enabled: true

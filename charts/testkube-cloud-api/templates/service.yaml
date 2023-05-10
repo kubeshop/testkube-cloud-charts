@@ -4,31 +4,24 @@ metadata:
   name: {{ include "testkube-cloud-api.fullname" . }}
   labels:
     {{- include "testkube-cloud-api.labels" . | nindent 4 }}
+    {{- with .Values.service.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    {{- if .Values.api.tls.enabled }}
-    - port: {{ .Values.api.tls.apiPort }}
-      targetPort: https
+    - port: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}{{ .Values.service.port }}{{ end }}
+      targetPort: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
       protocol: TCP
-      name: https
-    {{- else }}
-    - port: {{ .Values.service.port }}
-      targetPort: http
+      name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
+    - port: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.agentPort }}{{ else }}{{ .Values.service.grpcPort }}{{ end }}
+      targetPort: {{ if .Values.api.tls.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
       protocol: TCP
-      name: http
-    {{- end }}
-    {{- if .Values.api.tls.enabled }}
-    - port: {{ .Values.api.tls.agentPort }}
-      targetPort: grpcs
-      protocol: TCP
-      name: grpcs
-    {{- else }}
-    - port: {{ .Values.service.grpcPort }}
-      targetPort: grpc
-      protocol: TCP
-      name: grpc
-    {{- end }}
+      name: {{ if .Values.api.tls.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
     {{- if .Values.prometheus.enabled }}
     - port: {{ .Values.service.metricsPort }}
       targetPort: metrics

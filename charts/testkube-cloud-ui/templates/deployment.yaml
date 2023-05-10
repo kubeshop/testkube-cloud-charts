@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "testkube-cloud-api.fullname" . }}
+  name: {{ include "testkube-cloud-ui.fullname" . }}
   labels:
-    {{- include "testkube-cloud-api.labels" . | nindent 4 }}
+    {{- include "testkube-cloud-ui.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "testkube-cloud-api.selectorLabels" . | nindent 6 }}
+      {{- include "testkube-cloud-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "testkube-cloud-api.selectorLabels" . | nindent 8 }}
+        {{- include "testkube-cloud-ui.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "testkube-cloud-api.serviceAccountName" . }}
+      serviceAccountName: {{ include "testkube-cloud-ui.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -39,17 +39,28 @@ spec:
               protocol: TCP
           env:
             - name: REACT_APP_SEGMENT_WRITE_KEY
+              {{- if .Values.ui.segment.secretRef }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ui.segment.secretName }}
-                  key: {{ .Values.ui.segment.secretKey }}
+                  name: {{ .Values.ui.segment.secretRef }}
+                  key: "SEGMENTIO_WRITE_KEY_UI"
+              {{- else }}
+              value: {{ .Values.ui.segment.writeKey }}
+              {{- end }}
             - name: REACT_APP_API_SERVER_ENDPOINT
-              value: {{ .Values.ui.apiServerEndpoint }}
+              value: "{{ required ".Values.ui.apiServerEndpoint must be configured" .Values.ui.apiServerEndpoint }}"
             - name: REACT_APP_API_ROOT_ROUTE
-              value: {{ .Values.ui.rootRoute }}
-            {{- if .Values.sentry.url }}
+              value: "{{ required ".Values.ui.rootRoute must be configured" .Values.ui.rootRoute }}"
+            {{- if .Values.sentry.enabled }}
             - name: REACT_APP_SENTRY_KEY
-              value: {{ .Values.sentry.url }}
+              {{- if .Values.sentry.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.sentry.secretRef }}
+                  key: "SENTRY_KEY"
+              {{- else }}
+              value: "{{ .Values.sentry.url }}"
+              {{- end }}
             {{- end }}
           livenessProbe:
             httpGet:

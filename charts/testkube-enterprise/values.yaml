@@ -1,0 +1,244 @@
+# Default values for testkube-enterprise.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  # -- Domain under which to create Ingress rules
+  domain: "enterprise.testkube.dev"
+  # -- UI subdomain which get prepended to the domain
+  uiSubdomain: "dashboard"
+  # -- TLS provider (possible values: "", "cert-manager")
+  certificateProvider: "cert-manager"
+  certManager:
+    # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
+    issuerRef: ""
+
+## Testkube Cloud API chart parameters
+testkube-cloud-api:
+  fullnameOverride: testkube-enterprise-api
+  image:
+    repository: kubeshop/testkube-cloud-api
+    tag: 1.1.0-dev-dc8933d
+  api:
+    tls:
+      tlsSecret: testkube-enterprise-api-tls
+    migrations:
+      # -- Toggle whether to run database migrations
+      enabled: true
+      # -- Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart)
+      useHelmHooks: false
+    mongo:
+      # -- Mongo DSN connection string
+      dsn: "mongodb://testkube-enterprise-mongodb:27017"
+      # -- Mongo database name
+      database: "testkubeEnterpriseDB"
+    nats:
+      # -- NATS URI
+      uri: "nats://testkube-enterprise-nats:4222"
+    minio:
+      # -- MinIO endpoint
+      endpoint: "testkube-enterprise-minio:9000"
+      # -- S3 region
+      region: ""
+      # -- MinIO access key id
+      accessKeyId: "testkube-enterprise"
+      # -- MinIO secret access key
+      secretAccessKey: "t3stkub3-3nt3rpr1s3"
+      # -- MinIO token
+      token: ""
+      # -- Credentials secret ref (secret should contain keys: MINIO_ACCESS_KEY_ID, MINIO_SECRET_ACCESS_KEY, MINIO_TOKEN) (default is `testkube-cloud-minio-secret`)
+      credsSecretRef: ""
+      # -- Expiration period in days
+      expirationPeriod: 0
+      # -- Should be set to `true` if MinIO is exposed through HTTPS
+      secure: false
+    sendgrid:
+      # -- Sendgrid API key
+      apiKey: ""
+      # -- Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`)
+      secretRef: ""
+    agent:
+      hide: false
+      # -- Agent host (without protocol) - used for building agent install commands
+      host: agent.testkube.dev
+      # -- Agent port - used for building agent install commands
+      port: 443
+    oauth:
+      # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`)
+      secretRef: ""
+      # -- if oauth.secretRef is empty (""), then oauth.clientId field will be used for the OAuth client ID
+      clientId: ""
+      # -- if oauth.secretRef is empty (""), then oauth.clientSecret field will be used for the OAuth client secret
+      clientSecret: ""
+      # -- if oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
+      redirectUri: ""
+    # -- S3 bucket in which to store logs & artifacts
+    outputsBucket: testkube-cloud-outputs
+  minio:
+    fullnameOverride: testkube-enterprise-minio
+    # -- Toggle whether to install MinIO
+    enabled: true
+    # -- Minio extra vars
+    extraEnvVars: {}
+    # - name: FOO
+    #   value: BAR
+
+    # Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
+    # -- PVC Access Modes for Minio. The volume is mounted as read-write by a single node.
+    accessModes:
+      - ReadWriteOnce
+    # -- Node labels for pod assignment.
+    nodeSelector: {}
+    # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+    tolerations: []
+    # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+    # Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+    # -- Affinity for pod assignment.
+    affinity: {}
+    # -- Custom service account for MinIO Deployment resource (overrides service account creation)
+    customServiceAccountName: ""
+    serviceAccount:
+      # -- Specifies whether a service account should be created
+      create: false
+      # -- Additional annotations to add to the ServiceAccount resource
+      annotations: {}
+      # -- Additional labels to add to the ServiceAccount resource
+      labels: {}
+      # -- The name of the service account to use.
+      name: ""
+    credentials:
+      # -- Root username
+      accessKeyId: "testkube-enterprise"
+      # -- Root password
+      secretAccessKey: "t3stkub3-3nt3rpr1s3"
+    persistence:
+      # -- PVC Storage Request for MinIO. Should be available in the cluster.
+      storage: 10Gi
+    # -- MinIO Resources settings
+    resources: {}
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+    # -- MinIO Pod Security Context
+    podSecurityContext: {}
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for MinIO container
+    securityContext: {}
+
+testkube-cloud-ui:
+  fullnameOverride: testkube-enterprise-ui
+  image:
+    repository: kubeshop/testkube-cloud-ui
+    tag: 1.1.0-dev-132c87d
+  ui:
+    # -- API Server endpoint URL
+    apiServerEndpoint: "https://api2.testkube.dev"
+    # -- The URL on which UI is served
+    rootRoute: "https://dashboard.testkube.dev"
+  ingress:
+    # -- Name of the TLS secret which contains the certificate files
+    tlsSecretName: testkube-enterprise-ui-tls
+
+## NATS chart parameter
+## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
+nats:
+  fullnameOverride: testkube-enterprise-nats
+  tolerations: []
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- NATS Pod Security Context
+  securityContext: {}
+
+  cluster:
+    # -- Enable cluster mode (HA)
+    enabled: true
+    # -- NATS cluster replicas
+    replicas: 3
+
+  # NATS container settings
+  nats:
+    enabled: true
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for NATS container
+    securityContext: {}
+    # -- NATS resource settings
+    resources: {}
+    limits:
+      # -- Max payload
+      maxPayload: 8MB
+
+  # Reloader container settings
+  reloader:
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for Reloader container
+    securityContext: {}
+
+  # NATS Box container settings
+  natsbox:
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for NATS Box container
+    securityContext: {}
+    # -- NATS Box tolerations settings
+    tolerations: []
+
+  # Exporter container settings
+  exporter:
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for Exporter container
+    securityContext: {}
+    # -- Exporter resources settings
+    resources: {}
+
+## MongoDB chart parameters
+## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
+mongodb:
+  # -- Toggle whether to install MongoDB
+  enabled: true
+  # -- MongoDB fullname override
+  fullnameOverride: "testkube-enterprise-mongodb"
+  # MongoDB Auth settings
+  auth:
+    # -- Toggle whether to enable MongoDB authentication
+    enabled: false
+    # rootPassword: "123DefaultOne321"
+  # -- MongoDB service settings
+  service:
+    port: "27017"
+    portName: "mongodb"
+    nodePort: true
+    clusterIP: ""
+  # -- MongoDB resource settings
+  resources:
+    requests:
+      cpu: 150m
+      memory: 128Mi
+
+  tolerations: []
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- MongoDB Pod Security Context
+  podSecurityContext: {}
+  # For OpenShift clusters use the following settings:
+  #  fsGroup: 1000670000
+
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for MongoDB container
+  containerSecurityContext: {}
+  # For OpenShift clusters use the following settings:
+  #  runAsGroup: 1000670000
+
+## Dex chart parameters
+## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
+dex:
+  fullnameOverride: testkube-enterprise-dex
+  ingress:
+    # -- Toggle whether to enable ingress for Dex
+    enabled: true
+    # -- Testkube Enterprise supports only NGINX Controller
+    className: nginx
+    hosts:
+      - host: 'api.{{ include "common.tplvalues.render" ( dict "value" .Values.global.domain "context" .) }}'
+        paths:
+          - path: /idp
+            pathType: Prefix
+    tls:
+      - secretName: testkube-enterprise-api-tls
+        hosts:
+          - 'api.{{ include "common.tplvalues.render" ( dict "value" .Values.global.domain "context" .) }}'

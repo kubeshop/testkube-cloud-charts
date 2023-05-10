@@ -2,16 +2,32 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  # -- Domain under which to create Ingress rules
+  domain: ""
+  # -- UI subdomain which get prepended to the domain
+  uiSubdomain: "cloud"
+  # -- TLS provider (possible values: "", "cert-manager")
+  certificateProvider: ""
+  certManager:
+    # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
+    issuerRef: ""
+
 replicaCount: 1
 
 sentry:
+  # -- Toggle whether to enable Sentry.io error reporting
+  enabled: false
+  # -- Sentry.io secret ref (secret must contain key SENTRY_URL) (default is `testkube-cloud-sentry-secret`)
+  secretRef: ""
+  # -- Sentry.io authenticated URL
   url: ""
 
 image:
   repository: kubeshop/testkube-cloud-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.17"
+  tag: "1.0.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -23,52 +39,53 @@ ui:
   # -- The URL on which UI is served
   rootRoute: ""
   segment:
-    secretName: testkube-cloud-analytics-secret
-    secretKey: REACT_APP_SEGMENT_WRITE_KEY
+    # -- Segment.io write key secret ref (secret must contain key SEGMENTIO_WRITE_KEY_UI) (default is `testkube-cloud-analytics-secret`)
+    secretRef: ""
+    # -- Segment.io write key (overriden by `secretRef` if set)
+    writeKey: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # -- Toggle whether to create ServiceAccount resource
   create: false
-  # Annotations to add to the service account
+  # -- Additional labels to add to the ServiceAccount resource
+  labels: {}
+  # -- Additional annotations to add to the ServiceAccount resource
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+  # -- The name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template
   name: ""
 
 podAnnotations: {}
 
+# -- Pod Security Context
 podSecurityContext: {}
   # fsGroup: 2000
 
+# -- Container Security Context
 securityContext:
-  capabilities:
-    drop:
-    - ALL
   readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 1000
 
 service:
   type: ClusterIP
   port: 8080
 
 ingress:
+  # -- Toggle whether to create Ingress resource
   enabled: false
+  # -- Ingress class (NGINX Controller is the only officially supported Ingress controller)
   className: "nginx"
-  labels:
-    kubernetes.io/ingress.class: nginx
+  # -- Name of the TLS secret which contains the certificate files
+  tlsSecretName: testkube-cloud-ui-tls
+  # -- Additional Ingress labels
+  labels: {}
+  # -- Additional Ingress annotations
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  hosts: []
-  #  - host: testkube-cloud-ui.testkube.svc.cluster.local
-  #    paths:
-  #      - path: /
-  #        pathType: Prefix
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls:
+    # -- TLS provider (possible values: "", "cert-manager")
+    provider: "cert-manager"
+  # -- Hostname for which to create rules and TLS certificates
+  host: ""
 
 resources:
   requests:

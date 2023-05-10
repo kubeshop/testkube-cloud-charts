@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "testkube-cloud-api.fullname" . }}
+  name: {{ include "testkube-cloud-ui.fullname" . }}
   labels:
-    {{- include "testkube-cloud-api.labels" . | nindent 4 }}
+    {{- include "testkube-cloud-ui.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "testkube-cloud-api.fullname" . }}
+    name: {{ include "testkube-cloud-ui.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
