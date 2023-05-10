@@ -18,8 +18,10 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: kubeshop/testkube-cloud-api
-    tag: 1.1.0-dev-dc8933d
+    tag: 1.1.0-dev-c13d345
   api:
+    # -- Run API in enterprise mode (enables enterprise features)
+    enterpriseMode: true
     tls:
       tlsSecret: testkube-enterprise-api-tls
     migrations:
@@ -194,12 +196,6 @@ mongodb:
     # -- Toggle whether to enable MongoDB authentication
     enabled: false
     # rootPassword: "123DefaultOne321"
-  # -- MongoDB service settings
-  service:
-    port: "27017"
-    portName: "mongodb"
-    nodePort: true
-    clusterIP: ""
   # -- MongoDB resource settings
   resources:
     requests:
@@ -223,10 +219,21 @@ mongodb:
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
   fullnameOverride: testkube-enterprise-dex
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for MongoDB container
+  securityContext: {}
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- MongoDB Pod Security Context
+  podSecurityContext:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits: {}
   ingress:
     # -- Toggle whether to enable ingress for Dex
     enabled: true
-    # -- Testkube Enterprise supports only NGINX Controller
+    # -- Testkube Enterprise supports only NGINX Controller currently
     className: nginx
     hosts:
       - host: 'api.{{ include "common.tplvalues.render" ( dict "value" .Values.global.domain "context" .) }}'

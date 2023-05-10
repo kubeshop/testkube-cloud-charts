@@ -132,7 +132,7 @@ spec:
                   key: OAUTH_REDIRECT_URI
                   name: {{ .Values.api.oauth.secretRef }}
               {{- else }}
-              value: "{{ .Values.api.oauth.redirectUri }}"
+              value: "{{ if .Values.api.oauth.redirectUri }}{{ .Values.api.oauth.redirectUri }}{{ else }}https://api.{{ .Values.global.domain }}/auth/callback{{ end }}"
               {{- end }}
             - name: NATS_URI
               value: {{ .Values.api.nats.uri }}
