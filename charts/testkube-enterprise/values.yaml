@@ -129,11 +129,6 @@ testkube-cloud-ui:
   image:
     repository: kubeshop/testkube-cloud-ui
     tag: 1.1.0-dev-132c87d
-  ui:
-    # -- API Server endpoint URL
-    apiServerEndpoint: "https://api2.testkube.dev"
-    # -- The URL on which UI is served
-    rootRoute: "https://dashboard.testkube.dev"
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls

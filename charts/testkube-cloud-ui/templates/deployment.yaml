@@ -48,9 +48,9 @@ spec:
               value: {{ .Values.ui.segment.writeKey }}
               {{- end }}
             - name: REACT_APP_API_SERVER_ENDPOINT
-              value: "{{ required ".Values.ui.apiServerEndpoint must be configured" .Values.ui.apiServerEndpoint }}"
+              value: {{ if .Values.ui.apiServerEndpoint}}{{ .Values.ui.apiServerEndpoint }}{{ else }}https://api.{{ .Values.global.domain }}{{ end }}
             - name: REACT_APP_API_ROOT_ROUTE
-              value: "{{ required ".Values.ui.rootRoute must be configured" .Values.ui.rootRoute }}"
+              value: {{ if .Values.ui.rootRoute}}{{ .Values.ui.rootRoute }}{{ else }}https://{{ .Values.global.uiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             {{- if .Values.sentry.enabled }}
             - name: REACT_APP_SENTRY_KEY
               {{- if .Values.sentry.secretRef }}

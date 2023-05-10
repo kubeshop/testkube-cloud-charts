@@ -16,3 +16,5 @@ testkube-cloud-ui:
     - name: testkube-cloud-creds
   ingress:
     enabled: true
+    annotations:
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
