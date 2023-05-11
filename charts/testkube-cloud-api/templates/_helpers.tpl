@@ -90,7 +90,7 @@ Base labels
 {{- define "testkube-cloud-api.baseLabels" -}}
 helm.sh/chart: {{ include "testkube-cloud-api.chart" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/part-of: testkube-cloud
+app.kubernetes.io/part-of: testkube-{{ if .Values.global.enterpriseMode }}enterprise{{ else }}cloud{{ end }}
 {{- end }}
 
 {{/*
@@ -134,7 +134,7 @@ Get REST Ingress host
 {{- define "testkube-cloud-api.ingress.restHost" -}}
 {{- .Values.restIngress.host }}
 {{- if .Values.global.domain }}
-{{- printf "api.%s" .Values.global.domain }}
+{{- printf "%s.%s" .Values.global.restApiSubdomain .Values.global.domain }}
 {{- end }}
 {{- end }}
 
@@ -144,7 +144,7 @@ Get gRPC Ingress host
 {{- define "testkube-cloud-api.ingress.grpcHost" -}}
 {{- .Values.grpcIngress.host }}
 {{- if .Values.global.domain }}
-{{- printf "grpc.%s" .Values.global.domain }}
+{{- printf "%s.%s" .Values.global.grpcApiSubdomain .Values.global.domain }}
 {{- end }}
 {{- end }}
 
@@ -154,6 +154,6 @@ Get Websockets Ingress host
 {{- define "testkube-cloud-api.ingress.websocketsHost" -}}
 {{- .Values.websocketsIngress.host }}
 {{- if .Values.global.domain }}
-{{- printf "websockets.%s" .Values.global.domain }}
+{{- printf "%s.%s" .Values.global.websocketApiSubdomain .Values.global.domain }}
 {{- end }}
 {{- end }}

@@ -3,10 +3,18 @@
 # Declare variables to be passed into your templates.
 
 global:
+  # -- Toggle whether UI is installed in Enterprise mode
+  enterpriseMode: false
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain
   uiSubdomain: "cloud"
+  # -- REST API subdomain which get prepended to the domain
+  restApiSubdomain: "api"
+  # -- gRPC API subdomain which get prepended to the domain
+  grpcApiSubdomain: "agent"
+  # -- Websocket API subdomain which get prepended to the domain
+  websocketApiSubdomain: "websockets"
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
   certManager:
@@ -50,8 +58,6 @@ payments:
   portalConfigurationId: ""
 
 api:
-  # -- Toggle whether to run Cloud API in Enterprise mode
-  enterpriseMode: false
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
     enabled: false

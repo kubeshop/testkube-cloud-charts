@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: ENTERPRISE_MODE
-              value: "{{ .Values.api.enterpriseMode }}"
+              value: "{{ .Values.global.enterpriseMode }}"
             - name: METRICS_LISTEN_ADDR
               value: "0.0.0.0:9100"
             {{- if .Values.payments.enabled }}
@@ -123,7 +123,7 @@ spec:
                   key: OAUTH_ISSUER_URL
                   name: {{ .Values.api.oauth.secretRef }}
               {{- else }}
-              value: {{ if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://api.{{ .Values.global.domain }}/idp{{ end }}
+              value: {{ if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
               {{- end }}
             - name: OAUTH_REDIRECT_URI
               {{- if .Values.api.oauth.secretRef }}
@@ -132,7 +132,7 @@ spec:
                   key: OAUTH_REDIRECT_URI
                   name: {{ .Values.api.oauth.secretRef }}
               {{- else }}
-              value: "{{ if .Values.api.oauth.redirectUri }}{{ .Values.api.oauth.redirectUri }}{{ else }}https://api.{{ .Values.global.domain }}/auth/callback{{ end }}"
+              value: "{{ if .Values.api.oauth.redirectUri }}{{ .Values.api.oauth.redirectUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/auth/callback{{ end }}"
               {{- end }}
             - name: NATS_URI
               value: {{ .Values.api.nats.uri }}
@@ -149,11 +149,11 @@ spec:
               value: "{{ .Values.api.agent.hide }}"
             {{- end }}
             - name: AGENT_HOST
-              value: {{ if .Values.api.agent.host }}{{ .Values.api.agent.host }}{{ else }}agent.{{ .Values.global.domain }}{{ end }}
+              value: {{ if .Values.api.agent.host }}{{ .Values.api.agent.host }}{{ else }}{{ .Values.global.grpcApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: AGENT_PORT
               value: "{{ if .Values.api.tls.serveHTTPS }}443{{ else }}{{ .Values.service.grpcPort }}{{ end }}"
             - name: API_ADDRESS
-              value: {{ if .Values.api.apiAddress }}{{ .Values.api.apiAddress }}{{ else }}https://api.{{ .Values.global.domain }}{{ end }}
+              value: {{ if .Values.api.apiAddress }}{{ .Values.api.apiAddress }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: DASHBOARD_ADDRESS
               value: {{ $dashboardAddress }}
             - name: USE_TLS

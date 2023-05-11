@@ -39,7 +39,7 @@ helm.sh/chart: {{ include "testkube-cloud-ui.chart" . }}
 app.kubernetes.io/version: {{ .Values.image.tag | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/component: frontend
-app.kubernetes.io/part-of: testkube-cloud
+app.kubernetes.io/part-of: testkube-{{ if .Values.global.enterpriseMode }}enterprise{{ else }}cloud{{ end }}
 {{- end }}
 
 {{/*

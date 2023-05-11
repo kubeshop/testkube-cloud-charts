@@ -3,6 +3,8 @@
 # Declare variables to be passed into your templates.
 
 global:
+  # -- Toggle whether UI is installed in Enterprise mode
+  enterpriseMode: false
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain
