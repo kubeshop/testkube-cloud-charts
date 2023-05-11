@@ -132,9 +132,10 @@ Get the MinIO service account name for the Deployment
 Get REST Ingress host
 */}}
 {{- define "testkube-cloud-api.ingress.restHost" -}}
-{{- .Values.restIngress.host }}
 {{- if .Values.global.domain }}
 {{- printf "%s.%s" .Values.global.restApiSubdomain .Values.global.domain }}
+{{- else }}
+{{- .Values.restIngress.host }}
 {{- end }}
 {{- end }}
 
@@ -142,9 +143,10 @@ Get REST Ingress host
 Get gRPC Ingress host
 */}}
 {{- define "testkube-cloud-api.ingress.grpcHost" -}}
-{{- .Values.grpcIngress.host }}
 {{- if .Values.global.domain }}
 {{- printf "%s.%s" .Values.global.grpcApiSubdomain .Values.global.domain }}
+{{- else }}
+{{- .Values.grpcIngress.host }}
 {{- end }}
 {{- end }}
 
@@ -152,8 +154,9 @@ Get gRPC Ingress host
 Get Websockets Ingress host
 */}}
 {{- define "testkube-cloud-api.ingress.websocketsHost" -}}
-{{- .Values.websocketsIngress.host }}
 {{- if .Values.global.domain }}
 {{- printf "%s.%s" .Values.global.websocketApiSubdomain .Values.global.domain }}
+{{- else }}
+{{- .Values.websocketsIngress.host }}
 {{- end }}
 {{- end }}

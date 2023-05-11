@@ -180,7 +180,7 @@ spec:
                   key: MINIO_ACCESS_KEY_ID
                   name: {{ .Values.api.minio.credsSecretRef }}
               {{- else }}
-              value: "{{ .Values.api.minio.accessKeyId }}"
+              value: "{{ if .Values.api.minio.accessKeyId }}{{ .Values.api.minio.accessKeyId }}{{ else }}{{ .Values.minio.credentials.accessKeyId }}{{ end }}"
               {{- end }}
             - name: MINIO_SECRET_ACCESS_KEY
               {{- if .Values.api.minio.credsSecretRef }}
@@ -189,7 +189,7 @@ spec:
                   key: MINIO_SECRET_ACCESS_KEY
                   name: {{ .Values.api.minio.credsSecretRef }}
               {{- else }}
-              value: "{{ .Values.api.minio.secretAccessKey }}"
+              value: "{{ if .Values.api.minio.secretAccessKey }}{{ .Values.api.minio.secretAccessKey }}{{ else }}{{ .Values.minio.credentials.secretAccessKey }}{{ end }}"
               {{- end }}
             - name: MINIO_TOKEN
               {{- if .Values.api.minio.credsSecretRef }}

@@ -5,6 +5,8 @@
 global:
   # -- Toggle whether UI is installed in Enterprise mode
   enterpriseMode: false
+  # -- Enterprise License key
+  enterpriseKey: ""
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain
