@@ -113,6 +113,11 @@ spec:
                 secretKeyRef:
                   key: OAUTH_REDIRECT_URI
                   name: {{ .Values.api.oauth.secretRef }}
+            - name: OAUTH_CLI_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: OAUTH_CLI_CLIENT_ID
+                  name: {{ .Values.api.oauth.secretRef }}
             {{- end }}
             {{- if .Values.api.oauth.clientId }}
             - name: OAUTH_CLIENT_ID
