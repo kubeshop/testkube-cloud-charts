@@ -45,7 +45,7 @@ spec:
                   name: {{ .Values.ui.segment.secretRef }}
                   key: "SEGMENTIO_WRITE_KEY_UI"
               {{- else }}
-              value: {{ .Values.ui.segment.writeKey }}
+              value: "{{ .Values.ui.segment.writeKey }}"
               {{- end }}
             - name: REACT_APP_API_SERVER_ENDPOINT
               value: {{ if .Values.ui.apiServerEndpoint}}{{ .Values.ui.apiServerEndpoint }}{{ else }}https://api.{{ .Values.global.domain }}{{ end }}

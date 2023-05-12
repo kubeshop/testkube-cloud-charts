@@ -3,6 +3,10 @@
 # Declare variables to be passed into your templates.
 
 global:
+  # -- Run Testkube in enterprise mode (enables enterprise features)
+  enterpriseMode: true
+  # -- Enterprise License key
+  enterpriseKey: ""
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain
@@ -26,8 +30,6 @@ testkube-cloud-api:
     repository: kubeshop/testkube-cloud-api
     tag: 1.1.0-dev-c13d345
   api:
-    # -- Run API in enterprise mode (enables enterprise features)
-    enterpriseMode: true
     tls:
       tlsSecret: testkube-enterprise-api-tls
     migrations:

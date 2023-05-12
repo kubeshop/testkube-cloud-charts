@@ -72,7 +72,7 @@ service:
 
 ingress:
   # -- Toggle whether to create Ingress resource
-  enabled: false
+  enabled: true
   # -- Ingress class (NGINX Controller is the only officially supported Ingress controller)
   className: "nginx"
   # -- Name of the TLS secret which contains the certificate files
