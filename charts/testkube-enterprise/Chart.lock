@@ -1,0 +1,21 @@
+dependencies:
+- name: common
+  repository: https://charts.bitnami.com/bitnami
+  version: 2.2.5
+- name: testkube-cloud-api
+  repository: file://../testkube-cloud-api
+  version: 1.0.0
+- name: testkube-cloud-ui
+  repository: file://../testkube-cloud-ui
+  version: 1.0.0
+- name: dex
+  repository: https://charts.dexidp.io
+  version: 0.14.1
+- name: mongodb
+  repository: https://charts.bitnami.com/bitnami
+  version: 13.10.2
+- name: nats
+  repository: https://nats-io.github.io/k8s/helm/charts/
+  version: 0.14.2
+digest: sha256:4aef307d4aa68bc78d5c03e7f491bc335a12c73aa9190a24f7ecff15611df216
+generated: "2023-05-10T02:06:54.765365+02:00"

@@ -6,9 +6,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "testkube-cloud-api.labels" . | nindent 4 -}}
-  {{- if .Values.prometheus.labels }}
-    {{- toYaml .Values.prometheus.labels | nindent 4 -}}
-  {{- end }}
+    {{- with .Values.prometheus.labels }}
+    {{- toYaml . | nindent 4 -}}
+    {{- end }}
 spec:
   selector:
     matchLabels:

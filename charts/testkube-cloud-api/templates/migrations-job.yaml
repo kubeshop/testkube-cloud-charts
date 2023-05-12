@@ -2,9 +2,13 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+  labels:
+    {{- include "testkube-cloud-api.labels" . | nindent 4 }}
   annotations:
+    {{- if .Values.api.migrations.useHelmHooks }}
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-weight": "-1"
+    {{- end }}
   name: {{ include "testkube-cloud-api.fullname" . }}-migrations
 spec:
   template:
@@ -13,6 +17,35 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      initContainers:
+        - name: wait-for
+          image: mongo:6.0.5-jammy
+          command:
+            - bash
+            - -c
+            - |
+              times=20
+              until mongosh "$MONGO_DSN" --eval "db.runCommand({ ping: 1 })"; do
+                echo "Waiting for MongoDB to be ready..."
+                echo "$times retries left"
+                times=$((times - 1))
+                sleep 5
+                if [ "$times" -eq 0 ]; then
+                  echo "MongoDB is not ready, exiting..."
+                  exit 1
+                fi
+              done
+              echo "Mongo is up!"
+          env:
+            - name: MONGO_DSN
+            {{- if .Values.api.mongo.dsnSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: MONGO_DSN
+                  name: {{ .Values.api.mongo.dsnSecretRef }}
+            {{- else }}
+              value: {{ .Values.api.mongo.dsn }}
+            {{- end }}
       containers:
         - name: migrations
           image: {{ .Values.api.migrations.image.repository }}:{{ .Values.image.tag }}
@@ -20,16 +53,16 @@ spec:
             - up
           env:
             - name: MONGO_URL
-            {{- if .Values.api.mongoDsnSecretRef }}
+            {{- if .Values.api.mongo.dsnSecretRef }}
               valueFrom:
                 secretKeyRef:
                   key: MONGO_DSN
-                  name: {{ .Values.api.mongoDsnSecretRef }}
+                  name: {{ .Values.api.mongo.dsnSecretRef }}
             {{- else }}
-              value: {{ .Values.api.mongoDsn }}
+              value: {{ .Values.api.mongo.dsn }}
             {{- end }}
             - name: MONGO_DB
-              value: {{ .Values.api.mongoDb }}
+              value: {{ .Values.api.mongo.database }}
       restartPolicy: Never
   backoffLimit: 3
 {{- end }}

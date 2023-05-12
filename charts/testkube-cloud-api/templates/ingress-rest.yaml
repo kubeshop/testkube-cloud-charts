@@ -1,9 +1,8 @@
-{{- if .Values.ingress.enabled -}}
-{{- $fullName := include "testkube-cloud-ui.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
+{{- if .Values.restIngress.enabled  -}}
+{{- $fullName := include "testkube-cloud-api.fullname" . -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+  {{- if not (hasKey .Values.restIngress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.restIngress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
   {{- end }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -15,25 +14,21 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-rest
   labels:
-    {{- include "testkube-cloud-ui.labels" . | nindent 4 }}
-  {{- if .Values.ingress.labels }}
-    {{- toYaml .Values.ingress.labels | nindent 4 }}
-  {{- end }}
+    {{- include "testkube-cloud-api.labels" . | nindent 4 }}
+    {{- with .Values.restIngress.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      add_header X-Frame-Options "sameorigin";
-      add_header X-XSS-Protection "1; mode=block";
-      add_header X-Content-Type-Options nosniff;
-      add_header Referrer-Policy 'same-origin';
-      add_header Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()";
-    {{- if (eq .Values.global.certificateProvider "cert-manager") }}
+    nginx.ingress.kubernetes.io/backend-protocol: {{ if .Values.api.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
+    {{- if and (not .Values.api.tls.serveHTTPS) (eq .Values.global.certificateProvider "cert-manager") }}
     cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
     {{- end }}
     {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with .Values.restIngress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
@@ -42,10 +37,11 @@ spec:
   {{- end }}
   tls:
     - hosts:
-        - {{ include "testkube-cloud-ui.ingress.host" . | quote }}
-      secretName: {{ .Values.ingress.tlsSecretName }}
+        - {{ include "testkube-cloud-api.ingress.restHost" . | quote }}
+      secretName: {{ .Values.api.tls.tlsSecret }}
   rules:
-    - host: {{ include "testkube-cloud-ui.ingress.host" . | quote }}
+    {{- $tlsConfig := .Values.api.tls }}
+    - host: {{ include "testkube-cloud-api.ingress.restHost" . | quote }}
       http:
         paths:
           - path: /
@@ -57,9 +53,9 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  name: http
+                  name: {{ if $tlsConfig.serveHTTPS }}https{{ else }}http{{ end }}
               {{- else }}
               serviceName: {{ $fullName }}
-              servicePort: http
+              servicePort: {{ if $tlsConfig.serveHTTPS }}https{{ else }}http{{ end }}
               {{- end }}
 {{- end }}

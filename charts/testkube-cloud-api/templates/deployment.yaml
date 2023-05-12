@@ -34,172 +34,211 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: ENTERPRISE_MODE
+              value: "{{ .Values.global.enterpriseMode }}"
             - name: METRICS_LISTEN_ADDR
               value: "0.0.0.0:9100"
+            {{- if .Values.payments.enabled }}
             - name: PAYMENTS_PORTAL_CONFIGURATION_ID
-            {{- if .Values.payments.secretRef }}
+              {{- if .Values.payments.secretRef }}
               valueFrom:
                 secretKeyRef:
                   key: PAYMENTS_PORTAL_CONFIGURATION_ID
                   name: {{ .Values.payments.secretRef }}
-            {{- else }}
+              {{- else }}
               value: {{ .Values.payments.portalConfigurationId }}
-            {{- end }}
+              {{- end }}
             - name: PAYMENTS_ENDPOINT_SECRET
-            {{- if .Values.payments.secretRef }}
+              {{- if .Values.payments.secretRef }}
               valueFrom:
                 secretKeyRef:
                   key: PAYMENTS_ENDPOINT_SECRET
                   name: {{ .Values.payments.secretRef }}
-            {{- else }}
+              {{- else }}
               value: {{ .Values.payments.endpointSecret }}
-            {{- end }}
+              {{- end }}
             - name: PAYMENTS_API_KEY
-            {{- if .Values.payments.secretRef }}
+              {{- if .Values.payments.secretRef }}
               valueFrom:
                 secretKeyRef:
                   key: PAYMENTS_API_KEY
                   name: {{ .Values.payments.secretRef }}
-            {{- else }}
+              {{- else }}
               value: {{ .Values.payments.apiKey }}
+              {{- end }}
             {{- end }}
+            {{- if .Values.analytics.segmentio.enabled }}
             - name: SEGMENTIO_WRITE_KEY
-            {{- if .Values.analytics.segmentio.secretRef }}
+              {{- if .Values.analytics.segmentio.secretRef }}
               valueFrom:
                 secretKeyRef:
                   key: SEGMENTIO_WRITE_KEY
                   name: {{ .Values.analytics.segmentio.secretRef }}
-            {{- else }}
+              {{- else }}
               value: {{ .Values.analytics.segmentio.writeKey }}
+              {{- end }}
             {{- end }}
             - name: SENDGRID_API_KEY
-            {{- if .Values.api.sendgrid.secretRef }}
+              {{- if .Values.api.sendgrid.secretRef }}
               valueFrom:
                 secretKeyRef:
                   key: SENDGRID_API_KEY
                   name: {{ .Values.api.sendgrid.secretRef }}
-            {{- else }}
-              value: {{ .Values.api.sendgrid.apiKey }}
-            {{- end }}
+              {{- else }}
+              value: "{{ .Values.api.sendgrid.apiKey }}"
+              {{- end }}
             - name: API_MONGO_DSN
-            {{- if .Values.api.mongoDsnSecretRef }}
+              {{- if .Values.api.mongo.dsnSecretRef }}
               valueFrom:
                 secretKeyRef:
                   key: MONGO_DSN
-                  name: {{ .Values.api.mongoDsnSecretRef }}
-            {{- else }}
-              value: {{ .Values.api.mongoDsn }}
-            {{- end }}
+                  name: {{ .Values.api.mongo.dsnSecretRef }}
+              {{- else }}
+              value: {{ .Values.api.mongo.dsn }}
+              {{- end }}
             - name: API_MONGO_DB
-              value: {{ .Values.api.mongoDb }}
-            {{- if .Values.api.oauth.secretRef }}
+              value: {{ .Values.api.mongo.database }}
             - name: OAUTH_CLIENT_ID
+              {{- if .Values.api.oauth.secretRef }}
               valueFrom:
                 secretKeyRef:
                   key: OAUTH_CLIENT_ID
                   name: {{ .Values.api.oauth.secretRef }}
-            - name: OAUTH_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  key: OAUTH_CLIENT_SECRET
-                  name: {{ .Values.api.oauth.secretRef }}
-            - name: OAUTH_ISSUER_URL
-              valueFrom:
-                secretKeyRef:
-                  key: OAUTH_ISSUER_URL
-                  name: {{ .Values.api.oauth.secretRef }}
-            - name: OAUTH_REDIRECT_URI
-              valueFrom:
-                secretKeyRef:
-                  key: OAUTH_REDIRECT_URI
-                  name: {{ .Values.api.oauth.secretRef }}
+              {{- else }}
+              value: "{{ .Values.api.oauth.clientId }}"
+              {{- end }}
             - name: OAUTH_CLI_CLIENT_ID
+              {{- if .Values.api.oauth.secretRef }}
               valueFrom:
                 secretKeyRef:
                   key: OAUTH_CLI_CLIENT_ID
                   name: {{ .Values.api.oauth.secretRef }}
-            {{- end }}
-            {{- if .Values.api.oauth.clientId }}
-            - name: OAUTH_CLIENT_ID
-              value: {{ .Values.api.oauth.clientId }}
-            {{- end }}
-            {{- if .Values.api.oauth.clientSecret }}
+              {{- else }}
+              value: "{{ .Values.api.oauth.cliClientId }}"
+              {{- end }}
             - name: OAUTH_CLIENT_SECRET
-              value: {{ .Values.api.oauth.clientSecret }}
-            {{- end }}
-            {{- if .Values.api.oauth.issuerUrl }}
+              {{- if .Values.api.oauth.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: OAUTH_CLIENT_SECRET
+                  name: {{ .Values.api.oauth.secretRef }}
+              {{- else }}
+              value: "{{ .Values.api.oauth.clientSecret }}"
+              {{- end }}
             - name: OAUTH_ISSUER_URL
-              value: {{ .Values.api.oauth.issuerUrl }}
-            {{- end }}
-            {{- if .Values.api.oauth.redirectUri }}
+              {{- if .Values.api.oauth.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: OAUTH_ISSUER_URL
+                  name: {{ .Values.api.oauth.secretRef }}
+              {{- else }}
+              value: {{ if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
+              {{- end }}
             - name: OAUTH_REDIRECT_URI
-              value: {{ .Values.api.oauth.redirectUri }}
-            {{- end }}
+              {{- if .Values.api.oauth.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: OAUTH_REDIRECT_URI
+                  name: {{ .Values.api.oauth.secretRef }}
+              {{- else }}
+              value: "{{ if .Values.api.oauth.redirectUri }}{{ .Values.api.oauth.redirectUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/auth/callback{{ end }}"
+              {{- end }}
             - name: NATS_URI
-              value: {{ .Values.api.natsUri }}
+              value: {{ .Values.api.nats.uri }}
+            {{- $dashboardAddress := "" }}
+            {{- if .Values.api.dashboardAddress }}
+            {{- $dashboardAddress = .Values.api.dashboardAddress }}
+            {{- else }}
+            {{- $dashboardAddress = printf "https://%s.%s" .Values.global.uiSubdomain .Values.global.domain }}
+            {{- end }}
             - name: ALLOWED_EXTERNAL_REDIRECT_URIS
-              value: {{ .Values.api.oauth.allowedExternalRedirectURIs }}
+              value: {{ if .Values.api.oauth.allowedExternalRedirectURIs }}{{ .Values.api.oauth.allowedExternalRedirectURIs }}{{ else }}{{ $dashboardAddress }}{{ end }}
             {{- if .Values.api.agent.hide }}
             - name: HIDE_AGENT_HOST
               value: "{{ .Values.api.agent.hide }}"
             {{- end }}
             - name: AGENT_HOST
-              value: "{{ .Values.api.agent.host }}"
+              value: {{ if .Values.api.agent.host }}{{ .Values.api.agent.host }}{{ else }}{{ .Values.global.grpcApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: AGENT_PORT
-              value: "{{ .Values.api.agent.port }}"
+              value: "{{ if .Values.api.tls.serveHTTPS }}443{{ else }}{{ .Values.service.grpcPort }}{{ end }}"
             - name: API_ADDRESS
-              value: "{{ .Values.api.apiAddress }}"
+              value: {{ if .Values.api.apiAddress }}{{ .Values.api.apiAddress }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: DASHBOARD_ADDRESS
-              value: "{{ .Values.api.dashboardAddress }}"
+              value: {{ $dashboardAddress }}
             - name: USE_TLS
-              value: "{{ .Values.api.tls.enabled }}"
+              value: "{{ .Values.api.tls.serveHTTPS }}"
             - name: TLS_CERT
               value: "{{ .Values.api.tls.certPath }}"
             - name: TLS_KEY
               value: "{{ .Values.api.tls.keyPath }}"
             - name: OUTPUTS_BUCKET
               value: "{{ .Values.api.outputsBucket }}"
+            {{- if .Values.minio.enabled }}
+            - name: MINIO_ENDPOINT
+              value: "{{ .Values.api.minio.endpoint }}"
+            - name: MINIO_REGION
+              value: "{{ .Values.api.minio.region }}"
+            - name: MINIO_SSL
+              value: "{{ .Values.api.minio.secure }}"
+            - name: MINIO_EXPIRATION
+              value: "{{ .Values.api.minio.expirationPeriod }}"
+            - name: MINIO_ACCESS_KEY_ID
+              {{- if .Values.api.minio.credsSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: MINIO_ACCESS_KEY_ID
+                  name: {{ .Values.api.minio.credsSecretRef }}
+              {{- else }}
+              value: "{{ if .Values.api.minio.accessKeyId }}{{ .Values.api.minio.accessKeyId }}{{ else }}{{ .Values.minio.credentials.accessKeyId }}{{ end }}"
+              {{- end }}
+            - name: MINIO_SECRET_ACCESS_KEY
+              {{- if .Values.api.minio.credsSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: MINIO_SECRET_ACCESS_KEY
+                  name: {{ .Values.api.minio.credsSecretRef }}
+              {{- else }}
+              value: "{{ if .Values.api.minio.secretAccessKey }}{{ .Values.api.minio.secretAccessKey }}{{ else }}{{ .Values.minio.credentials.secretAccessKey }}{{ end }}"
+              {{- end }}
+            - name: MINIO_TOKEN
+              {{- if .Values.api.minio.credsSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: MINIO_TOKEN
+                  name: {{ .Values.api.minio.credsSecretRef }}
+              {{- else }}
+              value: "{{ .Values.api.minio.token }}"
+              {{- end }}
+            {{- end }}
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
               value: "{{ $v }}"
             {{- end}}
           ports:
-            {{- if .Values.api.tls.enabled }}
-            - name: https
-              containerPort: {{ .Values.api.tls.apiPort }}
+            - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
+              containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}
               protocol: TCP
-            {{- else }}
-            - name: http
-              containerPort: 8090
+            - name: {{ if .Values.api.tls.serveHTTPS }}grpcs{{ else }}grpcs{{ end }}
+              containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.agentPort }}{{ else }}8089{{ end }}
               protocol: TCP
-            {{- end }}
             {{- if .Values.prometheus.enabled }}
             - name: metrics
               containerPort: 9100
               protocol: TCP
             {{- end }}
-            {{- if .Values.api.tls.enabled }}
-            - name: grpcs
-              containerPort:  {{ .Values.api.tls.agentPort }}
-              protocol: TCP
-            {{- else }}
-            - name: grpc
-              containerPort: 8089
-              protocol: TCP
-            {{- end }}
           livenessProbe:
             httpGet:
               path: /health
-              scheme: {{ if .Values.api.tls.enabled }}HTTPS{{ else }}HTTP{{ end }}
-              port: {{ if .Values.api.tls.enabled }}https{{ else }}http{{ end }}
+              scheme: {{ if .Values.api.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
+              port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
           readinessProbe:
             httpGet:
               path: /health
-              scheme: {{ if .Values.api.tls.enabled }}HTTPS{{ else }}HTTP{{ end }}
-              port: {{ if .Values.api.tls.enabled }}https{{ else }}http{{ end }}
+              scheme: {{ if .Values.api.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
+              port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.api.tls.enabled }}
+          {{- if .Values.api.tls.serveHTTPS }}
           volumeMounts:
             - mountPath: /tmp/serving-cert/crt.pem
               readOnly: true
@@ -222,7 +261,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.api.tls.enabled }}
+      {{- if .Values.api.tls.serveHTTPS }}
       volumes:
         - name: serving-cert
           secret:
