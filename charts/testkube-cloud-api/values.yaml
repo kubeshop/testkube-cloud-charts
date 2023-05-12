@@ -134,6 +134,8 @@ api:
     secretRef: ""
     # -- if oauth.secretRef is empty (""), then oauth.clientId field will be used for the OAuth client ID
     clientId: ""
+    # -- if oauth.secretRef is empty (""), then oauth.clientId field will be used for the OAuth cli client ID
+    cliClientId: ""
     # -- if oauth.secretRef is empty (""), then oauth.clientSecret field will be used for the OAuth client secret
     clientSecret: ""
     # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL

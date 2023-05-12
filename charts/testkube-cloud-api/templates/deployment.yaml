@@ -107,6 +107,15 @@ spec:
               {{- else }}
               value: "{{ .Values.api.oauth.clientId }}"
               {{- end }}
+            - name: OAUTH_CLI_CLIENT_ID
+              {{- if .Values.api.oauth.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: OAUTH_CLI_CLIENT_ID
+                  name: {{ .Values.api.oauth.secretRef }}
+              {{- else }}
+              value: "{{ .Values.api.oauth.cliClientId }}"
+              {{- end }}
             - name: OAUTH_CLIENT_SECRET
               {{- if .Values.api.oauth.secretRef }}
               valueFrom:
