@@ -36,6 +36,8 @@ spec:
           env:
             - name: ENTERPRISE_MODE
               value: "{{ .Values.global.enterpriseMode }}"
+            - name: ROOT_DOMAIN
+              value: "{{ .Values.global.domain }}"
             - name: METRICS_LISTEN_ADDR
               value: "0.0.0.0:9100"
             {{- if .Values.payments.enabled }}
