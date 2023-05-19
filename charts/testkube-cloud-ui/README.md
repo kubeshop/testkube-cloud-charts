@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.17](https://img.shields.io/badge/AppVersion-0.0.17-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -10,43 +10,51 @@ A Helm chart for Testkube Cloud UI
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
+| autoscaling.maxReplicas | int | `10` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | fullnameOverride | string | `""` |  |
+| global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
+| global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
+| global.domain | string | `""` | Domain under which to create Ingress rules |
+| global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
+| global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-ui"` |  |
-| image.tag | string | `"0.0.17"` |  |
+| image.tag | string | `"1.0.0"` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.className | string | `"nginx"` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts | list | `[]` |  |
-| ingress.labels."kubernetes.io/ingress.class" | string | `"nginx"` |  |
-| ingress.tls | list | `[]` |  |
+| ingress.annotations | object | `{}` | Additional Ingress annotations |
+| ingress.className | string | `"nginx"` | Ingress class (NGINX Controller is the only officially supported Ingress controller) |
+| ingress.enabled | bool | `true` | Toggle whether to create Ingress resource |
+| ingress.host | string | `""` | Hostname for which to create rules and TLS certificates |
+| ingress.labels | object | `{}` | Additional Ingress labels |
+| ingress.tls.provider | string | `"cert-manager"` | TLS provider (possible values: "", "cert-manager") |
+| ingress.tlsSecretName | string | `"testkube-cloud-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
+| podSecurityContext | object | `{}` | Pod Security Context |
 | replicaCount | int | `1` |  |
-| resources.limits.cpu | string | `"50m"` |  |
-| resources.limits.memory | string | `"64Mi"` |  |
-| resources.requests.cpu | string | `"150m"` |  |
-| resources.requests.memory | string | `"128Mi"` |  |
-| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| securityContext.readOnlyRootFilesystem | bool | `true` |  |
-| securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.runAsUser | int | `1000` |  |
+| resources.limits.cpu | string | `"150m"` |  |
+| resources.limits.memory | string | `"128Mi"` |  |
+| resources.requests.cpu | string | `"50m"` |  |
+| resources.requests.memory | string | `"64Mi"` |  |
+| securityContext | object | `{"readOnlyRootFilesystem":true}` | Container Security Context |
+| sentry.enabled | bool | `false` | Toggle whether to enable Sentry.io error reporting |
+| sentry.secretRef | string | `""` | Sentry.io secret ref (secret must contain key SENTRY_URL) (default is `testkube-cloud-sentry-secret`) |
+| sentry.url | string | `""` | Sentry.io authenticated URL |
 | service.port | int | `8080` |  |
 | service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `false` |  |
-| serviceAccount.name | string | `""` |  |
+| serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |
+| serviceAccount.create | bool | `false` | Toggle whether to create ServiceAccount resource |
+| serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
+| serviceAccount.name | string | `""` | The name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` |  |
 | ui.apiServerEndpoint | string | `""` | API Server endpoint URL |
 | ui.rootRoute | string | `""` | The URL on which UI is served |
-| ui.segment.secretKey | string | `"REACT_APP_SEGMENT_WRITE_KEY"` |  |
-| ui.segment.secretName | string | `"testkube-cloud-analytics-secret"` |  |
+| ui.segment.secretRef | string | `""` | Segment.io write key secret ref (secret must contain key SEGMENTIO_WRITE_KEY_UI) (default is `testkube-cloud-analytics-secret`) |
+| ui.segment.writeKey | string | `""` | Segment.io write key (overriden by `secretRef` if set) |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

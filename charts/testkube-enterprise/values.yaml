@@ -69,8 +69,8 @@ testkube-cloud-api:
       secretRef: ""
     agent:
       hide: false
-      # -- Agent host (without protocol) - used for building agent install commands
-      host: agent.testkube.dev
+      # -- Agent host (without protocol) is used for building agent install commands (if blank, api will autogenerate it based on the value of `global.domain`)
+      host: ""
       # -- Agent port - used for building agent install commands
       port: 443
     oauth:

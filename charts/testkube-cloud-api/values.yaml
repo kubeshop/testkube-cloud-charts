@@ -128,7 +128,7 @@ api:
     # -- Agent host with protocol (example `agent.testkube.xyz`)
     host: ""
     # -- Agent port
-    port: ""
+    port: "443"
   oauth:
     # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`)
     secretRef: ""
