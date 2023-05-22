@@ -43,7 +43,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.ui.segment.secretRef }}
-                  key: "SEGMENTIO_WRITE_KEY_UI"
+                  key: "REACT_APP_SEGMENT_WRITE_KEY"
               {{- else }}
               value: "{{ .Values.ui.segment.writeKey }}"
               {{- end }}
