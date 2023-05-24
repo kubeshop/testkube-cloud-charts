@@ -45,6 +45,8 @@ ui:
     secretRef: ""
     # -- Segment.io write key (overriden by `secretRef` if set)
     writeKey: ""
+  # -- Force disabling telemetry on the UI
+  disableTelemetry: false
 
 serviceAccount:
   # -- Toggle whether to create ServiceAccount resource
