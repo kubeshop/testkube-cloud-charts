@@ -60,6 +60,8 @@ spec:
             - name: REACT_APP_DISABLE_TELEMETRY
               value: "true"
             {{- end }}
+            - name: REACT_APP_AUTH_STRATEGY
+              value: "{{ .Values.authStrategy }}"
           livenessProbe:
             httpGet:
               path: /

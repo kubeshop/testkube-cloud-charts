@@ -50,6 +50,8 @@ ui:
   # -- Force disabling telemetry on the UI
   disableTelemetry: false
 
+authStrategy: "github"
+
 serviceAccount:
   # -- Toggle whether to create ServiceAccount resource
   create: false
