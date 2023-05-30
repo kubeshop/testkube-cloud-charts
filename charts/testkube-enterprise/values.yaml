@@ -7,6 +7,8 @@ global:
   enterpriseMode: true
   # -- Enterprise License key
   enterpriseKey: ""
+  # -- Toggle whether to enable offline license activation in Enterprise mode
+  enterpriseOfflineAccess: false
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain
