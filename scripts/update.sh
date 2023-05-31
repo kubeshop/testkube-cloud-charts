@@ -33,6 +33,10 @@ chart_yaml_path=""
 dry_run=false
 # if verbose is enabled, it will print the action logs
 verbose=false
+# if print_chart_version is enabled, it will print the chart version
+print_chart_version=false
+# if print_app_version is enabled, it will print the app version
+print_app_version=false
 
 show() {
   if [[ "$verbose" == "true" ]]; then
@@ -52,8 +56,35 @@ usage() {
   echo "  -d, --base-dir           Specify the base charts directory (default: charts)"
   echo "  -s|--strategy <strategy> Specify the bumping strategy (patch, minor, major or none)"
   echo "  --dry-run                Print the updated Chart.yaml instead of updating the file"
+  echo "  --print-chart-version    Print the version of the chart"
+  echo "  --print-app-version      Print the app version of the chart"
+  echo "  --dry-run                Print the updated Chart.yaml instead of updating the file"
   echo "  --verbose                Print the action logs"
   echo "  -h, --help               Display this help message"
+}
+
+# function to print the chart version from the Chart.yaml
+print_chart_version() {
+  local chart_version=""
+
+  if [[ -f "$chart_yaml_path" ]]; then
+    chart_version=$(grep -E '^version:' "$chart_yaml_path" | awk '{print $2}')
+    printf "%s" "$chart_version"
+  else
+    err "$chart_yaml_path not found"
+  fi
+}
+
+# Function to print the app version from the Chart.yaml
+print_app_version() {
+  local app_version=""
+
+  if [[ -f "$chart_yaml_path" ]]; then
+    app_version=$(grep -E '^appVersion:' "$chart_yaml_path" | awk '{print $2}')
+    printf "%s" "$app_version"
+  else
+    err "$chart_yaml_path not found"
+  fi
 }
 
 # function to update the Chart.yaml file
@@ -138,6 +169,14 @@ while [[ $# -gt 0 ]]; do
     shift
     shift
     ;;
+    --print-chart-version)
+    print_chart_version=true
+    shift
+    ;;
+    --print-app-version)
+    print_app_version=true
+    shift
+    ;;
     --verbose)
     verbose=true
     shift
@@ -189,7 +228,33 @@ fi
 
 helm_version=${helm_version#v}
 
+# validate Helm chart version is a valid semver tag
+semver_regex="^[0-9]+\.[0-9]+\.[0-9]$"
+if [[ ! $helm_version =~ $semver_regex ]]; then
+  err "Invalid Helm chart version, expected semver ('X.Y.Z'), got: $helm_version"
+fi
+
 show "Current Helm chart version: $helm_version"
+
+chart_yaml_path="${chart_path}/Chart.yaml"
+
+if [[ "$print_chart_version" == true ]]; then
+  print_chart_version
+  exit 0
+fi
+
+if [[ "$print_app_version" == true ]]; then
+  print_app_version
+  exit 0
+fi
+
+# extract current appVersion from Chart.yaml if not specified
+if [[ -z "$app_version" ]]; then
+  app_version=$(grep -E '^appVersion:' "$chart_yaml_path" | awk '{print $2}')
+fi
+
+app_version=${app_version#v}
+show "New Helm chart appVersion: $app_version"
 
 if [[ ! " ${strategy_options[*]} " =~ ${bump_strategy} ]]; then
   err "Invalid bumping strategy. Allowed strategies: ${strategy_options[*]}"
@@ -197,26 +262,10 @@ if [[ ! " ${strategy_options[*]} " =~ ${bump_strategy} ]]; then
   exit 1
 fi
 
-show "Using $bump_strategy bumping strategy"
-
-# validate Helm chart version is a valid semver tag
-semver_regex="^[0-9]+\.[0-9]+\.[0-9]$"
-if [[ ! $helm_version =~ $semver_regex ]]; then
-  err "Invalid Helm chart version, expected semver ('X.Y.Z'), got: $helm_version"
-fi
+show "Bumping $bump_strategy version in chart $chart_name"
 
 # bump the version if a strategy is specified
 helm_version=$(increment_version "$helm_version" "$bump_strategy")
 show "New Helm chart version: $helm_version"
-
-# extract current appVersion from Chart.yaml if not specified
-chart_yaml_path="${chart_path}/Chart.yaml"
-if [[ -z "$app_version" ]]; then
-  app_version=$(grep -E '^appVersion:' "$chart_yaml_path" | awk '{print $2}')
-fi
-
-app_version=${app_version#v}
-
-show "New Helm app version: $app_version"
 
 update_chart_yaml "$app_version" "$helm_version"

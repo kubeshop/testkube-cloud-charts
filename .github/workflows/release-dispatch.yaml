@@ -1,0 +1,68 @@
+name: Release Helm Chart - dispatch
+
+on:
+  repository_dispatch:
+    types: [trigger-workflow-testkube-cloud-api, trigger-workflow-testkube-cloud-ui]
+
+jobs:
+  release-helm-charts:
+    name: Release Helm Charts
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install yq
+        uses: mikefarah/yq@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Update Helm chart
+        run: |
+          ./scripts/update.sh                                \
+            -c ${{ github.event.client_payload.app }}        \
+            -a ${{ github.event.client_payload.appVersion }} \
+            --verbose
+          
+          echo -e "### ${{ github.event.client_payload.app }} Helm chart diff" >> $GITHUB_STEP_SUMMARY
+          git --no-pager diff >> $GITHUB_STEP_SUMMARY
+
+      - name: Update Testkube Enterprise Helm chart
+        run: |
+          echo "Syncing subchart versions in testkube-enterprise Helm chart"
+          ./scripts/sync.sh
+          
+          echo -e "### Testkube Enterprise Helm chart diff" >> $GITHUB_STEP_SUMMARY
+          git --no-pager diff charts/testkube-enterprise >> $GITHUB_STEP_SUMMARY
+
+      - name: Lint Helm charts for safety
+        run: |
+            helm lint charts/*
+
+      - name: Package charts & update Helm repo index
+        run: |
+          echo "Packaging ${{ github.event.client_payload.app }} chart"
+          helm package charts/${{ github.event.client_payload.app }} --destination charts
+
+          echo "Packaging testkube-enterprise chart"
+          helm package charts/testkube-enterprise --version ${{ steps.version.outputs.chart_version }} --destination charts
+
+          helm repo index .
+
+      - name: Commit & push changes
+        run: |
+          git config --global user.name "testkube-cloud-ci-bot"
+          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+          git commit -a -m "Updating chart ${{ github.event.client_payload.app }} version "${{ steps.version.outputs.chart_version }}" and app version to ${{ github.event.client_payload.appVersion }}"
+          git push
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.64.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          PRERELEASE: true
+          DEFAULT_BUMP: patch

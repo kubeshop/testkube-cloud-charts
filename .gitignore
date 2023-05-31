@@ -2,4 +2,6 @@
 .idea
 
 # Chart dependencies
-**/charts/*.tgz
+charts/testkube-cloud-api/charts/*.tgz
+charts/testkube-cloud-ui/charts/*.tgz
+charts/testkube-enterprise/charts/*.tgz

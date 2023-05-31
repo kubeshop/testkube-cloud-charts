@@ -5,7 +5,7 @@ set -eux
 
 SRCROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
-echo -e "\n-- Linting all Helm Charts --\n"
+echo -e "\n-- Linting all Helm Charts using helmpack/chart-testing --\n"
 docker run \
      -v "$SRCROOT:/workdir" \
      --entrypoint /bin/sh \

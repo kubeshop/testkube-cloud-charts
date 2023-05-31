@@ -24,12 +24,11 @@ global:
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
     issuerRef: ""
-
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
-    repository: kubeshop/testkube-cloud-api
+    repository: kubeshop/testkube-enterprise-api
     tag: 1.1.0-dev-c13d345
   api:
     tls:
@@ -135,7 +134,6 @@ testkube-cloud-api:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for MinIO container
     securityContext: {}
-
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
@@ -144,7 +142,6 @@ testkube-cloud-ui:
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
@@ -153,13 +150,11 @@ nats:
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- NATS Pod Security Context
   securityContext: {}
-
   cluster:
     # -- Enable cluster mode (HA)
     enabled: true
     # -- NATS cluster replicas
     replicas: 3
-
   # NATS container settings
   nats:
     enabled: true
@@ -171,13 +166,11 @@ nats:
     limits:
       # -- Max payload
       maxPayload: 8MB
-
   # Reloader container settings
   reloader:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for Reloader container
     securityContext: {}
-
   # NATS Box container settings
   natsbox:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -185,7 +178,6 @@ nats:
     securityContext: {}
     # -- NATS Box tolerations settings
     tolerations: []
-
   # Exporter container settings
   exporter:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -193,7 +185,6 @@ nats:
     securityContext: {}
     # -- Exporter resources settings
     resources: {}
-
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -211,7 +202,6 @@ mongodb:
     requests:
       cpu: 150m
       memory: 128Mi
-
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
@@ -224,7 +214,6 @@ mongodb:
   containerSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  runAsGroup: 1000670000
-
 ## Dex chart parameters
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
@@ -256,7 +245,7 @@ dex:
     additionalConfig: ""
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
-  securityContext: { }
+  securityContext: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
   podSecurityContext:
