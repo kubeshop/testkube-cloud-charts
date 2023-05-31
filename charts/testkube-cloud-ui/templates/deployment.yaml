@@ -38,15 +38,6 @@ spec:
               containerPort: 8080
               protocol: TCP
           env:
-            - name: REACT_APP_SEGMENT_WRITE_KEY
-              {{- if .Values.ui.segment.secretRef }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.ui.segment.secretRef }}
-                  key: "REACT_APP_SEGMENT_WRITE_KEY"
-              {{- else }}
-              value: "{{ .Values.ui.segment.writeKey }}"
-              {{- end }}
             - name: REACT_APP_API_SERVER_ENDPOINT
               value: {{ if .Values.ui.apiServerEndpoint}}{{ .Values.ui.apiServerEndpoint }}{{ else }}https://api.{{ .Values.global.domain }}{{ end }}
             - name: REACT_APP_API_ROOT_ROUTE
@@ -61,6 +52,10 @@ spec:
               {{- else }}
               value: "{{ .Values.sentry.url }}"
               {{- end }}
+            {{- end }}
+            {{- if .Values.ui.disableTelemetry }}
+            - name: REACT_APP_DISABLE_TELEMETRY
+              value: "true"
             {{- end }}
           livenessProbe:
             httpGet:
