@@ -1,0 +1,29 @@
+global:
+  domain: testkube.xyz
+  certificateProvider: cert-manager
+  certManager:
+    issuerRef: letsencrypt-dev
+
+imagePullSecrets:
+  - name: testkube-cloud-creds
+
+sentry:
+  enabled: false
+  url: ""
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - testkube-cloud-ui
+          topologyKey: kubernetes.io/hostname

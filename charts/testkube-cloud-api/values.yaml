@@ -5,6 +5,8 @@
 global:
   # -- Toggle whether UI is installed in Enterprise mode
   enterpriseMode: false
+  # -- Toggle whether to enable offline license activation in Enterprise mode
+  enterpriseOfflineAccess: false
   # -- Enterprise License key
   enterpriseKey: ""
   # -- Domain under which to create Ingress rules
@@ -34,7 +36,7 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-#-- Additional env vars to be added to the deployment
+# -- Additional env vars to be added to the deployment
 additionalEnv: {}
  # FOO: bar
 

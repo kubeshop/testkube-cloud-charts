@@ -1,0 +1,70 @@
+name: Release Helm charts - main
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'charts/testkube-cloud-api/templates/**'
+      - 'charts/testkube-cloud-api/Chart.yaml'
+      - 'charts/testkube-cloud-api/values.yaml'
+      - 'charts/testkube-cloud-api/README.md'
+      - 'charts/testkube-cloud-ui/templates/**'
+      - 'charts/testkube-cloud-ui/Chart.yaml'
+      - 'charts/testkube-cloud-ui/values.yaml'
+      - 'charts/testkube-cloud-ui/README.md'
+      - 'charts/testkube-enterprise/templates/**'
+      - 'charts/testkube-enterprise/Chart.yaml'
+      - 'charts/testkube-enterprise/values.yaml'
+      - 'charts/testkube-enterprise/README.md'
+
+jobs:
+  release-helm-charts:
+    name: Release Helm charts
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Sync & Update Testkube Enterprise Helm chart
+        run: |
+          echo "Syncing subchart versions in testkube-enterprise Helm chart"
+          ./scripts/sync.sh
+          
+          echo "Updating testkube-enterprise Helm chart version"
+          ./scripts/update.sh -c testkube-enterprise --verbose
+          
+          echo -e "### Testkube Enterprise Helm chart diff" >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
+          git --no-pager diff charts/testkube-enterprise >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Package Helm charts
+        run: |
+          helm package charts/testkube-cloud-api --destination charts
+          helm package charts/testkube-cloud-ui --destination charts
+          helm package charts/testkube-enterprise --destination charts
+          helm repo index .  
+
+      - name: Commit & push changes
+        run: |
+          git diff --quiet --exit-code
+          if [ $? -eq 0 ]; then
+            echo "No changes in charts/ directory"
+            exit 0
+          fi
+          git config --global user.name "testkube-cloud-ci-bot"
+          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+          git commit -a -m "Updating testkube-enterprise chart ${{ github.event.client_payload.app }} to version "
+          git push
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.64.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true

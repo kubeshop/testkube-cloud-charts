@@ -1,15 +1,28 @@
 # testkube-enterprise
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
+
+**Homepage:** <https://github.com/kubeshop/testkube-cloud-charts>
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| testkube |  | <https://testkube.io> |
+
+## Source Code
+
+* <https://github.com/kubeshop/testkube-cloud-api>
+* <https://github.com/kubeshop/testkube-cloud-ui>
 
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.0.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.0.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.1.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.1.0 |
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
 | https://charts.dexidp.io | dex | 0.14.1 |
@@ -27,7 +40,7 @@ A Helm chart for Testkube Enterprise
 | dex.configTemplate.customConfig | string | `""` | If provided, it will completely override the default config (`base` and `additionalConfig`). This is useful if you want to use a custom config file. |
 | dex.enabled | bool | `true` |  |
 | dex.fullnameOverride | string | `"testkube-enterprise-dex"` |  |
-| dex.image.tag | string | `"v2.36.0-alpine"` |  |
+| dex.image.tag | string | `"v2.36.0-alpine"` | Dex image tag (https://ghcr.io/dexidp/dex) |
 | dex.ingress.className | string | `"nginx"` | Testkube Enterprise supports only NGINX Controller currently |
 | dex.ingress.enabled | bool | `true` | Toggle whether to enable ingress for Dex |
 | dex.ingress.hosts[0].host | string | `"api.{{ .Values.global.domain }}"` |  |
@@ -45,6 +58,7 @@ A Helm chart for Testkube Enterprise
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseKey | string | `""` | Enterprise License key |
 | global.enterpriseMode | bool | `true` | Run Testkube in enterprise mode (enables enterprise features) |
+| global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
@@ -95,8 +109,8 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.sendgrid.secretRef | string | `""` | Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`) |
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.1.0-dev-c13d345"` |  |
+| testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
+| testkube-cloud-api.image.tag | string | `"1.0.1"` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
 | testkube-cloud-api.minio.credentials.accessKeyId | string | `"testkube-enterprise"` | Root username |
@@ -116,8 +130,8 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.minio.serviceAccount.name | string | `""` | The name of the service account to use. |
 | testkube-cloud-api.minio.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-cloud-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"1.1.0-dev-132c87d"` |  |
+| testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.0.2"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 
 ----------------------------------------------

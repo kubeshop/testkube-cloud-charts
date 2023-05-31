@@ -1,0 +1,80 @@
+## Reference: https://github.com/helm/chart-testing-action
+name: Lint
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  docs-up-to-date:
+    name: Docs Up To Date
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Check for changes in generated Helm docs models (helm-docs)
+        run: |
+          ./scripts/helm-docs.sh
+
+          changed=$(git status -s -uno | wc -l)
+
+          echo -e "### Git status" >> $GITHUB_STEP_SUMMARY
+          if [[ "$changed" -gt 0 ]]; then
+            echo -e "Generated Helm docs are not synchronized. Please run './scripts/helm-docs.sh' and commit the changes." >> $GITHUB_STEP_SUMMARY
+            echo -e '```' >> $GITHUB_STEP_SUMMARY
+            git status -s -uno >> $GITHUB_STEP_SUMMARY
+            echo -e '```' >> $GITHUB_STEP_SUMMARY
+
+            echo -e >> $GITHUB_STEP_SUMMARY
+            echo -e "### Git diff" >> $GITHUB_STEP_SUMMARY
+            
+            echo -e '```' >> $GITHUB_STEP_SUMMARY
+            git --no-pager diff >> $GITHUB_STEP_SUMMARY
+            echo -e '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo -e "Generated Helm docs are synchronized." >> $GITHUB_STEP_SUMMARY
+            echo -e >> $GITHUB_STEP_SUMMARY
+          fi
+
+          exit $changed
+
+  chart-test:
+    name: Chart lint & check docs
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.1 # Also update in publish.yaml
+
+      - name: Set up python
+        uses: actions/setup-python@bd6b4b6205c4dbad673328db7b31b7fab9e241c0 # v4.6.1
+        with:
+          python-version: 3.9
+
+      - name: Setup Chart Linting
+        id: lint
+        uses: helm/chart-testing-action@v2
+        with:
+          # Note: Also update in scripts/lint.sh
+          version: v3.7.1
+
+      - name: List changed charts
+        id: list-changed
+        run: |
+          ## If executed with debug this won't work anymore.
+          changed=$(ct --config ./.github/configs/ct-lint.yaml list-changed)
+          charts=$(echo "$changed" | tr '\n' ' ' | xargs)
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "changed_charts=$charts" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run chart-testing (lint)
+        run: ct lint --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml

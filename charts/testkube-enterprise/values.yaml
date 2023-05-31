@@ -7,6 +7,8 @@ global:
   enterpriseMode: true
   # -- Enterprise License key
   enterpriseKey: ""
+  # -- Toggle whether to enable offline license activation in Enterprise mode
+  enterpriseOfflineAccess: false
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain
@@ -22,13 +24,12 @@ global:
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
     issuerRef: ""
-
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
-    repository: kubeshop/testkube-cloud-api
-    tag: 1.1.0-dev-c13d345
+    repository: kubeshop/testkube-enterprise-api
+    tag: 1.0.1
   api:
     tls:
       tlsSecret: testkube-enterprise-api-tls
@@ -133,16 +134,14 @@ testkube-cloud-api:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for MinIO container
     securityContext: {}
-
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
     repository: kubeshop/testkube-enterprise-ui
-    tag: 1.1.0-dev-2b8deb0
+    tag: 1.0.2
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
@@ -151,13 +150,11 @@ nats:
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- NATS Pod Security Context
   securityContext: {}
-
   cluster:
     # -- Enable cluster mode (HA)
     enabled: true
     # -- NATS cluster replicas
     replicas: 3
-
   # NATS container settings
   nats:
     enabled: true
@@ -169,13 +166,11 @@ nats:
     limits:
       # -- Max payload
       maxPayload: 8MB
-
   # Reloader container settings
   reloader:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for Reloader container
     securityContext: {}
-
   # NATS Box container settings
   natsbox:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -183,7 +178,6 @@ nats:
     securityContext: {}
     # -- NATS Box tolerations settings
     tolerations: []
-
   # Exporter container settings
   exporter:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -191,7 +185,6 @@ nats:
     securityContext: {}
     # -- Exporter resources settings
     resources: {}
-
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -209,7 +202,6 @@ mongodb:
     requests:
       cpu: 150m
       memory: 128Mi
-
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
@@ -222,14 +214,13 @@ mongodb:
   containerSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  runAsGroup: 1000670000
-
 ## Dex chart parameters
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
   enabled: true
   fullnameOverride: testkube-enterprise-dex
   image:
-    #-- Dex image tag (https://ghcr.io/dexidp/dex)
+    # -- Dex image tag (https://ghcr.io/dexidp/dex)
     tag: v2.36.0-alpine
   configSecret:
     # -- This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret.
@@ -254,7 +245,7 @@ dex:
     additionalConfig: ""
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
-  securityContext: { }
+  securityContext: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
   podSecurityContext:

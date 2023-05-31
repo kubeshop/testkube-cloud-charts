@@ -1,0 +1,8 @@
+testkube-cloud-api:
+  - charts/testkube-cloud-api/**/*
+
+testkube-cloud-ui:
+  - charts/testkube-cloud-ui/**/*
+
+testkube-enterprise:
+  - charts/testkube-enterprise/**/*
