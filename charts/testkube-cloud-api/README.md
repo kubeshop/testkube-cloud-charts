@@ -20,7 +20,7 @@ A Helm chart for Testkube Cloud API
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| additionalEnv | object | `{}` |  |
+| additionalEnv | object | `{}` | Additional env vars to be added to the deployment |
 | affinity | object | `{}` |  |
 | analytics.segmentio.enabled | bool | `false` | Toggle whether to enable Segment.io analytics |
 | analytics.segmentio.secretRef | string | `""` | Segment.io secret ref (secret must contain key SEGMENTIO_WRITE_KEY) (default is `testkube-cloud-analytics-secret`) |

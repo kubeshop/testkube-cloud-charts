@@ -36,7 +36,7 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-#-- Additional env vars to be added to the deployment
+# -- Additional env vars to be added to the deployment
 additionalEnv: {}
  # FOO: bar
 
