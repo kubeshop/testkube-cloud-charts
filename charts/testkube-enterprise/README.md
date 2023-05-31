@@ -40,7 +40,7 @@ A Helm chart for Testkube Enterprise
 | dex.configTemplate.customConfig | string | `""` | If provided, it will completely override the default config (`base` and `additionalConfig`). This is useful if you want to use a custom config file. |
 | dex.enabled | bool | `true` |  |
 | dex.fullnameOverride | string | `"testkube-enterprise-dex"` |  |
-| dex.image.tag | string | `"v2.36.0-alpine"` |  |
+| dex.image.tag | string | `"v2.36.0-alpine"` | Dex image tag (https://ghcr.io/dexidp/dex) |
 | dex.ingress.className | string | `"nginx"` | Testkube Enterprise supports only NGINX Controller currently |
 | dex.ingress.enabled | bool | `true` | Toggle whether to enable ingress for Dex |
 | dex.ingress.hosts[0].host | string | `"api.{{ .Values.global.domain }}"` |  |
