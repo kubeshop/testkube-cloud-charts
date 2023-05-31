@@ -1,7 +1,7 @@
 name: PR Labeler
 on:
   pull_request:
-    types: [opened]
+    types: [pull_request_target]
 
 permissions:
   contents: read
@@ -11,10 +11,6 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    name: Label PR
     runs-on: ubuntu-22.04
     steps:
-      - uses: TimonVS/pr-labeler-action@v4
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          configuration-path: .github/configs/labeler.yaml
+      - uses: actions/labeler@v4
