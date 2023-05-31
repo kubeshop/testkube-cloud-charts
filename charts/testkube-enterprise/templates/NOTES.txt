@@ -1,5 +1,7 @@
 Thank you for subscribing to Testkube Enterprise!
 
+Make sure to check out the Enterprise documentation at https://docs.testkube.io
+
 To access your application, please follow the instructions below:
 {{/*1. Get the application URL by running these commands:*/}}
 {{/*{{- if .Values.ingress.enabled }}*/}}
