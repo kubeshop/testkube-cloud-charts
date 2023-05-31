@@ -18,9 +18,9 @@ enterprise_ui_app_version=$("$update_script" -c testkube-cloud-ui --print-app-ve
 
 # Update the values.yaml in the enterprise chart
 echo "Updating testkube-cloud-api version in testkube-enterprise Helm chart to $enterprise_api_app_version"
-yq eval -i '.testkube-cloud-api.image.tag = env(enterprise_api_version)' "charts/testkube-enterprise/values.yaml"
+yq eval -i '.testkube-cloud-api.image.tag = env(enterprise_api_app_version)' "charts/testkube-enterprise/values.yaml"
 echo "Updating testkube-cloud-ui version in testkube-enterprise Helm chart to $enterprise_ui_app_version"
-yq eval -i '.testkube-cloud-ui.image.tag = env(enterprise_ui_version)' "charts/testkube-enterprise/values.yaml"
+yq eval -i '.testkube-cloud-ui.image.tag = env(enterprise_ui_app_version)' "charts/testkube-enterprise/values.yaml"
 
 # Update the dependencies field in Chart.yaml
 echo "Updating dependencies in Chart.yaml"

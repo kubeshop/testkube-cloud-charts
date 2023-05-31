@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Check for changes in generated Helm docs models (helm-docs)
         run: |
@@ -24,15 +22,16 @@ jobs:
           echo -e "### Git status" >> $GITHUB_STEP_SUMMARY
           if [[ "$changed" -gt 0 ]]; then
             echo -e "Generated Helm docs are not synchronized. Please run './scripts/helm-docs.sh' and commit the changes." >> $GITHUB_STEP_SUMMARY
-            ```
+            echo -e '```' >> $GITHUB_STEP_SUMMARY
             git status -s -uno >> $GITHUB_STEP_SUMMARY
-            ```
+            echo -e '```' >> $GITHUB_STEP_SUMMARY
 
             echo -e >> $GITHUB_STEP_SUMMARY
             echo -e "### Git diff" >> $GITHUB_STEP_SUMMARY
-            ```
+            
+            echo -e '```' >> $GITHUB_STEP_SUMMARY
             git --no-pager diff >> $GITHUB_STEP_SUMMARY
-            ```
+            echo -e '```' >> $GITHUB_STEP_SUMMARY
           else
             echo -e "Generated Helm docs are synchronized." >> $GITHUB_STEP_SUMMARY
             echo -e >> $GITHUB_STEP_SUMMARY
