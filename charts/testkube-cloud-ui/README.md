@@ -64,6 +64,7 @@ A Helm chart for Testkube Cloud UI
 | serviceAccount.name | string | `""` | The name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` |  |
 | ui.apiServerEndpoint | string | `""` | API Server endpoint URL |
+| ui.disableTelemetry | bool | `false` | Force disabling telemetry on the UI |
 | ui.rootRoute | string | `""` | The URL on which UI is served |
 | ui.segment.secretRef | string | `""` | Segment.io write key secret ref (secret must contain key SEGMENTIO_WRITE_KEY_UI) (default is `testkube-cloud-analytics-secret`) |
 | ui.segment.writeKey | string | `""` | Segment.io write key (overriden by `secretRef` if set) |
