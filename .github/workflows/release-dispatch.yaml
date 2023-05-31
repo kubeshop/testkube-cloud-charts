@@ -28,7 +28,9 @@ jobs:
             --verbose
           
           echo -e "### ${{ github.event.client_payload.app }} Helm chart diff" >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
           git --no-pager diff >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Update Testkube Enterprise Helm chart
         run: |
@@ -36,7 +38,9 @@ jobs:
           ./scripts/sync.sh
           
           echo -e "### Testkube Enterprise Helm chart diff" >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
           git --no-pager diff charts/testkube-enterprise >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Lint Helm charts for safety
         run: |
