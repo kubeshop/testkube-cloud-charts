@@ -29,7 +29,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.1.0-dev-c13d345
+    tag: 1.0.1
   api:
     tls:
       tlsSecret: testkube-enterprise-api-tls
@@ -138,7 +138,7 @@ testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
     repository: kubeshop/testkube-enterprise-ui
-    tag: 1.1.0-dev-2b8deb0
+    tag: 1.0.2
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
