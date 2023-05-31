@@ -220,7 +220,7 @@ dex:
   enabled: true
   fullnameOverride: testkube-enterprise-dex
   image:
-    #-- Dex image tag (https://ghcr.io/dexidp/dex)
+    # -- Dex image tag (https://ghcr.io/dexidp/dex)
     tag: v2.36.0-alpine
   configSecret:
     # -- This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret.
