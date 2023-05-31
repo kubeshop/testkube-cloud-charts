@@ -37,7 +37,7 @@ jobs:
           ./scripts/sync.sh
           
           echo "Updating testkube-enterprise Helm chart version"
-          ./scripts/update.sh -c testkube-enterprise --verbose
+          ./scripts/update.sh -c testkube-enterprise -s minor --verbose
           
           echo -e "### Testkube Enterprise Helm chart diff" >> $GITHUB_STEP_SUMMARY
           echo -e '```' >> $GITHUB_STEP_SUMMARY
@@ -48,6 +48,7 @@ jobs:
         run: |
           helm package charts/testkube-cloud-api --destination charts
           helm package charts/testkube-cloud-ui --destination charts
+          helm dependency update charts/testkube-enterprise
           helm package charts/testkube-enterprise --destination charts
           helm repo index .  
 

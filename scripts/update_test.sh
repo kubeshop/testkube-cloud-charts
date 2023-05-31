@@ -33,12 +33,27 @@ EOF
 )
 assert_equal "$expected_output" "$output"
 
-echo "Test case 2: Get current Helm chart appVersion"
+echo "Test case 2: Update with specific app version and Helm version"
+output=$($target_script -d "$script_dir" -a v1.2.3 -s minor -c $test_chart --dry-run | tail +3)
+expected_output=$(cat << EOF
+apiVersion: v2
+name: testkube-test-chart
+description: Testing Helm chart
+type: application
+version: 1.1.0
+appVersion: 1.2.3
+---
+
+EOF
+)
+assert_equal "$expected_output" "$output"
+
+echo "Test case 3: Get current Helm chart appVersion"
 output=$($target_script -d "$script_dir" -c $test_chart --print-app-version)
 expected_output="1.2.3"
 assert_equal "$expected_output" "$output"
 
-echo "Test case 3: Get current Helm chart version"
+echo "Test case 4: Get current Helm chart version"
 output=$($target_script -d "$script_dir" -c $test_chart --print-chart-version)
 expected_output="1.0.0"
 assert_equal "$expected_output" "$output"
