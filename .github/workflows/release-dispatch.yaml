@@ -66,8 +66,20 @@ jobs:
           git push
 
       - name: Bump version and push tag
+        id: tag
         uses: anothrNick/github-tag-action@1.64.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: patch
+
+      - name: Changelog
+        uses: scottbrenner/generate-changelog-action@master
+        id: changelog
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag.outputs.new_tag }}
+          name: Testkube Cloud & Enterprise Helm charts ${{ steps.tag.outputs.new_tag }}
+          body: ${{ steps.changelog.outputs.changelog }}
