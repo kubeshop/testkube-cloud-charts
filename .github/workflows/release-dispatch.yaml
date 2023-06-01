@@ -31,6 +31,9 @@ jobs:
           echo -e '```' >> $GITHUB_STEP_SUMMARY
           git --no-pager diff >> $GITHUB_STEP_SUMMARY
           echo -e '```' >> $GITHUB_STEP_SUMMARY
+          
+          chart_version=$(./scripts/update.sh -c ${{ github.event.client_payload.app }} --print-chart-version)
+          echo "CHART_VERSION=$chart_version" >> $GITHUB_ENV
 
       - name: Update Testkube Enterprise Helm chart
         run: |
@@ -41,6 +44,9 @@ jobs:
           echo -e '```' >> $GITHUB_STEP_SUMMARY
           git --no-pager diff charts/testkube-enterprise >> $GITHUB_STEP_SUMMARY
           echo -e '```' >> $GITHUB_STEP_SUMMARY
+          
+          enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
+          echo "ENTERPRISE_CHART_VERSION=$enterprise_chart_version" >> $GITHUB_ENV
 
       - name: Lint Helm charts for safety
         run: |
@@ -52,7 +58,7 @@ jobs:
           helm package charts/${{ github.event.client_payload.app }} --destination charts
 
           echo "Packaging testkube-enterprise chart"
-          helm package charts/testkube-enterprise --version ${{ steps.version.outputs.chart_version }} --destination charts
+          helm package charts/testkube-enterprise --destination charts
 
           helm repo index .
 
@@ -62,7 +68,7 @@ jobs:
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
           git status
           git add .
-          git commit -m "Updating chart ${{ github.event.client_payload.app }} version to "${{ steps.version.outputs.chart_version }}" and app version to ${{ github.event.client_payload.appVersion }}"
+          git commit -m "Updating chart ${{ github.event.client_payload.app }} version to "${{ env.CHART_VERSION }}" and appVersion to ${{ github.event.client_payload.appVersion }}; Updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}."
           git push
 
       - name: Bump version and push tag
