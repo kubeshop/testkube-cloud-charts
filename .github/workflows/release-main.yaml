@@ -50,18 +50,15 @@ jobs:
           helm package charts/testkube-cloud-ui --destination charts
           helm dependency update charts/testkube-enterprise
           helm package charts/testkube-enterprise --destination charts
+          echo "Updating Helm repository index"
           helm repo index .  
 
       - name: Commit & push changes
         run: |
-          git diff --quiet --exit-code
-          if [ $? -eq 0 ]; then
-            echo "No changes in charts/ directory"
-            exit 0
-          fi
           git config --global user.name "testkube-cloud-ci-bot"
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
-          git commit -a -m "Updating testkube-enterprise chart ${{ github.event.client_payload.app }} to version "
+          git status
+          git commit -A -m "Updating testkube-enterprise chart ${{ github.event.client_payload.app }} to version "
           git push
 
       - name: Bump version and push tag
