@@ -60,7 +60,9 @@ jobs:
         run: |
           git config --global user.name "testkube-cloud-ci-bot"
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
-          git commit -a -m "Updating chart ${{ github.event.client_payload.app }} version "${{ steps.version.outputs.chart_version }}" and app version to ${{ github.event.client_payload.appVersion }}"
+          git status
+          git add .
+          git commit -m "Updating chart ${{ github.event.client_payload.app }} version to "${{ steps.version.outputs.chart_version }}" and app version to ${{ github.event.client_payload.appVersion }}"
           git push
 
       - name: Bump version and push tag
