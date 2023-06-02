@@ -20,9 +20,12 @@ spec:
       labels:
         {{- include "testkube-cloud-api.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- if .Values.global.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        {{- toYaml .Values.global.imagePullSecrets | nindent 8 }}
+      {{- else if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "testkube-cloud-api.serviceAccountName" . }}
       securityContext:
@@ -38,7 +41,7 @@ spec:
               value: "{{ .Values.global.enterpriseMode }}"
             {{- if .Values.global.enterpriseMode }}
             - name: ENTERPRISE_OFFLINE_ACTIVATION
-              value: {{ .Values.global.enterpriseOfflineAccess }}
+              value: "{{ .Values.global.enterpriseOfflineAccess }}"
             {{- end }}
             - name: ROOT_DOMAIN
               value: "{{ .Values.global.domain }}"
@@ -224,7 +227,7 @@ spec:
             - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}
               protocol: TCP
-            - name: {{ if .Values.api.tls.serveHTTPS }}grpcs{{ else }}grpcs{{ end }}
+            - name: {{ if .Values.api.tls.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.agentPort }}{{ else }}8089{{ end }}
               protocol: TCP
             {{- if .Values.prometheus.enabled }}
