@@ -26,14 +26,12 @@ global:
     issuerRef: ""
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
   imagePullSecrets: []
-
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.0.1
-
   api:
     tls:
       tlsSecret: testkube-enterprise-api-tls
