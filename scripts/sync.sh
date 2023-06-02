@@ -27,4 +27,7 @@ echo "Updating dependencies in Chart.yaml"
 yq -i '.dependencies[] |= select(.name == "testkube-cloud-api") |= .version = env(enterprise_api_chart_version)' "charts/testkube-enterprise/Chart.yaml"
 yq -i '.dependencies[] |= select(.name == "testkube-cloud-ui") |= .version = env(enterprise_ui_chart_version)' "charts/testkube-enterprise/Chart.yaml"
 
+echo "Updating dependencies in testkube-enterprise Helm chart"
+helm dependency update charts/testkube-enterprise
+
 echo "Update completed successfully"

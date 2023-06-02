@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -21,8 +21,8 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.1.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.1.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.2.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.2.0 |
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
 | https://charts.dexidp.io | dex | 0.14.1 |
@@ -38,7 +38,7 @@ A Helm chart for Testkube Enterprise
 | dex.configTemplate | object | `{"additionalConfig":"","base":"logger:\n  level: debug\n  format: json\nstorage:\n  type: kubernetes\n  config:\n    inCluster: true\n","customConfig":""}` | Inline Dex configuration which will be used to generate the config secret. |
 | dex.configTemplate.additionalConfig | string | `""` | Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`... |
 | dex.configTemplate.customConfig | string | `""` | If provided, it will completely override the default config (`base` and `additionalConfig`). This is useful if you want to use a custom config file. |
-| dex.enabled | bool | `true` |  |
+| dex.enabled | bool | `true` | Toggle whether to install Dex |
 | dex.fullnameOverride | string | `"testkube-enterprise-dex"` |  |
 | dex.image.tag | string | `"v2.36.0-alpine"` | Dex image tag (https://ghcr.io/dexidp/dex) |
 | dex.ingress.className | string | `"nginx"` | Testkube Enterprise supports only NGINX Controller currently |
@@ -48,6 +48,7 @@ A Helm chart for Testkube Enterprise
 | dex.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | dex.ingress.tls[0].hosts[0] | string | `"api.{{ .Values.global.domain }}"` |  |
 | dex.ingress.tls[0].secretName | string | `"testkube-enterprise-api-tls"` |  |
+| dex.issuer | string | `""` | Override default issuer config which is constructed from global.domain |
 | dex.podSecurityContext | string | `nil` | MongoDB Pod Security Context |
 | dex.resources.limits | object | `{}` |  |
 | dex.resources.requests.cpu | string | `"100m"` |  |
@@ -60,6 +61,7 @@ A Helm chart for Testkube Enterprise
 | global.enterpriseMode | bool | `true` | Run Testkube in enterprise mode (enables enterprise features) |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
+| global.imagePullSecrets | list | `[]` | Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
@@ -129,6 +131,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.minio.serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | testkube-cloud-api.minio.serviceAccount.name | string | `""` | The name of the service account to use. |
 | testkube-cloud-api.minio.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-cloud-api.prometheus.enabled | bool | `true` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.tag | string | `"1.0.2"` |  |

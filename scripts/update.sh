@@ -46,7 +46,7 @@ show() {
 
 err() { echo "$@" 1>&2; }
 
-# Function to display script usage
+# function to display script usage
 usage() {
   echo "Usage: $0 -a|--app-version <version> -v|--helm-version <version> -c|--chart <chart_name> [--bump-path|--bump-minor|--bump-major] [--strategy <strategy>]"
   echo "Options:"

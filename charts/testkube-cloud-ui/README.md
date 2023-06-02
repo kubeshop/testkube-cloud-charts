@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.2](https://img.shields.io/badge/AppVersion-1.0.2-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.2](https://img.shields.io/badge/AppVersion-1.0.2-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -31,6 +31,7 @@ A Helm chart for Testkube Cloud UI
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
+| global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-ui"` |  |

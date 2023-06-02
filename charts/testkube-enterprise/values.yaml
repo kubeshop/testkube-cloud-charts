@@ -24,6 +24,8 @@ global:
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
     issuerRef: ""
+  # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
+  imagePullSecrets: []
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -134,6 +136,8 @@ testkube-cloud-api:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for MinIO container
     securityContext: {}
+  prometheus:
+    enabled: true
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
@@ -217,7 +221,10 @@ mongodb:
 ## Dex chart parameters
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
+  # -- Toggle whether to install Dex
   enabled: true
+  # -- Override default issuer config which is constructed from global.domain
+  issuer: ""
   fullnameOverride: testkube-enterprise-dex
   image:
     # -- Dex image tag (https://ghcr.io/dexidp/dex)
