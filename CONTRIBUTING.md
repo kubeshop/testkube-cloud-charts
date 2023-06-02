@@ -20,6 +20,16 @@ We have a script on the repository which will execute the helm-docs docker conta
 ./scripts/helm-docs.sh
 ```
 
+## Synchronization
+
+Testkube Enterprise includes the Testkube Cloud API and Testkube Cloud UI Helm charts.
+
+On every update to either of the subcharts, the sync script should be executed which makes sure Testkube Enterprise Helm chart is up to date.
+
+```shell
+./scripts/sync.sh
+```
+
 > **Note**
 > When creating your own `README.md.gotmpl`, don't forget to add it to your `.helmignore` file.
 
