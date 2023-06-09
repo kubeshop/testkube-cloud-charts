@@ -68,7 +68,7 @@ jobs:
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
           git status
           git add .
-          git commit -m "Updating chart ${{ github.event.client_payload.app }} version to "${{ env.CHART_VERSION }}" and appVersion to ${{ github.event.client_payload.appVersion }}; Updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}."
+          git commit -m "updating chart ${{ github.event.client_payload.app }} version to "${{ env.CHART_VERSION }}" and appVersion to ${{ github.event.client_payload.appVersion }}; Updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}."
           git push
 
       - name: Bump version and push tag
@@ -91,3 +91,31 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           artifacts: |
             charts/*.tgz
+
+      - name: Release to Keygen
+        uses: getgrit/keygen-action@main
+        with:
+          # Required: Keygen Account ID or slug
+          account-id: "${{ secrets.KEYGEN_ACCOUNT_ID }}"
+          # Required: A Product or User Token (ref. https://keygen.sh/docs/api/authentication/#token-authentication)
+          token: "${{ secrets.KEYGEN_TESTKUBE_ENTERPRISE_PRODUCT_TOKEN }}"
+          # Required: Product ID
+          product-id: "${{ secrets.KEYGEN_TESTKUBE_ENTERPRISE_PRODUCT_ID }}"
+          # Required (boolean): true to publish the created release; false to keep it in the DRAFT state.
+          release-publish: true
+          # Optional
+          release-name: 'Testkube Enterprise v${{ env.ENTERPRISE_CHART_VERSION }}'
+          # Required: must be a valid semver value, without the `v` prefix
+          release-version: '${{ env.ENTERPRISE_CHART_VERSION }}'
+          # Required
+          release-channel: 'stable'
+          # Optional
+          release-tag: 'latest'
+          artifacts-json: |
+            [
+              {
+                "filepath": "./charts/testkube-enterprise-${{ env.ENTERPRISE_CHART_VERSION }}.tgz",
+                "platform": "linux",
+                "arch": "amd64"
+              }
+            ]
