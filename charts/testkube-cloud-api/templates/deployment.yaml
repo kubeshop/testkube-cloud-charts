@@ -43,6 +43,14 @@ spec:
             - name: ENTERPRISE_OFFLINE_ACTIVATION
               value: "{{ .Values.global.enterpriseOfflineAccess }}"
             {{- end }}
+            {{- if .Values.global.enterpriseLicenseKey }}
+            - name: ENTERPRISE_LICENSE_KEY
+              value: "{{ .Values.global.enterpriseLicenseKey }}"
+            {{- end }}
+            {{- if .Values.global.enterpriseLicenseFile }}
+            - name: ENTERPRISE_LICENSE_KEY
+              value: "{{ .Values.global.enterpriseLicenseKey }}"
+            {{- end }}
             - name: ROOT_DOMAIN
               value: "{{ .Values.global.domain }}"
             - name: METRICS_LISTEN_ADDR
@@ -247,8 +255,9 @@ spec:
               port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.api.tls.serveHTTPS }}
+          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseFileSecretRef }}
           volumeMounts:
+            {{- if .Values.api.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
               readOnly: true
               name: serving-cert
@@ -257,6 +266,13 @@ spec:
               readOnly: true
               name: serving-cert
               subPath: tls.key
+            {{- end }}
+            {{- if .Values.global.enterpriseLicenseFileSecretRef }}
+            - mountPath: /testkube/license.lic
+              readOnly: true
+              name: license-file
+              subPath: license.lic
+            {{- end }}
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -270,9 +286,16 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.api.tls.serveHTTPS }}
+      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseFileSecretRef }}
       volumes:
+        {{- if .Values.api.tls.serveHTTPS }}
         - name: serving-cert
           secret:
             secretName: {{ .Values.api.tls.tlsSecret }}
+        {{- end }}
+        {{- if .Values.global.enterpriseLicenseFileSecretRef }}
+        - name: license-file
+          secret:
+            secretName: {{ .Values.global.enterpriseLicenseFileSecretRef }}
+        {{- end }}
       {{- end }}
