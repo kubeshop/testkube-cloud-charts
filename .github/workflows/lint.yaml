@@ -40,7 +40,7 @@ jobs:
           exit $changed
 
   chart-test:
-    name: Chart lint & check docs
+    name: Chart lint
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout

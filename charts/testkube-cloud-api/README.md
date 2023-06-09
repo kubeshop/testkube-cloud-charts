@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
+![Version: 1.6.3](https://img.shields.io/badge/Version-1.6.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0-dev-ba71c83](https://img.shields.io/badge/AppVersion-1.2.0--dev--ba71c83-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -72,7 +72,9 @@ A Helm chart for Testkube Cloud API
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
-| global.enterpriseKey | string | `""` | Enterprise License key |
+| global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
+| global.enterpriseLicenseFileSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
+| global.enterpriseLicenseKey | string | `""` | Enterprise License key |
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
