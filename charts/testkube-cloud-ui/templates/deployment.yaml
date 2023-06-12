@@ -61,7 +61,7 @@ spec:
               value: "true"
             {{- end }}
             - name: REACT_APP_AUTH_STRATEGY
-              value: "{{ .Values.authStrategy }}"
+              value: "{{ .Values.ui.authStrategy }}"
           livenessProbe:
             httpGet:
               path: /

@@ -49,8 +49,8 @@ ui:
     writeKey: ""
   # -- Force disabling telemetry on the UI
   disableTelemetry: false
-
-authStrategy: "github"
+  # -- Select the auth strategy for the UI
+  authStrategy: "github"
 
 serviceAccount:
   # -- Toggle whether to create ServiceAccount resource
