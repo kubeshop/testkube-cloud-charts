@@ -38,6 +38,9 @@ testkube-cloud-api:
     tag: 1.2.0-dev-5f9d7d3
   api:
     tls:
+      certManager:
+        # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
+        issuerKind: ClusterIssuer
       tlsSecret: testkube-enterprise-api-tls
     migrations:
       # -- Toggle whether to run database migrations
