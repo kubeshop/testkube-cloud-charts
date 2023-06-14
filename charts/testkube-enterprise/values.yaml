@@ -35,7 +35,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.2.0-dev-a9634d2
+    tag: 1.2.0-dev-9cac163
   api:
     tls:
       tlsSecret: testkube-enterprise-api-tls
