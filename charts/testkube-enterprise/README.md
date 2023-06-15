@@ -91,6 +91,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |
 | testkube-cloud-api.api.agent.host | string | `""` | Agent host (without protocol) is used for building agent install commands (if blank, api will autogenerate it based on the value of `global.domain`) |
 | testkube-cloud-api.api.agent.port | int | `443` | Agent port - used for building agent install commands |
+| testkube-cloud-api.api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | testkube-cloud-api.api.migrations.enabled | bool | `true` | Toggle whether to run database migrations |
 | testkube-cloud-api.api.migrations.useHelmHooks | bool | `false` | Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart) |
 | testkube-cloud-api.api.minio.accessKeyId | string | `"testkube-enterprise"` | MinIO access key id |
@@ -111,6 +112,11 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which to store logs & artifacts |
 | testkube-cloud-api.api.sendgrid.apiKey | string | `""` | Sendgrid API key |
 | testkube-cloud-api.api.sendgrid.secretRef | string | `""` | Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`) |
+| testkube-cloud-api.api.smtp.host | string | `"smtp.sendgrid.net"` | SMTP host |
+| testkube-cloud-api.api.smtp.password | string | `""` | SMTP password |
+| testkube-cloud-api.api.smtp.passwordSecretRef | string | `""` | SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined |
+| testkube-cloud-api.api.smtp.port | int | `587` | SMTP port |
+| testkube-cloud-api.api.smtp.username | string | `""` | SMTP username |
 | testkube-cloud-api.api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |

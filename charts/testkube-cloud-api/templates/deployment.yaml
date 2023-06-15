@@ -51,6 +51,25 @@ spec:
             - name: ENTERPRISE_LICENSE_KEY
               value: "{{ .Values.global.enterpriseLicenseKey }}"
             {{- end }}
+            - name: INVITE_MODE
+              value: "{{ .Values.api.inviteMode }}"
+            {{- if eq .Values.api.inviteMode "email" }}
+            - name: SMTP_HOST
+              value: "{{ .Values.api.smtp.host }}"
+            - name: SMTP_PORT
+              value: "{{ .Values.api.smtp.port }}"
+            - name: SMTP_USER
+              value: "{{ .Values.api.smtp.username }}"
+            - name: SMTP_PASSWORD
+              {{- if .Values.api.smtp.password }}
+              value: {{ .Values.api.smtp.password }}
+              {{- else }}
+              valueFrom:
+                  secretKeyRef:
+                    key: SMTP_PASSWORD
+                    name: {{ .Values.api.smtp.passwordSecretRef }}
+              {{- end }}
+            {{- end }}
             - name: ROOT_DOMAIN
               value: "{{ .Values.global.domain }}"
             - name: METRICS_LISTEN_ADDR

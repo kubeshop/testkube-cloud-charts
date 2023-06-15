@@ -30,6 +30,7 @@ A Helm chart for Testkube Cloud API
 | api.agent.port | string | `"443"` | Agent port |
 | api.apiAddress | string | `""` | API address (used in invitation emails) (example `https://api.testkube.xyz`) |
 | api.dashboardAddress | string | `""` | Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`) |
+| api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
 | api.migrations.image.repository | string | `"kubeshop/testkube-cloud-api-migrations"` |  |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
@@ -55,6 +56,11 @@ A Helm chart for Testkube Cloud API
 | api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which outputs are stored |
 | api.sendgrid.apiKey | string | `""` | Sendgrid API key |
 | api.sendgrid.secretRef | string | `""` | Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`) |
+| api.smtp.host | string | `"smtp.sendgrid.net"` | SMTP host |
+| api.smtp.password | string | `""` | SMTP password |
+| api.smtp.passwordSecretRef | string | `""` | SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined |
+| api.smtp.port | int | `587` | SMTP port |
+| api.smtp.username | string | `""` | SMTP username |
 | api.tls.agentPort | int | `8443` | Agent gRPCS port |
 | api.tls.apiPort | int | `9443` | API HTTPS port |
 | api.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |

@@ -83,6 +83,39 @@ global:
 Testkube Enterprise uses [Dex](https://dexidp.io/) for authentication & authorization.
 For more info on how to configure Dex, refer to the [auth.md](./auth.md) document.
 
+## Invitations
+
+Testkube Enterprise supports inviting users to Testkube Organizations and Environments, and assigning them various roles & permissions.
+
+### Invitations via email
+
+If `testkube-cloud-api.api.inviteMode` is set to `email`, Testkube Enterprise will send emails when a user gets invited to
+an Organization or an Environment, and in that case SMTP settings need to be configured in the API Helm chart.
+
+```helm
+# values.yaml
+testkube-cloud-api:
+  inviteMode: email
+  smtp:
+    host: <smtp host>
+    port: <smtp port>
+    username: <smtp username>
+    password: <smtp password>
+    # password can also be referenced by using the `passwordSecretRef` field which needs to contain the key SMTP_PASSWORD
+    # passwordSecretRef: <secret name>
+```
+
+### Auto-accept invitations
+
+If `testkube-cloud-api.api.inviteMode` is set to `auto-accept`, Testkube Enterprise will automatically add users to
+Organizations and Environments when they get invited.
+
+```helm
+# values.yaml
+testkube-cloud-api:
+  inviteMode: auto-accept
+```
+
 ### Minimal setup
 
 For a minimal setup, you need to at least provide the following configuration:

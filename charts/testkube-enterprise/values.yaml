@@ -37,6 +37,19 @@ testkube-cloud-api:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.2.0-dev-5f9d7d3
   api:
+    # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
+    inviteMode: email
+    smtp:
+      # -- SMTP host
+      host: smtp.sendgrid.net
+      # -- SMTP port
+      port: 587
+      # -- SMTP username
+      username: ""
+      # -- SMTP password
+      password: ""
+      # -- SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined
+      passwordSecretRef: ""
     tls:
       certManager:
         # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
