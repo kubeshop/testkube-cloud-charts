@@ -48,8 +48,8 @@ spec:
               value: "{{ .Values.global.enterpriseLicenseKey }}"
             {{- end }}
             {{- if .Values.global.enterpriseLicenseFile }}
-            - name: ENTERPRISE_LICENSE_KEY
-              value: "{{ .Values.global.enterpriseLicenseKey }}"
+            - name: ENTERPRISE_LICENSE_FILE
+              value: "{{ .Values.global.enterpriseLicenseFile }}"
             {{- end }}
             - name: INVITE_MODE
               value: "{{ .Values.api.inviteMode }}"
@@ -61,13 +61,13 @@ spec:
             - name: SMTP_USER
               value: "{{ .Values.api.smtp.username }}"
             - name: SMTP_PASSWORD
-              {{- if .Values.api.smtp.password }}
-              value: {{ .Values.api.smtp.password }}
-              {{- else }}
+              {{- if .Values.api.smtp.passwordSecretRef }}
               valueFrom:
-                  secretKeyRef:
-                    key: SMTP_PASSWORD
-                    name: {{ .Values.api.smtp.passwordSecretRef }}
+                secretKeyRef:
+                  key: SMTP_PASSWORD
+                  name: {{ .Values.api.smtp.passwordSecretRef }}
+              {{- else }}
+              value: {{ .Values.api.smtp.password }}
               {{- end }}
             {{- end }}
             - name: ROOT_DOMAIN
@@ -168,7 +168,7 @@ spec:
                   key: OAUTH_ISSUER_URL
                   name: {{ .Values.api.oauth.secretRef }}
               {{- else }}
-              value: {{ if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
+              value: {{ if .Values.global.dex.issuerUrl}}{{ .Values.global.dex.issuerUrl }}{{ else if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
               {{- end }}
             - name: OAUTH_REDIRECT_URI
               {{- if .Values.api.oauth.secretRef }}

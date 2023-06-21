@@ -30,6 +30,13 @@ global:
     issuerRef: ""
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
   imagePullSecrets: []
+  ingress:
+    # -- Global toggle whether to create Ingress resources
+    enabled: true
+  dex:
+    # -- Global Dex issuer url which is configured both in Dex and API
+    issuer: "http://testkube-enterprise-dex:5556"
+
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -105,6 +112,8 @@ testkube-cloud-api:
       clientSecret: "QWkVzs3nct6HZM5hxsPzwaZtq"
       # -- If oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
       redirectUri: ""
+      # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL
+      issuerUrl: "http://testkube-enterprise-dex:5556/idp"
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
   minio:
@@ -158,6 +167,8 @@ testkube-cloud-api:
     securityContext: {}
   prometheus:
     enabled: true
+  ingress:
+
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
@@ -243,8 +254,6 @@ mongodb:
 dex:
   # -- Toggle whether to install Dex
   enabled: true
-  # -- Override default issuer config which is constructed from global.domain
-  issuer: ""
   fullnameOverride: testkube-enterprise-dex
   image:
     # -- Dex image tag (https://ghcr.io/dexidp/dex)

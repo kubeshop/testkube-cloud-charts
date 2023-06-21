@@ -33,11 +33,17 @@ jobs:
 
       - name: Sync & Update Testkube Enterprise Helm chart
         run: |
+          bump_strategy="patch"
+          changed=$(git status --porcelain charts/testkube-enterprise | wc -l)
+          if [ $changed -gt 0 ]; then
+            bump_strategy="none"
+          fi
+          
           echo "Syncing subchart versions in testkube-enterprise Helm chart"
           ./scripts/sync.sh
           
-          echo "Updating testkube-enterprise Helm chart version"
-          ./scripts/update.sh -c testkube-enterprise -s minor --verbose
+          echo "Updating testkube-enterprise Helm chart version with bump strategy: $bump_strategy"
+          ./scripts/update.sh -c testkube-enterprise -s $bump_strategy --verbose
           
           enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
           echo "ENTERPRISE_CHART_VERSION=$enterprise_chart_version" >> $GITHUB_ENV

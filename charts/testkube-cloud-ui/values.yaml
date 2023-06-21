@@ -16,6 +16,9 @@ global:
     issuerRef: ""
   # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
+  ingress:
+    # -- Global toggle whether to create Ingress resources
+    enabled: true
 
 replicaCount: 1
 

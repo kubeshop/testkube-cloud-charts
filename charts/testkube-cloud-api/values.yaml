@@ -30,6 +30,12 @@ global:
     issuerRef: ""
   # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
+  ingress:
+    # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
+    enabled: true
+  dex:
+    # -- Global Dex issuer url
+    issuerUrl: ""
 
 replicaCount: 1
 

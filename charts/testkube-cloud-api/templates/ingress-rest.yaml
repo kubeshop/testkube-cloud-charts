@@ -1,4 +1,4 @@
-{{- if .Values.restIngress.enabled  -}}
+{{- if and .Values.global.ingress.enabled .Values.restIngress.enabled -}}
 {{- $fullName := include "testkube-cloud-api.fullname" . -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.restIngress.annotations "kubernetes.io/ingress.class") }}

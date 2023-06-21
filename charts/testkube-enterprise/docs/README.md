@@ -1,25 +1,55 @@
 # Testkube Enterprise Helm Chart Installation and Usage Guide
 
-This guide provides step-by-step instructions for installing and using Testkube Enterprise Helm chart.
-Testkube Enterprise is a Kubernetes-native testing platform that offers enterprise features for efficient testing and quality assurance processes.
+Welcome to the Testkube Enterprise Helm chart installation and usage guide.
+This comprehensive guide provides step-by-step instructions for installing and utilizing the Testkube Enterprise Helm chart.
+Testkube Enterprise is a cutting-edge Kubernetes-native testing platform designed to optimize your testing and quality assurance processes with enterprise-grade features.
+
+<!-- toc -->
+
+- [Prerequisites](#prerequisites)
+- [Configuration](#configuration)
+  * [Artifacts](#artifacts)
+  * [Docker images](#docker-images)
+  * [License](#license)
+    + [Online License](#online-license)
+    + [Offline License](#offline-license)
+  * [Ingress](#ingress)
+    + [Domain](#domain)
+    + [TLS](#tls)
+  * [Auth](#auth)
+- [Invitations](#invitations)
+  * [Invitations via email](#invitations-via-email)
+  * [Auto-accept invitations](#auto-accept-invitations)
+- [Bring Your Own Infra](#bring-your-own-infra)
+  * [MongoDB](#mongodb)
+  * [NATS](#nats)
+  * [MinIO](#minio)
+  * [Dex](#dex)
+- [Installation](#installation)
+  * [Minimal setup](#minimal-setup)
+- [FAQ](#faq)
+
+<!-- tocstop -->
 
 ## Prerequisites
 
-Before you begin, ensure that you have the following prerequisites:
+Before you proceed with the installation, please ensure that you have the following prerequisites in place:
 * Kubernetes cluster (version 1.21+)
 * [Helm](https://helm.sh/docs/intro/quickstart/) (version 3+)
-* [cert-manager](https://cert-manager.io/docs/installation/) (version 1.11+)
-* [NGINX Controller](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/) (version v1.8+)
-* Access to a domain for creating Ingress rules
-* License key
+* [cert-manager](https://cert-manager.io/docs/installation/) (version 1.11+) - used for TLS certificate management
+* [NGINX Controller](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/) (version v1.8+) - used for Ingress configuration
+* Own a public/private domain for creating Ingress rules
+* License Key and/or License File
 
 ## Configuration
 
-### Docker images
-First, make sure you have access to the Testkube Enterprise API & Dashboard Docker images either by requesting access from your Testkube representative
-or by uploading the Docker image tarball artifacts.
+### Artifacts
 
-After that, you should create a secret with the Docker registry credentials:
+### Docker images
+To begin, ensure that you have access to the Testkube Enterprise API & Dashboard Docker images.
+You can either request access from your Testkube representative or upload the Docker image tarball artifacts to a private Docker registry.
+
+Next, create a secret to store your Docker registry credentials:
 ```bash
 kubectl create secret docker-registry testkube-enterprise-registry \
   --docker-server=<your-registry-server> \
@@ -29,13 +59,76 @@ kubectl create secret docker-registry testkube-enterprise-registry \
   --namespace=testkube-enterprise
 ```
 
+Make sure to configure the image pull secrets in your `values.yaml` file:
+```helm
+global:
+  imagePullSecrets:
+    - name: testkube-enterprise-registry
+```
+
 ### License
 
-If you are running in an air-gaped environment, you should opt in for an Offline License which consists of a 
-License Key and License File. If your environment has access to the Internet, you can use an Online License which requires 
-only the License Key.
+Choose the appropriate license type based on your environment.
 
-### Domain
+If you are running in an air-gapped environment, an [Offline License](#offline-license) is recommended as it provides a higher level of security.
+An Offline License consists of a **License Key** and **License File**.
+
+If your environment has internet access, you can use an [Online License](#online-license), which only requires the **License Key**.
+
+#### Online License
+
+To use an **Online License**, set the `global.licenseKey` field to your **License Key**:
+```helm
+global:
+  licenseKey: <your license key>
+```
+
+#### Offline License
+
+For an **Offline License**, you need to provide the **License Key** and **License File** either as a secret or Helm parameter.
+Creating a secret is generally considered a "safer" option because it does not expose the **License File** in the Helm chart values.
+
+To create a secret with the **License File**, run the following command:
+```bash
+kubectl create secret generic testkube-enterprise-license \
+  --from-file=license.lic=<path-to-license-file> \
+  --namespace=testkube-enterprise
+```
+
+After creating the secret, use the following Helm chart configuration:
+```helm
+global:
+  enterpriseOfflineAccess: true
+  licenseKey: <your license key>
+  licenseFileSecret: testkube-enterprise-license
+```
+
+Alternatively, you can provide the **License File** as a Helm parameter:
+```helm
+global:
+  licenseKey: <your license key>
+  licenseFile: <your license file>
+```
+
+### Ingress
+
+We highly recommend installing Testkube Enterprise with Ingress enabled.
+This requires a valid domain (public or private) with a valid TLS certificate.
+Ingresses are enabled and created by default.
+
+If you wish to disable Ingress creation, you can configure the following values. However, in this case, you will need to manually configure API & Dashboard services to ensure accessibility:
+```helm
+global:
+  ingress:
+    enabled: false
+
+testkube-cloud-api:
+  api:
+    tls:
+      serveHTTPS: false
+```
+
+#### Domain
 
 Testkube Enterprise uses NGINX Controller to properly configure & optimize various protocols it uses.
 NGINX is the only currently supported Ingress Controller and Testkube Enterprise will not work without it.
@@ -52,10 +145,9 @@ For best performance, TLS should be terminated at application level (Testkube En
 gRPC and Websockets protocols perform significantly better when HTTP2 protocol is used end-to-end.
 By default, NGINX downgrades HTTP2 protocol to HTTP1.1 when the backend service listens on an insecure port.
 
-If `cert-manager` is installed in your cluster, it should be configured to issue certificates for the configured domain by using `Issuer` or `ClusterIssuer` resource.
+If `cert-manager` (check the [Prerequisites](#prerequisites) for installation guide) is installed in your cluster, it should be configured to issue certificates for the configured domain by using `Issuer` or `ClusterIssuer` resource.
 Testkube Enterprise Helm chart needs the following config in that case:
 ```helm
-# values.yaml
 global:
   certificateProvider: "cert-manager"
   certManager:
@@ -73,19 +165,20 @@ If `cert-manager` is not installed in your cluster, valid TLS certificates (for 
   * `dashboard.<your-domain>`
 Also, `global.certificateProvider` should be set to blank ("").
 ```helm
-# values.yaml
 global:
   certificateProvider: ""
 ```
 
 ### Auth
 
-Testkube Enterprise uses [Dex](https://dexidp.io/) for authentication & authorization.
-For more info on how to configure Dex, refer to the [auth.md](./auth.md) document.
+Testkube Enterprise utilizes [Dex](https://dexidp.io/) for authentication & authorization.
+For detailed instruction on configuring Dex, please refer to the [auth.md](./auth.md) document.
 
 ## Invitations
 
-Testkube Enterprise supports inviting users to Testkube Organizations and Environments, and assigning them various roles & permissions.
+Testkube Enterprise offers the capability to invite users to Testkube Organizations and Environments, allowing you to assign them specific roles and permissions.
+Currently, two modes of invitations are supported: `email` and `auto-accept`.
+Email mode should be used when we want to send the user an invitation email and him to accept it, and auto-accept mode should be used when you want to automatically add users.
 
 ### Invitations via email
 
@@ -93,7 +186,6 @@ If `testkube-cloud-api.api.inviteMode` is set to `email`, Testkube Enterprise wi
 an Organization or an Environment, and in that case SMTP settings need to be configured in the API Helm chart.
 
 ```helm
-# values.yaml
 testkube-cloud-api:
   inviteMode: email
   smtp:
@@ -111,21 +203,109 @@ If `testkube-cloud-api.api.inviteMode` is set to `auto-accept`, Testkube Enterpr
 Organizations and Environments when they get invited.
 
 ```helm
-# values.yaml
 testkube-cloud-api:
   inviteMode: auto-accept
 ```
 
+## Bring Your Own Infra
+
+Testkube Enterprise supports integrating with existing infrastructure components such as MongoDB, NATS, Dex, etc.
+
+### MongoDB
+
+Testkube Enterprise uses MongoDB as a database for storing all the data. By default, it will install a MongoDB instance using the Bitnami MongoDB Helm chart.
+
+If you wish to use an existing MongoDB instance, you can configure the following values:
+```helm
+mongodb:
+  enabled: false
+ 
+testkube-cloud-api:
+  api:
+    mongo:
+      dsn: <mongodb dsn (mongodb://...)>
+```
+
+### NATS
+
+Testkube Enterprise uses NATS as a message broker for communication between API and Agents.
+
+If you wish to use an existing NATS instance, you can configure the following values:
+```helm
+nats:
+  enabled: false
+  
+testkube-cloud-api:
+  api:
+    nats:
+      uri: <nats uri (nats://...)>
+```
+
+### MinIO
+
+Testkube Enterprise uses MinIO as a storage backend for storing artifacts.
+
+If you wish to use an existing MinIO instance, you can configure the following values:
+```helm
+testkube-cloud-api:
+  minio:
+    enabled: false
+  api:
+    minio: {} # check out the `testkube-cloud-api.api.minio` block in the values.yaml for all available settings
+```
+
+### Dex
+
+Testkube Enterprise uses Dex as an identity provider.
+
+If you wish to use an existing Dex instance, you can configure the following values:
+```helm
+global:
+  dex:
+    issuer: <dex issuer url>
+dex:
+  enabled: false
+testkube-cloud-api:
+  api:
+    oauth: {} # check out the `testkube-cloud-api.api.oauth` block in the values.yaml for all available settings
+```
+
+## Installation
+
+1. Get the Testkube Enterprise Helm chart (TODO: add a guide for downloading from keygen.sh)
+2. Create a `values.yaml` with preferred configuration
+3. Run `helm install testkube-enterprise ./testkube-enterprise -f values.yaml --namespace testkube-enterprise`
+
 ### Minimal setup
 
-For a minimal setup, you need to at least provide the following configuration:
+This is a minimal setup which will install a development Testkube Enterprise cluster with the following components:
+* Testkube Enterprise API
+* Testkube Enterprise Dashboard
+* MongoDB
+* NATS
+* Dex
+
+This setup should not be used in production environments. For a more advanced setup please refer to the [Production Install](#production-install) section.
+
+**IMPORTANT**
+The Bitnami MongoDB Helm chart does not work reliably on ARM architectures. If you are installing MongoDB using this chart, you need to use an ARM compatible image:
 ```helm
-# values.yaml
+mongodb:
+  image:
+    repository: zcube/bitnami-compat-mongodb
+    tag: "6.0.5"
+```
+
+Following configuration can be used for a minimal development setup of Testkube Enterprise:
+```helm
 global:
   domain: <your domain>
   imagePullSecrets:
     - name: <docker creds secret>
   licenseKey: <your license key>
+  ingress:
+    enabled: false
+
 dex:
   configTemplate:
     additionalConfig: |
@@ -137,8 +317,11 @@ dex:
 
 For a more advanced setup, refer to the Testkube Enterprise Chart [README.md](../README.md).
 
-## Installation
+## FAQ
 
-1. Get the Testkube Enterprise Helm chart (TODO: add a guide for downloading from keygen.sh)
-2. Create a `values.yaml` with preferred configuration
-3. Run `helm install testkube-enterprise ./testkube-enterprise -f values.yaml --namespace testkube-enterprise`
+Q: Testkube Enterprise API is crashing (pod is in `Error`/`CrashLoopBackOff` state) with the following error:
+```
+panic: license file is invalid
+```
+A: Make sure the license file ends with a newline character.
+There should be a new line after the `-----END LICENSE FILE-----` line in the license file.
