@@ -86,12 +86,14 @@ global:
 #### Offline License
 
 For an **Offline License**, you need to provide the **License Key** and **License File** either as a secret or Helm parameter.
-Creating a secret is generally considered a "safer" option because it does not expose the **License File** in the Helm chart values.
+Creating a secret is generally considered a "safer" option because it does not expose sensitive license info in the Helm chart values.
 
-To create a secret with the **License File**, run the following command:
+The Kubernetes secret needs to contain 2 entries: `license.lic` and `LICENSE_KEY`.
+To create the secret with the **License Key** and **License File**, run the following command:
 ```bash
 kubectl create secret generic testkube-enterprise-license \
-  --from-file=license.lic=<path-to-license-file> \
+  --from-litral=LICENSE_KEY=<your license key>            \
+  --from-file=license.lic=<path-to-license-file>          \
   --namespace=testkube-enterprise
 ```
 
@@ -99,7 +101,6 @@ After creating the secret, use the following Helm chart configuration:
 ```helm
 global:
   enterpriseOfflineAccess: true
-  licenseKey: <your license key>
   licenseFileSecret: testkube-enterprise-license
 ```
 
@@ -285,7 +286,7 @@ This is a minimal setup which will install a development Testkube Enterprise clu
 * NATS
 * Dex
 
-This setup should not be used in production environments. For a more advanced setup please refer to the [Production Install](#production-install) section.
+This setup should not be used in production environments. For a more advanced setup please refer to the [Production Setup](#production-setup) section.
 
 **IMPORTANT**
 The Bitnami MongoDB Helm chart does not work reliably on ARM architectures. If you are installing MongoDB using this chart, you need to use an ARM compatible image:
@@ -316,6 +317,10 @@ dex:
 ```
 
 For a more advanced setup, refer to the Testkube Enterprise Chart [README.md](../README.md).
+
+### Production setup
+
+TBD
 
 ## FAQ
 

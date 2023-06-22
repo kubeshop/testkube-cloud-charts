@@ -43,9 +43,16 @@ spec:
             - name: ENTERPRISE_OFFLINE_ACTIVATION
               value: "{{ .Values.global.enterpriseOfflineAccess }}"
             {{- end }}
-            {{- if .Values.global.enterpriseLicenseKey }}
+            {{- if .Values.global.enterpriseMode }}
             - name: ENTERPRISE_LICENSE_KEY
+              {{- if .Values.global.enterpriseLicenseSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: LICENSE_KEY
+                  name: {{ .Values.global.enterpriseLicenseSecretRef }}
+              {{- else }}
               value: "{{ .Values.global.enterpriseLicenseKey }}"
+              {{- end }}
             {{- end }}
             {{- if .Values.global.enterpriseLicenseFile }}
             - name: ENTERPRISE_LICENSE_FILE
@@ -274,7 +281,7 @@ spec:
               port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseFileSecretRef }}
+          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef }}
           volumeMounts:
             {{- if .Values.api.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
@@ -286,7 +293,7 @@ spec:
               name: serving-cert
               subPath: tls.key
             {{- end }}
-            {{- if .Values.global.enterpriseLicenseFileSecretRef }}
+            {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
             - mountPath: /testkube/license.lic
               readOnly: true
               name: license-file
@@ -305,16 +312,16 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseFileSecretRef }}
+      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef }}
       volumes:
         {{- if .Values.api.tls.serveHTTPS }}
         - name: serving-cert
           secret:
             secretName: {{ .Values.api.tls.tlsSecret }}
         {{- end }}
-        {{- if .Values.global.enterpriseLicenseFileSecretRef }}
+        {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
         - name: license-file
           secret:
-            secretName: {{ .Values.global.enterpriseLicenseFileSecretRef }}
+            secretName: {{ .Values.global.enterpriseLicenseSecretRef }}
         {{- end }}
       {{- end }}

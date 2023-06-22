@@ -12,7 +12,7 @@ global:
   # -- Base64-encoded Enterprise License file
   enterpriseLicenseFile: ""
   # -- Enterprise License file secret ref (secret should contain a file called 'license.lic')
-  enterpriseLicenseFileSecretRef: ""
+  enterpriseLicenseSecretRef: ""
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain

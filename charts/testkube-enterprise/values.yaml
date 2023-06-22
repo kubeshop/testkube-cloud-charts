@@ -10,7 +10,7 @@ global:
   # -- Base64-encoded Enterprise License file
   enterpriseLicenseFile: ""
   # -- Enterprise License file secret ref (secret should contain a file called 'license.lic')
-  enterpriseLicenseFileSecretRef: ""
+  enterpriseLicenseSecretRef: ""
   # -- Toggle whether to enable offline license activation in Enterprise mode
   enterpriseOfflineAccess: false
   # -- Domain under which to create Ingress rules
