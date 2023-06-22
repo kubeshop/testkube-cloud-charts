@@ -32,6 +32,7 @@ A Helm chart for Testkube Cloud UI
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
+| global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-ui"` |  |

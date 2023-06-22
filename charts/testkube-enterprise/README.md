@@ -48,7 +48,6 @@ A Helm chart for Testkube Enterprise
 | dex.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | dex.ingress.tls[0].hosts[0] | string | `"api.{{ .Values.global.domain }}"` |  |
 | dex.ingress.tls[0].secretName | string | `"testkube-enterprise-api-tls"` |  |
-| dex.issuer | string | `""` | Override default issuer config which is constructed from global.domain |
 | dex.podSecurityContext | string | `nil` | MongoDB Pod Security Context |
 | dex.resources.limits | object | `{}` |  |
 | dex.resources.requests.cpu | string | `"100m"` |  |
@@ -56,14 +55,16 @@ A Helm chart for Testkube Enterprise
 | dex.securityContext | object | `{}` | Security Context for MongoDB container |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS provider (possible values: "", "cert-manager") |
+| global.dex.issuer | string | `"http://testkube-enterprise-dex:5556"` | Global Dex issuer url which is configured both in Dex and API |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
-| global.enterpriseLicenseFileSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
 | global.enterpriseLicenseKey | string | `""` | Enterprise License key |
+| global.enterpriseLicenseSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
 | global.enterpriseMode | bool | `true` | Run Testkube in enterprise mode (enables enterprise features) |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui |
+| global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
@@ -107,6 +108,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
 | testkube-cloud-api.api.oauth.clientId | string | `"testkube-enterprise"` | OAuth Client ID for the configured static client in Dex |
 | testkube-cloud-api.api.oauth.clientSecret | string | `"QWkVzs3nct6HZM5hxsPzwaZtq"` | OAuth Client ID for the configured static client in Dex |
+| testkube-cloud-api.api.oauth.issuerUrl | string | `"http://testkube-enterprise-dex:5556/idp"` | if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL |
 | testkube-cloud-api.api.oauth.redirectUri | string | `""` | If oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI |
 | testkube-cloud-api.api.oauth.secretRef | string | `""` | OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`) |
 | testkube-cloud-api.api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which to store logs & artifacts |
@@ -122,6 +124,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.tag | string | `"1.2.0-dev-5f9d7d3"` |  |
+| testkube-cloud-api.ingress | string | `nil` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
 | testkube-cloud-api.minio.credentials.accessKeyId | string | `"testkube-enterprise"` | Root username |

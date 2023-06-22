@@ -77,14 +77,16 @@ A Helm chart for Testkube Cloud API
 | fullnameOverride | string | `""` |  |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
+| global.dex.issuerUrl | string | `""` | Global Dex issuer url |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
-| global.enterpriseLicenseFileSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
 | global.enterpriseLicenseKey | string | `""` | Enterprise License key |
+| global.enterpriseLicenseSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
+| global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
