@@ -4,7 +4,26 @@ You can configure Testkube Enterprise to authenticate users using different iden
 
 For a list of all supported identity providers, see [Connectors](https://dexidp.io/docs/connectors/).
 
-Below are examples for how to configure Testkube Enterprise with popular identity providers:
+Examples below show how to configure Testkube Enterprise with each identity provider by editing the `dex.configTemplate.additionalConfig` field in the Helm chart values.
+
+### Quickstart
+
+For a quickstart, or if you do not have an identity provider, you can configure Testkube Enterprise to use static users.
+See [Static Users](#static-users).
+
+### Static Users
+
+To configure Testkube Enterprise with static users, add the following configuration to the additionalConfig field:
+
+```yaml
+additionalConfig: |
+  staticPasswords:
+    - email: <user email>
+      hash: <bcrypt hash of user password>
+      username: <username>
+```
+
+Replace `<user email>`, `<bcrypt hash of user password>`, and `<username>` with your actual values.
 
 ### Azure AD
 
@@ -77,17 +96,3 @@ additionalConfig: |
         clientSecret: <OIDC client secret>
         redirectURI: <Testkube Enterprise redirect URI>
 ```
-
-### Static Users
-
-To configure Testkube Enterprise with static users, add the following configuration to the additionalConfig field:
-
-```yaml
-additionalConfig: |
-  staticPasswords:
-    - email: <user email>
-      hash: <bcrypt hash of user password>
-      username: <username>
-```
-
-Replace `<user email>`, `<bcrypt hash of user password>`, and `<username>` with your actual values.

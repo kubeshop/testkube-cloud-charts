@@ -12,7 +12,7 @@ global:
   # -- Base64-encoded Enterprise License file
   enterpriseLicenseFile: ""
   # -- Enterprise License file secret ref (secret should contain a file called 'license.lic')
-  enterpriseLicenseFileSecretRef: ""
+  enterpriseLicenseSecretRef: ""
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain
@@ -30,6 +30,12 @@ global:
     issuerRef: ""
   # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
+  ingress:
+    # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
+    enabled: true
+  dex:
+    # -- Global Dex issuer url
+    issuerUrl: ""
 
 replicaCount: 1
 
@@ -75,6 +81,19 @@ api:
     useHelmHooks: true
     image:
       repository: kubeshop/testkube-cloud-api-migrations
+  # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
+  inviteMode: email
+  smtp:
+    # -- SMTP host
+    host: smtp.sendgrid.net
+    # -- SMTP port
+    port: 587
+    # -- SMTP username
+    username: ""
+    # -- SMTP password
+    password: ""
+    # -- SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined
+    passwordSecretRef: ""
   tls:
     # -- Toggle should the Application terminate TLS instead of the Ingress
     serveHTTPS: true

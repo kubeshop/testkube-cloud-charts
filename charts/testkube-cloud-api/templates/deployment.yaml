@@ -43,13 +43,39 @@ spec:
             - name: ENTERPRISE_OFFLINE_ACTIVATION
               value: "{{ .Values.global.enterpriseOfflineAccess }}"
             {{- end }}
-            {{- if .Values.global.enterpriseLicenseKey }}
+            {{- if .Values.global.enterpriseMode }}
             - name: ENTERPRISE_LICENSE_KEY
+              {{- if .Values.global.enterpriseLicenseSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: LICENSE_KEY
+                  name: {{ .Values.global.enterpriseLicenseSecretRef }}
+              {{- else }}
               value: "{{ .Values.global.enterpriseLicenseKey }}"
+              {{- end }}
             {{- end }}
             {{- if .Values.global.enterpriseLicenseFile }}
-            - name: ENTERPRISE_LICENSE_KEY
-              value: "{{ .Values.global.enterpriseLicenseKey }}"
+            - name: ENTERPRISE_LICENSE_FILE
+              value: "{{ .Values.global.enterpriseLicenseFile }}"
+            {{- end }}
+            - name: INVITE_MODE
+              value: "{{ .Values.api.inviteMode }}"
+            {{- if eq .Values.api.inviteMode "email" }}
+            - name: SMTP_HOST
+              value: "{{ .Values.api.smtp.host }}"
+            - name: SMTP_PORT
+              value: "{{ .Values.api.smtp.port }}"
+            - name: SMTP_USER
+              value: "{{ .Values.api.smtp.username }}"
+            - name: SMTP_PASSWORD
+              {{- if .Values.api.smtp.passwordSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: SMTP_PASSWORD
+                  name: {{ .Values.api.smtp.passwordSecretRef }}
+              {{- else }}
+              value: {{ .Values.api.smtp.password }}
+              {{- end }}
             {{- end }}
             - name: ROOT_DOMAIN
               value: "{{ .Values.global.domain }}"
@@ -149,7 +175,7 @@ spec:
                   key: OAUTH_ISSUER_URL
                   name: {{ .Values.api.oauth.secretRef }}
               {{- else }}
-              value: {{ if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
+              value: {{ if .Values.global.dex.issuerUrl}}{{ .Values.global.dex.issuerUrl }}{{ else if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
               {{- end }}
             - name: OAUTH_REDIRECT_URI
               {{- if .Values.api.oauth.secretRef }}
@@ -255,7 +281,7 @@ spec:
               port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseFileSecretRef }}
+          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef }}
           volumeMounts:
             {{- if .Values.api.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
@@ -267,7 +293,7 @@ spec:
               name: serving-cert
               subPath: tls.key
             {{- end }}
-            {{- if .Values.global.enterpriseLicenseFileSecretRef }}
+            {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
             - mountPath: /testkube/license.lic
               readOnly: true
               name: license-file
@@ -286,16 +312,16 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseFileSecretRef }}
+      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef }}
       volumes:
         {{- if .Values.api.tls.serveHTTPS }}
         - name: serving-cert
           secret:
             secretName: {{ .Values.api.tls.tlsSecret }}
         {{- end }}
-        {{- if .Values.global.enterpriseLicenseFileSecretRef }}
+        {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
         - name: license-file
           secret:
-            secretName: {{ .Values.global.enterpriseLicenseFileSecretRef }}
+            secretName: {{ .Values.global.enterpriseLicenseSecretRef }}
         {{- end }}
       {{- end }}

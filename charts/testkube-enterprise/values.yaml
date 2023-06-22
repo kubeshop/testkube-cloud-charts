@@ -10,7 +10,7 @@ global:
   # -- Base64-encoded Enterprise License file
   enterpriseLicenseFile: ""
   # -- Enterprise License file secret ref (secret should contain a file called 'license.lic')
-  enterpriseLicenseFileSecretRef: ""
+  enterpriseLicenseSecretRef: ""
   # -- Toggle whether to enable offline license activation in Enterprise mode
   enterpriseOfflineAccess: false
   # -- Domain under which to create Ingress rules
@@ -30,6 +30,13 @@ global:
     issuerRef: ""
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
   imagePullSecrets: []
+  ingress:
+    # -- Global toggle whether to create Ingress resources
+    enabled: true
+  dex:
+    # -- Global Dex issuer url which is configured both in Dex and API
+    issuer: "http://testkube-enterprise-dex:5556"
+
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -37,7 +44,23 @@ testkube-cloud-api:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.2.0-dev-39ae202
   api:
+    # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
+    inviteMode: email
+    smtp:
+      # -- SMTP host
+      host: smtp.sendgrid.net
+      # -- SMTP port
+      port: 587
+      # -- SMTP username
+      username: ""
+      # -- SMTP password
+      password: ""
+      # -- SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined
+      passwordSecretRef: ""
     tls:
+      certManager:
+        # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
+        issuerKind: ClusterIssuer
       tlsSecret: testkube-enterprise-api-tls
     migrations:
       # -- Toggle whether to run database migrations
@@ -89,6 +112,8 @@ testkube-cloud-api:
       clientSecret: "QWkVzs3nct6HZM5hxsPzwaZtq"
       # -- If oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
       redirectUri: ""
+      # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL
+      issuerUrl: "http://testkube-enterprise-dex:5556/idp"
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
   minio:
@@ -142,6 +167,8 @@ testkube-cloud-api:
     securityContext: {}
   prometheus:
     enabled: true
+  ingress:
+
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
@@ -227,8 +254,6 @@ mongodb:
 dex:
   # -- Toggle whether to install Dex
   enabled: true
-  # -- Override default issuer config which is constructed from global.domain
-  issuer: ""
   fullnameOverride: testkube-enterprise-dex
   image:
     # -- Dex image tag (https://ghcr.io/dexidp/dex)

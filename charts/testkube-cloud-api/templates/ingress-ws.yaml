@@ -1,4 +1,4 @@
-{{- if .Values.websocketsIngress.enabled -}}
+{{- if and .Values.global.ingress.enabled .Values.websocketsIngress.enabled -}}
 {{- $fullName := include "testkube-cloud-api.fullname" . -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.websocketsIngress.annotations "kubernetes.io/ingress.class") }}

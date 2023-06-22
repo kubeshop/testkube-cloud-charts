@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.6.3](https://img.shields.io/badge/Version-1.6.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0-dev-ba71c83](https://img.shields.io/badge/AppVersion-1.2.0--dev--ba71c83-informational?style=flat-square)
+![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0-dev-39ae202](https://img.shields.io/badge/AppVersion-1.2.0--dev--39ae202-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -30,6 +30,7 @@ A Helm chart for Testkube Cloud API
 | api.agent.port | string | `"443"` | Agent port |
 | api.apiAddress | string | `""` | API address (used in invitation emails) (example `https://api.testkube.xyz`) |
 | api.dashboardAddress | string | `""` | Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`) |
+| api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
 | api.migrations.image.repository | string | `"kubeshop/testkube-cloud-api-migrations"` |  |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
@@ -55,6 +56,11 @@ A Helm chart for Testkube Cloud API
 | api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which outputs are stored |
 | api.sendgrid.apiKey | string | `""` | Sendgrid API key |
 | api.sendgrid.secretRef | string | `""` | Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`) |
+| api.smtp.host | string | `"smtp.sendgrid.net"` | SMTP host |
+| api.smtp.password | string | `""` | SMTP password |
+| api.smtp.passwordSecretRef | string | `""` | SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined |
+| api.smtp.port | int | `587` | SMTP port |
+| api.smtp.username | string | `""` | SMTP username |
 | api.tls.agentPort | int | `8443` | Agent gRPCS port |
 | api.tls.apiPort | int | `9443` | API HTTPS port |
 | api.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
@@ -71,14 +77,16 @@ A Helm chart for Testkube Cloud API
 | fullnameOverride | string | `""` |  |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
+| global.dex.issuerUrl | string | `""` | Global Dex issuer url |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
-| global.enterpriseLicenseFileSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
 | global.enterpriseLicenseKey | string | `""` | Enterprise License key |
+| global.enterpriseLicenseSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
+| global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
