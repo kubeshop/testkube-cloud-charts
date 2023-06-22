@@ -8,7 +8,6 @@ Testkube Enterprise is a cutting-edge Kubernetes-native testing platform designe
 
 - [Prerequisites](#prerequisites)
 - [Configuration](#configuration)
-  * [Artifacts](#artifacts)
   * [Docker images](#docker-images)
   * [License](#license)
     + [Online License](#online-license)
@@ -27,6 +26,7 @@ Testkube Enterprise is a cutting-edge Kubernetes-native testing platform designe
   * [Dex](#dex)
 - [Installation](#installation)
   * [Minimal setup](#minimal-setup)
+  * [Production setup](#production-setup)
 - [FAQ](#faq)
 
 <!-- tocstop -->
@@ -39,11 +39,13 @@ Before you proceed with the installation, please ensure that you have the follow
 * [cert-manager](https://cert-manager.io/docs/installation/) (version 1.11+) - used for TLS certificate management
 * [NGINX Controller](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/) (version v1.8+) - used for Ingress configuration
 * Own a public/private domain for creating Ingress rules
-* License Key and/or License File
+* License Key and/or License File (if offline access is required)
+
+**NOTE**
+Is it possible to provide custom TLS certificates for the Testkube Enterprise API and Dashboard, but it is highly recommended 
+to use `cert-manager` for certificate management.
 
 ## Configuration
-
-### Artifacts
 
 ### Docker images
 To begin, ensure that you have access to the Testkube Enterprise API & Dashboard Docker images.
