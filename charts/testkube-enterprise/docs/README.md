@@ -279,6 +279,15 @@ testkube-cloud-api:
 2. Create a `values.yaml` with preferred configuration
 3. Run `helm install testkube-enterprise ./testkube-enterprise -f values.yaml --namespace testkube-enterprise`
 
+**IMPORTANT**
+The Bitnami MongoDB Helm chart does not work reliably on ARM architectures. If you are installing MongoDB using this chart, you need to use an ARM compatible image:
+```helm
+mongodb:
+  image:
+    repository: zcube/bitnami-compat-mongodb
+    tag: "6.0.5"
+```
+
 ### Minimal setup
 
 This is a minimal setup which will install a development Testkube Enterprise cluster with the following components:
@@ -289,15 +298,6 @@ This is a minimal setup which will install a development Testkube Enterprise clu
 * Dex
 
 This setup should not be used in production environments. For a more advanced setup please refer to the [Production Setup](#production-setup) section.
-
-**IMPORTANT**
-The Bitnami MongoDB Helm chart does not work reliably on ARM architectures. If you are installing MongoDB using this chart, you need to use an ARM compatible image:
-```helm
-mongodb:
-  image:
-    repository: zcube/bitnami-compat-mongodb
-    tag: "6.0.5"
-```
 
 Following configuration can be used for a minimal development setup of Testkube Enterprise:
 ```helm
@@ -317,8 +317,6 @@ dex:
           hash: <bcrypt hash of user password>
           username: <username>
 ```
-
-For a more advanced setup, refer to the Testkube Enterprise Chart [README.md](../README.md).
 
 ### Production setup
 
