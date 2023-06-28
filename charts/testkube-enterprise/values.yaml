@@ -36,11 +36,12 @@ global:
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: "http://testkube-enterprise-dex:5556"
+
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
-    repository: kubeshop/testkube-enterprise-api
+    repository: testkubeenterprise/testkube-enterprise-api
     tag: 1.2.0-dev-457bd3d
   api:
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
@@ -66,6 +67,9 @@ testkube-cloud-api:
       enabled: true
       # -- Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart)
       useHelmHooks: false
+      image:
+        # -- Migrations image repository
+        repository: testkubeenterprise/testkube-enterprise-api-migrations
     mongo:
       # -- Mongo DSN connection string
       dsn: "mongodb://testkube-enterprise-mongodb:27017"
@@ -170,7 +174,7 @@ testkube-cloud-api:
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
-    repository: kubeshop/testkube-enterprise-ui
+    repository: testkubeenterprise/testkube-enterprise-ui
     tag: 1.0.2
   ingress:
     # -- Name of the TLS secret which contains the certificate files
