@@ -21,7 +21,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.7.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.8.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.3.0 |
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
@@ -94,6 +94,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.agent.port | int | `443` | Agent port - used for building agent install commands |
 | testkube-cloud-api.api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | testkube-cloud-api.api.migrations.enabled | bool | `true` | Toggle whether to run database migrations |
+| testkube-cloud-api.api.migrations.image.repository | string | `"testkubeenterprise/testkube-enterprise-api-migrations"` | Migrations image repository |
 | testkube-cloud-api.api.migrations.useHelmHooks | bool | `false` | Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart) |
 | testkube-cloud-api.api.minio.accessKeyId | string | `"testkube-enterprise"` | MinIO access key id |
 | testkube-cloud-api.api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: MINIO_ACCESS_KEY_ID, MINIO_SECRET_ACCESS_KEY, MINIO_TOKEN) (default is `testkube-cloud-minio-secret`) |
@@ -122,8 +123,8 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.2.0-dev-39ae202"` |  |
+| testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
+| testkube-cloud-api.image.tag | string | `"1.2.0-dev-457bd3d"` |  |
 | testkube-cloud-api.ingress | string | `nil` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
@@ -145,7 +146,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.minio.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-cloud-api.prometheus.enabled | bool | `true` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
+| testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.tag | string | `"1.0.2"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 

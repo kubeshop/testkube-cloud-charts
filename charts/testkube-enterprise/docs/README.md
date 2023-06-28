@@ -94,7 +94,7 @@ The Kubernetes secret needs to contain 2 entries: `license.lic` and `LICENSE_KEY
 To create the secret with the **License Key** and **License File**, run the following command:
 ```bash
 kubectl create secret generic testkube-enterprise-license \
-  --from-litral=LICENSE_KEY=<your license key>            \
+  --from-literal=LICENSE_KEY=<your license key>            \
   --from-file=license.lic=<path-to-license-file>          \
   --namespace=testkube-enterprise
 ```
