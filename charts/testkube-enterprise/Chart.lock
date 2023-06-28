@@ -4,7 +4,7 @@ dependencies:
   version: 2.2.5
 - name: testkube-cloud-api
   repository: file://../testkube-cloud-api
-  version: 1.7.5
+  version: 1.7.6
 - name: testkube-cloud-ui
   repository: file://../testkube-cloud-ui
   version: 1.3.0
@@ -17,5 +17,5 @@ dependencies:
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
   version: 0.14.2
-digest: sha256:d1d580924585f89157769f4f0dd58f0628585f31c877cfe8a18b5aa6aa4b83c1
-generated: "2023-06-27T12:12:29.4224595Z"
+digest: sha256:cabf3ec7b413ace7cc822cb9c679964c62c71ff8187a50db39d731739604d485
+generated: "2023-06-28T06:41:25.882964962Z"
