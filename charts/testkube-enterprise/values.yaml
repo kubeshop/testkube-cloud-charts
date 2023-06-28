@@ -36,7 +36,6 @@ global:
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: "http://testkube-enterprise-dex:5556"
-
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
