@@ -115,6 +115,9 @@ global:
 
 ### Ingress
 
+Testkube Enterprise uses NGINX Controller to properly configure & optimize various protocols it uses.
+NGINX is the only currently supported Ingress Controller and Testkube Enterprise will not work without it.
+
 We highly recommend installing Testkube Enterprise with Ingress enabled.
 This requires a valid domain (public or private) with a valid TLS certificate.
 Ingresses are enabled and created by default.
@@ -131,16 +134,48 @@ testkube-cloud-api:
       serveHTTPS: false
 ```
 
+#### Configuration
+
+To ensure the reliable functioning of gRPC and Websockets protocols, Testkube Enterprise is locked in with NGINX Ingress Controller.
+
+Below are current configurations per Ingress resource which ensure Testkube Enterprise protocols work performant and reliably.
+It is not recommended to change any of these settings!
+
+gRPC Ingress annotations:
+```kubernetes
+annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 8m
+    nginx.ingress.kubernetes.io/client-header-timeout: "10800"
+    nginx.ingress.kubernetes.io/client-body-timeout: "10800"
+```
+
+Websockets Ingress annotations:
+```kubernetes
+annotations:
+  nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+  nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+  nginx.ingress.kubernetes.io/server-snippets: |
+    location / {
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_http_version 1.1;
+      proxy_set_header X-Forwarded-Host $http_host;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header Connection "upgrade";
+      proxy_cache_bypass $http_upgrade;
+    }
+```
+
+If you want to use a different Ingress Controller, we kindly ask you to reach out and discuss with our support team.
+
 #### Domain
 
-Testkube Enterprise uses NGINX Controller to properly configure & optimize various protocols it uses.
-NGINX is the only currently supported Ingress Controller and Testkube Enterprise will not work without it.
-
 Testkube Enterprise requires a domain (public or internal) under which it will expose the following services:
-* Dashboard -> https://dashboard.<your-domain>
-* REST API -> https://api.<your-domain>
-* Websocket API -> wss://websockets.<your-domain>
-* gRPC API -> grpc://agent.<your-domain>
+* Dashboard -> `https://dashboard.<your-domain>`
+* REST API -> `https://api.<your-domain>`
+* Websocket API -> `wss://websockets.<your-domain>`
+* gRPC API -> `grpc://agent.<your-domain>`
 
 #### TLS
 
