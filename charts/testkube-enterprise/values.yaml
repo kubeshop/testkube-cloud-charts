@@ -35,7 +35,7 @@ global:
     enabled: true
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
-    issuer: "http://testkube-enterprise-dex:5556"
+    issuer: "http://testkube-enterprise-dex:5556/idp"
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -115,7 +115,7 @@ testkube-cloud-api:
       # -- If oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
       redirectUri: ""
       # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL
-      issuerUrl: "http://testkube-enterprise-dex:5556/idp"
+      issuerUrl: ""
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
   minio:
