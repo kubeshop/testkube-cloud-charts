@@ -216,7 +216,8 @@ Testkube Enterprise supports integrating with existing infrastructure components
 
 ### MongoDB
 
-Testkube Enterprise uses MongoDB as a database for storing all the data. By default, it will install a MongoDB instance using the Bitnami MongoDB Helm chart.
+Testkube Enterprise uses MongoDB as a database for storing all the data.
+By default, it will install a MongoDB instance using the Bitnami MongoDB Helm chart.
 
 If you wish to use an existing MongoDB instance, you can configure the following values:
 ```helm
