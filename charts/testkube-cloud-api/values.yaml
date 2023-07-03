@@ -35,7 +35,7 @@ global:
     enabled: true
   dex:
     # -- Global Dex issuer url
-    issuerUrl: ""
+    issuer: ""
 
 replicaCount: 1
 

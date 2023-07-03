@@ -175,7 +175,7 @@ spec:
                   key: OAUTH_ISSUER_URL
                   name: {{ .Values.api.oauth.secretRef }}
               {{- else }}
-              value: {{ if .Values.global.dex.issuerUrl}}{{ .Values.global.dex.issuerUrl }}{{ else if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
+              value: {{ if .Values.global.dex.issuer}}{{ .Values.global.dex.issuer }}{{ else if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
               {{- end }}
             - name: OAUTH_REDIRECT_URI
               {{- if .Values.api.oauth.secretRef }}
