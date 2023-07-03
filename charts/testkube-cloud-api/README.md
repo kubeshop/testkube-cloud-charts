@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.9.2](https://img.shields.io/badge/Version-1.9.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0-dev-b3f34e0](https://img.shields.io/badge/AppVersion-1.2.0--dev--b3f34e0-informational?style=flat-square)
+![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0-dev-b3f34e0](https://img.shields.io/badge/AppVersion-1.2.0--dev--b3f34e0-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -77,7 +77,7 @@ A Helm chart for Testkube Cloud API
 | fullnameOverride | string | `""` |  |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
-| global.dex.issuerUrl | string | `""` | Global Dex issuer url |
+| global.dex.issuer | string | `""` | Global Dex issuer url |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
 | global.enterpriseLicenseKey | string | `""` | Enterprise License key |
