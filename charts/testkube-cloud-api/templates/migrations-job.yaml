@@ -22,7 +22,11 @@ spec:
       {{- end }}
       initContainers:
         - name: wait-for
+          {{ if .Values.global.privateRegistry }}
+          image: "{{ .Values.global.privateRegistry}}/mongo:6.0.5-jammy"
+          {{- else }}
           image: mongo:6.0.5-jammy
+          {{- end }}
           command:
             - bash
             - -c
@@ -51,7 +55,11 @@ spec:
             {{- end }}
       containers:
         - name: migrations
+          {{ if .Values.global.privateRegistry }}
+          image: "{{ .Values.global.privateRegistry}}/{{ .Values.api.migrations.image.repository }}:{{ .Values.image.tag }}"
+          {{- else }}
           image: {{ .Values.api.migrations.image.repository }}:{{ .Values.image.tag }}
+          {{- end }}
           args:
             - up
           env:

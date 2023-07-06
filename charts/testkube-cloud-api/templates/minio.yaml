@@ -38,7 +38,11 @@ spec:
       {{- end }}
       containers:
         - name: minio
+          {{ if .Values.global.privateRegistry }}
+          image: {{ .Values.global.privateRegistry }}/{{ .Values.minio.image.repository }}:{{ .Values.minio.image.tag | quote }}
+          {{ else }}
           image: "{{ .Values.minio.image.repository }}:{{ .Values.minio.image.tag }}"
+          {{ end }}
           imagePullPolicy: {{ .Values.minio.image.pullPolicy }}
           args:
             - server

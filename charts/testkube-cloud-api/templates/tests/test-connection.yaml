@@ -9,7 +9,11 @@ metadata:
 spec:
   containers:
     - name: wget
+      {{ if .Valuse.global.usePrivateRegistry}}
+      image: {{ .Values.global.registry.url }}/busybox
+      {{ else }}
       image: busybox
+      {{ end }}
       command: ['wget']
       args: ['{{ include "testkube-cloud-api.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never
