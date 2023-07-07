@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0-dev-b3f34e0](https://img.shields.io/badge/AppVersion-1.2.0--dev--b3f34e0-informational?style=flat-square)
+![Version: 1.11.7](https://img.shields.io/badge/Version-1.11.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0-dev-f05d636](https://img.shields.io/badge/AppVersion-1.2.0--dev--f05d636-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -22,6 +22,9 @@ A Helm chart for Testkube Cloud API
 |-----|------|---------|-------------|
 | additionalEnv | object | `{}` | Additional env vars to be added to the deployment |
 | affinity | object | `{}` |  |
+| analytics.hubspot.apiKey | string | `""` | HubSpot write key |
+| analytics.hubspot.enabled | bool | `false` | Toggle whether to enable HubSpot sync |
+| analytics.hubspot.secretRef | string | `""` | HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`) |
 | analytics.segmentio.enabled | bool | `false` | Toggle whether to enable Segment.io analytics |
 | analytics.segmentio.secretRef | string | `""` | Segment.io secret ref (secret must contain key SEGMENTIO_WRITE_KEY) (default is `testkube-cloud-analytics-secret`) |
 | analytics.segmentio.writeKey | string | `""` | Segment.io write key |

@@ -121,6 +121,17 @@ spec:
               value: {{ .Values.analytics.segmentio.writeKey }}
               {{- end }}
             {{- end }}
+            {{- if .Values.analytics.hubspot.enabled }}
+            - name: HUBSPOT_API_KEY
+              {{- if .Values.analytics.hubspot.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: HUBSPOT_API_KEY
+                  name: {{ .Values.analytics.hubspot.secretRef }}
+              {{- else }}
+              value: {{ .Values.analytics.hubspot.apiKey }}
+              {{- end }}
+            {{- end }}
             - name: SENDGRID_API_KEY
               {{- if .Values.api.sendgrid.secretRef }}
               valueFrom:
