@@ -60,6 +60,13 @@ analytics:
     writeKey: ""
     # -- Segment.io secret ref (secret must contain key SEGMENTIO_WRITE_KEY) (default is `testkube-cloud-analytics-secret`)
     secretRef: ""
+  hubspot:
+    # -- Toggle whether to enable HubSpot sync
+    enabled: false
+    # -- HubSpot write key
+    apiKey: ""
+    # -- HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`)
+    secretRef: ""
 
 payments:
   # -- Toggle whether to enable payments service
