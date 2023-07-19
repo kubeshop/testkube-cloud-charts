@@ -71,7 +71,7 @@ analytics:
 
 ai:
   # -- AI config secret ref (secret must contain keys: OPENAI_API_KEY) (default is `testkube-cloud-ai-secret`)
-  secretRef: "testkube-cloud-ai-secret"
+  secretRef: "openai-api-key"
 
 payments:
   # -- Toggle whether to enable payments service
