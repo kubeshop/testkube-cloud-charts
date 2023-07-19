@@ -58,6 +58,15 @@ spec:
             - name: ENTERPRISE_LICENSE_FILE
               value: "{{ .Values.global.enterpriseLicenseFile }}"
             {{- end }}
+            - name: OPENAI_API_KEY
+              {{- if .Values.ai.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ .Values.ai.secretKey }}
+                  name: {{ .Values.ai.secretRef }}
+              {{- else }}
+              value: {{ .Values.ai.apiKey }}
+              {{- end }}
             - name: INVITE_MODE
               value: "{{ .Values.api.inviteMode }}"
             {{- if eq .Values.api.inviteMode "email" }}

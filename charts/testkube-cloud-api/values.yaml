@@ -49,8 +49,9 @@ nameOverride: ""
 fullnameOverride: ""
 
 # -- Additional env vars to be added to the deployment
-additionalEnv: {}
- # FOO: bar
+additionalEnv:
+  {}
+  # FOO: bar
 
 analytics:
   segmentio:
@@ -67,6 +68,13 @@ analytics:
     apiKey: ""
     # -- HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`)
     secretRef: ""
+
+ai:
+  # -- AI config secret ref
+  secretRef: "openai-api-key"
+  secretKey: "key"
+  # -- or use api key instead two above
+  apiKey: ""
 
 payments:
   # -- Toggle whether to enable payments service
@@ -226,8 +234,7 @@ restIngress:
   # -- Toggle whether to enable the REST API Ingress
   enabled: true
   # -- Additional labels to add to the REST Ingress resource
-  labels:
-    {}
+  labels: {}
   # -- Additional annotations to add to the REST Ingress resource
   annotations:
     {}
@@ -239,8 +246,7 @@ grpcIngress:
   # -- Toggle whether to enable the gRPC API Ingress
   enabled: true
   # -- Additional labels to add to the gRPC Ingress resource
-  labels:
-    {}
+  labels: {}
   # -- Additional annotations to add to the gRPC Ingress resource
   annotations:
     {}
@@ -252,8 +258,7 @@ websocketsIngress:
   # -- Toggle whether to enable the Websocket API Ingress
   enabled: true
   # -- Additional labels to add to the WebSocket Ingress resource
-  labels:
-    {}
+  labels: {}
   # -- Additional annotations to add to the WebSocket Ingress resource
   annotations:
     {}
@@ -333,8 +338,7 @@ prometheus:
   # -- Toggle whether to create ServiceMonitor resource for Prometheus Operator
   enabled: true
   # -- ServiceMonitor labels
-  labels:
-    {}
+  labels: {}
   # -- Scrape interval configuration in ServiceMonitor resource
   scrapeInterval: 15s
   # -- Metrics port which will be scraper
