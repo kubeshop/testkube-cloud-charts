@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.11.7](https://img.shields.io/badge/Version-1.11.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0-dev-f05d636](https://img.shields.io/badge/AppVersion-1.2.0--dev--f05d636-informational?style=flat-square)
+![Version: 1.12.32](https://img.shields.io/badge/Version-1.12.32-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.0-dev-95a814a](https://img.shields.io/badge/AppVersion-1.3.0--dev--95a814a-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -22,6 +22,9 @@ A Helm chart for Testkube Cloud API
 |-----|------|---------|-------------|
 | additionalEnv | object | `{}` | Additional env vars to be added to the deployment |
 | affinity | object | `{}` |  |
+| ai.apiKey | string | `""` | or use api key instead two above |
+| ai.secretKey | string | `"key"` |  |
+| ai.secretRef | string | `"openai-api-key"` | AI config secret ref |
 | analytics.hubspot.apiKey | string | `""` | HubSpot write key |
 | analytics.hubspot.enabled | bool | `false` | Toggle whether to enable HubSpot sync |
 | analytics.hubspot.secretRef | string | `""` | HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`) |
