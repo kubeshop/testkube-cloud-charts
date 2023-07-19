@@ -62,7 +62,7 @@ spec:
               {{- if .Values.ai.secretRef }}
               valueFrom:
                 secretKeyRef:
-                  key: OPENAI_API_KEY
+                  key: {{ .Values.ai.secretKey }}
                   name: {{ .Values.ai.secretRef }}
               {{- else }}
               value: {{ .Values.ai.apiKey }}
