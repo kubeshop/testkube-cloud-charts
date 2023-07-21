@@ -41,7 +41,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 0.1.0-dev-730907b
+    tag: 1.3.0-dev-797fbf9
   api:
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
     inviteMode: email
