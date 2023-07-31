@@ -1,4 +1,4 @@
-#Helm Chart: testkube-cloud-secrets
+# Helm Chart: testkube-cloud-secrets
 
 This Helm chart deploys the testkube-cloud-secrets and utilizes Google Cloud Secret Manager to manage API secrets.
 
