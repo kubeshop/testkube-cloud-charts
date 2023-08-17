@@ -7,7 +7,7 @@ dependencies:
   version: 1.13.53
 - name: testkube-cloud-ui
   repository: file://../testkube-cloud-ui
-  version: 1.13.52
+  version: 1.13.54
 - name: dex
   repository: https://charts.dexidp.io
   version: 0.14.1
@@ -17,5 +17,5 @@ dependencies:
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
   version: 0.14.2
-digest: sha256:f4778af4b63576a765f3df119296f480abe444c41ff3856c2cbde22d94b2e01e
-generated: "2023-08-16T10:24:46.493010957Z"
+digest: sha256:6158d4348580d6e86aa321eeef5d0e5d95e5381e554dc69385a2812e797ad2da
+generated: "2023-08-17T07:34:10.376072102Z"
