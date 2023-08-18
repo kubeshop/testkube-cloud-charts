@@ -189,8 +189,8 @@ api:
 
 externalSecrets:
   enabled: false
-  keys:
-    OPENAPI_KEY: open-api-key
+  keys: {}
+
 serviceAccount:
   # -- Toggle whether to create a ServiceAccount resource
   create: false
