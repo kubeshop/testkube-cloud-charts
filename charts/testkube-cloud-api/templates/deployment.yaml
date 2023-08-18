@@ -277,6 +277,15 @@ spec:
             - name: {{ $k }}
               value: "{{ $v }}"
             {{- end}}
+            {{- if .Values.externalSecrets.enabled -}}
+            {{- range $key, $value := .Values.externalSecrets.keys }}
+            - name: {{ $value }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ $value }}
+                  name: api-external-secrets
+            {{ end }}
+            {{- end}}
           ports:
             - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}

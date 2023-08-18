@@ -53,6 +53,11 @@ ui:
   # -- Force disabling telemetry on the UI
   disableTelemetry: false
 
+externalSecrets:
+  enabled: false
+  keys:
+    OPENAPI_KEY: open-api-key
+
 serviceAccount:
   # -- Toggle whether to create ServiceAccount resource
   create: false
