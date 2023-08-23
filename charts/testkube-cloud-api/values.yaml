@@ -189,6 +189,8 @@ api:
 
 externalSecrets:
   enabled: false
+  refreshInterval: 5m
+  clusterSecretStoreName: secret-store
   keys: {}
 
 serviceAccount:

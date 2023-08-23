@@ -55,8 +55,9 @@ ui:
 
 externalSecrets:
   enabled: false
-  keys:
-    OPENAPI_KEY: open-api-key
+  refreshInterval: 5m
+  clusterSecretStoreName: secret-store 
+  keys: {}
 
 serviceAccount:
   # -- Toggle whether to create ServiceAccount resource
