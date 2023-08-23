@@ -174,7 +174,7 @@ testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: 1.3.0-dev-e02a6a2
+    tag: 1.3.0-dev-54f0de7
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
