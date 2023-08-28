@@ -20,52 +20,14 @@ spec:
       imagePullSecrets:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
-      initContainers:
-        - name: wait-for
-          image: mongo:6.0.5-jammy
-          command:
-            - bash
-            - -c
-            - |
-              times=20
-              until mongosh "$MONGO_DSN" --eval "db.runCommand({ ping: 1 })"; do
-                echo "Waiting for MongoDB to be ready..."
-                echo "$times retries left"
-                times=$((times - 1))
-                sleep 5
-                if [ "$times" -eq 0 ]; then
-                  echo "MongoDB is not ready, exiting..."
-                  exit 1
-                fi
-              done
-              echo "Mongo is up!"
-          env:
-            - name: MONGO_DSN
-            {{- if .Values.api.mongo.dsnSecretRef }}
-              valueFrom:
-                secretKeyRef:
-                  key: MONGO_DSN
-                  name: {{ .Values.api.mongo.dsnSecretRef }}
-            {{- else }}
-              value: {{ .Values.api.mongo.dsn }}
-            {{- end }}
       containers:
         - name: migrations
-          image: {{ .Values.api.migrations.image.repository }}:{{ .Values.image.tag }}
-          args:
-            - up
-          env:
-            - name: MONGO_URL
-            {{- if .Values.api.mongo.dsnSecretRef }}
-              valueFrom:
-                secretKeyRef:
-                  key: MONGO_DSN
-                  name: {{ .Values.api.mongo.dsnSecretRef }}
-            {{- else }}
-              value: {{ .Values.api.mongo.dsn }}
-            {{- end }}
-            - name: MONGO_DB
-              value: {{ .Values.api.mongo.database }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: ["/testkube/cloud-api"]
+          args: ["migrate"]
+          env: []
+            
+            # {{ include "testkube-cloud-api.env" . nindent 12 }} /* include values from _helpers.tpl */
       restartPolicy: Never
   backoffLimit: 3
 {{- end }}
