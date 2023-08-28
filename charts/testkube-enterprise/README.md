@@ -21,7 +21,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.13.87 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.13.88 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.13.78 |
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |

@@ -94,8 +94,7 @@ api:
     enabled: false
     # -- Toggle whether to enable pre-install & pre-upgrade hooks
     useHelmHooks: true
-    image:
-      repository: kubeshop/testkube-cloud-api-migrations
+
   # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
   inviteMode: email
   smtp:
