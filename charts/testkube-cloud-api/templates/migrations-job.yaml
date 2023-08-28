@@ -23,7 +23,6 @@ spec:
       containers:
         - name: migrations
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          command: ["/testkube/cloud-api"]
           args: ["migrate"]
           env: 
             - name: ENTERPRISE_MODE
