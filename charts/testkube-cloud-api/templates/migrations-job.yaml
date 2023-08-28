@@ -262,8 +262,6 @@ spec:
               value: "{{ .Values.api.minio.token }}"
               {{- end }}
             {{- end }}
-            
-            # {{ include "testkube-cloud-api.env" . nindent 12 }} /* include values from _helpers.tpl */
       restartPolicy: Never
   backoffLimit: 3
 {{- end }}
