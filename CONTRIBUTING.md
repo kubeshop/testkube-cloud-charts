@@ -30,6 +30,12 @@ On every update to either of the subcharts, the sync script should be executed w
 ./scripts/sync.sh
 ```
 
+After the sync script is executed, regenerate the docs by running:
+
+```shell
+./scripts/helm-docs.sh
+```
+
 > **Note**
 > When creating your own `README.md.gotmpl`, don't forget to add it to your `.helmignore` file.
 
@@ -53,6 +59,10 @@ New charts should start at version `1.0.0`, if it's considered stable. If it isn
 Any breaking changes to a chart (backwards incompatible) require:
 
 * Bump of the current Major version of the chart
+
+Any other manual change to a chart require:
+
+* Bump of the current Minor version of the chart
 
 ### New Application Versions
 
