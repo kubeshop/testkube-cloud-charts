@@ -8,10 +8,10 @@ dependencies:
     version: 2.2.5
     repository: https://charts.bitnami.com/bitnami
   - name: testkube-cloud-api
-    version: 1.13.88
+    version: 1.14.0
     repository: file://../testkube-cloud-api
   - name: testkube-cloud-ui
-    version: 1.13.78
+    version: 1.13.79
     repository: file://../testkube-cloud-ui
   - name: dex
     version: 0.14.1

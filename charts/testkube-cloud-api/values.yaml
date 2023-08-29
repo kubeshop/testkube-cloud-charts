@@ -51,7 +51,7 @@ fullnameOverride: ""
 # -- Additional env vars to be added to the deployment
 additionalEnv:
   {}
-  # FOO: bar
+# FOO: bar
 
 analytics:
   segmentio:
@@ -201,7 +201,7 @@ podAnnotations: {}
 # -- Pod Security Context
 podSecurityContext:
   {}
-  # fsGroup: 2000
+# fsGroup: 2000
 
 # -- Security Context for app container
 securityContext:
@@ -237,7 +237,7 @@ restIngress:
   # -- Additional annotations to add to the REST Ingress resource
   annotations:
     {}
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates
   host: ""
 
@@ -249,7 +249,7 @@ grpcIngress:
   # -- Additional annotations to add to the gRPC Ingress resource
   annotations:
     {}
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates
   host: ""
 
@@ -261,7 +261,7 @@ websocketsIngress:
   # -- Additional annotations to add to the WebSocket Ingress resource
   annotations:
     {}
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates
   host: ""
 

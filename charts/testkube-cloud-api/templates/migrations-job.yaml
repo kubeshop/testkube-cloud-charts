@@ -24,7 +24,7 @@ spec:
         - name: migrations
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           args: ["migrate"]
-          env: 
+          env:
             - name: ENTERPRISE_MODE
               value: "{{ .Values.global.enterpriseMode }}"
             {{- if .Values.global.enterpriseMode }}
