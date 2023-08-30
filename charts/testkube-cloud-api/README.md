@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.11.7](https://img.shields.io/badge/Version-1.11.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0-dev-f05d636](https://img.shields.io/badge/AppVersion-1.2.0--dev--f05d636-informational?style=flat-square)
+![Version: 1.14.0](https://img.shields.io/badge/Version-1.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.7](https://img.shields.io/badge/AppVersion-1.3.7-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -22,6 +22,9 @@ A Helm chart for Testkube Cloud API
 |-----|------|---------|-------------|
 | additionalEnv | object | `{}` | Additional env vars to be added to the deployment |
 | affinity | object | `{}` |  |
+| ai.apiKey | string | `""` | or use api key instead two above |
+| ai.secretKey | string | `"key"` |  |
+| ai.secretRef | string | `"openai-api-key"` | AI config secret ref |
 | analytics.hubspot.apiKey | string | `""` | HubSpot write key |
 | analytics.hubspot.enabled | bool | `false` | Toggle whether to enable HubSpot sync |
 | analytics.hubspot.secretRef | string | `""` | HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`) |
@@ -35,7 +38,6 @@ A Helm chart for Testkube Cloud API
 | api.dashboardAddress | string | `""` | Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`) |
 | api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
-| api.migrations.image.repository | string | `"kubeshop/testkube-cloud-api-migrations"` |  |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
 | api.minio.accessKeyId | string | `""` | MinIO access key id |
 | api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: MINIO_ACCESS_KEY_ID, MINIO_SECRET_ACCESS_KEY, MINIO_TOKEN) (default is `testkube-cloud-minio-secret`) |
