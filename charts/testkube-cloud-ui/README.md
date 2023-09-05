@@ -1,6 +1,10 @@
 # testkube-cloud-ui
 
+<<<<<<< HEAD
 ![Version: 1.13.25](https://img.shields.io/badge/Version-1.13.25-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.0-dev-71b4169](https://img.shields.io/badge/AppVersion-1.3.0--dev--71b4169-informational?style=flat-square)
+=======
+![Version: 1.14.0](https://img.shields.io/badge/Version-1.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.0-dev-f443d5d](https://img.shields.io/badge/AppVersion-1.4.0--dev--f443d5d-informational?style=flat-square)
+>>>>>>> origin/develop
 
 A Helm chart for Testkube Cloud UI
 

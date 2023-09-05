@@ -229,7 +229,7 @@ fi
 helm_version=${helm_version#v}
 
 # validate Helm chart version is a valid semver tag
-semver_regex="^[0-9]+\.[0-9]+\.[0-9]$"
+semver_regex="^[0-9]+\.[0-9]+\.[0-9]+$"
 if [[ ! $helm_version =~ $semver_regex ]]; then
   err "Invalid Helm chart version, expected semver ('X.Y.Z'), got: $helm_version"
 fi

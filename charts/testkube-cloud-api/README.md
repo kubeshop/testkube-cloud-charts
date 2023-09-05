@@ -1,6 +1,10 @@
 # testkube-cloud-api
 
+<<<<<<< HEAD
 ![Version: 1.13.28](https://img.shields.io/badge/Version-1.13.28-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.0-dev-68fd8ac](https://img.shields.io/badge/AppVersion-1.3.0--dev--68fd8ac-informational?style=flat-square)
+=======
+![Version: 1.14.0](https://img.shields.io/badge/Version-1.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.7](https://img.shields.io/badge/AppVersion-1.3.7-informational?style=flat-square)
+>>>>>>> origin/develop
 
 A Helm chart for Testkube Cloud API
 
@@ -38,7 +42,6 @@ A Helm chart for Testkube Cloud API
 | api.dashboardAddress | string | `""` | Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`) |
 | api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
-| api.migrations.image.repository | string | `"kubeshop/testkube-cloud-api-migrations"` |  |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
 | api.minio.accessKeyId | string | `""` | MinIO access key id |
 | api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: MINIO_ACCESS_KEY_ID, MINIO_SECRET_ACCESS_KEY, MINIO_TOKEN) (default is `testkube-cloud-minio-secret`) |
