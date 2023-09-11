@@ -2,8 +2,8 @@ apiVersion: v2
 name: testkube-cloud-ui
 description: A Helm chart for Testkube Cloud UI
 type: application
-version: 1.14.13
-appVersion: 1.4.0-dev-d6ebc3e
+version: 1.14.14
+appVersion: 1.4.0-dev-1642519
 maintainers:
   - name: testkube
     url: https://testkube.io
