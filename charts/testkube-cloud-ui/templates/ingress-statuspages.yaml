@@ -44,10 +44,10 @@ spec:
   {{- end }}
   tls:
     - hosts:
-        - {{ include "testkube-cloud-ui.ingress.statusPagesHost" . | quote }}
+        - {{ include "testkube-cloud-ui.statusPagesIngress.host" . | quote }}
       secretName: {{ .Values.ingress.tlsSecretName }}
   rules:
-    - host: {{ include "testkube-cloud-ui.ingress.statusPagesHost" . | quote }}
+    - host: {{ include "testkube-cloud-ui.statusPagesIngress.host" . | quote }}
       http:
         paths:
           - path: /
