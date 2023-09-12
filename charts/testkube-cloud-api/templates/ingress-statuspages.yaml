@@ -1,5 +1,5 @@
 {{- if and .Values.global.ingress .Values.statusPagesIngress.enabled -}}
-{{- $fullName := include "testkube-cloud-ui.fullname" . -}}
+{{- $fullName := include "testkube-cloud-api.fullname" . -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
@@ -16,7 +16,7 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}-status-pages
   labels:
-    {{- include "testkube-cloud-ui.labels" . | nindent 4 }}
+    {{- include "testkube-cloud-api.labels" . | nindent 4 }}
   {{- if .Values.statusPagesIngress.labels }}
     {{- toYaml .Values.ingress.labels | nindent 4 }}
   {{- end }}
@@ -44,10 +44,10 @@ spec:
   {{- end }}
   tls:
     - hosts:
-        - {{ include "testkube-cloud-ui.statusPagesIngress.host" . | quote }}
+        - {{ include "testkube-cloud-api.statusPagesIngress.host" . | quote }}
       secretName: {{ .Values.ingress.tlsSecretName }}
   rules:
-    - host: {{ include "testkube-cloud-ui.statusPagesIngress.host" . | quote }}
+    - host: {{ include "testkube-cloud-api.statusPagesIngress.host" . | quote }}
       http:
         paths:
           - path: /
