@@ -44,10 +44,10 @@ spec:
   {{- end }}
   tls:
     - hosts:
-        - {{ .Values.statusPagesIngress.annotations.host }}
+        - {{ .Values.statusPagesIngress.host | quote }}
       secretName: {{ .Values.ingress.tlsSecretName }}
   rules:
-    - host: {{ .Values.statusPagesIngress.annotations.host }}
+    - host: {{ .Values.statusPagesIngress.host | quote }}
       http:
         paths:
           - path: /
