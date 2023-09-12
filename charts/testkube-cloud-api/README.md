@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.14.0](https://img.shields.io/badge/Version-1.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.7](https://img.shields.io/badge/AppVersion-1.3.7-informational?style=flat-square)
+![Version: 1.14.12](https://img.shields.io/badge/Version-1.14.12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.14](https://img.shields.io/badge/AppVersion-1.3.14-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -161,6 +161,10 @@ A Helm chart for Testkube Cloud API
 | serviceAccount.create | bool | `false` | Toggle whether to create a ServiceAccount resource |
 | serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| statusPagesIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
+| statusPagesIngress.enabled | bool | `true` | Toggle whether to enable the Status Pages API Ingress |
+| statusPagesIngress.host | string | `"*.status.testkube.io"` | Hostname for which to create rules and TLS certificates |
+| statusPagesIngress.labels | object | `{}` | Additional labels to add to the WebSocket Ingress resource |
 | tolerations | list | `[]` |  |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | websocketsIngress.enabled | bool | `true` | Toggle whether to enable the Websocket API Ingress |
