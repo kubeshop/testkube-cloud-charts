@@ -1,5 +1,6 @@
 # IDE
 .idea
+.vscode/*
 
 # Chart dependencies
 charts/testkube-cloud-api/charts/*.tgz
