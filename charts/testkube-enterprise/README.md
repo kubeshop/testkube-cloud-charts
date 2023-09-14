@@ -21,7 +21,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.15.2 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.15.3 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.14.17 |
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
@@ -125,10 +125,8 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.4.0-dev-88d810f"` |  |
-| testkube-cloud-api.ingress.className | string | `"nginx"` |  |
-| testkube-cloud-api.ingress.enabled | bool | `true` |  |
-| testkube-cloud-api.ingress.hosts[0].host | string | `""` |  |
+| testkube-cloud-api.image.tag | string | `"1.4.0-dev-72a1668"` |  |
+| testkube-cloud-api.ingress | string | `nil` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
 | testkube-cloud-api.minio.credentials.accessKeyId | string | `"testkube-enterprise"` | Root username |

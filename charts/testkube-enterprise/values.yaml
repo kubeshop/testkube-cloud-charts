@@ -172,10 +172,6 @@ testkube-cloud-api:
   prometheus:
     enabled: true
   ingress:
-    enabled: true
-    className: nginx
-    hosts:
-      - host: ''
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
