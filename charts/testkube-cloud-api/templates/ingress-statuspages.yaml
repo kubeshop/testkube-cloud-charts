@@ -45,7 +45,7 @@ spec:
   tls:
     - hosts:
         - {{ include "testkube-cloud-api.ingress.statusPagesHost" . | quote }}
-      secretName: {{ .Values.ingress.tlsSecretName }}
+      secretName: {{ .Values.api.tls.tlsSecret }}
   rules:
     - host: {{ include "testkube-cloud-api.ingress.statusPagesHost" . | quote }}
       http:
