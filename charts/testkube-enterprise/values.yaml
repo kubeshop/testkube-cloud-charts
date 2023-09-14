@@ -23,6 +23,8 @@ global:
   grpcApiSubdomain: "agent"
   # -- Websocket API subdomain which get prepended to the domain
   websocketApiSubdomain: "websockets"
+  # -- Status Pages API subdomain which get prepended to the domain
+  statusPagesApiSubdomain: "status"
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: "cert-manager"
   certManager:
@@ -173,7 +175,7 @@ testkube-cloud-api:
     enabled: true
     className: nginx
     hosts:
-      - host: '*.status.{{ .Values.global.domain }}'
+      - host: ''
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:

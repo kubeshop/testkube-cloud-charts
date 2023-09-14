@@ -66,6 +66,7 @@ A Helm chart for Testkube Enterprise
 | global.imagePullSecrets | list | `[]` | Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui |
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
+| global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
 | mongodb.auth.enabled | bool | `false` | Toggle whether to enable MongoDB authentication |
@@ -127,7 +128,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.image.tag | string | `"1.4.0-dev-88d810f"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.ingress.enabled | bool | `true` |  |
-| testkube-cloud-api.ingress.hosts[0].host | string | `"*.status.{{ .Values.global.domain }}"` |  |
+| testkube-cloud-api.ingress.hosts[0].host | string | `""` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
 | testkube-cloud-api.minio.credentials.accessKeyId | string | `"testkube-enterprise"` | Root username |
