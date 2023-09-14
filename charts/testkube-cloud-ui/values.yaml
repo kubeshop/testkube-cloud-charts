@@ -53,6 +53,12 @@ ui:
   # -- Force disabling telemetry on the UI
   disableTelemetry: false
 
+externalSecrets:
+  enabled: false
+  refreshInterval: 5m
+  clusterSecretStoreName: secret-store 
+  keys: {}
+
 serviceAccount:
   # -- Toggle whether to create ServiceAccount resource
   create: false

@@ -186,6 +186,12 @@ api:
     # -- Comma-separated list of allowed external redirect URIs (example: `https://cloud.testkube.xyz,http://localhost:3000`)
     allowedExternalRedirectURIs: ""
 
+externalSecrets:
+  enabled: false
+  refreshInterval: 5m
+  clusterSecretStoreName: secret-store
+  keys: {}
+
 serviceAccount:
   # -- Toggle whether to create a ServiceAccount resource
   create: false

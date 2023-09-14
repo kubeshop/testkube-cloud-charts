@@ -1,6 +1,10 @@
 # testkube-cloud-api
 
+<<<<<<< HEAD
+![Version: 1.14.7](https://img.shields.io/badge/Version-1.14.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.13](https://img.shields.io/badge/AppVersion-1.3.13-informational?style=flat-square)
+=======
 ![Version: 1.14.12](https://img.shields.io/badge/Version-1.14.12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.14](https://img.shields.io/badge/AppVersion-1.3.14-informational?style=flat-square)
+>>>>>>> origin/develop
 
 A Helm chart for Testkube Cloud API
 
@@ -79,6 +83,10 @@ A Helm chart for Testkube Cloud API
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| externalSecrets.clusterSecretStoreName | string | `"secret-store"` |  |
+| externalSecrets.enabled | bool | `false` |  |
+| externalSecrets.keys | object | `{}` |  |
+| externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |

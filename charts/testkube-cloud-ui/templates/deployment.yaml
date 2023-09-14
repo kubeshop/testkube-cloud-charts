@@ -60,6 +60,15 @@ spec:
             - name: REACT_APP_DISABLE_TELEMETRY
               value: "true"
             {{- end }}
+            {{- if .Values.externalSecrets.enabled -}}
+            {{- range $key, $value := .Values.externalSecrets.keys }}
+            - name: {{ $value }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ $value }}
+                  name: ui-external-secrets
+            {{ end }}
+            {{- end}}
           livenessProbe:
             httpGet:
               path: /
