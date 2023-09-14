@@ -1,10 +1,6 @@
 # testkube-cloud-api
 
-<<<<<<< HEAD
-![Version: 1.14.7](https://img.shields.io/badge/Version-1.14.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.13](https://img.shields.io/badge/AppVersion-1.3.13-informational?style=flat-square)
-=======
-![Version: 1.14.12](https://img.shields.io/badge/Version-1.14.12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.14](https://img.shields.io/badge/AppVersion-1.3.14-informational?style=flat-square)
->>>>>>> origin/develop
+![Version: 1.15.3](https://img.shields.io/badge/Version-1.15.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.0-dev-72a1668](https://img.shields.io/badge/AppVersion-1.4.0--dev--72a1668-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -101,6 +97,7 @@ A Helm chart for Testkube Cloud API
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
+| global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
 | grpcIngress.annotations | object | `{}` | Additional annotations to add to the gRPC Ingress resource |
@@ -171,7 +168,7 @@ A Helm chart for Testkube Cloud API
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | statusPagesIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | statusPagesIngress.enabled | bool | `true` | Toggle whether to enable the Status Pages API Ingress |
-| statusPagesIngress.host | string | `"*.status.testkube.io"` | Hostname for which to create rules and TLS certificates |
+| statusPagesIngress.host | string | `""` | Hostname for which to create rules and TLS certificates |
 | statusPagesIngress.labels | object | `{}` | Additional labels to add to the WebSocket Ingress resource |
 | tolerations | list | `[]` |  |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
