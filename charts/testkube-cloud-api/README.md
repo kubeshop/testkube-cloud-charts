@@ -97,6 +97,7 @@ A Helm chart for Testkube Cloud API
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
+| global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
 | grpcIngress.annotations | object | `{}` | Additional annotations to add to the gRPC Ingress resource |
@@ -167,7 +168,7 @@ A Helm chart for Testkube Cloud API
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | statusPagesIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | statusPagesIngress.enabled | bool | `true` | Toggle whether to enable the Status Pages API Ingress |
-| statusPagesIngress.host | string | `"*.status.testkube.io"` | Hostname for which to create rules and TLS certificates |
+| statusPagesIngress.host | string | `""` | Hostname for which to create rules and TLS certificates |
 | statusPagesIngress.labels | object | `{}` | Additional labels to add to the WebSocket Ingress resource |
 | tolerations | list | `[]` |  |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
