@@ -45,6 +45,10 @@ spec:
               value: {{ if .Values.ui.apiServerEndpoint}}{{ .Values.ui.apiServerEndpoint }}{{ else }}https://api.{{ .Values.global.domain }}{{ end }}
             - name: REACT_APP_API_ROOT_ROUTE
               value: {{ if .Values.ui.rootRoute}}{{ .Values.ui.rootRoute }}{{ else }}https://{{ .Values.global.uiSubdomain }}.{{ .Values.global.domain }}{{ end }}
+            {{- if .Values.ui.authStrategy }}
+            - name: REACT_APP_AUTH_STRATEGY
+              value: {{ .Values.ui.authStrategy }}
+            {{- end }}
             {{- if .Values.sentry.enabled }}
             - name: REACT_APP_SENTRY_KEY
               {{- if .Values.sentry.secretRef }}
