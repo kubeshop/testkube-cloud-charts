@@ -358,15 +358,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-statusPagesIngress:
-  # -- Toggle whether to enable the Status Pages API Ingress
-  enabled: true
-  # -- Additional labels to add to the WebSocket Ingress resource
-  labels: {}
-  # -- Additional annotations to add to the WebSocket Ingress resource
-  annotations:
-    {}
-  # kubernetes.io/ingress.class: nginx
-  # -- Hostname for which to create rules and TLS certificates
-  host: ""
