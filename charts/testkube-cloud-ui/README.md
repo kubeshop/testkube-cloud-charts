@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.14.17](https://img.shields.io/badge/Version-1.14.17-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.0-dev-84e330b](https://img.shields.io/badge/AppVersion-1.4.0--dev--84e330b-informational?style=flat-square)
+![Version: 1.15.7](https://img.shields.io/badge/Version-1.15.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.3](https://img.shields.io/badge/AppVersion-1.3.3-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -68,8 +68,13 @@ A Helm chart for Testkube Cloud UI
 | serviceAccount.create | bool | `false` | Toggle whether to create ServiceAccount resource |
 | serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | serviceAccount.name | string | `""` | The name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template |
+| statusPagesIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
+| statusPagesIngress.enabled | bool | `true` | Toggle whether to enable the Status Pages API Ingress |
+| statusPagesIngress.host | string | `""` | Hostname for which to create rules and TLS certificates |
+| statusPagesIngress.labels | object | `{}` | Additional labels to add to the WebSocket Ingress resource |
 | tolerations | list | `[]` |  |
 | ui.apiServerEndpoint | string | `""` | API Server endpoint URL |
+| ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies |
 | ui.disableTelemetry | bool | `false` | Force disabling telemetry on the UI |
 | ui.rootRoute | string | `""` | The URL on which UI is served |
 | ui.segment.secretRef | string | `""` | Segment.io write key secret ref (secret must contain key SEGMENTIO_WRITE_KEY_UI) (default is `testkube-cloud-analytics-secret`) |

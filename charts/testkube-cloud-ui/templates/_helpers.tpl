@@ -70,3 +70,14 @@ Get Ingress host
 {{- printf "%s.%s" .Values.global.uiSubdomain .Values.global.domain }}
 {{- end }}
 {{- end }}
+
+{{/*
+Get Status Pages Ingress host
+*/}}
+{{- define "testkube-cloud-ui.ingress.statusPagesHost" -}}
+{{- if .Values.global.domain }}
+{{- printf "%s.%s" .Values.global.statusPagesUiSubdomain .Values.global.domain }}
+{{- else }}
+{{- .Values.statusPagesIngress.host }}
+{{- end }}
+{{- end }}
