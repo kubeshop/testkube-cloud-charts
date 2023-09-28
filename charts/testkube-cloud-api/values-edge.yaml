@@ -1,0 +1,386 @@
+# Default values for testkube-cloud-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  # -- Toggle whether UI is installed in Enterprise mode
+  enterpriseMode: false
+  # -- Toggle whether to enable offline license activation in Enterprise mode
+  enterpriseOfflineAccess: false
+  # -- Enterprise License key
+  enterpriseLicenseKey: ""
+  # -- Base64-encoded Enterprise License file
+  enterpriseLicenseFile: ""
+  # -- Enterprise License file secret ref (secret should contain a file called 'license.lic')
+  enterpriseLicenseSecretRef: ""
+  # -- Domain under which to create Ingress rules
+  domain: ""
+  # -- UI subdomain which get prepended to the domain
+  uiSubdomain: "cloud"
+  # -- REST API subdomain which get prepended to the domain
+  restApiSubdomain: "api"
+  # -- gRPC API subdomain which get prepended to the domain
+  grpcApiSubdomain: "agent"
+  # -- Websocket API subdomain which get prepended to the domain
+  websocketApiSubdomain: "websockets"
+  # -- Status Pages API subdomain which get prepended to the domain
+  statusPagesApiSubdomain: "status"
+  # -- TLS provider (possible values: "", "cert-manager")
+  certificateProvider: ""
+  certManager:
+    # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
+    issuerRef: ""
+  # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
+  imagePullSecrets: []
+  ingress:
+    # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
+    enabled: true
+  dex:
+    # -- Global Dex issuer url
+    issuer: ""
+
+replicaCount: 1
+
+image:
+  repository: kubeshop/testkube-cloud-api
+  pullPolicy: IfNotPresent
+  tag: "1.0.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# -- Additional env vars to be added to the deployment
+additionalEnv:
+  {}
+# FOO: bar
+
+analytics:
+  segmentio:
+    # -- Toggle whether to enable Segment.io analytics
+    enabled: false
+    # -- Segment.io write key
+    writeKey: ""
+    # -- Segment.io secret ref (secret must contain key SEGMENTIO_WRITE_KEY) (default is `testkube-cloud-analytics-secret`)
+    secretRef: ""
+  hubspot:
+    # -- Toggle whether to enable HubSpot sync
+    enabled: false
+    # -- HubSpot write key
+    apiKey: ""
+    # -- HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`)
+    secretRef: ""
+
+ai:
+  # -- AI config secret ref
+  secretRef: ""
+  secretKey: ""
+  # -- or use api key instead two above
+  apiKey: ""
+
+payments:
+  # -- Toggle whether to enable payments service
+  enabled: false
+  # -- Payments config secret ref (secret must contain keys: PAYMENTS_PORTAL_CONFIGURATION_ID, PAYMENTS_ENDPOINT_SECRET and PAYMENTS_API_KEY) (default is `testkube-cloud-payments-secret`)
+  secretRef: ""
+  # -- Payments API key (currently only Stripe is supported)
+  apiKey: ""
+  # -- Payments endpoint secret (currently only Stripe is supported)
+  endpointSecret: ""
+  # -- Payments portal configuration ID (currently only Stripe is supported)
+  portalConfigurationId: ""
+
+api:
+  migrations:
+    # -- Toggle whether to apply migrations for MongoDB
+    enabled: false
+    # -- Toggle whether to enable pre-install & pre-upgrade hooks
+    useHelmHooks: true
+
+  # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
+  inviteMode: email
+  smtp:
+    # -- SMTP host
+    host: smtp.sendgrid.net
+    # -- SMTP port
+    port: 587
+    # -- SMTP username
+    username: ""
+    # -- SMTP password
+    password: ""
+    # -- SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined
+    passwordSecretRef: ""
+  tls:
+    # -- Toggle should the Application terminate TLS instead of the Ingress
+    serveHTTPS: true
+    # -- API HTTPS port
+    apiPort: 9443
+    # -- Agent gRPCS port
+    agentPort: 8443
+    # -- TLS secret name which contains the certificate files
+    tlsSecret: testkube-cloud-api-tls
+    certManager:
+      # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
+      issuerKind: ClusterIssuer
+      # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
+      issuerGroup: cert-manager.io
+    # -- certificate path
+    certPath: /tmp/serving-cert/crt.pem
+    # -- certificate key path
+    keyPath: /tmp/serving-cert/key.pem
+  # -- S3 bucket in which outputs are stored
+  outputsBucket: testkube-cloud-outputs
+  # -- API address (used in invitation emails) (example `https://api.testkube.xyz`)
+  apiAddress: ""
+  # -- Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`)
+  dashboardAddress: ""
+  mongo:
+    # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
+    dsnSecretRef: ""
+    # -- if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string
+    dsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
+    # -- Mongo database name
+    database: "testkubecloud"
+  nats:
+    # -- NATS URI
+    uri: "nats://nats.messaging.svc.cluster.local:4222"
+  minio:
+    # -- MinIO endpoint
+    endpoint: "minio.testkube.svc.cluster.local:9000"
+    # -- S3 region
+    region: ""
+    # -- MinIO access key id
+    accessKeyId: ""
+    # -- MinIO secret access key
+    secretAccessKey: ""
+    # -- MinIO token
+    token: ""
+    # -- Credentials secret ref (secret should contain keys: MINIO_ACCESS_KEY_ID, MINIO_SECRET_ACCESS_KEY, MINIO_TOKEN) (default is `testkube-cloud-minio-secret`)
+    credsSecretRef: ""
+    # -- Expiration period in days
+    expirationPeriod: 0
+    # -- Should be set to `true` if MinIO is behind
+    secure: false
+  sendgrid:
+    # -- Sendgrid API key
+    apiKey: ""
+    # -- Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`)
+    secretRef: ""
+  agent:
+    hide: false
+    # -- Agent host with protocol (example `agent.testkube.xyz`)
+    host: ""
+    # -- Agent port
+    port: "443"
+  oauth:
+    # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`)
+    secretRef: ""
+    # -- if oauth.secretRef is empty (""), then oauth.clientId field will be used for the OAuth client ID
+    clientId: ""
+    # -- if oauth.secretRef is empty (""), then oauth.clientId field will be used for the OAuth cli client ID
+    cliClientId: ""
+    # -- if oauth.secretRef is empty (""), then oauth.clientSecret field will be used for the OAuth client secret
+    clientSecret: ""
+    # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL
+    issuerUrl: ""
+    # -- if oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
+    redirectUri: ""
+    # -- Comma-separated list of allowed external redirect URIs (example: `https://cloud.testkube.xyz,http://localhost:3000`)
+    allowedExternalRedirectURIs: ""
+
+externalSecrets:
+  enabled: true
+  refreshInterval: 5m
+  clusterSecretStoreName: secret-store
+  keys: 
+    edge_HUBSPOT_API_KEY: HUBSPOT_API_KEY
+    edge_MONGO_DSN: API_MONGO_DSN
+    edge_OAUTH_CLI_CLIENT_ID: OAUTH_CLI_CLIENT_ID
+    edge_OAUTH_CLIENT_ID: OAUTH_CLIENT_ID
+    edge_OAUTH_CLIENT_SECRET: OAUTH_CLIENT_SECRET
+    edge_OAUTH_ISSUER_URL: OAUTH_ISSUER_URL
+    edge_OAUTH_REDIRECT_URI: OAUTH_REDIRECT_URI
+    edge_OPENAI_API_KEY: OPENAI_API_KEY
+    edge_PAYMENTS_API_KEY: PAYMENTS_API_KEY
+    edge_PAYMENTS_ENDPOINT_SECRET: PAYMENTS_ENDPOINT_SECRET
+    edge_PAYMENTS_PORTAL_CONFIGURATION_ID: PAYMENTS_PORTAL_CONFIGURATION_ID
+    edge_REACT_APP_SEGMENT_WRITE_KEY: REACT_APP_SEGMENT_WRITE_KEY
+    edge_SEGMENTIO_WRITE_KEY: SEGMENTIO_WRITE_KEY
+    edge_SENDGRID_API_KEY: SENDGRID_API_KEY
+
+serviceAccount:
+  # -- Toggle whether to create a ServiceAccount resource
+  create: false
+  # -- Additional labels to add to the ServiceAccount resource
+  labels: {}
+  # -- Additional annotations to add to the ServiceAccount resource
+  annotations: {}
+  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+# -- Pod Security Context
+podSecurityContext:
+  {}
+# fsGroup: 2000
+
+# -- Security Context for app container
+securityContext:
+  readOnlyRootFilesystem: true
+
+service:
+  # -- Service type
+  type: ClusterIP
+  # -- Additional annotations to add to the Service resource
+  annotations: {}
+  # -- Additional labels to add to the Service resource
+  labels: {}
+  # -- REST API port
+  port: 8088
+  # -- gRPC/Agent API port
+  grpcPort: 8089
+  # -- Metrics port
+  metricsPort: 9000
+
+ingress:
+  # -- Common annotations which will be added to all Ingress resources
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
+  # -- Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed)
+  className: nginx
+
+restIngress:
+  # -- Toggle whether to enable the REST API Ingress
+  enabled: true
+  # -- Additional labels to add to the REST Ingress resource
+  labels: {}
+  # -- Additional annotations to add to the REST Ingress resource
+  annotations:
+    {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Hostname for which to create rules and TLS certificates
+  host: ""
+
+grpcIngress:
+  # -- Toggle whether to enable the gRPC API Ingress
+  enabled: true
+  # -- Additional labels to add to the gRPC Ingress resource
+  labels: {}
+  # -- Additional annotations to add to the gRPC Ingress resource
+  annotations:
+    {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Hostname for which to create rules and TLS certificates
+  host: ""
+
+websocketsIngress:
+  # -- Toggle whether to enable the Websocket API Ingress
+  enabled: true
+  # -- Additional labels to add to the WebSocket Ingress resource
+  labels: {}
+  # -- Additional annotations to add to the WebSocket Ingress resource
+  annotations:
+    {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Hostname for which to create rules and TLS certificates
+  host: ""
+
+## MinIO parameters
+minio:
+  # -- Toggle whether to deploy MinIO
+  enabled: false
+  # -- Extra env vars to pass to MinIO deployment
+  extraEnvVars: {}
+  ## Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
+  # -- PVC Access Modes for Minio. The volume is mounted as read-write by a single node.
+  accessModes:
+    - ReadWriteOnce
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
+  # -- Tolerations for pod assignment.
+  tolerations: []
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # -- Affinity for pod assignment (note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set)
+  affinity: {}
+  image:
+    repository: minio/minio
+    tag: RELEASE.2023-05-04T21-44-30Z
+    pullPolicy: IfNotPresent
+  # -- Custom service account to attach to the MinIO deployment
+  customServiceAccountName: ""
+  serviceAccount:
+    # -- Toggle whether to create a ServiceAccount resource
+    create: false
+    # -- Additional labels to add to the ServiceAccount resource
+    labels: {}
+    # -- Additional annotations to add to the ServiceAccount resource
+    annotations: {}
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+    name: ""
+  credentials:
+    # -- MinIO access key
+    accessKeyId: ""
+    # -- MinIO secret key
+    secretAccessKey: ""
+    # -- MinIO credentials secret ref (secret must contain keys ACCESS_KEY_ID and SECRET_ACCESS_KEY)
+    secretRef: ""
+  persistence:
+    # -- Size of the volume claim for MinIO data
+    storage: 10Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    # -- It is strongly recommended to set limits for both cpu and memory
+    limits: {}
+  # -- MinIO Pod Security Context
+  podSecurityContext: {}
+  # -- MinIO Container Security Context
+  securityContext: {}
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  # -- It is strongly recommended to set limits for both cpu and memory
+  limits: {}
+
+autoscaling:
+  # -- Toggle whether to enable Horizontal Pod Autoscaler
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+prometheus:
+  # -- Toggle whether to create ServiceMonitor resource for Prometheus Operator
+  enabled: true
+  # -- ServiceMonitor labels
+  labels: {}
+  # -- Scrape interval configuration in ServiceMonitor resource
+  scrapeInterval: 15s
+  # -- Metrics port which will be scraper
+  port: metrics
+  # -- Metrics path which will be scraped
+  path: /metrics
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+statusPagesIngress:
+  # -- Toggle whether to enable the Status Pages API Ingress
+  enabled: true
+  # -- Additional labels to add to the WebSocket Ingress resource
+  labels: {}
+  # -- Additional annotations to add to the WebSocket Ingress resource
+  annotations:
+    {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Hostname for which to create rules and TLS certificates
+  host: ""
