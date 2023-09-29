@@ -11,7 +11,7 @@ dependencies:
     version: 1.15.37
     repository: file://../testkube-cloud-api
   - name: testkube-cloud-ui
-    version: 1.15.39
+    version: 1.15.40
     repository: file://../testkube-cloud-ui
   - name: dex
     version: 0.14.1
