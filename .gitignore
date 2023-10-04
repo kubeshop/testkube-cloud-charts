@@ -9,3 +9,6 @@ charts/testkube-cloud-ui/charts/*.tgz
 # OSX
 .DS_Store
 **/.DS_Store
+
+# Helm `dep up` charts
+**/charts/*.tgz
