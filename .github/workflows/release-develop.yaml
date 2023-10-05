@@ -41,6 +41,8 @@ jobs:
           if [[ "$changed_files" == *"testkube-cloud-api/"* ]]; then
             echo "Changes detected in files within the 'testkube-cloud-api' directory. Updating the chart patch version."
             ./scripts/update.sh -c testkube-cloud-api --strategy patch
+            new_chart_version=$(./scripts/update.sh -c testkube-cloud-api --print-chart-version)
+            echo "New testkube-cloud-api chart version is $new_chart_version" >> $GITHUB_STEP_SUMMARY
           else
             echo "No changes detected in the specified directories."
           fi
@@ -48,6 +50,8 @@ jobs:
           if [[ "$changed_files" == *"testkube-cloud-ui/"* ]]; then
             echo "Changes detected in files within the 'testkube-cloud-ui' directory. Updating the chart patch version."
             ./scripts/update.sh -c testkube-cloud-ui --strategy patch
+            new_chart_version=$(./scripts/update.sh -c testkube-cloud-ui --print-chart-version)
+            echo "New testkube-cloud-ui chart version is $new_chart_version" >> $GITHUB_STEP_SUMMARY
           else
             echo "No changes detected in the specified directories."
           fi
@@ -61,6 +65,10 @@ jobs:
           echo "Bumping testkube-enterprise Helm-chart version"
           ./scripts/update.sh -c testkube-enterprise --strategy patch
 
+          #get Enterprise version
+          enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
+          echo "New testkube-enterprise chart version is $enterprise_chart_version" >> $GITHUB_STEP_SUMMARY
+
       - name: Lint Helm charts for safety
         run: |
           helm lint charts/*
@@ -71,11 +79,22 @@ jobs:
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
           git status
           git add **/*Chart.yaml
-          git commit -m "updating chart versions"
+          git commit -m "Updating helm-chart versions"
           git push
 
-      - name: Generate Helm Docs
-        uses: shaybentk/helm-docs-action@v0.0.1
+      - name: Install Helm Docs
+        uses: envoy/install-helm-docs@v1.0.0
         with:
-          working-dir: charts/testkube-cloud-api,charts/testkube-cloud-ui,charts/testkube-cloud-enterprise
-          git-push: "true"
+          version: 1.11.0
+
+      - name: Update Helm Docs
+        run: |
+          set -ex
+          helm-docs
+
+      - name: Commit Helm Docs
+        run: |
+          set -ex
+          git add .
+          git commit -m "Update helm docs"
+          git push
