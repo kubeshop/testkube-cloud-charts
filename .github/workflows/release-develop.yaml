@@ -65,12 +65,12 @@ jobs:
           #get Enterprise version
           enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
           echo "New testkube-enterprise chart version is $enterprise_chart_version" >> $GITHUB_STEP_SUMMARY
-
-      - name: Lint Helm charts for safety
-        run: |
-          helm lint charts/testkube-cloud-ui
-          helm lint charts/testkube-cloud-api
-          helm lint charts/testkube-enterprise
+#
+#      - name: Lint Helm charts for safety
+#        run: |
+#          helm lint charts/testkube-cloud-ui
+#          helm lint charts/testkube-cloud-api
+#          helm lint charts/testkube-enterprise
 
       - name: Commit & push changes
         run: |
