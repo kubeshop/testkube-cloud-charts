@@ -31,7 +31,7 @@ A Helm chart for Testkube Cloud UI
 | externalSecrets.keys | object | `{}` |  |
 | externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
-| global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
+| global.certManager.issuerRef | string | `""` |  |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
