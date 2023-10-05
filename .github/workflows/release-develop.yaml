@@ -30,7 +30,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: run diff
-        run: git --no-pager diff charts
+        run: git --no-pager diff >> $GITHUB_STEP_SUMMARY
 
 #      - name: Update Helm chart with changes files
 #        run: |
