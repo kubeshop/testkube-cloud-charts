@@ -7,9 +7,9 @@
 #              -v|--helm-version to specify the versions, and -c|--chart       #
 #              to provide the name of the chart.                               #
 #                                                                              #
-# Note: If -v|--helm-version is not provided, the latest Git tag is used       #
-#       as the Helm version. If --strategy is specified, the Helm version is   #
-#       bumped based on the specified strategy.                                #
+# Note: If -v|--helm-version is not provided, we take the latest version       #
+# in Chart.yaml file and bump it. If --strategy is specified, the Helm version #
+# is bumped based on the specified strategy.                                   #
 ################################################################################
 
 ## VARIABLES
