@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
+          fetch-depth: 2
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -70,7 +70,9 @@ jobs:
 #
 #      - name: Lint Helm charts for safety
 #        run: |
-#          helm lint charts/*
+#          helm lint charts/testkube-cloud-ui
+#          helm lint charts/testkube-cloud-api
+#          helm lint charts/testkube-enterprise
 #
 #      - name: Commit & push changes
 #        run: |
