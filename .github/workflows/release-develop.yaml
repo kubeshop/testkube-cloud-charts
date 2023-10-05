@@ -8,17 +8,11 @@ on:
 
     paths:
       - 'charts/testkube-cloud-api/templates/**'
-      - 'charts/testkube-cloud-api/Chart.yaml'
       - 'charts/testkube-cloud-api/values.yaml'
-      - 'charts/testkube-cloud-api/README.md'
       - 'charts/testkube-cloud-ui/templates/**'
-      - 'charts/testkube-cloud-ui/Chart.yaml'
       - 'charts/testkube-cloud-ui/values.yaml'
-      - 'charts/testkube-cloud-ui/README.md'
       - 'charts/testkube-enterprise/templates/**'
-      - 'charts/testkube-enterprise/Chart.yaml'
       - 'charts/testkube-enterprise/values.yaml'
-      - 'charts/testkube-enterprise/README.md'
 
 jobs:
   release-helm-charts:
