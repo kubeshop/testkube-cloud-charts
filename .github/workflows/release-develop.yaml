@@ -32,8 +32,8 @@ jobs:
       - name: run diff
         run: git --no-pager diff >> $GITHUB_STEP_SUMMARY
 
-      - run: git log
-      - run: git diff HEAD~10
+      - run: git diff
+      - run: git diff >> $GITHUB_STEP_SUMMARY
 
 #      - name: Update Helm chart with changes files
 #        run: |
