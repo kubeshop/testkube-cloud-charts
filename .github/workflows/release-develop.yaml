@@ -71,3 +71,9 @@ jobs:
           git add **/*Chart.yaml
           git commit -m "updating chart versions"
           git push
+
+      - name: Generate Helm Docs
+        uses: shaybentk/helm-docs-action@v0.0.1
+        with:
+          working-dir: charts/testkube-cloud-api,charts/testkube-cloud-ui,charts/testkube-cloud-enterprise
+          git-push: "true"
