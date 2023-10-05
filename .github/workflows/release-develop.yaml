@@ -20,7 +20,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -31,7 +33,6 @@ jobs:
         run: |
           echo "Testkube Helm charts diff"
           changed_files=$(git --no-pager diff charts)
-          echo $changed_files
 
           if [[ "$changed_files" == *"testkube-cloud-api/"* ]]; then
             echo "Changes detected in files within the 'testkube-cloud-api' directory. Updating the chart patch version."
