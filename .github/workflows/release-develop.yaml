@@ -5,6 +5,7 @@ on:
     branches:
       - develop
       - ci/add-flow-for-develop
+
     paths:
       - 'charts/testkube-cloud-api/templates/**'
       - 'charts/testkube-cloud-api/Chart.yaml'
@@ -71,7 +72,7 @@ jobs:
           git status
           git add **/*Chart.yaml
           git commit -m "updating chart versions"
-
+          git push
 
       - name: Generate Helm Docs
         uses: shaybentk/helm-docs-action@v0.0.1
