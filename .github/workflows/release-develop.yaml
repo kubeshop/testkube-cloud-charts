@@ -71,15 +71,6 @@ jobs:
           helm lint charts/testkube-cloud-api
           helm lint charts/testkube-enterprise
 
-      - name: Commit & push changes
-        run: |
-          git config --global user.name "testkube-cloud-ci-bot"
-          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
-          git status
-          git add **/*Chart.yaml
-          git commit -m "Updating helm-chart versions"
-          git push
-
       - name: Install Helm Docs
         uses: envoy/install-helm-docs@v1.0.0
         with:
@@ -90,9 +81,11 @@ jobs:
           set -ex
           helm-docs
 
-      - name: Commit Helm Docs
+      - name: Commit & push changes
         run: |
-          set -ex
-          git add .
-          git commit -m "Update helm docs"
+          git config --global user.name "testkube-cloud-ci-bot"
+          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+          git status
+          git add **/*Chart.yaml **/*README.md
+          git commit -m "Updating helm-chart versions and README files"
           git push
