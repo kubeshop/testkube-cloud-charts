@@ -19,7 +19,6 @@ global:
   ingress:
     # -- Global toggle whether to create Ingress resources
     enabled: true
-
 replicaCount: 1
 
 sentry:
