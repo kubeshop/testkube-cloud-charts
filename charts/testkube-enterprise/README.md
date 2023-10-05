@@ -1,7 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.12.44](https://img.shields.io/badge/Version-1.12.44-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
-
+![Version: 1.12.38](https://img.shields.io/badge/Version-1.12.38-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 A Helm chart for Testkube Enterprise
 
 **Homepage:** <https://github.com/kubeshop/testkube-cloud-charts>
@@ -126,7 +125,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.tag | string | `"1.4.0-dev-0bd1f1d"` |  |
-| testkube-cloud-api.ingress | string | `nil` |  |
+| testkube-cloud-api.ingress.enabled | bool | `true` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
 | testkube-cloud-api.minio.credentials.accessKeyId | string | `"testkube-enterprise"` | Root username |
