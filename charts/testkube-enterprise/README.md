@@ -1,6 +1,7 @@
 # testkube-enterprise
 
-![Version: 1.12.38](https://img.shields.io/badge/Version-1.12.38-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.12.39](https://img.shields.io/badge/Version-1.12.39-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+
 A Helm chart for Testkube Enterprise
 
 **Homepage:** <https://github.com/kubeshop/testkube-cloud-charts>
@@ -20,8 +21,8 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.15.23 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.15.21 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.15.48 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.15.51 |
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
 | https://charts.dexidp.io | dex | 0.14.1 |
@@ -124,7 +125,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.4.0-dev-0bd1f1d"` |  |
+| testkube-cloud-api.image.tag | string | `"1.5.0-dev-9890f28"` |  |
 | testkube-cloud-api.ingress.enabled | bool | `true` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
@@ -147,7 +148,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.prometheus.enabled | bool | `true` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"1.4.0-dev-1b62f33"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.5.0-dev-6ed6dd7"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 
 ----------------------------------------------
