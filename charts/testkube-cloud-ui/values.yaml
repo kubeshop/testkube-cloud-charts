@@ -13,7 +13,6 @@ global:
   certificateProvider: ""
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
-
     issuerRef: ""
   # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
