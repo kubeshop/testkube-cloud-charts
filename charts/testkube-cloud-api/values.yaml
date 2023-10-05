@@ -38,6 +38,7 @@ global:
   dex:
     # -- Global Dex issuer url
     issuer: ""
+
 replicaCount: 1
 
 image:
