@@ -72,6 +72,7 @@ jobs:
           git add **/*Chart.yaml
           git commit -m "updating chart versions"
 
+
       - name: Generate Helm Docs
         uses: shaybentk/helm-docs-action@v0.0.1
         with:
