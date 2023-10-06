@@ -35,8 +35,8 @@ jobs:
           changed_files=$(git --no-pager diff HEAD~1 charts)
 
           if [[ "$changed_files" == *"testkube-cloud-api/"* ]]; then
-            echo "Changes detected in files within the 'testkube-cloud-api' directory. Updating the chart patch version."
-            ./scripts/update.sh -c testkube-cloud-api --strategy patch
+            echo "Changes detected in files within the 'testkube-cloud-api' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-cloud-api --strategy minor
             new_chart_version=$(./scripts/update.sh -c testkube-cloud-api --print-chart-version)
             echo "New testkube-cloud-api chart version is $new_chart_version" >> $GITHUB_STEP_SUMMARY
           else
@@ -44,8 +44,8 @@ jobs:
           fi
 
           if [[ "$changed_files" == *"testkube-cloud-ui/"* ]]; then
-            echo "Changes detected in files within the 'testkube-cloud-ui' directory. Updating the chart patch version."
-            ./scripts/update.sh -c testkube-cloud-ui --strategy patch
+            echo "Changes detected in files within the 'testkube-cloud-ui' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-cloud-ui --strategy minor
             new_chart_version=$(./scripts/update.sh -c testkube-cloud-ui --print-chart-version)
             echo "New testkube-cloud-ui chart version is $new_chart_version" >> $GITHUB_STEP_SUMMARY
           else
@@ -59,7 +59,7 @@ jobs:
           ./scripts/sync.sh
 
           echo "Bumping testkube-enterprise Helm-chart version"
-          ./scripts/update.sh -c testkube-enterprise --strategy patch
+          ./scripts/update.sh -c testkube-enterprise --strategy minor
 
           #get Enterprise version
           enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
