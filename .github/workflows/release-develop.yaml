@@ -1,10 +1,9 @@
-name: Release Helm charts - develop
+name: Update Helm charts - develop
 
 on:
   push:
     branches:
       - develop
-      - ci/add-flow-for-develop
 
     paths:
       - 'charts/testkube-cloud-api/templates/**'
