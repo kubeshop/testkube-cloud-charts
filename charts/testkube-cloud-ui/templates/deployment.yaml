@@ -82,6 +82,8 @@ spec:
               path: /
               port: http
           volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: html
             - mountPath: /tmp
               name: tmp
           resources:
@@ -95,6 +97,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - emptyDir: {}
+          name: html
         - emptyDir: {}
           name: tmp
       {{- with .Values.tolerations }}
