@@ -36,6 +36,7 @@ jobs:
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
 
           git checkout -b add-dispatch-main-test
+          git pull origin add-dispatch-main-test
 
           # update application version
           ./scripts/update.sh      \
