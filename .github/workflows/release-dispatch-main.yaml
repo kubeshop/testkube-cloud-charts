@@ -35,7 +35,7 @@ jobs:
           # update application version
           ./scripts/update.sh      \
             -c testkube-cloud-api  \
-            -a 1.5.4 \
+            -a 1.5.5 \
             --verbose
 
           # update helm chart version
@@ -90,7 +90,7 @@ jobs:
       - name: Commit & push changes
         run: |
           git add **/*Chart.yaml **/*README.md **/*values.yaml archives/*.tgz
-          git commit -m "updating chart testkube-cloud-api version to "${{ env.CHART_VERSION }}" and appVersion to 1.5.4 ; Updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}."
+          git commit -m "updating chart testkube-cloud-api version to "${{ env.CHART_VERSION }}" and appVersion to 1.5.5 ; Updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}."
           git push --set-upstream https://testkube-cloud-ci-bot:${{ secrets.GITHUB_TOKEN }}@github.com/kubeshop/testkube-cloud-charts add-dispatch-main-test
 
       - name: Bump version and push tag
