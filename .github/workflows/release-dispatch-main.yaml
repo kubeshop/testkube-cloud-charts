@@ -116,7 +116,6 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           artifacts: |
             archives/testkube-cloud-api-${{ env.CHART_VERSION }}.tgz
-#            archives/testkube-cloud-ui-${{ env.UI_CHART_VERSION }}.tgz
             archives/testkube-cloud-enterprise-${{ env.ENTERPRISE_CHART_VERSION }}.tgz
 
 #      - name: Release to Keygen
