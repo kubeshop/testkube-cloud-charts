@@ -43,6 +43,8 @@ jobs:
           new_chart_version=$(./scripts/update.sh -c testkube-cloud-api --print-chart-version)
           echo "CHART_VERSION=$chart_version" >> $GITHUB_ENV
 
+          cat charts/testkube-cloud-api/Chart.yaml
+
 
 #          chart_version=$(./scripts/update.sh -c testkube-cloud-ui --print-chart-version)
 #          echo "UI_CHART_VERSION=$chart_version" >> $GITHUB_ENV
@@ -58,11 +60,16 @@ jobs:
           enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
           echo "ENTERPRISE_CHART_VERSION=$enterprise_chart_version" >> $GITHUB_ENV
 
+          cat charts/testkube-cloud-api/Chart.yaml
+          cat charts/testkube-enterprise/Chart.yaml
+
       - name: Lint Helm charts for safety
         run: |
           helm lint charts/testkube-cloud-ui
           helm lint charts/testkube-cloud-api
           helm lint charts/testkube-enterprise
+
+          cat charts/testkube-cloud-api/Chart.yaml
 
       - name: Install Helm Docs
         uses: envoy/install-helm-docs@v1.0.0
@@ -73,6 +80,8 @@ jobs:
         run: |
           set -ex
           helm-docs
+
+          cat charts/testkube-cloud-api/Chart.yaml
 
       - name: Package charts & update Helm repo index
         run: |
