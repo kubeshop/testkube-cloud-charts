@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.15.70](https://img.shields.io/badge/Version-1.15.70-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.7](https://img.shields.io/badge/AppVersion-1.5.7-informational?style=flat-square)
+![Version: 1.15.71](https://img.shields.io/badge/Version-1.15.71-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.7](https://img.shields.io/badge/AppVersion-1.5.7-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
