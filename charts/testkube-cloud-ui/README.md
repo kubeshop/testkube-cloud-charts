@@ -68,6 +68,7 @@ A Helm chart for Testkube Cloud UI
 | serviceAccount.create | bool | `false` | Toggle whether to create ServiceAccount resource |
 | serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | serviceAccount.name | string | `""` | The name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template |
+| testkube-cloud-ui.image.tag | string | `"1.5.0"` |  |
 | tolerations | list | `[]` |  |
 | ui.apiServerEndpoint | string | `""` | API Server endpoint URL |
 | ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies |

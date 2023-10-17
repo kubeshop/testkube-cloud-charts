@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.15.73](https://img.shields.io/badge/Version-1.15.73-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.9](https://img.shields.io/badge/AppVersion-1.5.9-informational?style=flat-square)
+![Version: 1.15.74](https://img.shields.io/badge/Version-1.15.74-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.10](https://img.shields.io/badge/AppVersion-1.5.10-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -170,6 +170,7 @@ A Helm chart for Testkube Cloud API
 | statusPagesIngress.enabled | bool | `true` | Toggle whether to enable the Status Pages API Ingress |
 | statusPagesIngress.host | string | `""` | Hostname for which to create rules and TLS certificates |
 | statusPagesIngress.labels | object | `{}` | Additional labels to add to the WebSocket Ingress resource |
+| testkube-cloud-api.image.tag | string | `"1.5.10"` |  |
 | tolerations | list | `[]` |  |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | websocketsIngress.enabled | bool | `true` | Toggle whether to enable the Websocket API Ingress |
