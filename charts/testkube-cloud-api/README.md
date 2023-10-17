@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.15.74](https://img.shields.io/badge/Version-1.15.74-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.10](https://img.shields.io/badge/AppVersion-1.5.10-informational?style=flat-square)
+![Version: 1.15.75](https://img.shields.io/badge/Version-1.15.75-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.11](https://img.shields.io/badge/AppVersion-1.5.11-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -106,7 +106,7 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.labels | object | `{}` | Additional labels to add to the gRPC Ingress resource |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.0.0"` |  |
+| image.tag | string | `"1.5.11"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
@@ -170,7 +170,6 @@ A Helm chart for Testkube Cloud API
 | statusPagesIngress.enabled | bool | `true` | Toggle whether to enable the Status Pages API Ingress |
 | statusPagesIngress.host | string | `""` | Hostname for which to create rules and TLS certificates |
 | statusPagesIngress.labels | object | `{}` | Additional labels to add to the WebSocket Ingress resource |
-| testkube-cloud-api.image.tag | string | `"1.5.10"` |  |
 | tolerations | list | `[]` |  |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | websocketsIngress.enabled | bool | `true` | Toggle whether to enable the Websocket API Ingress |
