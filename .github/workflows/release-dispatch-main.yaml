@@ -40,7 +40,7 @@ jobs:
 
           # update helm chart version
           new_chart_version=$(./scripts/update.sh -c testkube-cloud-api --print-chart-version)
-          echo "CHART_VERSION=$chart_version" >> $GITHUB_ENV
+          echo "CHART_VERSION=$new_chart_version" >> $GITHUB_ENV
 
 
 #          chart_version=$(./scripts/update.sh -c testkube-cloud-ui --print-chart-version)
