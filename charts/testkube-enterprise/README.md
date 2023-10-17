@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.13.12](https://img.shields.io/badge/Version-1.13.12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.13.13](https://img.shields.io/badge/Version-1.13.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -21,7 +21,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.15.72 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.15.73 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.16.0 |
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
@@ -125,7 +125,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.5.8"` |  |
+| testkube-cloud-api.image.tag | string | `"1.5.9"` |  |
 | testkube-cloud-api.ingress.enabled | bool | `true` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
