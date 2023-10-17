@@ -75,6 +75,10 @@ jobs:
           set -ex
           helm-docs
 
+      - name: chart
+        run: |
+          echo charts="testkube-cloud-ui" >> $GITHUB_ENV
+
       - name: Add a release asset
         run: |
           if [[ "${{ env.charts }}" == "testkube-cloud-api" ]]; then
@@ -125,10 +129,6 @@ jobs:
       - name: Changelog
         uses: scottbrenner/generate-changelog-action@master
         id: changelog
-
-      - name: chart
-        run: |
-          echo charts="testkube-cloud-ui" >> $GITHUB_ENV
 
       - name: Create a GitHub release for the app
         uses: ncipollo/release-action@v1
