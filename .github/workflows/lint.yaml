@@ -32,7 +32,7 @@ jobs:
           git status
           git add **/*README.md
           git commit -m "Updating README.md files"
-          git push
+          git push --set-upstream https://testkube-cloud-ci-bot:${{ secrets.GITHUB_TOKEN }}@github.com/kubeshop/testkube-cloud-charts ${{ github.event.pull_request.head.ref }}
 
       - name: Check for changes in generated Helm docs models (helm-docs)
         run: |
