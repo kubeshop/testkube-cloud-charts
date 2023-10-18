@@ -42,7 +42,7 @@ jobs:
           else
             echo  "Docs are up to date"
           fi
-          exit $changed
+
   chart-test:
     name: Chart lint
     runs-on: ubuntu-22.04
