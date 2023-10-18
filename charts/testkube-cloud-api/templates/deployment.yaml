@@ -64,7 +64,7 @@ spec:
                 secretKeyRef:
                   key: {{ .Values.ai.secretKey }}
                   name: {{ .Values.ai.secretRef }}
-              {{- else if not .Values.externalSecrets.keys.edge_OPENAI_API_KEY }}
+              {{- else if not .Values.externalSecrets.keys.OPENAI_API_KEY }}
             - name: OPENAI_API_KEY
               value: {{ .Values.ai.apiKey }}
               {{- end }}
@@ -148,7 +148,7 @@ spec:
                 secretKeyRef:
                   key: SENDGRID_API_KEY
                   name: {{ .Values.api.sendgrid.secretRef }}
-              {{- else if not .Values.externalSecrets.keys.edge_SENDGRID_API_KEY }}
+              {{- else if not .Values.externalSecrets.keys.SENDGRID_API_KEY }}
             - name: SENDGRID_API_KEY
               value: "{{ .Values.api.sendgrid.apiKey }}"
               {{- end }}
@@ -158,7 +158,7 @@ spec:
                 secretKeyRef:
                   key: MONGO_DSN
                   name: {{ .Values.api.mongo.dsnSecretRef }}
-              {{- else if not .Values.externalSecrets.keys.edge_MONGO_DSN }}
+              {{- else if not .Values.externalSecrets.keys.MONGO_DSN }}
             - name: API_MONGO_DSN
               value: {{ .Values.api.mongo.dsn }}
               {{- end }}
@@ -170,7 +170,7 @@ spec:
                 secretKeyRef:
                   key: OAUTH_CLIENT_ID
                   name: {{ .Values.api.oauth.secretRef }}
-              {{- else if not .Values.externalSecrets.keys.edge_OAUTH_CLIENT_ID }}
+              {{- else if not .Values.externalSecrets.keys.OAUTH_CLIENT_ID }}
             - name: OAUTH_CLIENT_ID
               value: "{{ .Values.api.oauth.clientId }}"
               {{- end }}
@@ -180,7 +180,7 @@ spec:
                 secretKeyRef:
                   key: OAUTH_CLI_CLIENT_ID
                   name: {{ .Values.api.oauth.secretRef }}
-              {{- else if not .Values.externalSecrets.keys.edge_OAUTH_CLI_CLIENT_ID }}
+              {{- else if not .Values.externalSecrets.keys.OAUTH_CLI_CLIENT_ID }}
             - name: OAUTH_CLI_CLIENT_ID
               value: "{{ .Values.api.oauth.cliClientId }}"
               {{- end }}
@@ -190,7 +190,7 @@ spec:
                 secretKeyRef:
                   key: OAUTH_CLIENT_SECRET
                   name: {{ .Values.api.oauth.secretRef }}
-              {{- else if not .Values.externalSecrets.keys.edge_OAUTH_CLIENT_SECRET }}
+              {{- else if not .Values.externalSecrets.keys.OAUTH_CLIENT_SECRET }}
             - name: OAUTH_CLIENT_SECRET
               value: "{{ .Values.api.oauth.clientSecret }}"
               {{- end }}
@@ -200,7 +200,7 @@ spec:
                 secretKeyRef:
                   key: OAUTH_ISSUER_URL
                   name: {{ .Values.api.oauth.secretRef }}
-              {{- else if not .Values.externalSecrets.keys.edge_OAUTH_ISSUER_URL }}
+              {{- else if not .Values.externalSecrets.keys.OAUTH_ISSUER_URL }}
             - name: OAUTH_ISSUER_URL
               value: {{ if .Values.global.dex.issuer}}{{ .Values.global.dex.issuer }}{{ else if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
               {{- end }}
@@ -210,7 +210,7 @@ spec:
                 secretKeyRef:
                   key: OAUTH_REDIRECT_URI
                   name: {{ .Values.api.oauth.secretRef }}
-              {{- else if not .Values.externalSecrets.keys.edge_OAUTH_REDIRECT_URI }}
+              {{- else if not .Values.externalSecrets.keys.OAUTH_REDIRECT_URI }}
             - name: OAUTH_REDIRECT_URI
               value: "{{ if .Values.api.oauth.redirectUri }}{{ .Values.api.oauth.redirectUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/auth/callback{{ end }}"
               {{- end }}
