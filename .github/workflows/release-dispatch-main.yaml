@@ -79,7 +79,7 @@ jobs:
 
             helm package charts/testkube-cloud-api --destination archives
 
-          elif [[ "${{ github.event.client_payload.app }} " == "testkube-cloud-ui" ]]; then
+          elif [[ "${{ github.event.client_payload.app }}" == "testkube-cloud-ui" ]]; then
             release_asset="testkube-cloud-ui"
             asset_chart_version=$(./scripts/update.sh -c testkube-cloud-ui --print-chart-version)
             echo "RELEASE_ASSET=$release_asset" >> $GITHUB_ENV
@@ -127,10 +127,9 @@ jobs:
           name: ${{ steps.tag.outputs.new_tag }}
           body: ${{ steps.changelog.outputs.changelog }}
           artifacts: |
-            archives/testkube-cloud-ui-${{ env.CHART_VERSION }}.tgz
+            archives/${{ github.event.client_payload.app }}-${{ env.CHART_VERSION }}.tgz
             archives/testkube-enterprise-${{ env.ENTERPRISE_CHART_VERSION }}.tgz
             archives/${{ env.RELEASE_ASSET }}-${{ env.ASSET_CHART_VERSION }}.tgz
-
 
       - name: Release to Keygen
         uses: getgrit/keygen-action@main
