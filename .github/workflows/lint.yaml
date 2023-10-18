@@ -15,25 +15,12 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Install Helm Docs
-        uses: envoy/install-helm-docs@v1.0.0
-        with:
-          version: 1.11.0
-
-      - name: Update Helm Docs
-        run: |
-          set -ex
-          helm-docs
-
       - name: Check for changes in generated Helm docs models (helm-docs)
         run: |
           ./scripts/helm-docs.sh
           changed=$(git status -s -uno | wc -l)
-          echo -e "### Git status" >> $GITHUB_STEP_SUMMARY
           if [[ "$changed" -gt 0 ]]; then
-            echo "Generating helm-docs"
-            helm-docs
-
+            echo "Updating helm-docs"
             git config --global user.name "testkube-cloud-ci-bot"
             git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
             git add **/*README.md
