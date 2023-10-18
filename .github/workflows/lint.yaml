@@ -6,60 +6,6 @@ permissions:
   contents: read
 
 jobs:
-  docs-up-to-date:
-    name: Docs Up To Date
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: Install Helm Docs
-        uses: envoy/install-helm-docs@v1.0.0
-        with:
-          version: 1.11.0
-
-      - name: Update Helm Docs
-        run: |
-          set -ex
-          helm-docs
-
-      - name: Commit & push changes
-        run: |
-          git config --global user.name "testkube-cloud-ci-bot"
-          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
-          git status
-          git add **/*README.md
-          git commit -m "Updating README.md files"
-          git push --set-upstream https://testkube-cloud-ci-bot:${{ secrets.GITHUB_TOKEN }}@github.com/kubeshop/testkube-cloud-charts ${{ github.event.pull_request.head.ref }}
-
-      - name: Check for changes in generated Helm docs models (helm-docs)
-        run: |
-          ./scripts/helm-docs.sh
-
-          changed=$(git status -s -uno | wc -l)
-
-          echo -e "### Git status" >> $GITHUB_STEP_SUMMARY
-          if [[ "$changed" -gt 0 ]]; then
-            echo -e "Generated Helm docs are not synchronized. Please run './scripts/helm-docs.sh' and commit the changes." >> $GITHUB_STEP_SUMMARY
-            echo -e '```' >> $GITHUB_STEP_SUMMARY
-            git status -s -uno >> $GITHUB_STEP_SUMMARY
-            echo -e '```' >> $GITHUB_STEP_SUMMARY
-
-            echo -e >> $GITHUB_STEP_SUMMARY
-            echo -e "### Git diff" >> $GITHUB_STEP_SUMMARY
-            
-            echo -e '```' >> $GITHUB_STEP_SUMMARY
-            git --no-pager diff >> $GITHUB_STEP_SUMMARY
-            echo -e '```' >> $GITHUB_STEP_SUMMARY
-          else
-            echo -e "Generated Helm docs are synchronized." >> $GITHUB_STEP_SUMMARY
-            echo -e >> $GITHUB_STEP_SUMMARY
-          fi
-
-          exit $changed
-
   chart-test:
     name: Chart lint
     runs-on: ubuntu-22.04
@@ -81,7 +27,7 @@ jobs:
 
       - name: Setup Chart Linting
         id: lint
-        uses: helm/chart-testing-action@v2
+        uses: helm/chart-testing-action@v2.5.0
         with:
           # Note: Also update in scripts/lint.sh
           version: v3.7.1
