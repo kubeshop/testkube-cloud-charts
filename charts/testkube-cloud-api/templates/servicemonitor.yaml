@@ -18,4 +18,3 @@ spec:
       path: {{ .Values.prometheus.path }}
       interval: {{ .Values.prometheus.scrapeInterval }}
 {{- end }}
-
