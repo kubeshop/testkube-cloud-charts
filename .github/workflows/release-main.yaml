@@ -3,7 +3,6 @@ name: Release Helm charts - main
 on:
   push:
     branches:
-      - add-dispatch-main
       - main
     paths:
       - 'charts/testkube-cloud-api/templates/**'

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - add-dispatch-main
 
     paths:
       - 'charts/testkube-cloud-api/templates/**'
