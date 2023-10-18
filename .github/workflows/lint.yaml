@@ -3,7 +3,7 @@ name: Lint
 on: pull_request
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   docs-up-to-date:
