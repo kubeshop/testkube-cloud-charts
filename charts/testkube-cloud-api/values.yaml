@@ -38,21 +38,16 @@ global:
   dex:
     # -- Global Dex issuer url
     issuer: ""
-
 replicaCount: 1
-
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.0.0"
-
+  tag: "1.5.3"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
 # -- Additional env vars to be added to the deployment
-additionalEnv:
-  {}
+additionalEnv: {}
 # FOO: bar
 
 analytics:
@@ -70,14 +65,12 @@ analytics:
     apiKey: ""
     # -- HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`)
     secretRef: ""
-
 ai:
   # -- AI config secret ref
   secretRef: "openai-api-key"
   secretKey: "key"
   # -- or use api key instead two above
   apiKey: ""
-
 payments:
   # -- Toggle whether to enable payments service
   enabled: false
@@ -89,14 +82,12 @@ payments:
   endpointSecret: ""
   # -- Payments portal configuration ID (currently only Stripe is supported)
   portalConfigurationId: ""
-
 api:
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
     enabled: false
     # -- Toggle whether to enable pre-install & pre-upgrade hooks
     useHelmHooks: true
-
   # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
   inviteMode: email
   smtp:
@@ -187,13 +178,11 @@ api:
     redirectUri: ""
     # -- Comma-separated list of allowed external redirect URIs (example: `https://cloud.testkube.xyz,http://localhost:3000`)
     allowedExternalRedirectURIs: ""
-
 externalSecrets:
   enabled: false
   refreshInterval: 5m
   clusterSecretStoreName: secret-store
   keys: {}
-
 serviceAccount:
   # -- Toggle whether to create a ServiceAccount resource
   create: false
@@ -203,18 +192,14 @@ serviceAccount:
   annotations: {}
   # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
   name: ""
-
 podAnnotations: {}
-
 # -- Pod Security Context
-podSecurityContext:
-  {}
+podSecurityContext: {}
 # fsGroup: 2000
 
 # -- Security Context for app container
 securityContext:
   readOnlyRootFilesystem: true
-
 service:
   # -- Service type
   type: ClusterIP
@@ -228,7 +213,6 @@ service:
   grpcPort: 8089
   # -- Metrics port
   metricsPort: 9000
-
 ingress:
   # -- Common annotations which will be added to all Ingress resources
   annotations:
@@ -236,43 +220,36 @@ ingress:
     nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
   # -- Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed)
   className: nginx
-
 restIngress:
   # -- Toggle whether to enable the REST API Ingress
   enabled: true
   # -- Additional labels to add to the REST Ingress resource
   labels: {}
   # -- Additional annotations to add to the REST Ingress resource
-  annotations:
-    {}
+  annotations: {}
   # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates
   host: ""
-
 grpcIngress:
   # -- Toggle whether to enable the gRPC API Ingress
   enabled: true
   # -- Additional labels to add to the gRPC Ingress resource
   labels: {}
   # -- Additional annotations to add to the gRPC Ingress resource
-  annotations:
-    {}
+  annotations: {}
   # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates
   host: ""
-
 websocketsIngress:
   # -- Toggle whether to enable the Websocket API Ingress
   enabled: true
   # -- Additional labels to add to the WebSocket Ingress resource
   labels: {}
   # -- Additional annotations to add to the WebSocket Ingress resource
-  annotations:
-    {}
+  annotations: {}
   # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates
   host: ""
-
 ## MinIO parameters
 minio:
   # -- Toggle whether to deploy MinIO
@@ -325,14 +302,12 @@ minio:
   podSecurityContext: {}
   # -- MinIO Container Security Context
   securityContext: {}
-
 resources:
   requests:
     cpu: 100m
     memory: 128Mi
   # -- It is strongly recommended to set limits for both cpu and memory
   limits: {}
-
 autoscaling:
   # -- Toggle whether to enable Horizontal Pod Autoscaler
   enabled: false
@@ -340,7 +315,6 @@ autoscaling:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
-
 prometheus:
   # -- Toggle whether to create ServiceMonitor resource for Prometheus Operator
   enabled: true
@@ -352,21 +326,16 @@ prometheus:
   port: metrics
   # -- Metrics path which will be scraped
   path: /metrics
-
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}
-
 statusPagesIngress:
   # -- Toggle whether to enable the Status Pages API Ingress
   enabled: true
   # -- Additional labels to add to the WebSocket Ingress resource
   labels: {}
   # -- Additional annotations to add to the WebSocket Ingress resource
-  annotations:
-    {}
+  annotations: {}
   # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates
   host: ""
