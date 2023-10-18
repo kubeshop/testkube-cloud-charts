@@ -124,8 +124,13 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
+<<<<<<< HEAD
 | testkube-cloud-api.image.tag | string | `"1.3.6"` |  |
 | testkube-cloud-api.ingress | string | `nil` |  |
+=======
+| testkube-cloud-api.image.tag | string | `"1.5.3"` |  |
+| testkube-cloud-api.ingress.enabled | bool | `true` |  |
+>>>>>>> 1f1f6e9 (ci: modify flow (#49))
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
 | testkube-cloud-api.minio.credentials.accessKeyId | string | `"testkube-enterprise"` | Root username |

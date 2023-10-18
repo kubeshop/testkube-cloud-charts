@@ -21,6 +21,10 @@ echo "Updating testkube-cloud-api version in testkube-enterprise Helm chart to $
 yq eval -i '.testkube-cloud-api.image.tag = env(enterprise_api_app_version)' "charts/testkube-enterprise/values.yaml"
 echo "Updating testkube-cloud-ui version in testkube-enterprise Helm chart to $enterprise_ui_app_version"
 yq eval -i '.testkube-cloud-ui.image.tag = env(enterprise_ui_app_version)' "charts/testkube-enterprise/values.yaml"
+echo "Updating testkube-cloud-api version in testkube-cloud-api values.yaml to $enterprise_api_app_version"
+yq eval -i '.image.tag = env(enterprise_api_app_version)' "charts/testkube-cloud-api/values.yaml"
+echo "Updating testkube-cloud-ui version in testkube-cloud-ui values.yaml to $enterprise_ui_app_version"
+yq eval -i '.image.tag = env(enterprise_ui_app_version)' "charts/testkube-cloud-ui/values.yaml"
 
 # Update the dependencies field in Chart.yaml
 echo "Updating dependencies in Chart.yaml"

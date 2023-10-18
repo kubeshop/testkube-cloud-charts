@@ -5,6 +5,7 @@
 charts/testkube-cloud-api/charts/*.tgz
 charts/testkube-cloud-ui/charts/*.tgz
 
+archives/**
 # OSX
 .DS_Store
 **/.DS_Store
