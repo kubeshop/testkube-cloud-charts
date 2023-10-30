@@ -287,10 +287,10 @@ spec:
             {{- end}}
             {{- if .Values.externalSecrets.enabled -}}
             {{- range $key, $value := .Values.externalSecrets.keys }}
-            - name: {{ $value }}
+            - name: {{ $key }}
               valueFrom:
                 secretKeyRef:
-                  key: {{ $value }}
+                  key: {{ $key }}
                   name: api-external-secrets
             {{ end }}
             {{- end}}
