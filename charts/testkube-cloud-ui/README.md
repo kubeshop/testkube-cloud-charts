@@ -26,6 +26,10 @@ A Helm chart for Testkube Cloud UI
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| externalSecrets.clusterSecretStoreName | string | `"secret-store"` |  |
+| externalSecrets.enabled | bool | `false` |  |
+| externalSecrets.keys | object | `{}` |  |
+| externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
@@ -66,6 +70,7 @@ A Helm chart for Testkube Cloud UI
 | serviceAccount.name | string | `""` | The name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` |  |
 | ui.apiServerEndpoint | string | `""` | API Server endpoint URL |
+| ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies |
 | ui.disableTelemetry | bool | `false` | Force disabling telemetry on the UI |
 | ui.rootRoute | string | `""` | The URL on which UI is served |
 | ui.segment.secretRef | string | `""` | Segment.io write key secret ref (secret must contain key SEGMENTIO_WRITE_KEY_UI) (default is `testkube-cloud-analytics-secret`) |

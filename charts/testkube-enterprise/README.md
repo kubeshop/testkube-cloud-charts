@@ -66,6 +66,7 @@ A Helm chart for Testkube Enterprise
 | global.imagePullSecrets | list | `[]` | Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui |
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
+| global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
 | mongodb.auth.enabled | bool | `false` | Toggle whether to enable MongoDB authentication |

@@ -7,9 +7,9 @@
 #              -v|--helm-version to specify the versions, and -c|--chart       #
 #              to provide the name of the chart.                               #
 #                                                                              #
-# Note: If -v|--helm-version is not provided, the latest Git tag is used       #
-#       as the Helm version. If --strategy is specified, the Helm version is   #
-#       bumped based on the specified strategy.                                #
+# Note: If -v|--helm-version is not provided, we take the latest version       #
+# in Chart.yaml file and bump it. If --strategy is specified, the Helm version #
+# is bumped based on the specified strategy.                                   #
 ################################################################################
 
 ## VARIABLES
@@ -216,9 +216,12 @@ fi
 
 show "Updating chart $chart_path"
 
+
+chart_yaml_path="${chart_path}/Chart.yaml"
+
 # use latest git tag if helm_version is not specified
 if [[ -z "$helm_version" ]]; then
-  helm_version=$(git describe --abbrev=0 --tags)
+  helm_version=$(grep -E '^version:' "$chart_yaml_path" | awk '{print $2}')
   if [[ -z "$helm_version" ]]; then
     err "Helm version not specified or available. Use the -v|--helm-version flag or ensure there are Git tags."
     usage
@@ -235,8 +238,6 @@ if [[ ! $helm_version =~ $semver_regex ]]; then
 fi
 
 show "Current Helm chart version: $helm_version"
-
-chart_yaml_path="${chart_path}/Chart.yaml"
 
 if [[ "$print_chart_version" == true ]]; then
   print_chart_version

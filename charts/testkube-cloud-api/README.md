@@ -79,6 +79,10 @@ A Helm chart for Testkube Cloud API
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| externalSecrets.clusterSecretStoreName | string | `"secret-store"` |  |
+| externalSecrets.enabled | bool | `false` |  |
+| externalSecrets.keys | object | `{}` |  |
+| externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
@@ -93,6 +97,7 @@ A Helm chart for Testkube Cloud API
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
+| global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
 | grpcIngress.annotations | object | `{}` | Additional annotations to add to the gRPC Ingress resource |
@@ -161,6 +166,10 @@ A Helm chart for Testkube Cloud API
 | serviceAccount.create | bool | `false` | Toggle whether to create a ServiceAccount resource |
 | serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| statusPagesIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
+| statusPagesIngress.enabled | bool | `true` | Toggle whether to enable the Status Pages API Ingress |
+| statusPagesIngress.host | string | `""` | Hostname for which to create rules and TLS certificates |
+| statusPagesIngress.labels | object | `{}` | Additional labels to add to the WebSocket Ingress resource |
 | tolerations | list | `[]` |  |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | websocketsIngress.enabled | bool | `true` | Toggle whether to enable the Websocket API Ingress |

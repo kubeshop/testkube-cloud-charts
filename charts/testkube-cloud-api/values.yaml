@@ -23,6 +23,8 @@ global:
   grpcApiSubdomain: "agent"
   # -- Websocket API subdomain which get prepended to the domain
   websocketApiSubdomain: "websockets"
+  # -- Status Pages API subdomain which get prepended to the domain
+  statusPagesApiSubdomain: "status"
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
   certManager:
@@ -185,6 +187,12 @@ api:
     redirectUri: ""
     # -- Comma-separated list of allowed external redirect URIs (example: `https://cloud.testkube.xyz,http://localhost:3000`)
     allowedExternalRedirectURIs: ""
+
+externalSecrets:
+  enabled: false
+  refreshInterval: 5m
+  clusterSecretStoreName: secret-store
+  keys: {}
 
 serviceAccount:
   # -- Toggle whether to create a ServiceAccount resource
@@ -350,3 +358,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+statusPagesIngress:
+  # -- Toggle whether to enable the Status Pages API Ingress
+  enabled: true
+  # -- Additional labels to add to the WebSocket Ingress resource
+  labels: {}
+  # -- Additional annotations to add to the WebSocket Ingress resource
+  annotations:
+    {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Hostname for which to create rules and TLS certificates
+  host: ""

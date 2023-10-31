@@ -45,6 +45,8 @@ ui:
   apiServerEndpoint: ""
   # -- The URL on which UI is served
   rootRoute: ""
+  # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies
+  authStrategy: ""
   segment:
     # -- Segment.io write key secret ref (secret must contain key SEGMENTIO_WRITE_KEY_UI) (default is `testkube-cloud-analytics-secret`)
     secretRef: ""
@@ -52,6 +54,12 @@ ui:
     writeKey: ""
   # -- Force disabling telemetry on the UI
   disableTelemetry: false
+
+externalSecrets:
+  enabled: false
+  refreshInterval: 5m
+  clusterSecretStoreName: secret-store
+  keys: {}
 
 serviceAccount:
   # -- Toggle whether to create ServiceAccount resource
