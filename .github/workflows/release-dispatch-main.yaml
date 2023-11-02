@@ -71,7 +71,7 @@ jobs:
 
       - name: Add a release asset
         run: |
-          if [[ "${{ github.event.client_payload.app }} }" == "testkube-cloud-api" ]]; then
+          if [[ "${{ github.event.client_payload.app }}" == "testkube-cloud-api" ]]; then
             release_asset="testkube-cloud-api"
             asset_chart_version=$(./scripts/update.sh -c testkube-cloud-api --print-chart-version)
             echo "RELEASE_ASSET=$release_asset" >> $GITHUB_ENV
