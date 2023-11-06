@@ -1,6 +1,0 @@
-apiVersion: v2
-name: testkube-test-chart
-description: Testing Helm chart
-type: application
-version: 1.0.0
-appVersion: 1.2.3
