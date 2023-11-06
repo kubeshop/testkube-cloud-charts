@@ -1,4 +1,4 @@
-#name: Release Helm Chart - dispatch
+name: Release Helm Chart - dispatch
 #
 #on:
 #  repository_dispatch:
