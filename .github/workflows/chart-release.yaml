@@ -41,9 +41,13 @@ jobs:
         with:
           version: v3.10.0
 
-      - name: Installing third-party repositories
+      - name: Update lock file
         run: |
-            helm repo add bitnami https://charts.bitnami.com/bitnami
+          ./scripts/sync.sh
+           git status
+           git add charts/testkube-enterprise/Chart.lock
+           git commit -m "updating lock file"
+           git push
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
