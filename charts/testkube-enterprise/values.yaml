@@ -193,7 +193,7 @@ nats:
     # -- Enable cluster mode (HA)
     enabled: true
     # -- NATS cluster replicas
-    replicas: 2
+    replicas: 3
   # NATS container settings
   nats:
     enabled: true
