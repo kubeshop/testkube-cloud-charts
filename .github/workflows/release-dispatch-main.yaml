@@ -1,8 +1,8 @@
 name: Release Helm Chart - dispatch
-#
-#on:
-#  repository_dispatch:
-#    types: [trigger-workflow-testkube-cloud-api-main, trigger-workflow-testkube-cloud-ui-main]
+
+on:
+  repository_dispatch:
+    types: [trigger-workflow-testkube-cloud-api-main, trigger-workflow-testkube-cloud-ui-main]
 #
 #jobs:
 #  release-helm-charts:

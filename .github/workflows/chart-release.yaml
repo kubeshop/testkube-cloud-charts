@@ -44,10 +44,10 @@ jobs:
       - name: Update lock file
         run: |
           ./scripts/sync.sh
-           git status
-           git add charts/testkube-enterprise/Chart.lock
-           git commit -m "updating lock file"
-           git push
+#           git status
+#           git add charts/testkube-enterprise/Chart.lock
+#           git commit -m "updating lock file"
+#           git push
 
       - name: Installing repositories
         run: |
