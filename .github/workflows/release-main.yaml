@@ -18,15 +18,15 @@ on:
 #      - 'charts/testkube-enterprise/values.yaml'
 #      - 'charts/testkube-enterprise/README.md'
 #
-#jobs:
-#  release-helm-charts:
-#    name: Release Helm charts
-#    runs-on: ubuntu-22.04
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
+jobs:
+  release-helm-charts:
+    name: Release Helm charts
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 #
 #      - name: Install Helm
 #        uses: azure/setup-helm@v3

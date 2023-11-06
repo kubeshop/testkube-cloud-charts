@@ -44,10 +44,18 @@ jobs:
       - name: Update lock file
         run: |
           ./scripts/sync.sh
-#           git status
-#           git add charts/testkube-enterprise/Chart.lock
-#           git commit -m "updating lock file"
-#           git push
+
+          file_to_check="charts/testkube-enterprise/Chart.lock"
+
+          if git diff --quiet -- "$file_to_check"; then
+              echo "No changes in $file_to_check to commit."
+          else
+              # There are changes in the specified file, so proceed with the commit and push
+              git status
+              git add "$file_to_check"
+              git commit -m "Updating $file_to_check"
+              git push
+          fi
 
       - name: Installing repositories
         run: |
