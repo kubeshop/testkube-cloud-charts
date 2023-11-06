@@ -1,0 +1,194 @@
+name: Release Helm charts - main
+
+on:
+  push:
+    branches:
+      - main
+      - enterprise-chart
+    paths:
+      - 'charts/testkube-cloud-api/templates/**'
+      - 'charts/testkube-cloud-api/Chart.yaml'
+      - 'charts/testkube-cloud-api/values.yaml'
+      - 'charts/testkube-cloud-api/README.md'
+      - 'charts/testkube-cloud-ui/templates/**'
+      - 'charts/testkube-cloud-ui/Chart.yaml'
+      - 'charts/testkube-cloud-ui/values.yaml'
+      - 'charts/testkube-cloud-ui/README.md'
+      - 'charts/testkube-enterprise/templates/**'
+      - 'charts/testkube-enterprise/Chart.yaml'
+      - 'charts/testkube-enterprise/values.yaml'
+      - 'charts/testkube-enterprise/README.md'
+      - '.github/workflows/chart-release.yaml'
+
+jobs:
+  release-helm-charts:
+    name: Release Helm charts
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Installing third-party repositories
+        run: |
+            helm repo add bitnami https://charts.bitnami.com/bitnami
+
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_SKIP_EXISTING: true
+
+
+
+
+
+
+
+
+
+
+
+      - name: Update Helm chart with changes files
+        run: |
+          echo "Testkube Helm charts diff"
+          changed_files=$(git --no-pager diff HEAD~1 charts)
+
+          if [[ "$changed_files" == *"testkube-cloud-api/"* ]]; then
+            echo "Changes detected in files within the 'testkube-cloud-api' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-cloud-api --strategy minor
+          else
+            echo "No changes detected in the specified directories."
+          fi
+
+          if [[ "$changed_files" == *"testkube-cloud-ui/"* ]]; then
+            echo "Changes detected in files within the 'testkube-cloud-ui' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-cloud-ui --strategy minor
+          else
+            echo "No changes detected in the specified directories."
+          fi
+
+          tk_api_chart_version=$(./scripts/update.sh -c testkube-cloud-api --print-chart-version)
+          echo "New testkube-cloud-api chart version is $tk_api_chart_version" >> $GITHUB_STEP_SUMMARY
+          echo "API_CHART_VERSION=$tk_api_chart_version" >> $GITHUB_ENV
+
+          tk_ui_chart_version=$(./scripts/update.sh -c testkube-cloud-ui --print-chart-version)
+          echo "New testkube-cloud-ui chart version is $tk_ui_chart_version" >> $GITHUB_STEP_SUMMARY
+          echo "UI_CHART_VERSION=$tk_ui_chart_version" >> $GITHUB_ENV
+
+      - name: Sync & Update Testkube Enterprise Helm chart
+        run: |
+          bump_strategy="minor"
+          changed=$(git status --porcelain charts/testkube-enterprise | wc -l)
+          if [ $changed -gt 0 ]; then
+            bump_strategy="none"
+          fi
+
+          echo "Syncing subchart versions in testkube-enterprise Helm chart"
+          ./scripts/sync.sh
+
+          echo "Updating testkube-enterprise Helm chart version with bump strategy: $bump_strategy"
+          ./scripts/update.sh -c testkube-enterprise -s $bump_strategy --verbose
+
+          enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
+          echo "ENTERPRISE_CHART_VERSION=$enterprise_chart_version" >> $GITHUB_ENV
+
+          echo -e "### Testkube Enterprise Helm chart diff" >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
+          git --no-pager diff charts/testkube-enterprise >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Lint Helm charts for safety
+        run: |
+          helm lint charts/testkube-cloud-ui
+          helm lint charts/testkube-cloud-api
+          helm lint charts/testkube-enterprise
+
+      - name: Install Helm Docs
+        uses: envoy/install-helm-docs@v1.0.0
+        with:
+          version: 1.11.0
+
+      - name: Update Helm Docs
+        run: |
+          set -ex
+          helm-docs
+
+      - name: Package Helm charts
+        run: |
+          helm package charts/testkube-cloud-api --destination archives
+          helm package charts/testkube-cloud-ui --destination archives
+          helm dependency update charts/testkube-enterprise
+          helm package charts/testkube-enterprise --destination archives
+          echo "Updating Helm repository index"
+          helm repo index .
+
+      - name: Commit & push changes
+        run: |
+          git config --global user.name "testkube-cloud-ci-bot"
+          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+          git status
+          git add **/*Chart.yaml **/*README.md archives/*.tgz
+          git commit -m "updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}"
+          git push
+
+      - name: Bump version and push tag
+        id: tag
+        uses: anothrNick/github-tag-action@1.64.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: minor
+
+      - name: Changelog
+        uses: scottbrenner/generate-changelog-action@master
+        id: changelog
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag.outputs.new_tag }}
+          name: ${{ steps.tag.outputs.new_tag }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          artifacts: |
+            archives/testkube-cloud-ui-${{ env.UI_CHART_VERSION }}.tgz
+            archives/testkube-cloud-api-${{ env.API_CHART_VERSION }}.tgz
+            archives/testkube-enterprise-${{ env.ENTERPRISE_CHART_VERSION }}.tgz
+
+      - name: Release to Keygen
+        uses: getgrit/keygen-action@main
+        with:
+          # Required: Keygen Account ID or slug
+          account-id: "${{ secrets.KEYGEN_ACCOUNT_ID }}"
+          # Required: A Product or User Token (ref. https://keygen.sh/docs/api/authentication/#token-authentication)
+          token: "${{ secrets.KEYGEN_TESTKUBE_ENTERPRISE_PRODUCT_TOKEN }}"
+          # Required: Product ID
+          product-id: "${{ secrets.KEYGEN_TESTKUBE_ENTERPRISE_PRODUCT_ID }}"
+          # Required (boolean): true to publish the created release; false to keep it in the DRAFT state.
+          release-publish: true
+          # Optional
+          release-name: 'Testkube Enterprise v${{ env.ENTERPRISE_CHART_VERSION }}'
+          # Required: must be a valid semver value, without the `v` prefix
+          release-version: '${{ env.ENTERPRISE_CHART_VERSION }}'
+          # Required
+          release-channel: 'stable'
+          # Optional
+          release-tag: 'latest'
+          artifacts-json: |
+            [
+              {
+                "filepath": "./archives/testkube-enterprise-${{ env.ENTERPRISE_CHART_VERSION }}.tgz",
+                "platform": "linux",
+                "arch": "amd64"
+              }
+            ]
