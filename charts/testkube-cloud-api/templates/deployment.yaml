@@ -58,13 +58,14 @@ spec:
             - name: ENTERPRISE_LICENSE_FILE
               value: "{{ .Values.global.enterpriseLicenseFile }}"
             {{- end }}
-            - name: OPENAI_API_KEY
               {{- if .Values.ai.secretRef }}
+            - name: OPENAI_API_KEY
               valueFrom:
                 secretKeyRef:
                   key: {{ .Values.ai.secretKey }}
                   name: {{ .Values.ai.secretRef }}
-              {{- else }}
+              {{- else if .Values.ai.apiKey }}
+            - name: OPENAI_API_KEY
               value: {{ .Values.ai.apiKey }}
               {{- end }}
             - name: INVITE_MODE
@@ -141,69 +142,76 @@ spec:
               value: {{ .Values.analytics.hubspot.apiKey }}
               {{- end }}
             {{- end }}
-            - name: SENDGRID_API_KEY
               {{- if .Values.api.sendgrid.secretRef }}
+            - name: SENDGRID_API_KEY
               valueFrom:
                 secretKeyRef:
                   key: SENDGRID_API_KEY
                   name: {{ .Values.api.sendgrid.secretRef }}
-              {{- else }}
+              {{- else if .Values.api.sendgrid.apiKey }}
+            - name: SENDGRID_API_KEY
               value: "{{ .Values.api.sendgrid.apiKey }}"
               {{- end }}
-            - name: API_MONGO_DSN
               {{- if .Values.api.mongo.dsnSecretRef }}
+            - name: API_MONGO_DSN
               valueFrom:
                 secretKeyRef:
                   key: MONGO_DSN
                   name: {{ .Values.api.mongo.dsnSecretRef }}
-              {{- else }}
+              {{- else if .Values.api.mongo.dsn }}
+            - name: API_MONGO_DSN
               value: {{ .Values.api.mongo.dsn }}
               {{- end }}
             - name: API_MONGO_DB
               value: {{ .Values.api.mongo.database }}
-            - name: OAUTH_CLIENT_ID
               {{- if .Values.api.oauth.secretRef }}
+            - name: OAUTH_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   key: OAUTH_CLIENT_ID
                   name: {{ .Values.api.oauth.secretRef }}
-              {{- else }}
+              {{- else if .Values.api.oauth.clientId }}
+            - name: OAUTH_CLIENT_ID
               value: "{{ .Values.api.oauth.clientId }}"
               {{- end }}
-            - name: OAUTH_CLI_CLIENT_ID
               {{- if .Values.api.oauth.secretRef }}
+            - name: OAUTH_CLI_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   key: OAUTH_CLI_CLIENT_ID
                   name: {{ .Values.api.oauth.secretRef }}
-              {{- else }}
+              {{- else if .Values.api.oauth.cliClientId }}
+            - name: OAUTH_CLI_CLIENT_ID
               value: "{{ .Values.api.oauth.cliClientId }}"
               {{- end }}
-            - name: OAUTH_CLIENT_SECRET
               {{- if .Values.api.oauth.secretRef }}
+            - name: OAUTH_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   key: OAUTH_CLIENT_SECRET
                   name: {{ .Values.api.oauth.secretRef }}
-              {{- else }}
+              {{- else if .Values.api.oauth.clientSecret }}
+            - name: OAUTH_CLIENT_SECRET
               value: "{{ .Values.api.oauth.clientSecret }}"
               {{- end }}
-            - name: OAUTH_ISSUER_URL
               {{- if .Values.api.oauth.secretRef }}
+            - name: OAUTH_ISSUER_URL
               valueFrom:
                 secretKeyRef:
                   key: OAUTH_ISSUER_URL
                   name: {{ .Values.api.oauth.secretRef }}
               {{- else }}
+            - name: OAUTH_ISSUER_URL
               value: {{ if .Values.global.dex.issuer}}{{ .Values.global.dex.issuer }}{{ else if .Values.api.oauth.issuerUrl }}{{ .Values.api.oauth.issuerUrl }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp{{ end }}
               {{- end }}
-            - name: OAUTH_REDIRECT_URI
               {{- if .Values.api.oauth.secretRef }}
+            - name: OAUTH_REDIRECT_URI
               valueFrom:
                 secretKeyRef:
                   key: OAUTH_REDIRECT_URI
                   name: {{ .Values.api.oauth.secretRef }}
               {{- else }}
+            - name: OAUTH_REDIRECT_URI
               value: "{{ if .Values.api.oauth.redirectUri }}{{ .Values.api.oauth.redirectUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/auth/callback{{ end }}"
               {{- end }}
             - name: NATS_URI
@@ -279,10 +287,10 @@ spec:
             {{- end}}
             {{- if .Values.externalSecrets.enabled -}}
             {{- range $key, $value := .Values.externalSecrets.keys }}
-            - name: {{ $value }}
+            - name: {{ $key }}
               valueFrom:
                 secretKeyRef:
-                  key: {{ $value }}
+                  key: {{ $key }}
                   name: api-external-secrets
             {{ end }}
             {{- end}}
