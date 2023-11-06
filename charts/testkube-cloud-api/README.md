@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.13.89](https://img.shields.io/badge/Version-1.13.89-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.1](https://img.shields.io/badge/AppVersion-1.6.1-informational?style=flat-square)
+![Version: 1.13.90](https://img.shields.io/badge/Version-1.13.90-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.2](https://img.shields.io/badge/AppVersion-1.6.2-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -106,7 +106,7 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.labels | object | `{}` | Additional labels to add to the gRPC Ingress resource |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.6.1"` |  |
+| image.tag | string | `"1.6.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
