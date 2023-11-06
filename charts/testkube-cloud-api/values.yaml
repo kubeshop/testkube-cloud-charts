@@ -180,7 +180,7 @@ api:
     allowedExternalRedirectURIs: ""
 externalSecrets:
   enabled: false
-  refreshInterval: 5m
+  refreshInterval: 1m
   clusterSecretStoreName: secret-store
   keys: {}
 serviceAccount:
