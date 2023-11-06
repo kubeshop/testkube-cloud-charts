@@ -19,9 +19,7 @@ global:
   ingress:
     # -- Global toggle whether to create Ingress resources
     enabled: true
-
 replicaCount: 1
-
 sentry:
   # -- Toggle whether to enable Sentry.io error reporting
   enabled: false
@@ -29,17 +27,14 @@ sentry:
   secretRef: ""
   # -- Sentry.io authenticated URL
   url: ""
-
 image:
   repository: kubeshop/testkube-cloud-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.0.0"
-
+  tag: "1.3.1"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
 ui:
   # -- API Server endpoint URL
   apiServerEndpoint: ""
@@ -54,13 +49,11 @@ ui:
     writeKey: ""
   # -- Force disabling telemetry on the UI
   disableTelemetry: false
-
 externalSecrets:
   enabled: false
   refreshInterval: 5m
   clusterSecretStoreName: secret-store
   keys: {}
-
 serviceAccount:
   # -- Toggle whether to create ServiceAccount resource
   create: false
@@ -70,21 +63,17 @@ serviceAccount:
   annotations: {}
   # -- The name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template
   name: ""
-
 podAnnotations: {}
-
 # -- Pod Security Context
 podSecurityContext: {}
-  # fsGroup: 2000
+# fsGroup: 2000
 
 # -- Container Security Context
 securityContext:
   readOnlyRootFilesystem: true
-
 service:
   type: ClusterIP
   port: 8080
-
 ingress:
   # -- Toggle whether to create Ingress resource
   enabled: true
@@ -96,14 +85,13 @@ ingress:
   labels: {}
   # -- Additional Ingress annotations
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
   tls:
     # -- TLS provider (possible values: "", "cert-manager")
     provider: "cert-manager"
   # -- Hostname for which to create rules and TLS certificates
   host: ""
-
 resources:
   requests:
     cpu: 50m
@@ -111,16 +99,12 @@ resources:
   limits:
     cpu: 150m
     memory: 128Mi
-
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
-
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}
