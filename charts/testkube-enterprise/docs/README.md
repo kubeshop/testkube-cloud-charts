@@ -1,3 +1,34 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Testkube Enterprise Helm Chart Installation and Usage Guide](#testkube-enterprise-helm-chart-installation-and-usage-guide)
+  - [Prerequisites](#prerequisites)
+  - [Configuration](#configuration)
+    - [Docker images](#docker-images)
+    - [License](#license)
+      - [Online License](#online-license)
+      - [Offline License](#offline-license)
+    - [Ingress](#ingress)
+      - [Configuration](#configuration-1)
+      - [Domain](#domain)
+      - [TLS](#tls)
+    - [Auth](#auth)
+  - [Invitations](#invitations)
+    - [Invitations via email](#invitations-via-email)
+    - [Auto-accept invitations](#auto-accept-invitations)
+  - [Bring Your Own Infra](#bring-your-own-infra)
+    - [MongoDB](#mongodb)
+    - [NATS](#nats)
+    - [MinIO](#minio)
+    - [Dex](#dex)
+  - [Installation](#installation)
+    - [Minimal setup](#minimal-setup)
+    - [Production setup](#production-setup)
+  - [FAQ](#faq)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Testkube Enterprise Helm Chart Installation and Usage Guide
 
 Welcome to the Testkube Enterprise Helm chart installation and usage guide.
@@ -48,6 +79,11 @@ to use `cert-manager` for certificate management.
 ## Configuration
 
 ### Docker images
+
+**NOTE**: As of November 2023, Testkube Enterprise Docker images are publicly available, so no additional config is needed,
+but this section can be helpful if you want to re-publish the images to your own private Docker registry. Otherwise,
+feel free to skip this section.
+
 To begin, ensure that you have access to the Testkube Enterprise API & Dashboard Docker images.
 You can either request access from your Testkube representative or upload the Docker image tarball artifacts to a private Docker registry.
 
@@ -72,17 +108,33 @@ global:
 
 Choose the appropriate license type based on your environment.
 
-If you are running in an air-gapped environment, an [Offline License](#offline-license) is recommended as it provides a higher level of security.
+If you are running in an air-gaped environment, an [Offline License](#offline-license) is recommended as it provides a higher level of security.
 An Offline License consists of a **License Key** and **License File**.
 
 If your environment has internet access, you can use an [Online License](#online-license), which only requires the **License Key**.
 
 #### Online License
 
-To use an **Online License**, set the `global.licenseKey` field to your **License Key**:
+If your environment has internet access, you can use an **Online License**, which only requires the **License Key**,
+and can be provided as a Helm parameter or Kubernetes secret.
+
+To provide the **License Key** as a Helm parameter, use the following configuration:
 ```helm
 global:
   licenseKey: <your license key>
+```
+
+To provide the **License Key** as a Kubernetes secret, first we need to create a secret with the required field.
+Run the following command to create the secret:
+```bash
+kubectl create secret generic testkube-enterprise-license \
+  --from-literal=LICENSE_KEY=<your license key>           \
+  --namespace=testkube-enterprise
+```
+And then use the following Helm chart configuration:
+```helm
+global:
+  enterpriseLicenseSecretRef: <secret name>
 ```
 
 #### Offline License
@@ -211,6 +263,19 @@ global:
 
 Testkube Enterprise utilizes [Dex](https://dexidp.io/) for authentication & authorization.
 For detailed instruction on configuring Dex, please refer to the [auth.md](./auth.md) document.
+
+### Metrics
+
+Testkube Enterprise exposes Prometheus metrics on the `/metrics` endpoint and uses a `ServiceMonitor` resource to expose them to Prometheus.
+In order for this to work, you need to have `Prometheus Operator` installed in your cluster so that the `ServiceMonitor` resource can be created.
+
+
+Use the following configuration to enable metrics:
+```helm
+testkube-cloud-api:
+  prometheus:
+    enabled: true
+```
 
 ## Invitations
 

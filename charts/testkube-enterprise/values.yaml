@@ -170,7 +170,7 @@ testkube-cloud-api:
     # -- Security Context for MinIO container
     securityContext: {}
   prometheus:
-    enabled: true
+    enabled: false
   ingress:
     className: nginx
 testkube-cloud-ui:
