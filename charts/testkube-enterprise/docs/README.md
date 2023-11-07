@@ -73,16 +73,16 @@ Before you proceed with the installation, please ensure that you have the follow
 * License Key and/or License File (if offline access is required)
 
 **NOTE**
-Is it possible to provide custom TLS certificates for the Testkube Enterprise API and Dashboard, but it is highly recommended 
-to use `cert-manager` for certificate management.
+While it is possible to use custom TLS certificates for the Testkube Enterprise API and Dashboard,
+we strongly recommend using `cert-manager` for easier certificate management.
 
 ## Configuration
 
 ### Docker images
 
-**NOTE**: As of November 2023, Testkube Enterprise Docker images are publicly available, so no additional config is needed,
-but this section can be helpful if you want to re-publish the images to your own private Docker registry. Otherwise,
-feel free to skip this section.
+**NOTE**: As of November 2023, Testkube Enterprise Docker images are publicly accessible.
+You only need to follow the steps in this section if you wish to re-publish the images to your private Docker registry;
+otherwise, you may skip this section.
 
 To begin, ensure that you have access to the Testkube Enterprise API & Dashboard Docker images.
 You can either request access from your Testkube representative or upload the Docker image tarball artifacts to a private Docker registry.
@@ -106,10 +106,10 @@ global:
 
 ### License
 
-Choose the appropriate license type based on your environment.
+Select the appropriate license type for your environment.
 
-If you are running in an air-gaped environment, an [Offline License](#offline-license) is recommended as it provides a higher level of security.
-An Offline License consists of a **License Key** and **License File**.
+For air-gaped & firewalled environments, we offer an option to use an [Offline License](#offline-license) for enhanced security.
+An **Offline License** consists of a **License Key** and **License File**.
 
 If your environment has internet access, you can use an [Online License](#online-license), which only requires the **License Key**.
 
@@ -139,8 +139,8 @@ global:
 
 #### Offline License
 
-For an **Offline License**, you need to provide the **License Key** and **License File** either as a secret or Helm parameter.
-Creating a secret is generally considered a "safer" option because it does not expose sensitive license info in the Helm chart values.
+For an **Offline License**, supply both the **License Key** and **License File** as either Kubernetes secrets or Helm parameters.
+Using secrets is safer, as it prevents exposing sensitive license information in Helm chart values.
 
 The Kubernetes secret needs to contain 2 entries: `license.lic` and `LICENSE_KEY`.
 To create the secret with the **License Key** and **License File**, run the following command:
@@ -167,14 +167,15 @@ global:
 
 ### Ingress
 
-Testkube Enterprise uses NGINX Controller to properly configure & optimize various protocols it uses.
-NGINX is the only currently supported Ingress Controller and Testkube Enterprise will not work without it.
+Testkube Enterprise requires the NGINX Controller to configure and optimize its protocols.
+NGINX is the sole supported Ingress Controller, and is essential for Testkube Enterprise's operation.
+
 
 We highly recommend installing Testkube Enterprise with Ingress enabled.
 This requires a valid domain (public or private) with a valid TLS certificate.
 Ingresses are enabled and created by default.
 
-If you wish to disable Ingress creation, you can configure the following values. However, in this case, you will need to manually configure API & Dashboard services to ensure accessibility:
+To disable Ingress creation, adjust the following values accordingly. Note that you must then manually configure the API & Dashboard services to maintain accessibility:
 ```helm
 global:
   ingress:
@@ -233,7 +234,7 @@ Testkube Enterprise requires a domain (public or internal) under which it will e
 
 For best performance, TLS should be terminated at application level (Testkube Enterprise API) instead of NGINX/Ingress level because
 gRPC and Websockets protocols perform significantly better when HTTP2 protocol is used end-to-end.
-By default, NGINX downgrades HTTP2 protocol to HTTP1.1 when the backend service listens on an insecure port.
+Note that NGINX, by default, downgrades the HTTP2 protocol to HTTP1.1 when the backend service is using an insecure port.
 
 If `cert-manager` (check the [Prerequisites](#prerequisites) for installation guide) is installed in your cluster, it should be configured to issue certificates for the configured domain by using `Issuer` or `ClusterIssuer` resource.
 Testkube Enterprise Helm chart needs the following config in that case:
@@ -279,9 +280,10 @@ testkube-cloud-api:
 
 ## Invitations
 
-Testkube Enterprise offers the capability to invite users to Testkube Organizations and Environments, allowing you to assign them specific roles and permissions.
-Currently, two modes of invitations are supported: `email` and `auto-accept`.
-Email mode should be used when we want to send the user an invitation email and him to accept it, and auto-accept mode should be used when you want to automatically add users.
+Testkube Enterprise allows you to invite users to Organizations and Environments within Testkube, granting them specific roles and permissions.
+
+There are two supported invitation modes: `email` and `auto-accept`.
+Use `email` to send an invitation for the user to accept, and `auto-accept` to automatically add users without requiring acceptance.
 
 ### Invitations via email
 
@@ -376,9 +378,12 @@ testkube-cloud-api:
 
 ## Installation
 
-1. Get the Testkube Enterprise Helm chart (TODO: add a guide for downloading from keygen.sh)
+1. Add our Testkube Enterprise Helm registry:
+    ```bash
+    helm repo add teskubeenterprise https://kubeshop.github.io/testkube-cloud-charts
+    ```
 2. Create a `values.yaml` with preferred configuration
-3. Run `helm install testkube-enterprise ./testkube-enterprise -f values.yaml --namespace testkube-enterprise`
+3. Run `helm install testkube-enterprise testkubeenterprise/testkube-enterprise -f values.yaml --namespace testkube-enterprise`
 
 **IMPORTANT**
 The Bitnami MongoDB Helm chart does not work reliably on ARM architectures. If you are installing MongoDB using this chart, you need to use an ARM compatible image:
