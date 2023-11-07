@@ -380,7 +380,7 @@ testkube-cloud-api:
 
 1. Add our Testkube Enterprise Helm registry:
     ```bash
-    helm repo add teskubeenterprise https://kubeshop.github.io/testkube-cloud-charts
+    helm repo add testkubeenterprise https://kubeshop.github.io/testkube-cloud-charts
     ```
 2. Create a `values.yaml` with preferred configuration
 3. Run `helm install testkube-enterprise testkubeenterprise/testkube-enterprise -f values.yaml --namespace testkube-enterprise`
@@ -418,6 +418,7 @@ global:
 dex:
   configTemplate:
     additionalConfig: |
+      enablePasswordDB: true
       staticPasswords:
         - email: <user email>
           hash: <bcrypt hash of user password>
