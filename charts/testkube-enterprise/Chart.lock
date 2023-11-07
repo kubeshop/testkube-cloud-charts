@@ -17,5 +17,10 @@ dependencies:
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
   version: 0.14.2
+<<<<<<< HEAD
 digest: sha256:ea08a063d4140638d7436ca69d0fed79e5c5802888799794fbeee5166e40fbef
 generated: "2023-11-07T12:40:17.338030041Z"
+=======
+digest: sha256:439d4e3107c05334dff0684d55007fd23feb33d9e3a4c459eae2828d0f850828
+generated: "2023-08-29T08:16:34.376278456Z"
+>>>>>>> 986e233 (updating chart testkube-cloud-api version to 1.13.88 and appVersion to v1.4.0-dev-077e04c; Updating testkube-enterprise chart version to 1.12.33.)
