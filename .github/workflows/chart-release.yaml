@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - fix-enterprise-chart
     paths:
       - 'charts/testkube-cloud-api/templates/**'
       - 'charts/testkube-cloud-api/Chart.yaml'
@@ -17,21 +18,28 @@ on:
       - 'charts/testkube-enterprise/Chart.yaml'
       - 'charts/testkube-enterprise/values.yaml'
       - 'charts/testkube-enterprise/README.md'
+      - '.github/workflows/chart-release.yaml'
 
 jobs:
   release-helm-charts:
     name: Release Helm charts
     runs-on: ubuntu-22.04
     steps:
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "testkube-cloud-ci-bot"
+          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v3.10.0
 
       - name: Update Helm chart with changes files
         run: |
@@ -67,74 +75,38 @@ jobs:
           if [ $changed -gt 0 ]; then
             bump_strategy="none"
           fi
-          
+
           echo "Syncing subchart versions in testkube-enterprise Helm chart"
           ./scripts/sync.sh
-          
+
           echo "Updating testkube-enterprise Helm chart version with bump strategy: $bump_strategy"
           ./scripts/update.sh -c testkube-enterprise -s $bump_strategy --verbose
-          
+
           enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
           echo "ENTERPRISE_CHART_VERSION=$enterprise_chart_version" >> $GITHUB_ENV
-          
+
           echo -e "### Testkube Enterprise Helm chart diff" >> $GITHUB_STEP_SUMMARY
           echo -e '```' >> $GITHUB_STEP_SUMMARY
           git --no-pager diff charts/testkube-enterprise >> $GITHUB_STEP_SUMMARY
           echo -e '```' >> $GITHUB_STEP_SUMMARY
 
-      - name: Lint Helm charts for safety
-        run: |
-          helm lint charts/testkube-cloud-ui
-          helm lint charts/testkube-cloud-api
-          helm lint charts/testkube-enterprise
-
-      - name: Install Helm Docs
-        uses: envoy/install-helm-docs@v1.0.0
-        with:
-          version: 1.11.0
-
-      - name: Update Helm Docs
-        run: |
-          set -ex
-          helm-docs
-
-      - name: Package Helm charts
-        run: |
-          helm package charts/testkube-cloud-api --destination archives
-          helm package charts/testkube-cloud-ui --destination archives
-          helm dependency update charts/testkube-enterprise
-          helm package charts/testkube-enterprise --destination archives
-          echo "Updating Helm repository index"
-          helm repo index .  
-
       - name: Commit & push changes
         run: |
-          git config --global user.name "testkube-cloud-ci-bot"
-          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
           git status
-          git add **/*Chart.yaml **/*README.md archives/*.tgz
+          git add **/*Chart.yaml **/*README.md charts/testkube-enterprise/Chart.lock
           git commit -m "updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}"
-          git push
+          git push --force
 
-      - name: Bump version and push tag
-        id: tag
-        uses: anothrNick/github-tag-action@1.64.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          DEFAULT_BUMP: minor
+      - name: Installing repositories
+        run: |
+          helm repo add dex https://charts.dexidp.io
+          helm repo add nats https://nats-io.github.io/k8s/helm/charts/
+          helm repo add bitnami https://charts.bitnami.com/bitnami
 
-      - name: Changelog
-        uses: scottbrenner/generate-changelog-action@master
-        id: changelog
-
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
         with:
-          tag: ${{ steps.tag.outputs.new_tag }}
-          name: ${{ steps.tag.outputs.new_tag }}
-          body: ${{ steps.changelog.outputs.changelog }}
-          artifacts: |
-            archives/testkube-cloud-ui-${{ env.UI_CHART_VERSION }}.tgz
-            archives/testkube-cloud-api-${{ env.API_CHART_VERSION }}.tgz
-            archives/testkube-enterprise-${{ env.ENTERPRISE_CHART_VERSION }}.tgz
+          charts_dir: charts
+        env:
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CR_SKIP_EXISTING: true
