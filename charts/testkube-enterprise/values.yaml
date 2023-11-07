@@ -29,7 +29,7 @@ global:
   certificateProvider: "cert-manager"
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
-    issuerRef: ""
+    issuerRef: "ss"
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
   imagePullSecrets: []
   ingress:
@@ -44,6 +44,8 @@ testkube-cloud-api:
   image:
     repository: testkubeenterprise/testkube-enterprise-api
     tag: 1.5.3
+  ai:
+    secretRef: ""
   api:
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
     inviteMode: email
