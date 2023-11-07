@@ -53,7 +53,7 @@ A Helm chart for Testkube Cloud UI
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` | Pod Security Context |
-| replicaCount | int | `1` |  |
+| replicaCount | int | `2` |  |
 | resources.limits.cpu | string | `"150m"` |  |
 | resources.limits.memory | string | `"128Mi"` |  |
 | resources.requests.cpu | string | `"50m"` |  |
