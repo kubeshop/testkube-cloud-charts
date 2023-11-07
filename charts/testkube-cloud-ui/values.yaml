@@ -19,7 +19,7 @@ global:
   ingress:
     # -- Global toggle whether to create Ingress resources
     enabled: true
-replicaCount: 2
+replicaCount: 1
 sentry:
   # -- Toggle whether to enable Sentry.io error reporting
   enabled: false
