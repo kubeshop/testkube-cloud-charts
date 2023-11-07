@@ -99,7 +99,7 @@ jobs:
           git status
           git add **/*Chart.yaml **/*README.md
           git commit -m "updating testkube-enterprise chart version"
-          git push
+          git push --force
 
       - name: Installing repositories
         run: |
