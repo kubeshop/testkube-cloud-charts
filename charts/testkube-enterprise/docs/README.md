@@ -35,33 +35,6 @@ Welcome to the Testkube Enterprise Helm chart installation and usage guide.
 This comprehensive guide provides step-by-step instructions for installing and utilizing the Testkube Enterprise Helm chart.
 Testkube Enterprise is a cutting-edge Kubernetes-native testing platform designed to optimize your testing and quality assurance processes with enterprise-grade features.
 
-<!-- toc -->
-
-- [Prerequisites](#prerequisites)
-- [Configuration](#configuration)
-  * [Docker images](#docker-images)
-  * [License](#license)
-    + [Online License](#online-license)
-    + [Offline License](#offline-license)
-  * [Ingress](#ingress)
-    + [Domain](#domain)
-    + [TLS](#tls)
-  * [Auth](#auth)
-- [Invitations](#invitations)
-  * [Invitations via email](#invitations-via-email)
-  * [Auto-accept invitations](#auto-accept-invitations)
-- [Bring Your Own Infra](#bring-your-own-infra)
-  * [MongoDB](#mongodb)
-  * [NATS](#nats)
-  * [MinIO](#minio)
-  * [Dex](#dex)
-- [Installation](#installation)
-  * [Minimal setup](#minimal-setup)
-  * [Production setup](#production-setup)
-- [FAQ](#faq)
-
-<!-- tocstop -->
-
 ## Prerequisites
 
 Before you proceed with the installation, please ensure that you have the following prerequisites in place:
@@ -121,7 +94,7 @@ and can be provided as a Helm parameter or Kubernetes secret.
 To provide the **License Key** as a Helm parameter, use the following configuration:
 ```helm
 global:
-  licenseKey: <your license key>
+  enterpriseLicenseKey: <your license key>
 ```
 
 To provide the **License Key** as a Kubernetes secret, first we need to create a secret with the required field.

@@ -37,7 +37,7 @@ global:
     enabled: true
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
-    issuer: "http://testkube-enterprise-dex:5556/idp"
+    issuer: ""
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -299,6 +299,8 @@ dex:
   ingress:
     # -- Toggle whether to enable ingress for Dex
     enabled: true
+    # -- Additional annotations for Dex ingress
+    annotations: {}
     # -- Testkube Enterprise supports only NGINX Controller currently
     className: nginx
     hosts:
