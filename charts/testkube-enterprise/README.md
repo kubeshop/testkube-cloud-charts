@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.16.0](https://img.shields.io/badge/Version-1.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.18.0](https://img.shields.io/badge/Version-1.18.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -53,7 +53,7 @@ A Helm chart for Testkube Enterprise
 | dex.resources.requests.cpu | string | `"100m"` |  |
 | dex.resources.requests.memory | string | `"128Mi"` |  |
 | dex.securityContext | object | `{}` | Security Context for MongoDB container |
-| global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
+| global.certManager.issuerRef | string | `"ss"` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS provider (possible values: "", "cert-manager") |
 | global.dex.issuer | string | `"http://testkube-enterprise-dex:5556/idp"` | Global Dex issuer url which is configured both in Dex and API |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
@@ -90,6 +90,7 @@ A Helm chart for Testkube Enterprise
 | nats.reloader.securityContext | object | `{}` | Security Context for Reloader container |
 | nats.securityContext | object | `{}` | NATS Pod Security Context |
 | nats.tolerations | list | `[]` |  |
+| testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |
 | testkube-cloud-api.api.agent.host | string | `""` | Agent host (without protocol) is used for building agent install commands (if blank, api will autogenerate it based on the value of `global.domain`) |
 | testkube-cloud-api.api.agent.port | int | `443` | Agent port - used for building agent install commands |
@@ -126,7 +127,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.tag | string | `"1.5.3"` |  |
-| testkube-cloud-api.ingress.enabled | bool | `true` |  |
+| testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
 | testkube-cloud-api.minio.credentials.accessKeyId | string | `"testkube-enterprise"` | Root username |
@@ -145,7 +146,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.minio.serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | testkube-cloud-api.minio.serviceAccount.name | string | `""` | The name of the service account to use. |
 | testkube-cloud-api.minio.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
-| testkube-cloud-api.prometheus.enabled | bool | `true` |  |
+| testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.tag | string | `"1.6.0-dev-95e04bb"` |  |
