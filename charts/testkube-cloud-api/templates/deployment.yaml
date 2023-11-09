@@ -77,11 +77,11 @@ spec:
               value: "{{ .Values.api.smtp.port }}"
             - name: SMTP_USER
               value: "{{ .Values.api.smtp.username }}"
-            - name: SMTP_PASSWORD
+            - name: SMTP_PASS
               {{- if .Values.api.smtp.passwordSecretRef }}
               valueFrom:
                 secretKeyRef:
-                  key: SMTP_PASSWORD
+                  key: SMTP_PASS
                   name: {{ .Values.api.smtp.passwordSecretRef }}
               {{- else }}
               value: {{ .Values.api.smtp.password }}
