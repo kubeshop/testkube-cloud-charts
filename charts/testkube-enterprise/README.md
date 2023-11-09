@@ -1,6 +1,10 @@
 # testkube-enterprise
 
+<<<<<<< HEAD
 ![Version: 1.18.0](https://img.shields.io/badge/Version-1.18.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+=======
+![Version: 1.14.3](https://img.shields.io/badge/Version-1.14.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+>>>>>>> main
 
 A Helm chart for Testkube Enterprise
 
@@ -127,7 +131,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.5.3"` |  |
+| testkube-cloud-api.image.tag | string | `"1.6.2"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
@@ -150,7 +154,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"1.6.0-dev-95e04bb"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.6.2"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 
 ----------------------------------------------
