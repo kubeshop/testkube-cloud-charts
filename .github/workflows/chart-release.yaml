@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - fix-enterprise-chart
     paths:
       - 'charts/testkube-cloud-api/templates/**'
       - 'charts/testkube-cloud-api/Chart.yaml'
@@ -18,7 +17,6 @@ on:
       - 'charts/testkube-enterprise/Chart.yaml'
       - 'charts/testkube-enterprise/values.yaml'
       - 'charts/testkube-enterprise/README.md'
-      - '.github/workflows/chart-release.yaml'
 
 jobs:
   release-helm-charts:
