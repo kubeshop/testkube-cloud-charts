@@ -207,7 +207,6 @@ podSecurityContext: {}
 # -- Security Context for app container
 securityContext:
   readOnlyRootFilesystem: true
-
 service:
   # -- Service type
   type: ClusterIP
@@ -221,7 +220,6 @@ service:
   grpcPort: 8089
   # -- Metrics port
   metricsPort: 9000
-
 ingress:
   # -- Common annotations which will be added to all Ingress resources
   annotations:
@@ -236,7 +234,7 @@ restIngress:
   labels: {}
   # -- Additional annotations to add to the REST Ingress resource
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
 grpcIngress:
@@ -246,7 +244,7 @@ grpcIngress:
   labels: {}
   # -- Additional annotations to add to the gRPC Ingress resource
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
 websocketsIngress:
@@ -256,7 +254,7 @@ websocketsIngress:
   labels: {}
   # -- Additional annotations to add to the WebSocket Ingress resource
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
 statusPagesIngress:
@@ -266,10 +264,9 @@ statusPagesIngress:
   labels: {}
   # -- Additional annotations to add to the WebSocket Ingress resource
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
-
 ## MinIO parameters
 minio:
   # -- Toggle whether to deploy MinIO
@@ -340,14 +337,12 @@ minio:
   podSecurityContext: {}
   # -- MinIO Container Security Context
   securityContext: {}
-
 resources:
   requests:
     cpu: 100m
     memory: 128Mi
   # -- It is strongly recommended to set limits for both cpu and memory
   limits: {}
-
 autoscaling:
   # -- Toggle whether to enable Horizontal Pod Autoscaler
   enabled: false
@@ -355,7 +350,6 @@ autoscaling:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
-
 prometheus:
   # -- Toggle whether to create ServiceMonitor resource for Prometheus Operator
   enabled: true
@@ -367,9 +361,6 @@ prometheus:
   port: metrics
   # -- Metrics path which will be scraped
   path: /metrics
-
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}
