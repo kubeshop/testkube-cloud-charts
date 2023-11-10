@@ -24,7 +24,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-body-size: 8m
-    {{- if $tlsConfig.serveHTTPS }} 
+    {{- if .Values.api.tls.serveHTTPS }} 
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     {{- end }}
     {{- if and (not .Values.api.tls.serveHTTPS) (eq .Values.global.certificateProvider "cert-manager") }}
