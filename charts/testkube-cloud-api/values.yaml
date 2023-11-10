@@ -42,7 +42,7 @@ replicaCount: 1
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.6.3"
+  tag: "1.6.4"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -249,7 +249,11 @@ websocketsIngress:
   # -- Additional labels to add to the WebSocket Ingress resource
   labels: {}
   # -- Additional annotations to add to the WebSocket Ingress resource
-  annotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/upgrade-proxy: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/ssl-verify: "false"
+    nginx.org/websocket-services: testkube-cloud-api
   # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates
   host: ""
