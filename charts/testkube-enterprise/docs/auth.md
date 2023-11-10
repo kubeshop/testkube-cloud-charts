@@ -17,6 +17,7 @@ To configure Testkube Enterprise with static users, add the following configurat
 
 ```yaml
 additionalConfig: |
+  enablePasswordDB: true
   staticPasswords:
     - email: <user email>
       hash: <bcrypt hash of user password>

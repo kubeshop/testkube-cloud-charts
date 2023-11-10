@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.15.1](https://img.shields.io/badge/Version-1.15.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.21.0](https://img.shields.io/badge/Version-1.19.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -21,8 +21,13 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
+<<<<<<< HEAD
+| file://../testkube-cloud-api | testkube-cloud-api | 1.16.2 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.19.4 |
+=======
 | file://../testkube-cloud-api | testkube-cloud-api | 1.14.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.13.79 |
+>>>>>>> d4c3b9cee36370647b1e641e043779cd1bdbacbe
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
 | https://charts.dexidp.io | dex | 0.14.1 |
@@ -41,6 +46,7 @@ A Helm chart for Testkube Enterprise
 | dex.enabled | bool | `true` | Toggle whether to install Dex |
 | dex.fullnameOverride | string | `"testkube-enterprise-dex"` |  |
 | dex.image.tag | string | `"v2.36.0-alpine"` | Dex image tag (https://ghcr.io/dexidp/dex) |
+| dex.ingress.annotations | object | `{}` | Additional annotations for Dex ingress |
 | dex.ingress.className | string | `"nginx"` | Testkube Enterprise supports only NGINX Controller currently |
 | dex.ingress.enabled | bool | `true` | Toggle whether to enable ingress for Dex |
 | dex.ingress.hosts[0].host | string | `"api.{{ .Values.global.domain }}"` |  |
@@ -53,9 +59,9 @@ A Helm chart for Testkube Enterprise
 | dex.resources.requests.cpu | string | `"100m"` |  |
 | dex.resources.requests.memory | string | `"128Mi"` |  |
 | dex.securityContext | object | `{}` | Security Context for MongoDB container |
-| global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
+| global.certManager.issuerRef | string | `"ss"` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS provider (possible values: "", "cert-manager") |
-| global.dex.issuer | string | `"http://testkube-enterprise-dex:5556/idp"` | Global Dex issuer url which is configured both in Dex and API |
+| global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
 | global.enterpriseLicenseKey | string | `""` | Enterprise License key |
@@ -90,6 +96,7 @@ A Helm chart for Testkube Enterprise
 | nats.reloader.securityContext | object | `{}` | Security Context for Reloader container |
 | nats.securityContext | object | `{}` | NATS Pod Security Context |
 | nats.tolerations | list | `[]` |  |
+| testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |
 | testkube-cloud-api.api.agent.host | string | `""` | Agent host (without protocol) is used for building agent install commands (if blank, api will autogenerate it based on the value of `global.domain`) |
 | testkube-cloud-api.api.agent.port | int | `443` | Agent port - used for building agent install commands |
@@ -145,10 +152,10 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.minio.serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | testkube-cloud-api.minio.serviceAccount.name | string | `""` | The name of the service account to use. |
 | testkube-cloud-api.minio.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
-| testkube-cloud-api.prometheus.enabled | bool | `true` |  |
+| testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"1.3.1"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.6.2"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 
 ----------------------------------------------
