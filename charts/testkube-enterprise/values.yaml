@@ -73,6 +73,8 @@ testkube-cloud-api:
       image:
         # -- Migrations image repository
         repository: testkubeenterprise/testkube-enterprise-api-migrations
+       # -- clean up finished jobs
+      ttlSecondsAfterFinished: 180s
     mongo:
       # -- Mongo DSN connection string
       dsn: "mongodb://testkube-enterprise-mongodb:27017"
