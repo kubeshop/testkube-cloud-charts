@@ -14,16 +14,16 @@
       - [Domain](#domain)
       - [TLS](#tls)
     - [Auth](#auth)
-  - [Invitations](#invitations)
-    - [Invitations via email](#invitations-via-email)
-    - [Auto-accept invitations](#auto-accept-invitations)
+    - [Metrics](#metrics)
+    - [Invitations](#invitations)
+      - [Invitations via email](#invitations-via-email)
+      - [Auto-accept invitations](#auto-accept-invitations)
   - [Bring Your Own Infra](#bring-your-own-infra)
     - [MongoDB](#mongodb)
     - [NATS](#nats)
     - [MinIO](#minio)
     - [Dex](#dex)
   - [Installation](#installation)
-    - [Minimal setup](#minimal-setup)
     - [Production setup](#production-setup)
   - [FAQ](#faq)
 
@@ -42,6 +42,7 @@ Before you proceed with the installation, please ensure that you have the follow
 * [Helm](https://helm.sh/docs/intro/quickstart/) (version 3+)
 * [cert-manager](https://cert-manager.io/docs/installation/) (version 1.11+) - used for TLS certificate management
 * [NGINX Controller](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/) (version v1.8+) - used for Ingress configuration
+* (OPTIONAL) [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator) (version 0.49+) - used for metrics collection
 * Own a public/private domain for creating Ingress rules
 * License Key and/or License File (if offline access is required)
 
@@ -53,7 +54,7 @@ we strongly recommend using `cert-manager` for easier certificate management.
 
 ### Docker images
 
-**NOTE**: As of November 2023, Testkube Enterprise Docker images are publicly accessible.
+**DEPRECATION NOTICE**: As of November 2023, Testkube Enterprise Docker images are publicly accessible.
 You only need to follow the steps in this section if you wish to re-publish the images to your private Docker registry;
 otherwise, you may skip this section.
 
@@ -143,7 +144,6 @@ global:
 Testkube Enterprise requires the NGINX Controller to configure and optimize its protocols.
 NGINX is the sole supported Ingress Controller, and is essential for Testkube Enterprise's operation.
 
-
 We highly recommend installing Testkube Enterprise with Ingress enabled.
 This requires a valid domain (public or private) with a valid TLS certificate.
 Ingresses are enabled and created by default.
@@ -180,17 +180,6 @@ Websockets Ingress annotations:
 annotations:
   nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
   nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-  nginx.ingress.kubernetes.io/server-snippets: |
-    location / {
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_http_version 1.1;
-      proxy_set_header X-Forwarded-Host $http_host;
-      proxy_set_header X-Forwarded-Proto $scheme;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      proxy_set_header Host $host;
-      proxy_set_header Connection "upgrade";
-      proxy_cache_bypass $http_upgrade;
-    }
 ```
 
 If you want to use a different Ingress Controller, we kindly ask you to reach out and discuss with our support team.
@@ -198,10 +187,14 @@ If you want to use a different Ingress Controller, we kindly ask you to reach ou
 #### Domain
 
 Testkube Enterprise requires a domain (public or internal) under which it will expose the following services:
-* Dashboard -> `https://dashboard.<your-domain>`
-* REST API -> `https://api.<your-domain>`
-* Websocket API -> `wss://websockets.<your-domain>`
-* gRPC API -> `grpc://agent.<your-domain>`
+| Subdomain                       | Service          |
+|---------------------------------|------------------|
+| `dashboard.<your-(sub)domain>`  | Dashboard UI     |
+| `api.<your-(sub)domain>`        | REST API         |
+| `agent.(sub)<your-domain>`      | gRPC API         |
+| `websockets.(sub)<your-domain>` | WebSockets API   |
+| `storage.(sub)<your-domain>`    | Storage API      |
+| `status(sub).<your-domain>`     | Status Pages API |
 
 #### TLS
 
@@ -225,6 +218,7 @@ If `cert-manager` is not installed in your cluster, valid TLS certificates (for 
   * `api.<your-domain>`
   * `agent.<your-domain>`
   * `websockets.<your-domain>`
+  * `status.<your-domain>`
 * Dashboard (TLS secret name is configured with `testkube-cloud-ui.ingress.tlsSecretName` field)
   * `dashboard.<your-domain>`
 Also, `global.certificateProvider` should be set to blank ("").
@@ -243,7 +237,6 @@ For detailed instruction on configuring Dex, please refer to the [auth.md](./aut
 Testkube Enterprise exposes Prometheus metrics on the `/metrics` endpoint and uses a `ServiceMonitor` resource to expose them to Prometheus.
 In order for this to work, you need to have `Prometheus Operator` installed in your cluster so that the `ServiceMonitor` resource can be created.
 
-
 Use the following configuration to enable metrics:
 ```helm
 testkube-cloud-api:
@@ -251,14 +244,14 @@ testkube-cloud-api:
     enabled: true
 ```
 
-## Invitations
+### Invitations
 
 Testkube Enterprise allows you to invite users to Organizations and Environments within Testkube, granting them specific roles and permissions.
 
 There are two supported invitation modes: `email` and `auto-accept`.
 Use `email` to send an invitation for the user to accept, and `auto-accept` to automatically add users without requiring acceptance.
 
-### Invitations via email
+#### Invitations via email
 
 If `testkube-cloud-api.api.inviteMode` is set to `email`, Testkube Enterprise will send emails when a user gets invited to
 an Organization or an Environment, and in that case SMTP settings need to be configured in the API Helm chart.
@@ -276,7 +269,7 @@ testkube-cloud-api:
       # passwordSecretRef: <secret name>
 ```
 
-### Auto-accept invitations
+#### Auto-accept invitations
 
 If `testkube-cloud-api.api.inviteMode` is set to `auto-accept`, Testkube Enterprise will automatically add users to
 Organizations and Environments when they get invited.
@@ -368,40 +361,18 @@ mongodb:
     tag: "6.0.5"
 ```
 
-### Minimal setup
-
-This is a minimal setup which will install a development Testkube Enterprise cluster with the following components:
-* Testkube Enterprise API
-* Testkube Enterprise Dashboard
-* MongoDB
-* NATS
-* Dex
-
-This setup should not be used in production environments. For a more advanced setup please refer to the [Production Setup](#production-setup) section.
-
-Following configuration can be used for a minimal development setup of Testkube Enterprise:
-```helm
-global:
-  domain: <your domain>
-  imagePullSecrets:
-    - name: <docker creds secret>
-  licenseKey: <your license key>
-  ingress:
-    enabled: false
-
-dex:
-  configTemplate:
-    additionalConfig: |
-      enablePasswordDB: true
-      staticPasswords:
-        - email: <user email>
-          hash: <bcrypt hash of user password>
-          username: <username>
-```
-
 ### Production setup
 
-TBD
+For best performance and reliability, users should follow this official setup guide and make sure each section is properly configured.
+
+1. Configure DNS records as described in the [Domain](#domain) section
+2. Configure TLS certificates as described in the [TLS](#tls) section
+3. Configure Dex as described in the [Auth](#auth) section
+4. Configure Ingress as described in the [Ingress](#ingress) section
+5. Configure Metrics as described in the [Metrics](#metrics) section
+6. Configure Invitations as described in the [Invitations](#invitations) section
+7. Configure BYOI components as described in the [Bring Your Own Infra](#bring-your-own-infra) section
+8. Install Testkube Enterprise as described in the [Installation](#installation) section
 
 ## FAQ
 
