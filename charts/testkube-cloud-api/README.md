@@ -36,6 +36,8 @@ A Helm chart for Testkube Cloud API
 | api.agent.port | string | `"443"` | Agent port |
 | api.apiAddress | string | `""` | API address (used in invitation emails) (example `https://api.testkube.xyz`) |
 | api.dashboardAddress | string | `""` | Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`) |
+| api.email.fromEmail | string | `"noreply@kubeshop.io"` |  |
+| api.email.fromName | string | `"Testkube Cloud"` |  |
 | api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
