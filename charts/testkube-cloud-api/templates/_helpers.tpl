@@ -59,6 +59,15 @@ app.kubernetes.io/component: backend
 {{- end }}
 
 {{/*
+Common Testkube labels
+*/}}
+{{- define "testkube-cloud-api-migrations.labels" -}}
+app.kubernetes.io/component: backend
+{{ include "testkube-cloud-api.selectorLabels" . }}
+{{ include "testkube-cloud-api.baseLabels" . }}
+{{- end }}
+
+{{/*
 Testkube selector labels
 */}}
 {{- define "testkube-cloud-api.selectorLabels" -}}
