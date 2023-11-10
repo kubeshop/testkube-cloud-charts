@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
       - update-main
     paths:
       - 'charts/testkube-cloud-api/templates/**'
