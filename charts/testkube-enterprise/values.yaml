@@ -25,7 +25,9 @@ global:
   websocketApiSubdomain: "websockets"
   # -- Status Pages API subdomain which get prepended to the domain
   statusPagesApiSubdomain: "status"
-  # -- TLS provider (possible values: "", "cert-manager")
+  # -- Storage API subdomain which get prepended to the domain
+  storageApiSubdomain: "storage"
+  # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
   certificateProvider: "cert-manager"
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
@@ -38,6 +40,7 @@ global:
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: ""
+
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -51,7 +54,7 @@ testkube-cloud-api:
     inviteMode: email
     smtp:
       # -- SMTP host
-      host: smtp.sendgrid.net
+      host: ""
       # -- SMTP port
       port: 587
       # -- SMTP username
@@ -84,8 +87,8 @@ testkube-cloud-api:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats:4222"
     minio:
-      # -- MinIO endpoint
-      endpoint: "testkube-enterprise-minio:9000"
+      # -- Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service
+      endpoint: ""
       # -- S3 region
       region: ""
       # -- MinIO access key id
@@ -125,9 +128,16 @@ testkube-cloud-api:
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
   minio:
-    fullnameOverride: testkube-enterprise-minio
     # -- Toggle whether to install MinIO
     enabled: true
+    # -- MinIO fullname override
+    fullnameOverride: testkube-enterprise-minio
+    ingress:
+      # -- Toggle whether to enable ingress for MinIO
+      enabled: true
+      tls:
+        # -- TLS secret name which contains the certificate files
+        tlsSecret: testkube-enterprise-minio-tls
     # -- Minio extra vars
     extraEnvVars: {}
     # - name: FOO
@@ -149,7 +159,7 @@ testkube-cloud-api:
     # -- Custom service account for MinIO Deployment resource (overrides service account creation)
     customServiceAccountName: ""
     serviceAccount:
-      # -- Specifies whether a service account should be created
+      # -- Set to 'true' to create a dedicated service account for MinIO or 'false' to use the default service account
       create: false
       # -- Additional annotations to add to the ServiceAccount resource
       annotations: {}
@@ -177,6 +187,7 @@ testkube-cloud-api:
     enabled: false
   ingress:
     className: nginx
+
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
@@ -185,6 +196,7 @@ testkube-cloud-ui:
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
+
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:

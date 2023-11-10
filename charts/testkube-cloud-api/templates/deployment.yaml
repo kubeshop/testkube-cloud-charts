@@ -84,7 +84,7 @@ spec:
                   key: SMTP_PASS
                   name: {{ .Values.api.smtp.passwordSecretRef }}
               {{- else }}
-              value: {{ .Values.api.smtp.password }}
+              value: "{{ .Values.api.smtp.password }}"
               {{- end }}
             {{- end }}
             - name: FROM_EMAIL
@@ -250,11 +250,11 @@ spec:
               value: "{{ .Values.api.outputsBucket }}"
             {{- if .Values.minio.enabled }}
             - name: MINIO_ENDPOINT
-              value: "{{ .Values.api.minio.endpoint }}"
+              value: {{ include "testkube-cloud-api.ingress.minioHost" . | quote }}
             - name: MINIO_REGION
               value: "{{ .Values.api.minio.region }}"
             - name: MINIO_SSL
-              value: "{{ .Values.api.minio.secure }}"
+              value: "{{ if .Values.minio.ingress.enabled }}true{{ else }}{{ .Values.api.minio.secure }}{{ end }}"
             - name: MINIO_EXPIRATION
               value: "{{ .Values.api.minio.expirationPeriod }}"
             - name: MINIO_ACCESS_KEY_ID
