@@ -86,6 +86,10 @@ spec:
               value: {{ .Values.api.smtp.password }}
               {{- end }}
             {{- end }}
+            - name: FROM_EMAIL
+              value: "{{ .Values.api.email.fromEmail }}"
+            - name: FROM_NAME
+              value: "{{ .Values.api.email.fromName }}"
             - name: ROOT_DOMAIN
               value: "{{ .Values.global.domain }}"
             - name: METRICS_LISTEN_ADDR
