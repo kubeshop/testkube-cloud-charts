@@ -22,7 +22,7 @@ metadata:
     {{- end }}
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
-    {{- if and (not .Values.api.tls.serveHTTPS) (eq .Values.global.certificateProvider "cert-manager") }}
+    {{- if eq .Values.global.certificateProvider "cert-manager" }}
     cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
     {{- end }}
     {{- with .Values.minio.ingress.annotations }}
