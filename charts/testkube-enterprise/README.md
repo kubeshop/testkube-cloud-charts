@@ -1,6 +1,10 @@
 # testkube-enterprise
 
+<<<<<<< HEAD
 ![Version: 1.19.0](https://img.shields.io/badge/Version-1.19.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+=======
+![Version: 1.15.0](https://img.shields.io/badge/Version-1.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+>>>>>>> c72d99fd0baa7c00393a5be4190c73fdbb06f1ba
 
 A Helm chart for Testkube Enterprise
 

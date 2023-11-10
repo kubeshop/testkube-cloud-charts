@@ -90,6 +90,9 @@ api:
     useHelmHooks: true
   # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
   inviteMode: email
+  email:
+    fromEmail: "noreply@kubeshop.io"
+    fromName: "Testkube Cloud"
   smtp:
     # -- SMTP host
     host: smtp.sendgrid.net
