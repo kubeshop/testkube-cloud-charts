@@ -40,7 +40,6 @@ global:
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: ""
-
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -76,7 +75,7 @@ testkube-cloud-api:
       image:
         # -- Migrations image repository
         repository: testkubeenterprise/testkube-enterprise-api-migrations
-       # -- clean up finished jobs
+        # -- clean up finished jobs
       ttlSecondsAfterFinished: 90
     mongo:
       # -- Mongo DSN connection string
@@ -187,7 +186,6 @@ testkube-cloud-api:
     enabled: false
   ingress:
     className: nginx
-
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   image:
@@ -196,7 +194,6 @@ testkube-cloud-ui:
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
