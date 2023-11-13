@@ -4,7 +4,7 @@ dependencies:
   version: 2.2.5
 - name: testkube-cloud-api
   repository: file://../testkube-cloud-api
-  version: 1.21.0
+  version: 1.20.0
 - name: testkube-cloud-ui
   repository: file://../testkube-cloud-ui
   version: 1.20.0
