@@ -17,7 +17,6 @@ on:
       - 'charts/testkube-enterprise/Chart.yaml'
       - 'charts/testkube-enterprise/values.yaml'
       - 'charts/testkube-enterprise/README.md'
-      - '.github/workflows/chart-release.yaml'
 
 jobs:
   release-helm-charts:
