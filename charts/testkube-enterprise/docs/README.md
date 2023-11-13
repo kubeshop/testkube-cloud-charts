@@ -14,26 +14,17 @@
       - [Domain](#domain)
       - [TLS](#tls)
     - [Auth](#auth)
-<<<<<<< HEAD
     - [Metrics](#metrics)
     - [Invitations](#invitations)
       - [Invitations via email](#invitations-via-email)
       - [Auto-accept invitations](#auto-accept-invitations)
-=======
-  - [Invitations](#invitations)
-    - [Invitations via email](#invitations-via-email)
-    - [Auto-accept invitations](#auto-accept-invitations)
->>>>>>> main
   - [Bring Your Own Infra](#bring-your-own-infra)
     - [MongoDB](#mongodb)
     - [NATS](#nats)
     - [MinIO](#minio)
     - [Dex](#dex)
   - [Installation](#installation)
-<<<<<<< HEAD
-=======
     - [Minimal setup](#minimal-setup)
->>>>>>> main
     - [Production setup](#production-setup)
   - [FAQ](#faq)
 
@@ -64,11 +55,7 @@ we strongly recommend using `cert-manager` for easier certificate management.
 
 ### Docker images
 
-<<<<<<< HEAD
 **DEPRECATION NOTICE**: As of November 2023, Testkube Enterprise Docker images are publicly accessible.
-=======
-**NOTE**: As of November 2023, Testkube Enterprise Docker images are publicly accessible.
->>>>>>> main
 You only need to follow the steps in this section if you wish to re-publish the images to your private Docker registry;
 otherwise, you may skip this section.
 
@@ -157,10 +144,6 @@ global:
 
 Testkube Enterprise requires the NGINX Controller to configure and optimize its protocols.
 NGINX is the sole supported Ingress Controller, and is essential for Testkube Enterprise's operation.
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 
 We highly recommend installing Testkube Enterprise with Ingress enabled.
 This requires a valid domain (public or private) with a valid TLS certificate.
@@ -212,7 +195,7 @@ Testkube Enterprise requires a domain (public or internal) under which it will e
 | `agent.(sub)<your-domain>`      | gRPC API         |
 | `websockets.(sub)<your-domain>` | WebSockets API   |
 | `storage.(sub)<your-domain>`    | Storage API      |
-| `status(sub).<your-domain>`     | Status Pages API |
+| `status.(sub)<your-domain>`     | Status Pages API |
 
 #### TLS
 
@@ -251,30 +234,10 @@ Testkube Enterprise utilizes [Dex](https://dexidp.io/) for authentication & auth
 For detailed instruction on configuring Dex, please refer to the [auth.md](./auth.md) document.
 
 ### Metrics
-<<<<<<< HEAD
-
-Testkube Enterprise exposes Prometheus metrics on the `/metrics` endpoint and uses a `ServiceMonitor` resource to expose them to Prometheus.
-In order for this to work, you need to have `Prometheus Operator` installed in your cluster so that the `ServiceMonitor` resource can be created.
-=======
 
 Testkube Enterprise exposes Prometheus metrics on the `/metrics` endpoint and uses a `ServiceMonitor` resource to expose them to Prometheus.
 In order for this to work, you need to have `Prometheus Operator` installed in your cluster so that the `ServiceMonitor` resource can be created.
 
-
-Use the following configuration to enable metrics:
-```helm
-testkube-cloud-api:
-  prometheus:
-    enabled: true
-```
-
-## Invitations
-
-Testkube Enterprise allows you to invite users to Organizations and Environments within Testkube, granting them specific roles and permissions.
-
-There are two supported invitation modes: `email` and `auto-accept`.
-Use `email` to send an invitation for the user to accept, and `auto-accept` to automatically add users without requiring acceptance.
->>>>>>> main
 
 Use the following configuration to enable metrics:
 ```helm
@@ -298,6 +261,9 @@ an Organization or an Environment, and in that case SMTP settings need to be con
 ```helm
 testkube-cloud-api:
   api: 
+    email:
+      fromEmail: "example@gmail.com"
+      fromName: "Example Invitation"
     inviteMode: email
     smtp:
       host: <smtp host>
@@ -400,8 +366,6 @@ mongodb:
     tag: "6.0.5"
 ```
 
-<<<<<<< HEAD
-=======
 ### Minimal setup
 
 This is a minimal setup which will install a development Testkube Enterprise cluster with the following components:
@@ -433,7 +397,6 @@ dex:
           username: <username>
 ```
 
->>>>>>> main
 ### Production setup
 
 For best performance and reliability, users should follow this official setup guide and make sure each section is properly configured.
