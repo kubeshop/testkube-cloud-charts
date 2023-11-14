@@ -22,7 +22,7 @@ metadata:
     {{- end }}
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: {{ if .Values.api.tls.serveHTTPS }}GRPCS{{ else }}GRPC{{ end }}
-    nginx.ingress.kubernetes.io/proxy-body-size: 8m
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.grpcIngress.maxPayloadSize }}
     nginx.ingress.kubernetes.io/client-header-timeout: "10800"
     nginx.ingress.kubernetes.io/client-body-timeout: "10800"
     {{- if and (not .Values.api.tls.serveHTTPS) (eq .Values.global.certificateProvider "cert-manager") }}
