@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.20.0](https://img.shields.io/badge/Version-1.20.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.4](https://img.shields.io/badge/AppVersion-1.6.4-informational?style=flat-square)
+![Version: 1.22.0](https://img.shields.io/badge/Version-1.22.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.5](https://img.shields.io/badge/AppVersion-1.6.5-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -108,9 +108,10 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.enabled | bool | `true` | Toggle whether to enable the gRPC API Ingress |
 | grpcIngress.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
 | grpcIngress.labels | object | `{}` | Additional labels to add to the gRPC Ingress resource |
+| grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.6.4"` |  |
+| image.tag | string | `"1.6.5"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
