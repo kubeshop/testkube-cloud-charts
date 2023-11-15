@@ -7,7 +7,7 @@ dependencies:
   - name: common
     version: 2.2.5
     repository: https://charts.bitnami.com/bitnami
-  - name: testkube-cloud-api
+  - name: testkube-cloud-apiAD
     version: 1.22.0
     repository: file://../testkube-cloud-api
   - name: testkube-cloud-ui
