@@ -100,7 +100,15 @@ global:
 ```
 
 To provide the **License Key** as a Kubernetes secret, first we need to create a secret with the required field.
-Run the following command to create the secret:
+Run the following command to create the secret either from a file or from a literal:
+
+From file:
+```bash
+kubectl create secret generic testkube-enterprise-license \
+  --from-file=LICENSE_KEY=<path-to-license-key-file>      \
+  --namespace=testkube-enterprise
+```
+From literal:
 ```bash
 kubectl create secret generic testkube-enterprise-license \
   --from-literal=LICENSE_KEY=<your license key>           \

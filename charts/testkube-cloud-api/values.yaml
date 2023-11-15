@@ -273,6 +273,7 @@ statusPagesIngress:
 minio:
   # -- Toggle whether to deploy MinIO
   enabled: false
+
   # -- MinIO full name override
   fullnameOverride: ""
   # -- MinIO name override

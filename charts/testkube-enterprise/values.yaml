@@ -129,6 +129,13 @@ testkube-cloud-api:
   minio:
     # -- Toggle whether to install MinIO
     enabled: true
+    image:
+      # -- MinIO image repository
+      repository: minio/minio
+      # -- MinIO image tag
+      tag: RELEASE.2023-11-06T22-26-08Z
+      # -- MinIO image pull policy
+      pullPolicy: IfNotPresent
     # -- MinIO fullname override
     fullnameOverride: testkube-enterprise-minio
     ingress:
@@ -209,7 +216,11 @@ nats:
     replicas: 3
   # NATS container settings
   nats:
+    # -- Toggle whether to install NATS
     enabled: true
+    # Uncomment if you want to provide a different image or pullPolicy
+    # image: nats:2.7.4-alpine
+    # pullPolicy: IfNotPresent
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for NATS container
     securityContext: {}
@@ -220,11 +231,19 @@ nats:
       maxPayload: 8MB
   # Reloader container settings
   reloader:
+    # -- Toggle whether to install Reloader
+    enabled: true
+    # Uncomment if you want to provide a different image or pullPolicy
+    # image: natsio/nats-server-config-reloader:0.6.3
+    # pullPolicy: IfNotPresent
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for Reloader container
     securityContext: {}
   # NATS Box container settings
   natsbox:
+    # Uncomment if you want to provide a different image or pullPolicy
+    # image: natsio/nats-box:0.8.1
+    # pullPolicy: IfNotPresent
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for NATS Box container
     securityContext: {}
@@ -232,6 +251,11 @@ nats:
     tolerations: []
   # Exporter container settings
   exporter:
+    # -- Toggle whether to install NATS exporter
+    enabled: true
+    # Uncomment if you want to provide a different image or pullPolicy
+    # image: natsio/prometheus-nats-exporter:0.9.1
+    # pullPolicy: IfNotPresent
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for Exporter container
     securityContext: {}
@@ -242,6 +266,12 @@ nats:
 mongodb:
   # -- Toggle whether to install MongoDB
   enabled: true
+  # Uncomment if you want to provide different image settings
+  # image:
+    # registry: docker.io
+    # repository: bitnami/mongodb
+    # tag: 6.0.5-debian-11-r13
+    # digest: ""
   # -- MongoDB fullname override
   fullnameOverride: "testkube-enterprise-mongodb"
   # MongoDB Auth settings
@@ -272,9 +302,11 @@ dex:
   # -- Toggle whether to install Dex
   enabled: true
   fullnameOverride: testkube-enterprise-dex
-  image:
-    # -- Dex image tag (https://ghcr.io/dexidp/dex)
-    tag: v2.36.0-alpine
+  # Uncomment if you want to provide different image settings
+  # image:
+    # repository: ghcr.io/dexidp/dex
+    # tag: v2.36.0-alpine
+    # pullPolicy: IfNotPresent
   configSecret:
     # -- This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret.
     create: false
