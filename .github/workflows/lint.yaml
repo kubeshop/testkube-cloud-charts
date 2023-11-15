@@ -6,30 +6,6 @@ permissions:
   contents: write
 
 jobs:
-  docs-up-to-date:
-    name: Docs Up To Date
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: Check for changes in generated Helm docs models (helm-docs)
-        run: |
-          ./scripts/helm-docs.sh
-          changed=$(git status -s -uno | wc -l)
-          if [[ "$changed" -gt 0 ]]; then
-            echo "Updating helm-docs"
-            git config --global user.name "testkube-cloud-ci-bot"
-            git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
-            git add **/*README.md
-            git commit -m "Updating helm-chart versions and README files"
-            git push
-          else
-            echo  "Docs are up to date"
-          fi
-
   chart-test:
     name: Chart lint
     runs-on: ubuntu-22.04
