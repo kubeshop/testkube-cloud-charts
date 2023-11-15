@@ -21,8 +21,8 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.20.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.20.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.21.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.21.0 |
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
 | https://charts.dexidp.io | dex | 0.14.1 |
@@ -40,7 +40,6 @@ A Helm chart for Testkube Enterprise
 | dex.configTemplate.customConfig | string | `""` | If provided, it will completely override the default config (`base` and `additionalConfig`). This is useful if you want to use a custom config file. |
 | dex.enabled | bool | `true` | Toggle whether to install Dex |
 | dex.fullnameOverride | string | `"testkube-enterprise-dex"` |  |
-| dex.image.tag | string | `"v2.36.0-alpine"` | Dex image tag (https://ghcr.io/dexidp/dex) |
 | dex.ingress.annotations | object | `{}` | Additional annotations for Dex ingress |
 | dex.ingress.className | string | `"nginx"` | Testkube Enterprise supports only NGINX Controller currently |
 | dex.ingress.enabled | bool | `true` | Toggle whether to enable ingress for Dex |
@@ -80,15 +79,17 @@ A Helm chart for Testkube Enterprise
 | mongodb.tolerations | list | `[]` |  |
 | nats.cluster.enabled | bool | `true` | Enable cluster mode (HA) |
 | nats.cluster.replicas | int | `3` | NATS cluster replicas |
+| nats.exporter.enabled | bool | `true` | Toggle whether to install NATS exporter |
 | nats.exporter.resources | object | `{}` | Exporter resources settings |
 | nats.exporter.securityContext | object | `{}` | Security Context for Exporter container |
 | nats.fullnameOverride | string | `"testkube-enterprise-nats"` |  |
-| nats.nats.enabled | bool | `true` |  |
+| nats.nats.enabled | bool | `true` | Toggle whether to install NATS |
 | nats.nats.limits.maxPayload | string | `"8MB"` | Max payload |
 | nats.nats.resources | object | `{}` | NATS resource settings |
 | nats.nats.securityContext | object | `{}` | Security Context for NATS container |
 | nats.natsbox.securityContext | object | `{}` | Security Context for NATS Box container |
 | nats.natsbox.tolerations | list | `[]` | NATS Box tolerations settings |
+| nats.reloader.enabled | bool | `true` | Toggle whether to install Reloader |
 | nats.reloader.securityContext | object | `{}` | Security Context for Reloader container |
 | nats.securityContext | object | `{}` | NATS Pod Security Context |
 | nats.tolerations | list | `[]` |  |
@@ -129,7 +130,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.6.4"` |  |
+| testkube-cloud-api.image.tag | string | `"1.6.5"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
@@ -139,6 +140,9 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.minio.enabled | bool | `true` | Toggle whether to install MinIO |
 | testkube-cloud-api.minio.extraEnvVars | object | `{}` | Minio extra vars |
 | testkube-cloud-api.minio.fullnameOverride | string | `"testkube-enterprise-minio"` | MinIO fullname override |
+| testkube-cloud-api.minio.image.pullPolicy | string | `"IfNotPresent"` | MinIO image pull policy |
+| testkube-cloud-api.minio.image.repository | string | `"minio/minio"` | MinIO image repository |
+| testkube-cloud-api.minio.image.tag | string | `"RELEASE.2023-11-06T22-26-08Z"` | MinIO image tag |
 | testkube-cloud-api.minio.ingress.enabled | bool | `true` | Toggle whether to enable ingress for MinIO |
 | testkube-cloud-api.minio.ingress.tls.tlsSecret | string | `"testkube-enterprise-minio-tls"` | TLS secret name which contains the certificate files |
 | testkube-cloud-api.minio.nodeSelector | object | `{}` | Node labels for pod assignment. |
