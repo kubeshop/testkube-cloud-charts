@@ -1,8 +1,8 @@
 {{- if and .Values.global.ingress .Values.statusPagesIngress.enabled -}}
 {{- $fullName := include "testkube-cloud-api.fullname" . -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+  {{- if not (hasKey .Values.restIngress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.statusPagesIngress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
   {{- end }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -17,11 +17,11 @@ metadata:
   name: {{ $fullName }}-status-pages
   labels:
     {{- include "testkube-cloud-api.labels" . | nindent 4 }}
-  {{- if .Values.statusPagesIngress.labels }}
-    {{- toYaml .Values.ingress.labels | nindent 4 }}
-  {{- end }}
+    {{- with .Values.statusPagesIngress.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/backend-protocol: {{ if .Values.api.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
     nginx.ingress.kubernetes.io/configuration-snippet: |
       add_header X-Frame-Options "sameorigin";
       add_header X-XSS-Protection "1; mode=block";
