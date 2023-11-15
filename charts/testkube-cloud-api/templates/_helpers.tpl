@@ -171,3 +171,16 @@ Get Status Pages Ingress host
 {{- .Values.statusPagesIngress.host }}
 {{- end }}
 {{- end }}
+
+{{/*
+Get MinIO Ingress host
+*/}}
+{{- define "testkube-cloud-api.ingress.minioHost" -}}
+{{- if .Values.global.domain }}
+{{- printf "%s.%s" .Values.global.storageApiSubdomain .Values.global.domain }}
+{{- else if .Values.minio.ingress.host }}
+{{- .Values.minio.ingress.host }}
+{{- else }}
+{{- .Values.api.minio.endpoint }}
+{{- end }}
+{{- end }}

@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.21.0](https://img.shields.io/badge/Version-1.19.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.33.0](https://img.shields.io/badge/Version-1.33.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -21,13 +21,8 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-<<<<<<< HEAD
-| file://../testkube-cloud-api | testkube-cloud-api | 1.16.2 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.19.4 |
-=======
-| file://../testkube-cloud-api | testkube-cloud-api | 1.14.1 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.13.79 |
->>>>>>> d4c3b9cee36370647b1e641e043779cd1bdbacbe
+| file://../testkube-cloud-api | testkube-cloud-api | 1.20.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.20.0 |
 | https://charts.bitnami.com/bitnami | common | 2.2.5 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
 | https://charts.dexidp.io | dex | 0.14.1 |
@@ -59,8 +54,8 @@ A Helm chart for Testkube Enterprise
 | dex.resources.requests.cpu | string | `"100m"` |  |
 | dex.resources.requests.memory | string | `"128Mi"` |  |
 | dex.securityContext | object | `{}` | Security Context for MongoDB container |
-| global.certManager.issuerRef | string | `"ss"` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
-| global.certificateProvider | string | `"cert-manager"` | TLS provider (possible values: "", "cert-manager") |
+| global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
+| global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
 | global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
@@ -73,6 +68,7 @@ A Helm chart for Testkube Enterprise
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
+| global.storageApiSubdomain | string | `"storage"` | Storage API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
 | mongodb.auth.enabled | bool | `false` | Toggle whether to enable MongoDB authentication |
@@ -101,12 +97,13 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.agent.host | string | `""` | Agent host (without protocol) is used for building agent install commands (if blank, api will autogenerate it based on the value of `global.domain`) |
 | testkube-cloud-api.api.agent.port | int | `443` | Agent port - used for building agent install commands |
 | testkube-cloud-api.api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
-| testkube-cloud-api.api.migrations.enabled | bool | `true` | Toggle whether to run database migrations |
+| testkube-cloud-api.api.migrations.enabled | bool | `false` | Toggle whether to run database migrations |
 | testkube-cloud-api.api.migrations.image.repository | string | `"testkubeenterprise/testkube-enterprise-api-migrations"` | Migrations image repository |
+| testkube-cloud-api.api.migrations.ttlSecondsAfterFinished | int | `90` |  |
 | testkube-cloud-api.api.migrations.useHelmHooks | bool | `false` | Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart) |
 | testkube-cloud-api.api.minio.accessKeyId | string | `"testkube-enterprise"` | MinIO access key id |
 | testkube-cloud-api.api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: MINIO_ACCESS_KEY_ID, MINIO_SECRET_ACCESS_KEY, MINIO_TOKEN) (default is `testkube-cloud-minio-secret`) |
-| testkube-cloud-api.api.minio.endpoint | string | `"testkube-enterprise-minio:9000"` | MinIO endpoint |
+| testkube-cloud-api.api.minio.endpoint | string | `""` | Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service |
 | testkube-cloud-api.api.minio.expirationPeriod | int | `0` | Expiration period in days |
 | testkube-cloud-api.api.minio.region | string | `""` | S3 region |
 | testkube-cloud-api.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` | MinIO secret access key |
@@ -123,7 +120,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which to store logs & artifacts |
 | testkube-cloud-api.api.sendgrid.apiKey | string | `""` | Sendgrid API key |
 | testkube-cloud-api.api.sendgrid.secretRef | string | `""` | Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`) |
-| testkube-cloud-api.api.smtp.host | string | `"smtp.sendgrid.net"` | SMTP host |
+| testkube-cloud-api.api.smtp.host | string | `""` | SMTP host |
 | testkube-cloud-api.api.smtp.password | string | `""` | SMTP password |
 | testkube-cloud-api.api.smtp.passwordSecretRef | string | `""` | SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined |
 | testkube-cloud-api.api.smtp.port | int | `587` | SMTP port |
@@ -132,7 +129,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.6.3"` |  |
+| testkube-cloud-api.image.tag | string | `"1.6.4"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-cloud-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
@@ -141,14 +138,16 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.minio.customServiceAccountName | string | `""` | Custom service account for MinIO Deployment resource (overrides service account creation) |
 | testkube-cloud-api.minio.enabled | bool | `true` | Toggle whether to install MinIO |
 | testkube-cloud-api.minio.extraEnvVars | object | `{}` | Minio extra vars |
-| testkube-cloud-api.minio.fullnameOverride | string | `"testkube-enterprise-minio"` |  |
+| testkube-cloud-api.minio.fullnameOverride | string | `"testkube-enterprise-minio"` | MinIO fullname override |
+| testkube-cloud-api.minio.ingress.enabled | bool | `true` | Toggle whether to enable ingress for MinIO |
+| testkube-cloud-api.minio.ingress.tls.tlsSecret | string | `"testkube-enterprise-minio-tls"` | TLS secret name which contains the certificate files |
 | testkube-cloud-api.minio.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | testkube-cloud-api.minio.persistence.storage | string | `"10Gi"` | PVC Storage Request for MinIO. Should be available in the cluster. |
 | testkube-cloud-api.minio.podSecurityContext | object | `{}` | MinIO Pod Security Context |
 | testkube-cloud-api.minio.resources | object | `{}` | MinIO Resources settings |
 | testkube-cloud-api.minio.securityContext | object | `{}` | Security Context for MinIO container |
 | testkube-cloud-api.minio.serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |
-| testkube-cloud-api.minio.serviceAccount.create | bool | `false` | Specifies whether a service account should be created |
+| testkube-cloud-api.minio.serviceAccount.create | bool | `false` | Set to 'true' to create a dedicated service account for MinIO or 'false' to use the default service account |
 | testkube-cloud-api.minio.serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | testkube-cloud-api.minio.serviceAccount.name | string | `""` | The name of the service account to use. |
 | testkube-cloud-api.minio.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |

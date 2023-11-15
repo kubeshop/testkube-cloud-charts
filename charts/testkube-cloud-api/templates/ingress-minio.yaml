@@ -1,8 +1,8 @@
-{{- if and .Values.global.ingress.enabled .Values.grpcIngress.enabled -}}
-{{- $fullName := include "testkube-cloud-api.fullname" . -}}
+{{- if and .Values.global.ingress.enabled .Values.minio.ingress.enabled -}}
+{{- $fullName := include "testkube-cloud-api.minio.fullname" . -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.grpcIngress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.grpcIngress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+  {{- if not (hasKey .Values.minio.ingress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.minio.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
   {{- end }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -14,24 +14,18 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-grpc
+  name: {{ $fullName }}
   labels:
     {{- include "testkube-cloud-api.labels" . | nindent 4 }}
-    {{- with .Values.grpcIngress.labels }}
+    {{- with .Values.minio.ingress.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: {{ if .Values.api.tls.serveHTTPS }}GRPCS{{ else }}GRPC{{ end }}
-    nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.grpcIngress.maxPayloadSize }}
-    nginx.ingress.kubernetes.io/client-header-timeout: "10800"
-    nginx.ingress.kubernetes.io/client-body-timeout: "10800"
-    {{- if and (not .Values.api.tls.serveHTTPS) (eq .Values.global.certificateProvider "cert-manager") }}
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    {{- if eq .Values.global.certificateProvider "cert-manager" }}
     cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
     {{- end }}
-    {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
-    {{- with .Values.grpcIngress.annotations }}
+    {{- with .Values.minio.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
@@ -40,11 +34,10 @@ spec:
   {{- end }}
   tls:
     - hosts:
-        - {{ include "testkube-cloud-api.ingress.grpcHost" . | quote }}
-      secretName: {{ .Values.api.tls.tlsSecret }}
+        - {{ include "testkube-cloud-api.ingress.minioHost" . | quote }}
+      secretName: {{ .Values.minio.ingress.tls.tlsSecret }}
   rules:
-    {{- $tlsConfig := .Values.api.tls }}
-    - host: {{ include "testkube-cloud-api.ingress.grpcHost" . | quote }}
+    - host: {{ include "testkube-cloud-api.ingress.minioHost" . | quote }}
       http:
         paths:
           - path: /
@@ -56,9 +49,9 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  name: {{ if $tlsConfig.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
+                  name: http
               {{- else }}
               serviceName: {{ $fullName }}
-              servicePort: {{ if $tlsConfig.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
+              servicePort: http
               {{- end }}
 {{- end }}

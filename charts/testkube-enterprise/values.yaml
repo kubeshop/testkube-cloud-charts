@@ -25,7 +25,9 @@ global:
   websocketApiSubdomain: "websockets"
   # -- Status Pages API subdomain which get prepended to the domain
   statusPagesApiSubdomain: "status"
-  # -- TLS provider (possible values: "", "cert-manager")
+  # -- Storage API subdomain which get prepended to the domain
+  storageApiSubdomain: "storage"
+  # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
   certificateProvider: "cert-manager"
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
@@ -43,7 +45,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.6.3
+    tag: 1.6.4
   ai:
     secretRef: ""
   api:
@@ -51,7 +53,7 @@ testkube-cloud-api:
     inviteMode: email
     smtp:
       # -- SMTP host
-      host: smtp.sendgrid.net
+      host: ""
       # -- SMTP port
       port: 587
       # -- SMTP username
@@ -67,14 +69,14 @@ testkube-cloud-api:
       tlsSecret: testkube-enterprise-api-tls
     migrations:
       # -- Toggle whether to run database migrations
-      enabled: true
+      enabled: false
       # -- Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart)
       useHelmHooks: false
       image:
         # -- Migrations image repository
         repository: testkubeenterprise/testkube-enterprise-api-migrations
-       # -- clean up finished jobs
-      ttlSecondsAfterFinished: 180s
+        # -- clean up finished jobs
+      ttlSecondsAfterFinished: 90
     mongo:
       # -- Mongo DSN connection string
       dsn: "mongodb://testkube-enterprise-mongodb:27017"
@@ -84,8 +86,8 @@ testkube-cloud-api:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats:4222"
     minio:
-      # -- MinIO endpoint
-      endpoint: "testkube-enterprise-minio:9000"
+      # -- Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service
+      endpoint: ""
       # -- S3 region
       region: ""
       # -- MinIO access key id
@@ -125,9 +127,23 @@ testkube-cloud-api:
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
   minio:
-    fullnameOverride: testkube-enterprise-minio
     # -- Toggle whether to install MinIO
     enabled: true
+    image:
+      # -- MinIO image repository
+      repository: minio/minio
+      # -- MinIO image tag
+      tag: RELEASE.2023-11-06T22-26-08Z
+      # -- MinIO image pull policy
+      pullPolicy: IfNotPresent
+    # -- MinIO fullname override
+    fullnameOverride: testkube-enterprise-minio
+    ingress:
+      # -- Toggle whether to enable ingress for MinIO
+      enabled: true
+      tls:
+        # -- TLS secret name which contains the certificate files
+        tlsSecret: testkube-enterprise-minio-tls
     # -- Minio extra vars
     extraEnvVars: {}
     # - name: FOO
@@ -149,7 +165,7 @@ testkube-cloud-api:
     # -- Custom service account for MinIO Deployment resource (overrides service account creation)
     customServiceAccountName: ""
     serviceAccount:
-      # -- Specifies whether a service account should be created
+      # -- Set to 'true' to create a dedicated service account for MinIO or 'false' to use the default service account
       create: false
       # -- Additional annotations to add to the ServiceAccount resource
       annotations: {}
@@ -200,7 +216,11 @@ nats:
     replicas: 3
   # NATS container settings
   nats:
+    # -- Toggle whether to install NATS
     enabled: true
+    # Uncomment if you want to provide a different image or pullPolicy
+    # image: nats:2.7.4-alpine
+    # pullPolicy: IfNotPresent
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for NATS container
     securityContext: {}
@@ -211,11 +231,19 @@ nats:
       maxPayload: 8MB
   # Reloader container settings
   reloader:
+    # -- Toggle whether to install Reloader
+    enabled: true
+    # Uncomment if you want to provide a different image or pullPolicy
+    # image: natsio/nats-server-config-reloader:0.6.3
+    # pullPolicy: IfNotPresent
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for Reloader container
     securityContext: {}
   # NATS Box container settings
   natsbox:
+    # Uncomment if you want to provide a different image or pullPolicy
+    # image: natsio/nats-box:0.8.1
+    # pullPolicy: IfNotPresent
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for NATS Box container
     securityContext: {}
@@ -223,6 +251,11 @@ nats:
     tolerations: []
   # Exporter container settings
   exporter:
+    # -- Toggle whether to install NATS exporter
+    enabled: true
+    # Uncomment if you want to provide a different image or pullPolicy
+    # image: natsio/prometheus-nats-exporter:0.9.1
+    # pullPolicy: IfNotPresent
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for Exporter container
     securityContext: {}
@@ -233,6 +266,12 @@ nats:
 mongodb:
   # -- Toggle whether to install MongoDB
   enabled: true
+  # Uncomment if you want to provide different image settings
+  # image:
+    # registry: docker.io
+    # repository: bitnami/mongodb
+    # tag: 6.0.5-debian-11-r13
+    # digest: ""
   # -- MongoDB fullname override
   fullnameOverride: "testkube-enterprise-mongodb"
   # MongoDB Auth settings
@@ -263,9 +302,11 @@ dex:
   # -- Toggle whether to install Dex
   enabled: true
   fullnameOverride: testkube-enterprise-dex
-  image:
-    # -- Dex image tag (https://ghcr.io/dexidp/dex)
-    tag: v2.36.0-alpine
+  # Uncomment if you want to provide different image settings
+  # image:
+    # repository: ghcr.io/dexidp/dex
+    # tag: v2.36.0-alpine
+    # pullPolicy: IfNotPresent
   configSecret:
     # -- This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret.
     create: false

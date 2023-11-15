@@ -58,6 +58,10 @@ jobs:
           git --no-pager diff charts/testkube-enterprise >> $GITHUB_STEP_SUMMARY
           echo -e '```' >> $GITHUB_STEP_SUMMARY
 
+      - name: Check for changes in generated Helm docs models (helm-docs)
+        run: |
+          ./scripts/helm-docs.sh
+
       - name: Commit & push changes
         run: |
           git status

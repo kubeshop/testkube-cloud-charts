@@ -25,6 +25,8 @@ global:
   websocketApiSubdomain: "websockets"
   # -- Status Pages API subdomain which get prepended to the domain
   statusPagesApiSubdomain: "status"
+  # -- Storage API subdomain which get prepended to the domain
+  storageApiSubdomain: "storage"
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
   certManager:
@@ -42,7 +44,7 @@ replicaCount: 1
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.6.3"
+  tag: "1.6.4"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -88,6 +90,8 @@ api:
     enabled: false
     # -- Toggle whether to enable pre-install & pre-upgrade hooks
     useHelmHooks: true
+    # -- TTL for the migration job
+    ttlSecondsAfterFinished: 90
   # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
   inviteMode: email
   email:
@@ -95,7 +99,7 @@ api:
     fromName: "Testkube Cloud"
   smtp:
     # -- SMTP host
-    host: smtp.sendgrid.net
+    host: smtp.example.com
     # -- SMTP port
     port: 587
     # -- SMTP username
@@ -231,7 +235,7 @@ restIngress:
   # -- Additional annotations to add to the REST Ingress resource
   annotations: {}
   # kubernetes.io/ingress.class: nginx
-  # -- Hostname for which to create rules and TLS certificates
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
 grpcIngress:
   # -- Toggle whether to enable the gRPC API Ingress
@@ -241,7 +245,9 @@ grpcIngress:
   # -- Additional annotations to add to the gRPC Ingress resource
   annotations: {}
   # kubernetes.io/ingress.class: nginx
-  # -- Hostname for which to create rules and TLS certificates
+  # -- Max payload size for proxied gRPC API
+  maxPayloadSize: 16m
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
 websocketsIngress:
   # -- Toggle whether to enable the Websocket API Ingress
@@ -251,12 +257,41 @@ websocketsIngress:
   # -- Additional annotations to add to the WebSocket Ingress resource
   annotations: {}
   # kubernetes.io/ingress.class: nginx
-  # -- Hostname for which to create rules and TLS certificates
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
+  host: ""
+statusPagesIngress:
+  # -- Toggle whether to enable the Status Pages API Ingress
+  enabled: true
+  # -- Additional labels to add to the WebSocket Ingress resource
+  labels: {}
+  # -- Additional annotations to add to the WebSocket Ingress resource
+  annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
 ## MinIO parameters
 minio:
   # -- Toggle whether to deploy MinIO
   enabled: false
+
+  # -- MinIO full name override
+  fullnameOverride: ""
+  # -- MinIO name override
+  nameOverride: ""
+  ingress:
+    # -- Toggle whether to enable the MinIO Ingress
+    enabled: false
+    # -- Additional labels to add to the MinIO Ingress resource
+    labels: {}
+    # -- Additional annotations to add to the MinIO Ingress resource
+    annotations: {}
+    # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
+    host: ""
+    tls:
+      # -- TLS secret name which contains the certificate files
+      tlsSecret: testkube-cloud-minio-tls
+  # -- Storage class name of MinIO PVC
+  storageClassName: ""
   # -- Extra env vars to pass to MinIO deployment
   extraEnvVars: {}
   ## Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
@@ -272,7 +307,7 @@ minio:
   affinity: {}
   image:
     repository: minio/minio
-    tag: RELEASE.2023-05-04T21-44-30Z
+    tag: RELEASE.2023-11-06T22-26-08Z
     pullPolicy: IfNotPresent
   # -- Custom service account to attach to the MinIO deployment
   customServiceAccountName: ""
@@ -332,13 +367,3 @@ prometheus:
 nodeSelector: {}
 tolerations: []
 affinity: {}
-statusPagesIngress:
-  # -- Toggle whether to enable the Status Pages API Ingress
-  enabled: true
-  # -- Additional labels to add to the WebSocket Ingress resource
-  labels: {}
-  # -- Additional annotations to add to the WebSocket Ingress resource
-  annotations: {}
-  # kubernetes.io/ingress.class: nginx
-  # -- Hostname for which to create rules and TLS certificates
-  host: ""
