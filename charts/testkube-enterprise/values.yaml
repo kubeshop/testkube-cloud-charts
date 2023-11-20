@@ -45,7 +45,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.6.4
+    tag: 1.6.7
   ai:
     secretRef: ""
   api:
@@ -268,10 +268,10 @@ mongodb:
   enabled: true
   # Uncomment if you want to provide different image settings
   # image:
-    # registry: docker.io
-    # repository: bitnami/mongodb
-    # tag: 6.0.5-debian-11-r13
-    # digest: ""
+  # registry: docker.io
+  # repository: bitnami/mongodb
+  # tag: 6.0.5-debian-11-r13
+  # digest: ""
   # -- MongoDB fullname override
   fullnameOverride: "testkube-enterprise-mongodb"
   # MongoDB Auth settings
@@ -304,9 +304,9 @@ dex:
   fullnameOverride: testkube-enterprise-dex
   # Uncomment if you want to provide different image settings
   # image:
-    # repository: ghcr.io/dexidp/dex
-    # tag: v2.36.0-alpine
-    # pullPolicy: IfNotPresent
+  # repository: ghcr.io/dexidp/dex
+  # tag: v2.36.0-alpine
+  # pullPolicy: IfNotPresent
   configSecret:
     # -- This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret.
     create: false

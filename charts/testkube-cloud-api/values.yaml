@@ -44,7 +44,7 @@ replicaCount: 1
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.6.4"
+  tag: "1.6.7"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -273,7 +273,6 @@ statusPagesIngress:
 minio:
   # -- Toggle whether to deploy MinIO
   enabled: false
-
   # -- MinIO full name override
   fullnameOverride: ""
   # -- MinIO name override
