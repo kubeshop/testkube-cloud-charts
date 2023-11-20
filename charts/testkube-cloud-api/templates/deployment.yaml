@@ -294,7 +294,7 @@ spec:
             - name: {{ $key }}
               valueFrom:
                 secretKeyRef:
-                  key: {{ $key }}
+                  key: {{ $value }}
                   name: api-external-secrets
             {{ end }}
             {{- end}}
