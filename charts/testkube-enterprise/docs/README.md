@@ -196,14 +196,15 @@ If you want to use a different Ingress Controller, we kindly ask you to reach ou
 #### Domain
 
 Testkube Enterprise requires a domain (public or internal) under which it will expose the following services:
-| Subdomain                       | Service          |
-|---------------------------------|------------------|
-| `dashboard.<your-(sub)domain>`  | Dashboard UI     |
-| `api.<your-(sub)domain>`        | REST API         |
-| `agent.(sub)<your-domain>`      | gRPC API         |
-| `websockets.(sub)<your-domain>` | WebSockets API   |
-| `storage.(sub)<your-domain>`    | Storage API      |
-| `status.(sub)<your-domain>`     | Status Pages API |
+
+| Subdomain                       | Service          | Endpoint                         |
+|---------------------------------|------------------|----------------------------------|
+| `dashboard.<your-(sub)domain>`  | Dashboard UI     | `testkube-enterprise-ui:8080`    |
+| `api.<your-(sub)domain>`        | REST API         | `testkube-enterprise-api:9443`   |
+| `agent.<your-(sub)domain>`      | gRPC API         | `testkube-enterprise-api:8443`   |
+| `websockets.<your-(sub)domain>` | WebSockets API   | `testkube-enterprise-api:9443`   |
+| `storage.<your-(sub)domain>`    | Storage API      | `testkube-enterprise-minio:9000` |
+| `status.<your-(sub)domain>`     | Status Pages API | `testkube-enterprise-api:9443`   |
 
 #### TLS
 
@@ -240,6 +241,23 @@ global:
 
 Testkube Enterprise utilizes [Dex](https://dexidp.io/) for authentication & authorization.
 For detailed instruction on configuring Dex, please refer to the [auth.md](./auth.md) document.
+
+Dex requires persisting state to perform various tasks such as track refresh tokens, preventing replays, and rotating keys.
+This document is a summary of the storage configurations supported by dex.
+
+Default storage type for Dex is Kubernetes CRDs. This is the recommended storage type for most users.
+
+In order to use a different storage type, you need to configure the `dex.storage` field in the `values.yaml` file.
+```helm
+storage:
+  type: sqlite3
+  config:
+    file: /var/dex/dex.db
+```
+
+If the `dex.storage` field is not configured, it will default to the Kubernetes CRDs storage type.
+
+More info on various storage options can be found in the [Dex Storage](https://dexidp.io/docs/storage/) documentation.
 
 ### Metrics
 
