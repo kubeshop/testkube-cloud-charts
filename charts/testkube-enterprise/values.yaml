@@ -133,7 +133,7 @@ testkube-cloud-api:
       # -- MinIO image repository
       repository: minio/minio
       # -- MinIO image tag
-      tag: RELEASE.2023-11-06T22-26-08Z
+      tag: RELEASE.2023-11-20T22-40-07Z
       # -- MinIO image pull policy
       pullPolicy: IfNotPresent
     # -- MinIO fullname override
@@ -193,74 +193,115 @@ testkube-cloud-api:
     enabled: false
   ingress:
     className: nginx
+
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
+  ui:
+    # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector
+    authStrategy: ""
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: 1.6.2
+    tag: 1.6.4
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
+
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
   fullnameOverride: testkube-enterprise-nats
-  tolerations: []
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  # -- NATS Pod Security Context
-  securityContext: {}
-  cluster:
-    # -- Enable cluster mode (HA)
-    enabled: true
-    # -- NATS cluster replicas
-    replicas: 3
-  # NATS container settings
-  nats:
-    # -- Toggle whether to install NATS
-    enabled: true
-    # Uncomment if you want to provide a different image or pullPolicy
-    # image: nats:2.7.4-alpine
-    # pullPolicy: IfNotPresent
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS container
-    securityContext: {}
-    # -- NATS resource settings
-    resources: {}
-    limits:
-      # -- Max payload
-      maxPayload: 8MB
+
+  # Uncomment if you want to provide a different image or pullPolicy
+  # container:
+    # image:
+      # repository: nats
+      # tag: 2.10.5-alpine
+      # pullPolicy: IfNotPresent
+      # registry:
+
+  config:
+    cluster:
+      # -- Enable cluster mode (HA)
+      enabled: true
+      # -- NATS cluster replicas
+      replicas: 3
+
+    jetstream:
+      enabled: true
+
+      fileStore:
+        pvc:
+          enabled: true
+          size: 10Gi
+          storageClassName:
+
+    # -- Merge additional fields to nats config
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
+    merge:
+      max_payload: << 8MB >>
+    # -- Patch additional fields to nats config
+    patch: []
+
   # Reloader container settings
   reloader:
     # -- Toggle whether to install Reloader
     enabled: true
     # Uncomment if you want to provide a different image or pullPolicy
-    # image: natsio/nats-server-config-reloader:0.6.3
-    # pullPolicy: IfNotPresent
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for Reloader container
-    securityContext: {}
+    # image:
+      # repository: natsio/nats-server-config-reloader
+      # tag: 0.13.0
+      # pullPolicy:
+      # registry:
+
+    # -- Map of additional env vars
+    env: {}
+
+    # -- Merge additional fields to the container
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
+    merge: {}
+    # -- Patch additional fields to the container
+    patch: []
+
   # NATS Box container settings
-  natsbox:
+  natsBox:
+    enabled: true
     # Uncomment if you want to provide a different image or pullPolicy
-    # image: natsio/nats-box:0.8.1
-    # pullPolicy: IfNotPresent
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS Box container
-    securityContext: {}
-    # -- NATS Box tolerations settings
-    tolerations: []
+    # container:
+      # image:
+        # repository: natsio/nats-box
+        # tag: 0.14.1
+        # pullPolicy:
+        # registry:
+
+    # -- Map of additional env vars
+    env: {}
+
+    # -- Merge additional fields to the container
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
+    merge: {}
+    # -- Patch additional fields to the container
+    patch: []
+
   # Exporter container settings
-  exporter:
+  promExporter:
     # -- Toggle whether to install NATS exporter
     enabled: true
     # Uncomment if you want to provide a different image or pullPolicy
-    # image: natsio/prometheus-nats-exporter:0.9.1
-    # pullPolicy: IfNotPresent
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for Exporter container
-    securityContext: {}
-    # -- Exporter resources settings
-    resources: {}
+    # image:
+      # repository: natsio/prometheus-nats-exporter
+      # tag: 0.12.0
+      # pullPolicy:
+      # registry:
+
+    # -- Map of additional env vars
+    env: {}
+
+    # -- Merge additional fields to the container
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
+    merge: {}
+    # -- Patch additional fields to the container
+    patch: []
+
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -268,10 +309,11 @@ mongodb:
   enabled: true
   # Uncomment if you want to provide different image settings
   # image:
-  # registry: docker.io
-  # repository: bitnami/mongodb
-  # tag: 6.0.5-debian-11-r13
-  # digest: ""
+    # registry: docker.io
+    # repository: bitnami/mongodb
+    # tag: 7.0.3-debian-11-r6
+    # digest: ""
+
   # -- MongoDB fullname override
   fullnameOverride: "testkube-enterprise-mongodb"
   # MongoDB Auth settings
@@ -296,6 +338,7 @@ mongodb:
   containerSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  runAsGroup: 1000670000
+
 ## Dex chart parameters
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
@@ -304,9 +347,16 @@ dex:
   fullnameOverride: testkube-enterprise-dex
   # Uncomment if you want to provide different image settings
   # image:
-  # repository: ghcr.io/dexidp/dex
-  # tag: v2.36.0-alpine
-  # pullPolicy: IfNotPresent
+    # repository: ghcr.io/dexidp/dex
+    # tag: v2.36.0-alpine
+    # pullPolicy: IfNotPresent
+  rbac:
+    # -- Specifies whether RBAC resources should be created.
+    # If disabled, the operator is responsible for creating the necessary resources based on the templates.
+    create: true
+    # -- Specifies which RBAC resources should be created.
+    # If disabled, the operator is responsible for creating the necessary resources (ClusterRole and RoleBinding or CRD's)
+    createClusterScoped: true
   configSecret:
     # -- This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret.
     create: false
@@ -314,6 +364,12 @@ dex:
     createCustom: true
     # -- The name of the secret to mount as configuration in the pod. Set `createCustom: false` and edit the secret manually to use a custom config secret.
     name: "testkube-enterprise-dex-config"
+  # -- Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage)
+  storage: {}
+  # example config for saving Dex internal data as Kubernetes CRDs
+    # type: kubernetes
+    # config:
+      # inCluster: true
   # -- Inline Dex configuration which will be used to generate the config secret.
   configTemplate:
     # -- If provided, it will completely override the default config (`base` and `additionalConfig`). This is useful if you want to use a custom config file.
@@ -322,10 +378,6 @@ dex:
       logger:
         level: debug
         format: json
-      storage:
-        type: kubernetes
-        config:
-          inCluster: true
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: ""
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container

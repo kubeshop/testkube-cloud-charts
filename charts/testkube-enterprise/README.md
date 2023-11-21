@@ -12,21 +12,16 @@ A Helm chart for Testkube Enterprise
 | ---- | ------ | --- |
 | testkube |  | <https://testkube.io> |
 
-## Source Code
-
-* <https://github.com/kubeshop/testkube-cloud-api>
-* <https://github.com/kubeshop/testkube-cloud-ui>
-
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.22.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.21.0 |
-| https://charts.bitnami.com/bitnami | common | 2.2.5 |
-| https://charts.bitnami.com/bitnami | mongodb | 13.10.2 |
-| https://charts.dexidp.io | dex | 0.14.1 |
-| https://nats-io.github.io/k8s/helm/charts/ | nats | 0.14.2 |
+| https://charts.bitnami.com/bitnami | common | 2.13.3 |
+| https://charts.bitnami.com/bitnami | mongodb | 14.3.0 |
+| https://charts.dexidp.io | dex | 0.15.3 |
+| https://nats-io.github.io/k8s/helm/charts/ | nats | 1.1.5 |
 
 ## Values
 
@@ -35,7 +30,7 @@ A Helm chart for Testkube Enterprise
 | dex.configSecret.create | bool | `false` | This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret. |
 | dex.configSecret.createCustom | bool | `true` | Toggle whether to create a custom config secret for Dex (templates/dex-config-secret.yaml). If set to `true`, the `configTemplate` field will be used to generate the config secret. |
 | dex.configSecret.name | string | `"testkube-enterprise-dex-config"` | The name of the secret to mount as configuration in the pod. Set `createCustom: false` and edit the secret manually to use a custom config secret. |
-| dex.configTemplate | object | `{"additionalConfig":"","base":"logger:\n  level: debug\n  format: json\nstorage:\n  type: kubernetes\n  config:\n    inCluster: true\n","customConfig":""}` | Inline Dex configuration which will be used to generate the config secret. |
+| dex.configTemplate | object | `{"additionalConfig":"","base":"logger:\n  level: debug\n  format: json\n","customConfig":""}` | Inline Dex configuration which will be used to generate the config secret. |
 | dex.configTemplate.additionalConfig | string | `""` | Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`... |
 | dex.configTemplate.customConfig | string | `""` | If provided, it will completely override the default config (`base` and `additionalConfig`). This is useful if you want to use a custom config file. |
 | dex.enabled | bool | `true` | Toggle whether to install Dex |
@@ -49,10 +44,13 @@ A Helm chart for Testkube Enterprise
 | dex.ingress.tls[0].hosts[0] | string | `"api.{{ .Values.global.domain }}"` |  |
 | dex.ingress.tls[0].secretName | string | `"testkube-enterprise-api-tls"` |  |
 | dex.podSecurityContext | string | `nil` | MongoDB Pod Security Context |
+| dex.rbac.create | bool | `true` | Specifies whether RBAC resources should be created. If disabled, the operator is responsible for creating the necessary resources based on the templates. |
+| dex.rbac.createClusterScoped | bool | `true` | Specifies which RBAC resources should be created. If disabled, the operator is responsible for creating the necessary resources (ClusterRole and RoleBinding or CRD's) |
 | dex.resources.limits | object | `{}` |  |
 | dex.resources.requests.cpu | string | `"100m"` |  |
 | dex.resources.requests.memory | string | `"128Mi"` |  |
 | dex.securityContext | object | `{}` | Security Context for MongoDB container |
+| dex.storage | object | `{}` | Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage) |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
 | global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
@@ -77,22 +75,27 @@ A Helm chart for Testkube Enterprise
 | mongodb.podSecurityContext | object | `{}` | MongoDB Pod Security Context |
 | mongodb.resources | object | `{"requests":{"cpu":"150m","memory":"128Mi"}}` | MongoDB resource settings |
 | mongodb.tolerations | list | `[]` |  |
-| nats.cluster.enabled | bool | `true` | Enable cluster mode (HA) |
-| nats.cluster.replicas | int | `3` | NATS cluster replicas |
-| nats.exporter.enabled | bool | `true` | Toggle whether to install NATS exporter |
-| nats.exporter.resources | object | `{}` | Exporter resources settings |
-| nats.exporter.securityContext | object | `{}` | Security Context for Exporter container |
+| nats.config.cluster.enabled | bool | `true` | Enable cluster mode (HA) |
+| nats.config.cluster.replicas | int | `3` | NATS cluster replicas |
+| nats.config.jetstream.enabled | bool | `true` |  |
+| nats.config.jetstream.fileStore.pvc.enabled | bool | `true` |  |
+| nats.config.jetstream.fileStore.pvc.size | string | `"10Gi"` |  |
+| nats.config.jetstream.fileStore.pvc.storageClassName | string | `nil` |  |
+| nats.config.merge | object | `{"max_payload":"<< 8MB >>"}` | Merge additional fields to nats config https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.config.patch | list | `[]` | Patch additional fields to nats config |
 | nats.fullnameOverride | string | `"testkube-enterprise-nats"` |  |
-| nats.nats.enabled | bool | `true` | Toggle whether to install NATS |
-| nats.nats.limits.maxPayload | string | `"8MB"` | Max payload |
-| nats.nats.resources | object | `{}` | NATS resource settings |
-| nats.nats.securityContext | object | `{}` | Security Context for NATS container |
-| nats.natsbox.securityContext | object | `{}` | Security Context for NATS Box container |
-| nats.natsbox.tolerations | list | `[]` | NATS Box tolerations settings |
+| nats.natsBox.enabled | bool | `true` |  |
+| nats.natsBox.env | object | `{}` | Map of additional env vars |
+| nats.natsBox.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.natsBox.patch | list | `[]` | Patch additional fields to the container |
+| nats.promExporter.enabled | bool | `true` | Toggle whether to install NATS exporter |
+| nats.promExporter.env | object | `{}` | Map of additional env vars |
+| nats.promExporter.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.promExporter.patch | list | `[]` | Patch additional fields to the container |
 | nats.reloader.enabled | bool | `true` | Toggle whether to install Reloader |
-| nats.reloader.securityContext | object | `{}` | Security Context for Reloader container |
-| nats.securityContext | object | `{}` | NATS Pod Security Context |
-| nats.tolerations | list | `[]` |  |
+| nats.reloader.env | object | `{}` | Map of additional env vars |
+| nats.reloader.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.reloader.patch | list | `[]` | Patch additional fields to the container |
 | testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |
 | testkube-cloud-api.api.agent.host | string | `""` | Agent host (without protocol) is used for building agent install commands (if blank, api will autogenerate it based on the value of `global.domain`) |
@@ -142,7 +145,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.minio.fullnameOverride | string | `"testkube-enterprise-minio"` | MinIO fullname override |
 | testkube-cloud-api.minio.image.pullPolicy | string | `"IfNotPresent"` | MinIO image pull policy |
 | testkube-cloud-api.minio.image.repository | string | `"minio/minio"` | MinIO image repository |
-| testkube-cloud-api.minio.image.tag | string | `"RELEASE.2023-11-06T22-26-08Z"` | MinIO image tag |
+| testkube-cloud-api.minio.image.tag | string | `"RELEASE.2023-11-20T22-40-07Z"` | MinIO image tag |
 | testkube-cloud-api.minio.ingress.enabled | bool | `true` | Toggle whether to enable ingress for MinIO |
 | testkube-cloud-api.minio.ingress.tls.tlsSecret | string | `"testkube-enterprise-minio-tls"` | TLS secret name which contains the certificate files |
 | testkube-cloud-api.minio.nodeSelector | object | `{}` | Node labels for pod assignment. |
@@ -158,8 +161,9 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"1.6.2"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.6.4"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
+| testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+Autogenerated from chart metadata using [helm-docs v1.11.3](https://github.com/norwoodj/helm-docs/releases/v1.11.3)
