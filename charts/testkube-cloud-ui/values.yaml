@@ -94,6 +94,7 @@ ingress:
     provider: "cert-manager"
   # -- Hostname for which to create rules and TLS certificates
   host: ""
+# -- new UI subdomain which gets prepended to the domain. Replaces uiSubdomain if enabled.
 ingressRedirect:
   enabled: false
   annotations: {}
