@@ -97,6 +97,7 @@ ingress:
 ingressRedirect:
   enabled: false
   annotations: {}
+  labels: {}
 resources:
   requests:
     cpu: 50m

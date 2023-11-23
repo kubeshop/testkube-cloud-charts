@@ -42,10 +42,10 @@ spec:
   {{- end }}
   tls:
     - hosts:
-        - {{ .Values.global.redirectSubdomain }}
+        - {{ .Values.global.redirectSubdomain }}.{{ .Values.global.domain }}
       secretName: "{{ .Values.ingress.tlsSecretName }}-{{ .Values.global.redirectSubdomain }}"
   rules:
-    - host: {{ .Values.global.redirectSubdomain }}
+    - host: {{ .Values.global.redirectSubdomain }}.{{ .Values.global.domain }}
       http:
         paths:
           - path: /
