@@ -9,6 +9,8 @@ global:
   domain: ""
   # -- UI subdomain which get prepended to the domain
   uiSubdomain: "cloud"
+  # -- new UI subdomain which get prepended to the domain. Replaces uiSubdomain.
+  redirectSubdomain: "app"
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
   certManager:
@@ -92,6 +94,9 @@ ingress:
     provider: "cert-manager"
   # -- Hostname for which to create rules and TLS certificates
   host: ""
+ingressRedirect:
+  enabled: false
+  annotations: {}
 resources:
   requests:
     cpu: 50m
