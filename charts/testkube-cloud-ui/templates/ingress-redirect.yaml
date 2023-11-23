@@ -19,7 +19,7 @@ metadata:
   labels:
     {{- include "testkube-cloud-ui.labels" . | nindent 4 }}
   {{- if .Values.ingressRedirect.labels }}
-    {{- toYaml .Values.ingress.labels | nindent 4 }}
+    {{- toYaml .Values.ingressRedirect.labels | nindent 4 }}
   {{- end }}
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
