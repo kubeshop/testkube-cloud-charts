@@ -207,7 +207,6 @@ testkube-cloud-ui:
     tlsSecretName: testkube-enterprise-ui-tls
   ingressRedirect:
     enabled: false
-    annotations: {}
 
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
