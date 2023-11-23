@@ -17,7 +17,7 @@ global:
   domain: ""
   # -- UI subdomain which get prepended to the domain
   uiSubdomain: "dashboard"
-  # -- Different UI subdomain which get prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled.
+  # -- Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled.
   redirectSubdomain: "app"
   # -- REST API subdomain which get prepended to the domain
   restApiSubdomain: "api"

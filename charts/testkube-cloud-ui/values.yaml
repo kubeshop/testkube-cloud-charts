@@ -9,7 +9,7 @@ global:
   domain: ""
   # -- UI subdomain which get prepended to the domain
   uiSubdomain: "cloud"
-  # -- Different UI subdomain which get prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled.
+  # -- Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled.
   redirectSubdomain: "app"
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
@@ -94,7 +94,7 @@ ingress:
     provider: "cert-manager"
   # -- Hostname for which to create rules and TLS certificates
   host: ""
-# -- new UI subdomain which gets prepended to the domain. Replaces uiSubdomain if enabled.
+# -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
 ingressRedirect:
   enabled: false
   annotations: {}
