@@ -1,4 +1,4 @@
-{{- if and .Values.ingressRedirect.enabled -}}
+{{- if .Values.ingressRedirect.enabled -}}
 {{- $fullName := include "testkube-cloud-ui.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
@@ -43,7 +43,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.global.redirectSubdomain }}
-      secretName: {{ .Values.ingress.tlsSecretName }}-{{ .Values.global.redirectSubdomain }}
+      secretName: "{{ .Values.ingress.tlsSecretName }}-{{ .Values.global.redirectSubdomain }}"
   rules:
     - host: {{ .Values.global.redirectSubdomain }}
       http:
