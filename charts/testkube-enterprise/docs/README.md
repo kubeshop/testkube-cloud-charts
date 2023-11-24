@@ -204,7 +204,6 @@ Testkube Enterprise requires a domain (public or internal) under which it will e
 | `agent.<your-(sub)domain>`      | gRPC API         | `testkube-enterprise-api:8443`   |
 | `websockets.<your-(sub)domain>` | WebSockets API   | `testkube-enterprise-api:9443`   |
 | `storage.<your-(sub)domain>`    | Storage API      | `testkube-enterprise-minio:9000` |
-| `status.<your-(sub)domain>`     | Status Pages API | `testkube-enterprise-api:9443`   |
 
 #### TLS
 
@@ -228,7 +227,6 @@ If `cert-manager` is not installed in your cluster, valid TLS certificates (for 
   * `api.<your-domain>`
   * `agent.<your-domain>`
   * `websockets.<your-domain>`
-  * `status.<your-domain>`
 * Dashboard (TLS secret name is configured with `testkube-cloud-ui.ingress.tlsSecretName` field)
   * `dashboard.<your-domain>`
 Also, `global.certificateProvider` should be set to blank ("").
