@@ -1,8 +1,8 @@
-{{- if and .Values.global.ingress.enabled .Values.minio.ingress.enabled -}}
-{{- $fullName := include "testkube-cloud-api.minio.fullname" . -}}
-{{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.minio.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.minio.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+{{- if and .Values.global.ingress.enabled .Values.minio.customIngress.enabled -}}
+{{- $fullName := .Values.minio.fullnameOverride -}}
+{{- if and .Values.minio.customIngress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.minio.customIngress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.minio.customIngress.annotations "kubernetes.io/ingress.class" .Values.minio.customIngress.className}}
   {{- end }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -15,29 +15,28 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
+  {{- with .Values.minio.customIngress.labels }}
   labels:
-    {{- include "testkube-cloud-api.labels" . | nindent 4 }}
-    {{- with .Values.minio.ingress.labels }}
     {{- toYaml . | nindent 4 }}
-    {{- end }}
+  {{- end }}
   annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/backend-protocol: {{ if .Values.minio.tls.enabled }}HTTPS{{ else }}HTTP{{ end }}
     {{- if eq .Values.global.certificateProvider "cert-manager" }}
     cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
     {{- end }}
-    {{- with .Values.minio.ingress.annotations }}
+    {{- with .Values.minio.customIngress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
-  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: {{ .Values.ingress.className }}
+  {{- if and .Values.minio.customIngress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.minio.customIngress.className }}
   {{- end }}
   tls:
     - hosts:
-        - {{ include "testkube-cloud-api.ingress.minioHost" . | quote }}
-      secretName: {{ .Values.minio.ingress.tls.tlsSecret }}
+        - {{ include "testkube-enterprise.ingress.storageHost" . | quote }}
+      secretName: {{ .Values.minio.customIngress.tls.tlsSecret }}
   rules:
-    - host: {{ include "testkube-cloud-api.ingress.minioHost" . | quote }}
+    - host: {{ include "testkube-enterprise.ingress.storageHost" . | quote }}
       http:
         paths:
           - path: /
@@ -49,9 +48,9 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  name: http
+                  name: minio-api
               {{- else }}
               serviceName: {{ $fullName }}
-              servicePort: http
+              servicePort: minio-api
               {{- end }}
 {{- end }}
