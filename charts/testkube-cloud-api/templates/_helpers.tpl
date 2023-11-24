@@ -108,14 +108,3 @@ Get Websockets Ingress host
 {{- .Values.websocketsIngress.host }}
 {{- end }}
 {{- end }}
-
-{{/*
-Get Status Pages Ingress host
-*/}}
-{{- define "testkube-cloud-api.ingress.statusPagesHost" -}}
-{{- if .Values.global.domain }}
-{{- printf "%s.%s" .Values.global.statusPagesApiSubdomain .Values.global.domain }}
-{{- else }}
-{{- .Values.statusPagesIngress.host }}
-{{- end }}
-{{- end }}
