@@ -223,6 +223,8 @@ spec:
             {{- $dashboardAddress := "" }}
             {{- if .Values.api.dashboardAddress }}
             {{- $dashboardAddress = .Values.api.dashboardAddress }}
+            {{- else if .Values.api.redirectSubdomain }}
+            {{- $dashboardAddress = printf "https://%s.%s" .Values.api.redirectSubdomain .Values.global.domain }}
             {{- else }}
             {{- $dashboardAddress = printf "https://%s.%s" .Values.global.uiSubdomain .Values.global.domain }}
             {{- end }}
@@ -248,43 +250,41 @@ spec:
               value: "{{ .Values.api.tls.keyPath }}"
             - name: OUTPUTS_BUCKET
               value: "{{ .Values.api.outputsBucket }}"
-            {{- if .Values.minio.enabled }}
             - name: MINIO_ENDPOINT
-              value: {{ include "testkube-cloud-api.ingress.minioHost" . | quote }}
+              value: "{{ tpl .Values.api.minio.endpoint . }}"
             - name: MINIO_REGION
               value: "{{ .Values.api.minio.region }}"
             - name: MINIO_SSL
-              value: "{{ if .Values.minio.ingress.enabled }}true{{ else }}{{ .Values.api.minio.secure }}{{ end }}"
+              value: "{{ .Values.api.minio.secure }}"
             - name: MINIO_EXPIRATION
               value: "{{ .Values.api.minio.expirationPeriod }}"
             - name: MINIO_ACCESS_KEY_ID
               {{- if .Values.api.minio.credsSecretRef }}
               valueFrom:
                 secretKeyRef:
-                  key: MINIO_ACCESS_KEY_ID
+                  key: root-user
                   name: {{ .Values.api.minio.credsSecretRef }}
               {{- else }}
-              value: "{{ if .Values.api.minio.accessKeyId }}{{ .Values.api.minio.accessKeyId }}{{ else }}{{ .Values.minio.credentials.accessKeyId }}{{ end }}"
+              value: "{{ .Values.api.minio.accessKeyId }}"
               {{- end }}
             - name: MINIO_SECRET_ACCESS_KEY
               {{- if .Values.api.minio.credsSecretRef }}
               valueFrom:
                 secretKeyRef:
-                  key: MINIO_SECRET_ACCESS_KEY
+                  key: root-password
                   name: {{ .Values.api.minio.credsSecretRef }}
               {{- else }}
-              value: "{{ if .Values.api.minio.secretAccessKey }}{{ .Values.api.minio.secretAccessKey }}{{ else }}{{ .Values.minio.credentials.secretAccessKey }}{{ end }}"
+              value: "{{ .Values.api.minio.secretAccessKey }}"
               {{- end }}
             - name: MINIO_TOKEN
               {{- if .Values.api.minio.credsSecretRef }}
               valueFrom:
                 secretKeyRef:
-                  key: MINIO_TOKEN
+                  key: token
                   name: {{ .Values.api.minio.credsSecretRef }}
               {{- else }}
               value: "{{ .Values.api.minio.token }}"
               {{- end }}
-            {{- end }}
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
               value: "{{ $v }}"

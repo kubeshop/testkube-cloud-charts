@@ -1,8 +1,8 @@
 helm:
   parameters:
   - name: image.name
-    value: kubeshop/testkube-cloud-ui
+    value: kubeshop/testkube-cloud-api
     forcestring: true
   - name: image.tag
-    value: 1.7.0-dev-b4671c1
+    value: 1.7.0-dev-5162eca
     forcestring: true

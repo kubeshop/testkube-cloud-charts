@@ -23,24 +23,6 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
-{{/* MinIO
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
-*/}}
-{{- define "testkube-cloud-api.minio.fullname" -}}
-{{- if .Values.minio.fullnameOverride }}
-{{- .Values.minio.fullnameOverride | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- $name := default .Chart.Name .Values.minio.nameOverride }}
-{{- if contains $name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}-minio
-{{- end }}
-{{- end }}
-{{- end }}
-
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -64,16 +46,6 @@ Testkube selector labels
 {{- define "testkube-cloud-api.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "testkube-cloud-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
-Common MinIO labels
-*/}}
-{{- define "testkube-cloud-api.minio.labels" -}}
-app.kubernetes.io/version: {{ .Values.minio.image.tag | quote }}
-app.kubernetes.io/component: storage
-{{ include "testkube-cloud-api.minio.selectorLabels" . }}
-{{ include "testkube-cloud-api.baseLabels" . }}
 {{- end }}
 
 {{/*
@@ -101,30 +73,6 @@ Create the name of the service account to use
 {{- default (include "testkube-cloud-api.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create the name of the service account to use for MinIO
-*/}}
-{{- define "testkube-cloud-api.minio.serviceAccountName" -}}
-{{- if .Values.minio.serviceAccount.create }}
-{{- default (include "testkube-cloud-api.fullname" .) .Values.minio.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.minio.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
-Get the MinIO service account name for the Deployment
-*/}}
-{{- define "testkube-cloud-api.minio.findServiceAccountName" -}}
-{{- if .Values.minio.serviceAccount.create }}
-{{- default (include "testkube-cloud-api.minio.fullname" .) .Values.minio.serviceAccount.name }}
-{{- else if .Values.minio.customServiceAccountName }}
-{{- .Values.minio.customServiceAccountName }}
-{{- else }}
-{{- default "default" .Values.minio.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
@@ -169,18 +117,5 @@ Get Status Pages Ingress host
 {{- printf "%s.%s" .Values.global.statusPagesApiSubdomain .Values.global.domain }}
 {{- else }}
 {{- .Values.statusPagesIngress.host }}
-{{- end }}
-{{- end }}
-
-{{/*
-Get MinIO Ingress host
-*/}}
-{{- define "testkube-cloud-api.ingress.minioHost" -}}
-{{- if .Values.global.domain }}
-{{- printf "%s.%s" .Values.global.storageApiSubdomain .Values.global.domain }}
-{{- else if .Values.minio.ingress.host }}
-{{- .Values.minio.ingress.host }}
-{{- else }}
-{{- .Values.api.minio.endpoint }}
 {{- end }}
 {{- end }}
