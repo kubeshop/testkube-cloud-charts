@@ -223,6 +223,8 @@ spec:
             {{- $dashboardAddress := "" }}
             {{- if .Values.api.dashboardAddress }}
             {{- $dashboardAddress = .Values.api.dashboardAddress }}
+            {{- else if .Values.api.redirectSubdomain }}
+            {{- $dashboardAddress = printf "https://%s.%s" .Values.api.redirectSubdomain .Values.global.domain }}
             {{- else }}
             {{- $dashboardAddress = printf "https://%s.%s" .Values.global.uiSubdomain .Values.global.domain }}
             {{- end }}
