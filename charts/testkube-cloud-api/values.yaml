@@ -27,8 +27,6 @@ global:
   statusPagesApiSubdomain: "status"
   # -- Storage API subdomain which get prepended to the domain
   storageApiSubdomain: "storage"
-  # -- Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled.
-  redirectSubdomain: ""
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
   certManager:
@@ -134,6 +132,8 @@ api:
   apiAddress: ""
   # -- Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`)
   dashboardAddress: ""
+  # -- Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled.
+  redirectSubdomain: ""
   mongo:
     # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
     dsnSecretRef: ""
