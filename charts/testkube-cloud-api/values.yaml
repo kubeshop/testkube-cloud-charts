@@ -27,6 +27,8 @@ global:
   statusPagesApiSubdomain: "status"
   # -- Storage API subdomain which get prepended to the domain
   storageApiSubdomain: "storage"
+  # -- Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled.
+  redirectSubdomain: ""
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
   certManager:
