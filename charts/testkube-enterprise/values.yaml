@@ -273,6 +273,8 @@ nats:
     # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
     merge:
       max_payload: << 8MB >>
+      cluster:
+        name: << testkube-enterprise >>
     # -- Patch additional fields to nats config
     patch: []
 
