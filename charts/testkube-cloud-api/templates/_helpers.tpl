@@ -108,3 +108,10 @@ Get Websockets Ingress host
 {{- .Values.websocketsIngress.host }}
 {{- end }}
 {{- end }}
+
+{{/*
+THIS IS A HACK TO WORKAROUND LET'S ENCRYPT RATE LIMITS
+*/}}
+{{- define "testkube-cloud-api.ingress.hackHost" -}}
+{{- printf "health.%s" .Values.global.websocketApiSubdomain .Values.global.domain }}
+{{- end }}
