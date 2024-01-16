@@ -1,0 +1,20 @@
+{{- if .Values.prometheus.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ include "testkube-worker-service.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "testkube-worker-service.labels" . | nindent 4 -}}
+    {{- with .Values.prometheus.labels }}
+    {{- toYaml . | nindent 4 -}}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "testkube-worker-service.selectorLabels" . | nindent 6 }}
+  podMetricsEndpoints:
+    - port: {{ .Values.prometheus.port }}
+      path: {{ .Values.prometheus.path }}
+      interval: {{ .Values.prometheus.scrapeInterval }}
+{{- end }}
