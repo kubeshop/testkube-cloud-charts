@@ -10,7 +10,7 @@ Common labels
 */}}
 {{- define "testkube-enterprise.labels" -}}
 helm.sh/chart: {{ include "testkube-enterprise.chart" . }}
-app.kubernetes.io/version: {{ .Values.dex.image.tag }}
+app.kubernetes.io/version: {{ .Chart.Version }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/component: auth
 app.kubernetes.io/part-of: testkube-enterprise
