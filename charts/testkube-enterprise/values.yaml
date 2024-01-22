@@ -267,7 +267,7 @@ nats:
         pvc:
           enabled: true
           size: 10Gi
-          storageClassName:
+          storageClassName: default
 
     # -- Merge additional fields to nats config
     # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
@@ -415,11 +415,11 @@ dex:
         level: debug
         format: json
     additionalStaticClients:
-    #  - id: testkube-cloud-local
-    #    name: Testkube Cloud - localdev
-    #    redirectURIs:
-    #      - http://localhost:8090/auth/callback
-    #    secret: some-secret
+      - id: testkube-cloud-local
+        name: Testkube Cloud - localdev
+        redirectURIs:
+          - http://localhost:8090/auth/callback
+        secret: some-secret
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: ""
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -428,6 +428,8 @@ dex:
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
   podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 3000
   resources:
     requests:
       cpu: 100m
@@ -441,11 +443,11 @@ dex:
     # -- Testkube Enterprise supports only NGINX Controller currently
     className: nginx
     hosts:
-     # - host: '{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}'
+      - host: '{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}'
         paths:
           - path: /idp
             pathType: Prefix
     tls:
       - secretName: testkube-enterprise-api-tls
-       # hosts:
-        #  - '{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}'
+        hosts:
+          - '{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}'
