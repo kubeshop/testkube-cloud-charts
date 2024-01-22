@@ -181,7 +181,7 @@ testkube-cloud-api:
       uri: "nats://testkube-enterprise-nats:4222"
     minio:
       # -- Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service
-      endpoint: '{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}'
+     # endpoint: '{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}'
       # -- S3 region
       region: ""
       # -- MinIO access key id
@@ -441,11 +441,11 @@ dex:
     # -- Testkube Enterprise supports only NGINX Controller currently
     className: nginx
     hosts:
-      - host: '{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}'
+     # - host: '{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}'
         paths:
           - path: /idp
             pathType: Prefix
     tls:
       - secretName: testkube-enterprise-api-tls
-        hosts:
-          - '{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}'
+       # hosts:
+        #  - '{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}'
