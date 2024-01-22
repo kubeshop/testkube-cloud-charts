@@ -414,6 +414,12 @@ dex:
       logger:
         level: debug
         format: json
+    additionalStaticClients:
+    #  - id: testkube-cloud-local
+    #    name: Testkube Cloud - localdev
+    #    redirectURIs:
+    #      - http://localhost:8090/auth/callback
+    #    secret: some-secret
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: ""
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
