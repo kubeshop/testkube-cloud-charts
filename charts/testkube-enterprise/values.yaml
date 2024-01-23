@@ -139,7 +139,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.6.7
+    tag: 1.7.3-dev-a30142d2
   ai:
     secretRef: ""
   api:
@@ -232,7 +232,7 @@ testkube-cloud-ui:
     authStrategy: ""
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: 1.6.4
+    tag: 1.8.0-dev-565a665
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
