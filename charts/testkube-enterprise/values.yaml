@@ -414,7 +414,8 @@ dex:
       logger:
         level: debug
         format: json
-    additionalStaticClients:
+    # -- Additional static clients which will be appended to the dex staticClients config
+    additionalStaticClients: []
     #  - id: testkube-cloud-local
     #    name: Testkube Cloud - localdev
     #    redirectURIs:
