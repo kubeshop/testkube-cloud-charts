@@ -78,6 +78,16 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 
+service:
+  # -- Service type
+  type: ClusterIP
+  # -- Additional annotations to add to the Service resource
+  annotations: {}
+  # -- Additional labels to add to the Service resource
+  labels: {}
+  # -- Metrics port
+  metricsPort: 9000
+
 prometheus:
   # -- Toggle whether to create ServiceMonitor resource for Prometheus Operator
   enabled: false

@@ -1,6 +1,6 @@
 {{- if .Values.prometheus.enabled }}
 apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
+kind: ServiceMonitor
 metadata:
   name: {{ include "testkube-worker-service.fullname" . }}
   namespace: {{ .Release.Namespace }}
@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       {{- include "testkube-worker-service.selectorLabels" . | nindent 6 }}
-  podMetricsEndpoints:
+  endpoints:
     - port: {{ .Values.prometheus.port }}
       path: {{ .Values.prometheus.path }}
       interval: {{ .Values.prometheus.scrapeInterval }}
