@@ -244,7 +244,6 @@ testkube-cloud-ui:
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
   fullnameOverride: testkube-enterprise-nats
-
   # Uncomment if you want to provide a different image or pullPolicy
   # container:
     # image:
