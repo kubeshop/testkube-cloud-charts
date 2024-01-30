@@ -1,11 +1,8 @@
 helm:
   parameters:
   - name: image.name
-    value: testkubeenterprise/testkube-enterprise-ui
+    value: testkubeenterprise/testkube-enterprise-api
     forcestring: true
   - name: testkube-cloud-api.image.tag
-    value: 1.7.6-rc-10cff42e
-    forcestring: true
-  - name: testkube-cloud-ui.image.tag
-    value: 1.8.0-dev-565a665
+    value: 1.7.7-rc-d582c42d
     forcestring: true
