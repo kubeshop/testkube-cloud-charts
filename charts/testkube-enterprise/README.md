@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.43.0](https://img.shields.io/badge/Version-1.43.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.43.1](https://img.shields.io/badge/Version-1.43.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -17,7 +17,7 @@ A Helm chart for Testkube Enterprise
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.29.9 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.24.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.24.1 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
 | https://charts.bitnami.com/bitnami | mongodb | 14.3.0 |
@@ -171,7 +171,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"1.6.2"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.7.4"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
