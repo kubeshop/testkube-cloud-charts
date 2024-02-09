@@ -43,7 +43,7 @@ global:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: ""
 minio:
-  # -- To
+  # -- Toggle whether to install MinIO
   enabled: true
   fullnameOverride: &minioFullnameOverride testkube-enterprise-minio
   # Uncomment if you want to provide different image settings
