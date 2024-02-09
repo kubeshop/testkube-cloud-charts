@@ -83,6 +83,11 @@ payments:
   # -- Payments portal configuration ID (currently only Stripe is supported)
   portalConfigurationId: ""
 api:
+  debug:
+    # -- Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2
+    enableHttp2Logs: false
+    # -- Toggle whether to enable gRPC server logs
+    enableGrpcServerLogs: false
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
     enabled: false
@@ -170,6 +175,8 @@ api:
     host: ""
     # -- Agent port
     port: "443"
+    # -- Toggle whether to enable agent grpc keepalive pings
+    keepAlive: false
   oauth:
     # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`)
     secretRef: ""
