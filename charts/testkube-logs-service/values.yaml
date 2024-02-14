@@ -1,0 +1,197 @@
+# Default values for testkube-cloud-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  # -- Domain under which to create Ingress rules
+  domain: ""
+  # -- UI subdomain which get prepended to the domain
+  uiSubdomain: "cloud"
+  # -- REST API subdomain which get prepended to the domain
+  restApiSubdomain: "api"
+  # -- gRPC API subdomain which get prepended to the domain
+  grpcApiSubdomain: "agent"
+  # -- Websocket API subdomain which get prepended to the domain
+  websocketApiSubdomain: "websockets"
+  # -- TLS provider (possible values: "", "cert-manager")
+  certificateProvider: ""
+  certManager:
+    # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
+    issuerRef: ""
+  # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
+  imagePullSecrets: []
+  ingress:
+    # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
+    enabled: true
+
+replicaCount: 1
+image:
+  repository: kubeshop/testkube-log-service
+  pullPolicy: IfNotPresent
+  tag: "1.6.7"
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: "logs-service"
+# -- Additional env vars to be added to the deployment
+additionalEnv: {}
+# FOO: bar
+
+ingress:
+  # -- Common annotations which will be added to all Ingress resources
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
+  # -- Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed)
+  className: nginx
+
+restIngress:
+  # -- Toggle whether to enable the REST API Ingress
+  enabled: true
+  # -- Additional labels to add to the REST Ingress resource
+  labels: {}
+  # -- Additional annotations to add to the REST Ingress resource
+  annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
+  host: ""
+
+grpcIngress:
+  # -- Toggle whether to enable the gRPC API Ingress
+  enabled: true
+  # -- Additional labels to add to the gRPC Ingress resource
+  labels: {}
+  # -- Additional annotations to add to the gRPC Ingress resource
+  annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Max payload size for proxied gRPC API
+  maxPayloadSize: 16m
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
+  host: ""
+
+websocketsIngress:
+  # -- Toggle whether to enable the Websocket API Ingress
+  enabled: true
+  # -- Additional labels to add to the WebSocket Ingress resource
+  labels: {}
+  # -- Additional annotations to add to the WebSocket Ingress resource
+  annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
+  host: ""
+
+api:
+  # -- S3 bucket in which outputs are stored
+  outputsBucket: testkube-cloud-outputs
+  nats:
+    # -- NATS URI
+    uri: "nats://nats.messaging.svc.cluster.local:4222"
+  minio:
+    # -- MinIO endpoint
+    endpoint: "minio.testkube.svc.cluster.local:9000"
+    # -- S3 region
+    region: ""
+    # -- MinIO access key id
+    accessKeyId: ""
+    # -- MinIO secret access key
+    secretAccessKey: ""
+    # -- MinIO token
+    token: ""
+    # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
+    credsSecretRef: ""
+    # -- Expiration period in days
+    expirationPeriod: 0
+    # -- Should be set to `true` if MinIO is behind
+    secure: false
+  tls:
+    # -- Toggle should the Application terminate TLS instead of the Ingress
+    serveHTTPS: true
+    # -- API HTTPS port
+    apiPort: 9443
+    # -- Agent gRPCS port
+    agentPort: 8443
+    # -- TLS secret name which contains the certificate files
+    tlsSecret: testkube-cloud-api-tls
+    certManager:
+      # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
+      issuerKind: ClusterIssuer
+      # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
+      issuerGroup: cert-manager.io
+    # -- certificate path
+    certPath: /tmp/serving-cert/crt.pem
+    # -- certificate key path
+    keyPath: /tmp/serving-cert/key.pem
+  mongo:
+    # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
+    dsnSecretRef: ""
+    # -- if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string
+    dsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
+    # -- Mongo database name
+    database: "testkubecloud"
+
+externalSecrets:
+  enabled: false
+  refreshInterval: 5m
+  clusterSecretStoreName: secret-store
+  keys: {}
+serviceAccount:
+  # -- Toggle whether to create a ServiceAccount resource
+  create: false
+  # -- Additional labels to add to the ServiceAccount resource
+  labels: {}
+  # -- Additional annotations to add to the ServiceAccount resource
+  annotations: {}
+  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+podAnnotations: {}
+# -- Pod Security Context
+podSecurityContext: {}
+# fsGroup: 2000
+
+# -- Security Context for app container
+securityContext:
+  readOnlyRootFilesystem: true
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  # -- It is strongly recommended to set limits for both cpu and memory
+  limits: {}
+
+autoscaling:
+  # -- Toggle whether to enable Horizontal Pod Autoscaler
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+service:
+  # -- Service type
+  type: ClusterIP
+  # -- Additional annotations to add to the Service resource
+  annotations: {}
+  # -- Additional labels to add to the Service resource
+  labels: {}
+  # -- Metrics port
+  metricsPort: 9000
+  # -- GRPC service port (when TLS disabled)
+  grpcPort: 8089
+
+prometheus:
+  # -- Toggle whether to create ServiceMonitor resource for Prometheus Operator
+  enabled: false
+  # -- ServiceMonitor labels
+  labels: {}
+  # -- Scrape interval configuration in ServiceMonitor resource
+  scrapeInterval: 15s
+  # -- Metrics port which will be scraper
+  port: metrics
+  # -- Metrics path which will be scraped
+  path: /metrics
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

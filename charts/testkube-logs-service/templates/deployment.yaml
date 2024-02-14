@@ -1,0 +1,144 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "testkube-log-service.fullname" . }}
+  labels:
+    {{- include "testkube-log-service.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "testkube-log-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "testkube-log-service.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.global.imagePullSecrets | nindent 8 }}
+      {{- else if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "testkube-log-service.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: GRPC_LISTEN_ADDR
+              value: "0.0.0.0:8089"
+            - name: GRPC_LISTEN_ADDR_TLS
+              value: "0.0.0.0:8443"
+              {{- if .Values.api.mongo.dsnSecretRef }}
+            - name: API_MONGO_DSN
+              valueFrom:
+                secretKeyRef:
+                  key: MONGO_DSN
+                  name: {{ .Values.api.mongo.dsnSecretRef }}
+              {{- else if .Values.api.mongo.dsn }}
+            - name: API_MONGO_DSN
+              value: {{ .Values.api.mongo.dsn }}
+              {{- end }}
+            - name: API_MONGO_DB
+              value: {{ .Values.api.mongo.database }}
+            - name: METRICS_LISTEN_ADDR
+              value: "0.0.0.0:9100"
+            - name: OUTPUTS_BUCKET
+              value: "{{ .Values.api.outputsBucket }}"
+            - name: NATS_URI
+              value: {{ .Values.api.nats.uri }}
+            - name: MINIO_ENDPOINT
+              value: "{{ tpl .Values.api.minio.endpoint . }}"
+            - name: MINIO_REGION
+              value: "{{ .Values.api.minio.region }}"
+            - name: MINIO_SSL
+              value: "{{ .Values.api.minio.secure }}"
+            - name: MINIO_EXPIRATION
+              value: "{{ .Values.api.minio.expirationPeriod }}"
+            - name: MINIO_ACCESS_KEY_ID
+              {{- if .Values.api.minio.credsSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: root-user
+                  name: {{ .Values.api.minio.credsSecretRef }}
+              {{- else }}
+              value: "{{ .Values.api.minio.accessKeyId }}"
+              {{- end }}
+            - name: MINIO_SECRET_ACCESS_KEY
+              {{- if .Values.api.minio.credsSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: root-password
+                  name: {{ .Values.api.minio.credsSecretRef }}
+              {{- else }}
+              value: "{{ .Values.api.minio.secretAccessKey }}"
+              {{- end }}
+            - name: MINIO_TOKEN
+              {{- if .Values.api.minio.credsSecretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: {{ .Values.api.minio.credsSecretRef }}
+              {{- else }}
+              value: "{{ .Values.api.minio.token }}"
+              {{- end }}
+            {{- range $k, $v := .Values.additionalEnv }}
+            - name: {{ $k }}
+              value: "{{ $v }}"
+            {{- end}}
+            {{- if .Values.externalSecrets.enabled -}}
+            {{- range $key, $value := .Values.externalSecrets.keys }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ $value }}
+                  name: api-external-secrets
+            {{ end }}
+            {{- end}}
+          ports:
+            - name: {{ if .Values.api.tls.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
+              containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.agentPort }}{{ else }}{{ .Values.service.grpcPort }}{{ end }}
+              protocol: TCP
+            {{- if .Values.prometheus.enabled }}
+            - name: metrics
+              containerPort: 9100
+              protocol: TCP
+            {{- end }}
+          {{- if .Values.prometheus.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              scheme: HTTP
+              port: metrics
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              scheme: HTTP
+              port: metrics
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
