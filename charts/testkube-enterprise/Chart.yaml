@@ -13,6 +13,9 @@ dependencies:
   - name: testkube-cloud-ui
     version: 1.21.0
     repository: file://../testkube-cloud-ui
+  - name: testkube-worker-service
+    version: 1.29.0
+    repository: file://../testkube-worker-service
   - name: dex
     version: 0.15.3
     repository: https://charts.dexidp.io

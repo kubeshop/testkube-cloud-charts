@@ -18,6 +18,7 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.22.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.21.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.29.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
 | https://charts.bitnami.com/bitnami | mongodb | 14.3.0 |
@@ -31,8 +32,9 @@ A Helm chart for Testkube Enterprise
 | dex.configSecret.create | bool | `false` | This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret. |
 | dex.configSecret.createCustom | bool | `true` | Toggle whether to create a custom config secret for Dex (templates/dex-config-secret.yaml). If set to `true`, the `configTemplate` field will be used to generate the config secret. |
 | dex.configSecret.name | string | `"testkube-enterprise-dex-config"` | The name of the secret to mount as configuration in the pod. Set `createCustom: false` and edit the secret manually to use a custom config secret. |
-| dex.configTemplate | object | `{"additionalConfig":"","base":"logger:\n  level: debug\n  format: json\n","customConfig":""}` | Inline Dex configuration which will be used to generate the config secret. |
+| dex.configTemplate | object | `{"additionalConfig":"","additionalStaticClients":[],"base":"logger:\n  level: debug\n  format: json\n","customConfig":""}` | Inline Dex configuration which will be used to generate the config secret. |
 | dex.configTemplate.additionalConfig | string | `""` | Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`... |
+| dex.configTemplate.additionalStaticClients | list | `[]` | Additional static clients which will be appended to the dex staticClients config |
 | dex.configTemplate.customConfig | string | `""` | If provided, it will completely override the default config (`base` and `additionalConfig`). This is useful if you want to use a custom config file. |
 | dex.enabled | bool | `true` | Toggle whether to install Dex |
 | dex.fullnameOverride | string | `"testkube-enterprise-dex"` |  |
@@ -64,6 +66,7 @@ A Helm chart for Testkube Enterprise
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui |
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
+| global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
 | global.storageApiSubdomain | string | `"storage"` | Storage API subdomain which get prepended to the domain |
@@ -113,7 +116,7 @@ A Helm chart for Testkube Enterprise
 | nats.config.jetstream.fileStore.pvc.enabled | bool | `true` |  |
 | nats.config.jetstream.fileStore.pvc.size | string | `"10Gi"` |  |
 | nats.config.jetstream.fileStore.pvc.storageClassName | string | `nil` |  |
-| nats.config.merge | object | `{"max_payload":"<< 8MB >>"}` | Merge additional fields to nats config https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.config.merge | object | `{"cluster":{"name":"<< testkube-enterprise >>"},"max_payload":"<< 8MB >>"}` | Merge additional fields to nats config https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.config.patch | list | `[]` | Patch additional fields to nats config |
 | nats.fullnameOverride | string | `"testkube-enterprise-nats"` |  |
 | nats.natsBox.enabled | bool | `true` |  |
@@ -170,9 +173,13 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"1.6.4"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.6.2"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
+| testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
+| testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
+| testkube-worker-service.image.repository | string | `"testkubeenterprise/testkube-enterprise-worker-service"` |  |
+| testkube-worker-service.image.tag | string | `"1.7.2"` |  |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.3](https://github.com/norwoodj/helm-docs/releases/v1.11.3)
+Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
