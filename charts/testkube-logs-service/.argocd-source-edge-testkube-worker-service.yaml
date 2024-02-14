@@ -1,0 +1,8 @@
+helm:
+  parameters:
+    - name: image.name
+      value: kubeshop/testkube-log-service
+      forcestring: true
+    - name: image.tag
+      value: 1.8.0-dev-dfdb072f
+      forcestring: true
