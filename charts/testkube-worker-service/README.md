@@ -14,7 +14,7 @@ A Helm chart for Testkube Worker Service
 
 ## Source Code
 
-* <https://github.com/kubeshop/testkube-worker-service>
+* <https://github.com/kubeshop/testkube-cloud-api>
 
 ## Values
 
@@ -45,7 +45,7 @@ A Helm chart for Testkube Worker Service
 | global.imagePullSecrets | list | `[]` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-worker-service"` |  |
-| image.tag | string | `"1.6.7"` |  |
+| image.tag | string | `"1.7.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
@@ -61,6 +61,10 @@ A Helm chart for Testkube Worker Service
 | resources.requests.cpu | string | `"100m"` |  |
 | resources.requests.memory | string | `"128Mi"` |  |
 | securityContext | object | `{"readOnlyRootFilesystem":true}` | Security Context for app container |
+| service.annotations | object | `{}` | Additional annotations to add to the Service resource |
+| service.labels | object | `{}` | Additional labels to add to the Service resource |
+| service.metricsPort | int | `9000` | Metrics port |
+| service.type | string | `"ClusterIP"` | Service type |
 | serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |
 | serviceAccount.create | bool | `false` | Toggle whether to create a ServiceAccount resource |
 | serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |

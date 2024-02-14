@@ -2,14 +2,18 @@ name: Release Helm charts - main on dispatch
 
 on:
   repository_dispatch:
-    types: [trigger-workflow-testkube-cloud-api-main, trigger-workflow-testkube-cloud-ui-main]
+    types:
+      [
+        trigger-workflow-testkube-cloud-api-main,
+        trigger-workflow-testkube-cloud-ui-main,
+        trigger-workflow-testkube-worker-service-main,
+      ]
 
 jobs:
   release-helm-charts:
     name: Release Helm charts
     runs-on: ubuntu-22.04
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
         with:

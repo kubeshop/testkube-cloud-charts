@@ -1,4 +1,4 @@
-# Default values for testkube-cloud-api.
+# Default values for testkube-worker-service.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -8,7 +8,7 @@ replicaCount: 1
 image:
   repository: kubeshop/testkube-worker-service
   pullPolicy: IfNotPresent
-  tag: "1.6.7"
+  tag: "1.7.2"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -39,7 +39,6 @@ api:
     expirationPeriod: 0
     # -- Should be set to `true` if MinIO is behind
     secure: false
-
 externalSecrets:
   enabled: false
   refreshInterval: 5m
@@ -62,14 +61,12 @@ podSecurityContext: {}
 # -- Security Context for app container
 securityContext:
   readOnlyRootFilesystem: true
-
 resources:
   requests:
     cpu: 100m
     memory: 128Mi
   # -- It is strongly recommended to set limits for both cpu and memory
   limits: {}
-
 autoscaling:
   # -- Toggle whether to enable Horizontal Pod Autoscaler
   enabled: false
@@ -77,7 +74,6 @@ autoscaling:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
-
 service:
   # -- Service type
   type: ClusterIP
@@ -87,7 +83,6 @@ service:
   labels: {}
   # -- Metrics port
   metricsPort: 9000
-
 prometheus:
   # -- Toggle whether to create ServiceMonitor resource for Prometheus Operator
   enabled: false
@@ -99,9 +94,6 @@ prometheus:
   port: metrics
   # -- Metrics path which will be scraped
   path: /metrics
-
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}

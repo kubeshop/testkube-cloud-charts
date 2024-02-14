@@ -43,7 +43,7 @@ A Helm chart for Testkube Cloud API
 | api.migrations.ttlSecondsAfterFinished | int | `90` | TTL for the migration job |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
 | api.minio.accessKeyId | string | `""` | MinIO access key id |
-| api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: MINIO_ACCESS_KEY_ID, MINIO_SECRET_ACCESS_KEY, MINIO_TOKEN) (default is `testkube-cloud-minio-secret`) |
+| api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
 | api.minio.endpoint | string | `"minio.testkube.svc.cluster.local:9000"` | MinIO endpoint |
 | api.minio.expirationPeriod | int | `0` | Expiration period in days |
 | api.minio.region | string | `""` | S3 region |
@@ -62,6 +62,7 @@ A Helm chart for Testkube Cloud API
 | api.oauth.redirectUri | string | `""` | if oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI |
 | api.oauth.secretRef | string | `""` | OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`) |
 | api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which outputs are stored |
+| api.redirectSubdomain | string | `""` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | api.sendgrid.apiKey | string | `""` | Sendgrid API key |
 | api.sendgrid.secretRef | string | `""` | Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`) |
 | api.smtp.host | string | `"smtp.example.com"` | SMTP host |
@@ -100,7 +101,6 @@ A Helm chart for Testkube Cloud API
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
-| global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
 | global.storageApiSubdomain | string | `"storage"` | Storage API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
@@ -115,37 +115,6 @@ A Helm chart for Testkube Cloud API
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
-| minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
-| minio.affinity | object | `{}` | Affinity for pod assignment (note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set) |
-| minio.credentials.accessKeyId | string | `""` | MinIO access key |
-| minio.credentials.secretAccessKey | string | `""` | MinIO secret key |
-| minio.credentials.secretRef | string | `""` | MinIO credentials secret ref (secret must contain keys ACCESS_KEY_ID and SECRET_ACCESS_KEY) |
-| minio.customServiceAccountName | string | `""` | Custom service account to attach to the MinIO deployment |
-| minio.enabled | bool | `false` | Toggle whether to deploy MinIO |
-| minio.extraEnvVars | object | `{}` | Extra env vars to pass to MinIO deployment |
-| minio.fullnameOverride | string | `""` | MinIO full name override |
-| minio.image.pullPolicy | string | `"IfNotPresent"` |  |
-| minio.image.repository | string | `"minio/minio"` |  |
-| minio.image.tag | string | `"RELEASE.2023-11-06T22-26-08Z"` |  |
-| minio.ingress.annotations | object | `{}` | Additional annotations to add to the MinIO Ingress resource |
-| minio.ingress.enabled | bool | `false` | Toggle whether to enable the MinIO Ingress |
-| minio.ingress.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
-| minio.ingress.labels | object | `{}` | Additional labels to add to the MinIO Ingress resource |
-| minio.ingress.tls.tlsSecret | string | `"testkube-cloud-minio-tls"` | TLS secret name which contains the certificate files |
-| minio.nameOverride | string | `""` | MinIO name override |
-| minio.nodeSelector | object | `{}` | Node labels for pod assignment. |
-| minio.persistence.storage | string | `"10Gi"` | Size of the volume claim for MinIO data |
-| minio.podSecurityContext | object | `{}` | MinIO Pod Security Context |
-| minio.resources.limits | object | `{}` | It is strongly recommended to set limits for both cpu and memory |
-| minio.resources.requests.cpu | string | `"100m"` |  |
-| minio.resources.requests.memory | string | `"128Mi"` |  |
-| minio.securityContext | object | `{}` | MinIO Container Security Context |
-| minio.serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |
-| minio.serviceAccount.create | bool | `false` | Toggle whether to create a ServiceAccount resource |
-| minio.serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
-| minio.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| minio.storageClassName | string | `""` | Storage class name of MinIO PVC |
-| minio.tolerations | list | `[]` | Tolerations for pod assignment. |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | payments.apiKey | string | `""` | Payments API key (currently only Stripe is supported) |
@@ -179,10 +148,6 @@ A Helm chart for Testkube Cloud API
 | serviceAccount.create | bool | `false` | Toggle whether to create a ServiceAccount resource |
 | serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| statusPagesIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
-| statusPagesIngress.enabled | bool | `true` | Toggle whether to enable the Status Pages API Ingress |
-| statusPagesIngress.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
-| statusPagesIngress.labels | object | `{}` | Additional labels to add to the WebSocket Ingress resource |
 | tolerations | list | `[]` |  |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | websocketsIngress.enabled | bool | `true` | Toggle whether to enable the Websocket API Ingress |
