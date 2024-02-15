@@ -4,7 +4,7 @@ helm:
     value: testkubeenterprise/testkube-enterprise-ui
     forcestring: true
   - name: testkube-cloud-api.image.tag
-    value: 1.8.0-rc-6d5274ea
+    value: 1.9.0-rc-98182ddb
     forcestring: true
   - name: testkube-cloud-ui.image.tag
     value: 1.8.0-rc-5e5d528
