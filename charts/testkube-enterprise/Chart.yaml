@@ -14,8 +14,9 @@ dependencies:
     version: 1.21.0
     repository: file://../testkube-cloud-ui
   - name: dex
-    version: 0.15.3
+    version: 0.16.0
     repository: https://charts.dexidp.io
+   # repository: file://../dex
     condition: dex.enabled
   - name: mongodb
     version: 14.3.0
