@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.21.0](https://img.shields.io/badge/Version-1.21.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.2](https://img.shields.io/badge/AppVersion-1.6.2-informational?style=flat-square)
+![Version: 1.24.5](https://img.shields.io/badge/Version-1.24.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.8](https://img.shields.io/badge/AppVersion-1.7.8-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -37,10 +37,11 @@ A Helm chart for Testkube Cloud UI
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
+| global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-ui"` |  |
-| image.tag | string | `"1.6.2"` |  |
+| image.tag | string | `"1.7.8"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` | Additional Ingress annotations |
 | ingress.className | string | `"nginx"` | Ingress class (NGINX Controller is the only officially supported Ingress controller) |
@@ -49,6 +50,7 @@ A Helm chart for Testkube Cloud UI
 | ingress.labels | object | `{}` | Additional Ingress labels |
 | ingress.tls.provider | string | `"cert-manager"` | TLS provider (possible values: "", "cert-manager") |
 | ingress.tlsSecretName | string | `"testkube-cloud-ui-tls"` | Name of the TLS secret which contains the certificate files |
+| ingressRedirect | object | `{"annotations":{},"enabled":false,"labels":{}}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
