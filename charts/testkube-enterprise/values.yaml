@@ -41,7 +41,8 @@ global:
     enabled: false
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
-    issuer: "http://testkube-enterprise-dex.testkube-enterprise.svc.cluster.local:5556/dex"
+    #issuer: "http://testkube-enterprise-dex.testkube-enterprise.svc.cluster.local:5556"
+    issuer: http://localhost:5556
 
 minio:
   # -- To
@@ -139,7 +140,16 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.7.3-dev-a30142d2
+    tag: 1.9.1-auth-5c294861
+  additionalEnv:
+    OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
+    OAUTH_ENABLED: true
+    OAUTH_SKIP_DISCOVERY: true
+    OAUTH_AUTH_URL: http://localhost:5556/auth
+    OAUTH_TOKEN_URL: http://testkube-enterprise-dex.testkube-enterprise.svc.cluster.local:5556/token
+    OAUTH_USER_INFO_URL: http://testkube-enterprise-dex.testkube-enterprise.svc.cluster.local:5556/userinfo
+    OAUTH_JWKS_URL: http://testkube-enterprise-dex.testkube-enterprise.svc.cluster.local:5556/keys
+
   ai:
     secretRef: ""
   api:
@@ -216,11 +226,11 @@ testkube-cloud-api:
       # -- OAuth Client ID for the configured static client in Dex
       clientSecret: "QWkVzs3nct6HZM5hxsPzwaZtq"
       # -- If oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
-      redirectUri: "http://localhost:8088/auth/callback"
+      redirectUri: "http://localhost:8090/auth/callback" #"http://localhost:8088/auth/callback"
       # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL
       issuerUrl: ""
     dashboardAddress: "http://localhost:8080"
-    apiAddress: "http://localhost:8088"
+    apiAddress: "http://localhost:8090"
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
   prometheus:
@@ -233,7 +243,7 @@ testkube-cloud-ui:
   ui:
     # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector
     authStrategy: ""
-    apiServerEndpoint: "http://localhost:8088"
+    apiServerEndpoint: "http://localhost:8090"
     rootRoute: "http://testkube-enterprise-ui.testkube-enterprise.svc.cluster.local:8080"
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
@@ -408,7 +418,8 @@ dex:
     # -- The name of the secret to mount as configuration in the pod. Set `createCustom: false` and edit the secret manually to use a custom config secret.
     name: "testkube-enterprise-dex-config"
   # -- Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage)
-  storage: {}
+  storage:
+    type: memory
   # example config for saving Dex internal data as Kubernetes CRDs
     # type: kubernetes
     # config:
@@ -433,9 +444,11 @@ dex:
     additionalConfig: |
       enablePasswordDB: true
       staticPasswords:
-        - email: yuliapjv@gmail.com
-          hash: $2y$10$zXOqwUkKo8ZoG7yXJEwAbOdGrOoPJi40gYey3/s0e3wlNpMqVFJQy
-          username: ypoplavs
+        - email: "admin@example.com"
+          # bcrypt hash of the string "password": $(echo password | htpasswd -BinC 10 admin | cut -d: -f2)
+          hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W"
+          username: "admin"
+          userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
   securityContext: {}
