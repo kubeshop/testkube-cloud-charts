@@ -4,10 +4,10 @@ dependencies:
   version: 2.13.3
 - name: testkube-cloud-api
   repository: file://../testkube-cloud-api
-  version: 1.22.1
+  version: 1.29.13
 - name: testkube-cloud-ui
   repository: file://../testkube-cloud-ui
-  version: 1.21.0
+  version: 1.24.5
 - name: testkube-worker-service
   repository: file://../testkube-worker-service
   version: 1.29.0

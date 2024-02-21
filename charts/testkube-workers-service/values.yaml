@@ -1,0 +1,107 @@
+# Default values for testkube-cloud-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  imagePullSecrets: []
+replicaCount: 1
+image:
+  repository: kubeshop/testkube-worker-service
+  pullPolicy: IfNotPresent
+  tag: "1.6.7"
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+# -- Additional env vars to be added to the deployment
+additionalEnv: {}
+# FOO: bar
+
+api:
+  # -- S3 bucket in which outputs are stored
+  outputsBucket: testkube-cloud-outputs
+  nats:
+    # -- NATS URI
+    uri: "nats://nats.messaging.svc.cluster.local:4222"
+  minio:
+    # -- MinIO endpoint
+    endpoint: "minio.testkube.svc.cluster.local:9000"
+    # -- S3 region
+    region: ""
+    # -- MinIO access key id
+    accessKeyId: ""
+    # -- MinIO secret access key
+    secretAccessKey: ""
+    # -- MinIO token
+    token: ""
+    # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
+    credsSecretRef: ""
+    # -- Expiration period in days
+    expirationPeriod: 0
+    # -- Should be set to `true` if MinIO is behind
+    secure: false
+
+externalSecrets:
+  enabled: false
+  refreshInterval: 5m
+  clusterSecretStoreName: secret-store
+  keys: {}
+serviceAccount:
+  # -- Toggle whether to create a ServiceAccount resource
+  create: false
+  # -- Additional labels to add to the ServiceAccount resource
+  labels: {}
+  # -- Additional annotations to add to the ServiceAccount resource
+  annotations: {}
+  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+podAnnotations: {}
+# -- Pod Security Context
+podSecurityContext: {}
+# fsGroup: 2000
+
+# -- Security Context for app container
+securityContext:
+  readOnlyRootFilesystem: true
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  # -- It is strongly recommended to set limits for both cpu and memory
+  limits: {}
+
+autoscaling:
+  # -- Toggle whether to enable Horizontal Pod Autoscaler
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+service:
+  # -- Service type
+  type: ClusterIP
+  # -- Additional annotations to add to the Service resource
+  annotations: {}
+  # -- Additional labels to add to the Service resource
+  labels: {}
+  # -- Metrics port
+  metricsPort: 9000
+
+prometheus:
+  # -- Toggle whether to create ServiceMonitor resource for Prometheus Operator
+  enabled: false
+  # -- ServiceMonitor labels
+  labels: {}
+  # -- Scrape interval configuration in ServiceMonitor resource
+  scrapeInterval: 15s
+  # -- Metrics port which will be scraper
+  port: metrics
+  # -- Metrics path which will be scraped
+  path: /metrics
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
