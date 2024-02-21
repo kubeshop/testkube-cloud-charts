@@ -41,7 +41,6 @@ global:
     enabled: false
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
-    #issuer: "http://testkube-enterprise-dex.testkube-enterprise.svc.cluster.local:5556"
     issuer: http://localhost:5556
 
 minio:
@@ -226,7 +225,7 @@ testkube-cloud-api:
       # -- OAuth Client ID for the configured static client in Dex
       clientSecret: "QWkVzs3nct6HZM5hxsPzwaZtq"
       # -- If oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
-      redirectUri: "http://localhost:8090/auth/callback" #"http://localhost:8088/auth/callback"
+      redirectUri: "http://localhost:8090/auth/callback"
       # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL
       issuerUrl: ""
     dashboardAddress: "http://localhost:8080"
@@ -237,7 +236,6 @@ testkube-cloud-api:
     enabled: false
   ingress:
     className: nginx
-
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
@@ -255,7 +253,6 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
-
 
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
@@ -432,13 +429,28 @@ dex:
       logger:
         level: debug
         format: json
-
+      web:
+        http: 0.0.0.0:5556
+      expiry:
+        deviceRequests: "5m"
+        signingKeys: "6h"
+        idTokens: "24h"
+        refreshTokens:
+          disableRotation: false
+          reuseInterval: "3s"
+          validIfNotUsedFor: "2160h" # 90 days
+          absoluteLifetime: "3960h" # 165 days
+      oauth2:
+        responseTypes: ["code"]
+        skipApprovalScreen: false
+        alwaysShowLoginScreen: false
+        passwordConnector: local
     # -- Additional static clients which will be appended to the dex staticClients config
     additionalStaticClients: []
-#      - id: testkube-cloud-local
-#        name: Testkube Cloud - localdev
-#        redirectURIs:
-#          - http://localhost:8090/auth/callback
+    #  - id: testkube-cloud-local
+    #    name: Testkube Cloud - localdev
+    #    redirectURIs:
+    #      - http://localhost:8090/auth/callback
     #    secret: some-secret
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: |
