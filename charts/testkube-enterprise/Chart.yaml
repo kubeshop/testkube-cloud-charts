@@ -16,6 +16,10 @@ dependencies:
   - name: testkube-worker-service
     version: 1.29.1
     repository: file://../testkube-worker-service
+  - name: testkube-logs-service
+    version: 1.0.0
+    repository: file://../testkube-logs-service
+    condition: global.features.logsV2
   - name: dex
     version: 0.15.3
     repository: https://charts.dexidp.io
