@@ -1,9 +1,9 @@
 apiVersion: v2
-name: testkube-cloud-api
-description: A Helm chart for Testkube Cloud API
+name: testkube-worker-service
+description: A Helm chart for Testkube Worker Service
 type: application
-version: 1.29.13
-appVersion: 1.9.2
+version: 1.29.0
+appVersion: 1.7.2
 maintainers:
   - name: testkube
     url: https://testkube.io
