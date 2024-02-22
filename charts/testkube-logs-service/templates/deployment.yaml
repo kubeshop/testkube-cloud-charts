@@ -37,6 +37,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: DEBUG
+              value: "false"
             - name: GRPC_LISTEN_ADDR
               value: "0.0.0.0:8089"
             - name: GRPC_LISTEN_ADDR_TLS

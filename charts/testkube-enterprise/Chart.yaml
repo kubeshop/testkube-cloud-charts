@@ -13,10 +13,14 @@ dependencies:
   - name: testkube-cloud-ui
     version: 1.21.0
     repository: file://../testkube-cloud-ui
+  - name: testkube-logs-service
+    version: 1.0.0
+    repository: file://../testkube-logs-service
+    condition: global.features.logsV2
   - name: dex
     version: 0.16.0
     repository: https://charts.dexidp.io
-   # repository: file://../dex
+    # repository: file://../dex
     condition: dex.enabled
   - name: mongodb
     version: 14.3.0
