@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - '.github/workflows/chart-release.yaml'
       - 'charts/testkube-cloud-api/templates/**'
       - 'charts/testkube-cloud-api/Chart.yaml'
       - 'charts/testkube-cloud-api/values.yaml'
@@ -16,6 +17,7 @@ on:
       - 'charts/testkube-enterprise/templates/**'
       - 'charts/testkube-enterprise/Chart.yaml'
       - 'charts/testkube-enterprise/values.yaml'
+      - 'charts/testkube-enterprise/local-values.yaml'
       - 'charts/testkube-enterprise/README.md'
 
 jobs:
