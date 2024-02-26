@@ -132,7 +132,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.9.1-auth-5c294861
+    tag: 1.9.2-dev-488f9839
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
     OAUTH_ENABLED: true
@@ -250,7 +250,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
-    tag: 1.7.2
+    tag: 1.9.0-rc-e5167f6a
 
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
