@@ -251,6 +251,12 @@ testkube-worker-service:
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
     tag: 1.9.0-rc-e5167f6a
+  api:
+    nats:
+      # -- NATS URI
+      uri: "nats://testkube-enterprise-nats.testkube-enterprise.svc.cluster.local:4222"
+    minio:
+      endpoint: "http://testkube-enterprise-minio.testkube-enterprise.svc.cluster.local:9000"
 
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
