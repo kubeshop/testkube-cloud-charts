@@ -256,7 +256,10 @@ testkube-worker-service:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats.testkube-enterprise.svc.cluster.local:4222"
     minio:
-      endpoint: "http://testkube-enterprise-minio.testkube-enterprise.svc.cluster.local:9000"
+      endpoint: "testkube-enterprise-minio:9000"
+  additionalEnv:
+    USE_MINIO: true
+
 
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
@@ -440,7 +443,7 @@ dex:
           absoluteLifetime: "3960h" # 165 days
       oauth2:
         responseTypes: ["code"]
-        skipApprovalScreen: false
+        skipApprovalScreen: true
         alwaysShowLoginScreen: false
         passwordConnector: local
     # -- Additional static clients which will be appended to the dex staticClients config
