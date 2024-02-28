@@ -244,6 +244,27 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
+
+testkube-logs-service:
+  fullnameOverride: testkube-enterprise-logs-service
+  api:
+    tls:
+      serveHTTPS: false
+      certManager:
+        # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
+        issuerKind: ClusterIssuer
+      tlsSecret: testkube-enterprise-api-tls
+    mongo:
+      # -- Mongo DSN connection string
+      dsn: "mongodb://testkube-enterprise-mongodb:27017"
+      # -- Mongo database name
+      database: "testkubeEnterpriseDB"
+    nats:
+      # -- NATS URI
+      uri: "nats://testkube-enterprise-nats:4222"
+  image:
+    tag: v0-20240214-145418
+
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
