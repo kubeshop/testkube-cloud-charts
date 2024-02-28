@@ -77,17 +77,6 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Get REST Ingress host
-*/}}
-{{- define "testkube-log-service.ingress.restHost" -}}
-{{- if .Values.global.domain }}
-{{- printf "%s.%s" .Values.global.restApiSubdomain .Values.global.domain }}
-{{- else }}
-{{- .Values.restIngress.host }}
-{{- end }}
-{{- end }}
-
-{{/*
 Get gRPC Ingress host
 */}}
 {{- define "testkube-log-service.ingress.grpcHost" -}}
@@ -95,17 +84,6 @@ Get gRPC Ingress host
 {{- printf "%s.%s" .Values.global.grpcApiSubdomain .Values.global.domain }}
 {{- else }}
 {{- .Values.grpcIngress.host }}
-{{- end }}
-{{- end }}
-
-{{/*
-Get Websockets Ingress host
-*/}}
-{{- define "testkube-log-service.ingress.websocketsHost" -}}
-{{- if .Values.global.domain }}
-{{- printf "%s.%s" .Values.global.websocketApiSubdomain .Values.global.domain }}
-{{- else }}
-{{- .Values.websocketsIngress.host }}
 {{- end }}
 {{- end }}
 
