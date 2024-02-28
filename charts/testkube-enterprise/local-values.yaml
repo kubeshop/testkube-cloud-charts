@@ -132,7 +132,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.9.4
+    tag: 1.9.2-dev-488f9839
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
     OAUTH_ENABLED: true
@@ -256,9 +256,9 @@ testkube-worker-service:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats.testkube-enterprise.svc.cluster.local:4222"
     minio:
-      endpoint: "testkube-enterprise-minio.testkube-enterprise.svc.cluster.local:9000"
-#      accessKeyId: "minio"
-#      secretAccessKey: "minio123"
+      endpoint: "testkube-enterprise-minio:9000"
+      accessKeyId: "testkube-enterprise"
+      secretAccessKey: "t3stkub3-3nt3rpr1s3"
       secure: false
   additionalEnv:
     USE_MINIO: true
