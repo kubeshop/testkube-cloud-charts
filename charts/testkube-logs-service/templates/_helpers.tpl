@@ -48,13 +48,6 @@ app.kubernetes.io/name: {{ include "testkube-log-service.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{/*
-MinIO selector labels
-*/}}
-{{- define "testkube-log-service.minio.selectorLabels" -}}
-app.kubernetes.io/name: testkube-cloud-minio
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
 
 {{/*
 Base labels
