@@ -166,6 +166,7 @@ api:
     secretRef: ""
   agent:
     healthcheck:
+      # -- Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once
       lock: kv
     hide: false
     # -- Agent host with protocol (example `agent.testkube.xyz`)
