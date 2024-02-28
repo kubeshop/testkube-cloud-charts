@@ -31,6 +31,7 @@ A Helm chart for Testkube Cloud API
 | analytics.segmentio.enabled | bool | `false` | Toggle whether to enable Segment.io analytics |
 | analytics.segmentio.secretRef | string | `""` | Segment.io secret ref (secret must contain key SEGMENTIO_WRITE_KEY) (default is `testkube-cloud-analytics-secret`) |
 | analytics.segmentio.writeKey | string | `""` | Segment.io write key |
+| api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
 | api.agent.hide | bool | `false` |  |
 | api.agent.host | string | `""` | Agent host with protocol (example `agent.testkube.xyz`) |
 | api.agent.port | string | `"443"` | Agent port |
@@ -111,7 +112,7 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.9.3"` |  |
+| image.tag | string | `"1.9.4"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
