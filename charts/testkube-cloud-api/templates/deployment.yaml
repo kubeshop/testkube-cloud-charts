@@ -68,6 +68,8 @@ spec:
             - name: OPENAI_API_KEY
               value: "{{ .Values.ai.apiKey }}"
             {{- end }}
+            - name: HEALTHCHECK_DISTRIBUTED_LOCK
+              value: "{{ .Values.api.agent.healthcheck.lock }}"
             - name: INVITE_MODE
               value: "{{ .Values.api.inviteMode }}"
             {{- if eq .Values.api.inviteMode "email" }}
