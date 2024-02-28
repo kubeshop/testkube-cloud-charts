@@ -256,9 +256,12 @@ testkube-worker-service:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats.testkube-enterprise.svc.cluster.local:4222"
     minio:
-      endpoint: "http://testkube-enterprise-minio.testkube-enterprise.svc.cluster.local:9000"
-#  additionalEnv:
-#    USE_MINIO: true
+      endpoint: "testkube-enterprise-minio.testkube-enterprise.svc.cluster.local:9000"
+#      accessKeyId: "minio"
+#      secretAccessKey: "minio123"
+      secure: false
+  additionalEnv:
+    USE_MINIO: true
 
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
