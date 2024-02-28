@@ -132,7 +132,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.9.2-dev-488f9839
+    tag: 1.9.4
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
     OAUTH_ENABLED: true
@@ -259,7 +259,6 @@ testkube-worker-service:
       endpoint: "http://testkube-enterprise-minio.testkube-enterprise.svc.cluster.local:9000"
 #  additionalEnv:
 #    USE_MINIO: true
-
 
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
