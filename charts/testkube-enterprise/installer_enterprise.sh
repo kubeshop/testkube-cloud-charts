@@ -16,6 +16,38 @@ else
   ./get_helm.sh
 fi
 
+## Install jq
+# Check if jq is installed
+if command -v jq &> /dev/null
+then
+    echo "jq is already installed."
+else
+    # Install jq
+    echo "jq is not installed. Installing now..."
+
+    # Check the operating system
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux
+        sudo apt-get update
+        sudo apt-get install -y jq
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        brew install jq
+    else
+        echo "Unsupported operating system. Please install jq manually."
+        exit 1
+    fi
+
+    # Check installation success
+    if command -v jq &> /dev/null
+    then
+        echo "jq has been successfully installed."
+    else
+        echo "Installation failed. Please install jq manually."
+        exit 1
+    fi
+fi
+
 ## Create the testkube-enterprise namespace
 NAMESPACE="testkube-enterprise"
 
@@ -173,7 +205,7 @@ helm repo update && helm upgrade --install --create-namespace testkube kubeshop/
   --namespace testkube
 
 # Sleep
-sleep 40
+sleep 50
 
 # Wait for all Pods to be ready
 while true; do
@@ -184,7 +216,7 @@ while true; do
     echo "All pods are ready"
     break
   else
-    echo "Waiting for all pods to be ready. Currently, $num_ready_pods out of $(kubectl get pods -l app.kubernetes.io/instance=testkube-enterprise --no-headers --namespace testkube | wc -l) pods are ready."
+    echo "Waiting for all pods to be ready. Currently, $num_ready_pods out of $(kubectl get pods -l app.kubernetes.io/instance=testkube --no-headers --namespace testkube | wc -l) pods are ready."
     sleep 2
   fi
 done
