@@ -189,17 +189,5 @@ while true; do
   fi
 done
 
-#Check for the executors to become available
-while true; do
-    response=$(curl -s "$api_server$org_endpoint/$org_id$env_endpoint/$env_id/agent/executors" -H "Authorization: Bearer $access_token")
-    if [ -n "$response" ]; then
-        echo "Executors List:"
-        echo "$response" | jq '.'
-        break
-    else
-        echo "Error retrieving response. Retrying..."
-        sleep 2
-    fi
-done
 
 echo "Testkube Enterprise was deployed along with the Agent into your k8s cluster. Please note that it may take up to 5 minutes for Agent to be fully running. Visit http://localhost:8080 to open the Dashboard. Use 'admin@example.com' and 'password' as a username and a password respectively."
