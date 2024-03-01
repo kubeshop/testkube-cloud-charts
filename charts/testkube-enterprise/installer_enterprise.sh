@@ -70,21 +70,22 @@ fi
 export NAMESPACE="$NAMESPACE"
 
 ## License
-# Ask a user for the value of the license key from the email
-read -p "Please enter the value for the license key from the email: " license_value
 
-# Create a secret with the license
-secret_creation_output=$(kubectl create secret generic testkube-enterprise-license --from-literal=LICENSE_KEY="$license_value" --namespace "$NAMESPACE" 2>&1)
-
-# Check the exit status of the kubectl command
-if [ $? -eq 0 ]; then
-    echo "Secret 'license' created with the provided license key value."
+# Check if the secret already exists
+if kubectl get secret testkube-enterprise-license --namespace "$NAMESPACE" >/dev/null 2>&1; then
+    echo "Secret already exists. Continuing..."
 else
-    # Handle the case where there is an error creating the secret
-    if [[ $secret_creation_output == *"already exists"* ]]; then
-        echo "Secret 'testkube-enterprise-license' already exists in namespace '$NAMESPACE'. Continuing..."
+    # Ask the user for the license key value
+    read -p "Please enter the value for the license key from the email: " license_value
+
+    # Create a secret with the license
+    secret_creation_output=$(kubectl create secret generic testkube-enterprise-license --from-literal=LICENSE_KEY="$license_value" --namespace "$NAMESPACE" 2>&1)
+
+    # Check if secret creation was successful
+    if [ $? -eq 0 ]; then
+        echo "Secret created successfully."
     else
-        echo "Error: Failed to create secret 'license' in namespace '$NAMESPACE'."
+        echo "Error creating secret: $secret_creation_output"
         exit 1
     fi
 fi
@@ -175,7 +176,23 @@ echo "Organization ID: $org_id"
 
 #Rename Organization to admin-personal-org
 org_payload='{"id":"'$org_id'","name":"admin-personal-org"}'
-curl -X PATCH "$api_server$org_endpoint/$org_id" -H "Authorization: Bearer $access_token" -H "Content-Type: application/json" -d "$org_payload"
+response=$(curl -s -w "%{http_code}" -X PATCH "$api_server$org_endpoint/$org_id" -H "Authorization: Bearer $access_token" -H "Content-Type: application/json" -d "$org_payload")
+
+# Extract the status code from the response
+status_code="${response: -3}"
+
+# Check if the status code indicates an error (not 2xx)
+if ! [[ "$status_code" =~ ^2 ]]; then
+    echo "Request failed with status code: $status_code"
+
+    error_message=$(echo "$response" | sed '$s/...$//')
+    echo "Error message: $error_message"
+    exit 1
+fi
+
+# Continue with the rest of your script...
+echo "Request to rename an Organization was successful. Continuing with the script..."
+
 
 ## Environment
 # Gey a payload
