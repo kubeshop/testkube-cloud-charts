@@ -7,5 +7,5 @@ helm:
     value: 1.9.7-rc-bd4f0063
     forcestring: true
   - name: testkube-cloud-ui.image.tag
-    value: 1.8.0-rc-91b720e
+    value: 1.8.0-rc-96f1c9d
     forcestring: true
