@@ -224,6 +224,21 @@ testkube-cloud-api:
     apiAddress: "http://localhost:8090"
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
+    # -- External log server connection configuration
+    logServer:
+      # -- Log server address
+      grpcAddress: "testkube-enterprise-logs-service:8089"
+      # -- Log server TLS configuration secure connection
+      secure: "false"
+      # -- Log server TLS configuration skip Verify
+      skipVerify: "true"
+      # -- TLS certificate file
+      certFile: ""
+      # -- TLS key file
+      keyFile: ""
+      # -- TLS CA certificate file
+      caFile: ""
+
   prometheus:
     enabled: false
   ingress:
@@ -264,6 +279,14 @@ testkube-logs-service:
     nats:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats:4222"
+    minio:
+      endpoint: "testkube-enterprise-minio:9000"
+      accessKeyId: "testkube-enterprise"
+      secretAccessKey: "t3stkub3-3nt3rpr1s3"
+      secure: false
+  additionalEnv:
+    USE_MINIO: true
+
   image:
     tag: v0-20240214-145418
 
