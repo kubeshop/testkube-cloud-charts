@@ -260,7 +260,6 @@ testkube-worker-service:
 #  additionalEnv:
 #    USE_MINIO: true
 
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
