@@ -188,6 +188,22 @@ api:
     redirectUri: ""
     # -- Comma-separated list of allowed external redirect URIs (example: `https://cloud.testkube.xyz,http://localhost:3000`)
     allowedExternalRedirectURIs: ""
+
+  # -- External log server connection configuration
+  logServer:
+    # -- Log server address
+    grpcAddress: "testkube-logs-service:8090"
+    # -- Log server TLS configuration secure connection
+    secure: "false"
+    # -- Log server TLS configuration skip Verify
+    skipVerify: "true"
+    # -- TLS certificate file
+    certFile: ""
+    # -- TLS key file
+    keyFile: ""
+    # -- TLS CA certificate file
+    caFile: ""
+
 externalSecrets:
   enabled: false
   refreshInterval: 5m
