@@ -126,13 +126,12 @@ minio:
     tls:
       # -- TLS secret name which contains the certificate files
       tlsSecret: testkube-enterprise-minio-tls
-
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.9.2-dev-488f9839
+    tag: 1.9.7
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
     OAUTH_ENABLED: true
@@ -228,7 +227,6 @@ testkube-cloud-api:
     enabled: false
   ingress:
     className: nginx
-
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
@@ -238,7 +236,7 @@ testkube-cloud-ui:
     rootRoute: "http://testkube-enterprise-ui.testkube-enterprise.svc.cluster.local:8080"
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: 1.7.3
+    tag: 1.7.10
   ingress:
     enabled: false
     # -- Name of the TLS secret which contains the certificate files
@@ -250,7 +248,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
-    tag: 1.9.0-rc-e5167f6a
+    tag: 1.9.1
   api:
     nats:
       # -- NATS URI
@@ -346,7 +344,6 @@ nats:
     merge: {}
     # -- Patch additional fields to the container
     patch: []
-
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -357,7 +354,6 @@ mongodb:
     registry: docker.io
     repository: zcube/bitnami-compat-mongodb
     tag: 6.0.5
-
   # image:
   # registry: docker.io
   # repository: bitnami/mongodb
@@ -388,7 +384,6 @@ mongodb:
   containerSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  runAsGroup: 1000670000
-
 ## Dex chart parameters
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
