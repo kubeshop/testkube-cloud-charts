@@ -238,6 +238,27 @@ testkube-worker-service:
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
     tag: 1.9.0-rc-e5167f6a
+
+testkube-logs-service:
+  fullnameOverride: testkube-enterprise-logs-service
+  api:
+    tls:
+      serveHTTPS: false
+      certManager:
+        # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
+        issuerKind: ClusterIssuer
+      tlsSecret: testkube-enterprise-api-tls
+    mongo:
+      # -- Mongo DSN connection string
+      dsn: "mongodb://testkube-enterprise-mongodb:27017"
+      # -- Mongo database name
+      database: "testkubeEnterpriseDB"
+    nats:
+      # -- NATS URI
+      uri: "nats://testkube-enterprise-nats:4222"
+  image:
+    tag: v0-20240214-145418
+
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
