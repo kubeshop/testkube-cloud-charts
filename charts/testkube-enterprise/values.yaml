@@ -247,6 +247,7 @@ testkube-worker-service:
     tag: 1.7.2
 
 testkube-logs-service:
+  enabled: false
   fullnameOverride: testkube-enterprise-logs-service
   api:
     tls:
