@@ -244,8 +244,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
-    tag: 1.7.2
-
+    tag: 1.9.1
 testkube-logs-service:
   enabled: false
   fullnameOverride: testkube-enterprise-logs-service
@@ -266,7 +265,6 @@ testkube-logs-service:
       uri: "nats://testkube-enterprise-nats:4222"
   image:
     tag: v0-20240214-145418
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:

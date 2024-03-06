@@ -244,7 +244,6 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
-
 testkube-logs-service:
   fullnameOverride: testkube-enterprise-logs-service
   api:
@@ -264,7 +263,6 @@ testkube-logs-service:
       uri: "nats://testkube-enterprise-nats:4222"
   image:
     tag: v0-20240214-145418
-
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
@@ -276,12 +274,11 @@ testkube-worker-service:
       uri: "nats://testkube-enterprise-nats.testkube-enterprise.svc.cluster.local:4222"
     minio:
       endpoint: "testkube-enterprise-minio.testkube-enterprise.svc.cluster.local:9000"
-#      accessKeyId: "minio"
-#      secretAccessKey: "minio123"
+      #      accessKeyId: "minio"
+      #      secretAccessKey: "minio123"
       secure: false
   additionalEnv:
     USE_MINIO: true
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:

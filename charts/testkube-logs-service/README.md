@@ -1,6 +1,6 @@
-# testkube-log-service
+# testkube-logs-service
 
-![Version: 1.29.0](https://img.shields.io/badge/Version-1.29.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.2](https://img.shields.io/badge/AppVersion-1.7.2-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Testkube log Service
 
@@ -14,7 +14,7 @@ A Helm chart for Testkube log Service
 
 ## Source Code
 
-* <https://github.com/kubeshop/testkube-log-service>
+* <https://github.com/kubeshop/testkube-cloud-api>
 
 ## Values
 
@@ -30,8 +30,19 @@ A Helm chart for Testkube log Service
 | api.minio.secretAccessKey | string | `""` | MinIO secret access key |
 | api.minio.secure | bool | `false` | Should be set to `true` if MinIO is behind |
 | api.minio.token | string | `""` | MinIO token |
+| api.mongo.database | string | `"testkubecloud"` | Mongo database name |
+| api.mongo.dsn | string | `"mongodb://mongodb.testkube.svc.cluster.local:27017"` | if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string |
+| api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | api.nats.uri | string | `"nats://nats.messaging.svc.cluster.local:4222"` | NATS URI |
 | api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which outputs are stored |
+| api.tls.agentPort | int | `8443` | Agent gRPCS port |
+| api.tls.apiPort | int | `9443` | API HTTPS port |
+| api.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
+| api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
+| api.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | certificate path |
+| api.tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | certificate key path |
+| api.tls.serveHTTPS | bool | `true` | Toggle should the Application terminate TLS instead of the Ingress |
+| api.tls.tlsSecret | string | `"testkube-cloud-api-tls"` | TLS secret name which contains the certificate files |
 | autoscaling.enabled | bool | `false` | Toggle whether to enable Horizontal Pod Autoscaler |
 | autoscaling.maxReplicas | int | `10` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -41,12 +52,24 @@ A Helm chart for Testkube log Service
 | externalSecrets.enabled | bool | `false` |  |
 | externalSecrets.keys | object | `{}` |  |
 | externalSecrets.refreshInterval | string | `"5m"` |  |
-| fullnameOverride | string | `""` |  |
-| global.imagePullSecrets | list | `[]` |  |
+| fullnameOverride | string | `"logs-service"` |  |
+| global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
+| global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
+| global.domain | string | `""` | Domain under which to create Ingress rules |
+| global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
+| global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
+| global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
+| grpcIngress.annotations | object | `{}` | Additional annotations to add to the gRPC Ingress resource |
+| grpcIngress.enabled | bool | `true` | Toggle whether to enable the gRPC API Ingress |
+| grpcIngress.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
+| grpcIngress.labels | object | `{}` | Additional labels to add to the gRPC Ingress resource |
+| grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-log-service"` |  |
 | image.tag | string | `"1.6.7"` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
+| ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
@@ -61,6 +84,11 @@ A Helm chart for Testkube log Service
 | resources.requests.cpu | string | `"100m"` |  |
 | resources.requests.memory | string | `"128Mi"` |  |
 | securityContext | object | `{"readOnlyRootFilesystem":true}` | Security Context for app container |
+| service.annotations | object | `{}` | Additional annotations to add to the Service resource |
+| service.grpcPort | int | `8089` | GRPC service port (when TLS disabled) |
+| service.labels | object | `{}` | Additional labels to add to the Service resource |
+| service.metricsPort | int | `9000` | Metrics port |
+| service.type | string | `"ClusterIP"` | Service type |
 | serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |
 | serviceAccount.create | bool | `false` | Toggle whether to create a ServiceAccount resource |
 | serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
