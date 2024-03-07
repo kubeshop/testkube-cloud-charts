@@ -42,7 +42,7 @@ A Helm chart for Testkube log Service
 | api.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | certificate path |
 | api.tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | certificate key path |
 | api.tls.serveHTTPS | bool | `true` | Toggle should the Application terminate TLS instead of the Ingress |
-| api.tls.tlsSecret | string | `"testkube-cloud-api-tls"` | TLS secret name which contains the certificate files |
+| api.tls.tlsSecret | string | `"testkube-cloud-api-tls"` | TLS secret name which contains the certificate files TODO(emil): conflicts with agent ingress |
 | autoscaling.enabled | bool | `false` | Toggle whether to enable Horizontal Pod Autoscaler |
 | autoscaling.maxReplicas | int | `10` |  |
 | autoscaling.minReplicas | int | `1` |  |

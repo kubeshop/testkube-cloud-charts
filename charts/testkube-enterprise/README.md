@@ -18,7 +18,6 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.32.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.27.0 |
-| file://../testkube-logs-service | testkube-logs-service | 1.0.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.29.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
