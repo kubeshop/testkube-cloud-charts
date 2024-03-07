@@ -43,7 +43,7 @@ global:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: ""
 minio:
-  # -- To
+  # -- Toggle whether to install MinIO
   enabled: true
   fullnameOverride: &minioFullnameOverride testkube-enterprise-minio
   # Uncomment if you want to provide different image settings
@@ -135,6 +135,11 @@ testkube-cloud-api:
   ai:
     secretRef: ""
   api:
+    debug:
+      # -- Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2
+      enableHttp2Logs: false
+      # -- Toggle whether to enable gRPC server logs
+      enableGrpcServerLogs: false
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
     inviteMode: email
     smtp:
@@ -202,6 +207,8 @@ testkube-cloud-api:
       host: ""
       # -- Agent port - used for building agent install commands
       port: 443
+      # -- Toggle whether to enable agent grpc keepalive pings
+      keepAlive: false
     oauth:
       # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`)
       secretRef: ""
