@@ -112,7 +112,7 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.9.4"` |  |
+| image.tag | string | `"1.9.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |

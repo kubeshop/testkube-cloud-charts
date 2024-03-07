@@ -45,7 +45,7 @@ A Helm chart for Testkube Worker Service
 | global.imagePullSecrets | list | `[]` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-worker-service"` |  |
-| image.tag | string | `"1.9.0-rc-e5167f6a"` |  |
+| image.tag | string | `"1.7.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |

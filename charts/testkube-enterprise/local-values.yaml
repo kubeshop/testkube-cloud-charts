@@ -126,7 +126,6 @@ minio:
     tls:
       # -- TLS secret name which contains the certificate files
       tlsSecret: testkube-enterprise-minio-tls
-
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -228,7 +227,6 @@ testkube-cloud-api:
     enabled: false
   ingress:
     className: nginx
-
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
@@ -246,7 +244,6 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
-
 testkube-logs-service:
   fullnameOverride: testkube-enterprise-logs-service
   api:
@@ -266,12 +263,11 @@ testkube-logs-service:
       uri: "nats://testkube-enterprise-nats:4222"
   image:
     tag: v0-20240214-145418
-
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
-    tag: 1.9.0-rc-e5167f6a
+    tag: 1.7.2
   api:
     nats:
       # -- NATS URI
@@ -283,7 +279,6 @@ testkube-worker-service:
       secure: false
   additionalEnv:
     USE_MINIO: true
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
@@ -370,7 +365,6 @@ nats:
     merge: {}
     # -- Patch additional fields to the container
     patch: []
-
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -381,7 +375,6 @@ mongodb:
     registry: docker.io
     repository: zcube/bitnami-compat-mongodb
     tag: 6.0.5
-
   # image:
   # registry: docker.io
   # repository: bitnami/mongodb
@@ -412,7 +405,6 @@ mongodb:
   containerSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  runAsGroup: 1000670000
-
 ## Dex chart parameters
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
