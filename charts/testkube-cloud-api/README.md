@@ -34,9 +34,12 @@ A Helm chart for Testkube Cloud API
 | api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
 | api.agent.hide | bool | `false` |  |
 | api.agent.host | string | `""` | Agent host with protocol (example `agent.testkube.xyz`) |
+| api.agent.keepAlive | bool | `false` | Toggle whether to enable agent grpc keepalive pings |
 | api.agent.port | string | `"443"` | Agent port |
 | api.apiAddress | string | `""` | API address (used in invitation emails) (example `https://api.testkube.xyz`) |
 | api.dashboardAddress | string | `""` | Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`) |
+| api.debug.enableGrpcServerLogs | bool | `false` | Toggle whether to enable gRPC server logs |
+| api.debug.enableHttp2Logs | bool | `false` | Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2 |
 | api.email.fromEmail | string | `"noreply@kubeshop.io"` |  |
 | api.email.fromName | string | `"Testkube Cloud"` |  |
 | api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |

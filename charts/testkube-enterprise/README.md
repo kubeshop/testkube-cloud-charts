@@ -92,7 +92,7 @@ A Helm chart for Testkube Enterprise
 | minio.customIngress.labels | object | `{}` | Additional labels to add to the MinIO Ingress resource |
 | minio.customIngress.tls.tlsSecret | string | `"testkube-enterprise-minio-tls"` | TLS secret name which contains the certificate files |
 | minio.disableWebUI | bool | `false` | Disable MinIO Web UI |
-| minio.enabled | bool | `true` | To |
+| minio.enabled | bool | `true` | Toggle whether to install MinIO |
 | minio.extraEnvVars | list | `[]` |  |
 | minio.fullnameOverride | string | `"testkube-enterprise-minio"` |  |
 | minio.metrics.serviceMonitor.enabled | bool | `false` | Toggle whether to create ServiceMonitor resource for scraping metrics using Prometheus Operator |
@@ -135,7 +135,10 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |
 | testkube-cloud-api.api.agent.host | string | `""` | Agent host (without protocol) is used for building agent install commands (if blank, api will autogenerate it based on the value of `global.domain`) |
+| testkube-cloud-api.api.agent.keepAlive | bool | `false` | Toggle whether to enable agent grpc keepalive pings |
 | testkube-cloud-api.api.agent.port | int | `443` | Agent port - used for building agent install commands |
+| testkube-cloud-api.api.debug.enableGrpcServerLogs | bool | `false` | Toggle whether to enable gRPC server logs |
+| testkube-cloud-api.api.debug.enableHttp2Logs | bool | `false` | Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2 |
 | testkube-cloud-api.api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | testkube-cloud-api.api.migrations.enabled | bool | `false` | Toggle whether to run database migrations |
 | testkube-cloud-api.api.migrations.image.repository | string | `"testkubeenterprise/testkube-enterprise-api-migrations"` | Migrations image repository |
@@ -186,6 +189,7 @@ A Helm chart for Testkube Enterprise
 | testkube-logs-service.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-logs-service.fullnameOverride | string | `"testkube-enterprise-logs-service"` |  |
 | testkube-logs-service.image.tag | string | `"v0-20240214-145418"` |  |
+| testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.repository | string | `"testkubeenterprise/testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.tag | string | `"1.7.2"` |  |

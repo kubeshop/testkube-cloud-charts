@@ -244,11 +244,10 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
-    tag: 1.9.0-rc-e5167f6a
+    tag: 1.7.2
   api:
     nats:
       uri: "nats://testkube-enterprise-nats:4222"
-
 testkube-logs-service:
   fullnameOverride: testkube-enterprise-logs-service
   api:
