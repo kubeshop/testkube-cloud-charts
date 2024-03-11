@@ -299,6 +299,18 @@ spec:
               {{- else }}
               value: "{{ .Values.api.minio.token }}"
               {{- end }}
+            - name: "MINIO_SKIP_VERIFY"
+              value: "{{ .Values.api.minio.skipVerify }}"
+            {{- if .Values.api.minio.certSecret.enabled }}
+            - name: "MINIO_CERT_FILE"
+              value: "{{ .Values.api.minio.certSecret.baseMountPath }}/{{ .Values.api.minio.certSecret.certFile }}"
+            - name: "MINIO_KEY_FILE"
+              value: "{{ .Values.api.minio.certSecret.baseMountPath }}/{{ .Values.api.minio.certSecret.keyFile }}"
+            {{- if .Values.api.minio.mountCACertificate }}
+            - name: "MINIO_CA_FILE"
+              value: "{{ .Values.api.minio.certSecret.baseMountPath }}/{{ .Values.api.minio.certSecret.caFile }}"
+            {{- end }}
+            {{- end }}
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
               value: "{{ $v }}"
