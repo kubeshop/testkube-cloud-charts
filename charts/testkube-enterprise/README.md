@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.53.4](https://img.shields.io/badge/Version-1.53.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.53.5](https://img.shields.io/badge/Version-1.53.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.33.8 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.33.9 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.28.3 |
 | file://../testkube-logs-service | testkube-logs-service | 1.0.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.29.1 |
@@ -173,7 +173,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.9.10"` |  |
+| testkube-cloud-api.image.tag | string | `"1.9.11"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
