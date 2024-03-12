@@ -276,6 +276,8 @@ testkube-worker-service:
       endpoint: "testkube-enterprise-minio:9000"
       accessKeyId: "testkube-enterprise"
       secretAccessKey: "t3stkub3-3nt3rpr1s3"
+      #      accessKeyId: "minio"
+      #      secretAccessKey: "minio123"
       secure: false
   additionalEnv:
     USE_MINIO: true
