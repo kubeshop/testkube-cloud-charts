@@ -131,7 +131,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.9.7
+    tag: 1.9.11
   ai:
     secretRef: ""
   api:
@@ -265,7 +265,9 @@ testkube-worker-service:
   api:
     nats:
       uri: "nats://testkube-enterprise-nats:4222"
+
 testkube-logs-service:
+  enabled: false
   fullnameOverride: testkube-enterprise-logs-service
   api:
     tls:
