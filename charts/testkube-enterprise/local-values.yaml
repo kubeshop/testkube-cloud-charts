@@ -131,7 +131,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.9.3
+    tag: 1.9.7
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
     OAUTH_ENABLED: true
@@ -236,7 +236,7 @@ testkube-cloud-ui:
     rootRoute: "http://testkube-enterprise-ui.testkube-enterprise.svc.cluster.local:8080"
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: 1.7.9
+    tag: 1.7.12
   ingress:
     enabled: false
     # -- Name of the TLS secret which contains the certificate files
@@ -267,7 +267,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
-    tag: 1.7.2
+    tag: 1.9.1
   api:
     nats:
       # -- NATS URI
