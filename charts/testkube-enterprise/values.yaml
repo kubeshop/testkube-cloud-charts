@@ -131,7 +131,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.9.4
+    tag: 1.9.3
   ai:
     secretRef: ""
   api:
@@ -250,7 +250,7 @@ testkube-cloud-ui:
     authStrategy: ""
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: 1.7.3
+    tag: 1.7.9
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
@@ -261,11 +261,10 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
-    tag: 1.9.0-rc-e5167f6a
+    tag: 1.7.2
   api:
     nats:
       uri: "nats://testkube-enterprise-nats:4222"
-
 testkube-logs-service:
   fullnameOverride: testkube-enterprise-logs-service
   api:
@@ -285,7 +284,6 @@ testkube-logs-service:
       uri: "nats://testkube-enterprise-nats:4222"
   image:
     tag: v0-20240214-145418
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:

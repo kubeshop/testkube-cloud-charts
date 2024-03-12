@@ -11,9 +11,6 @@ dependencies:
 - name: testkube-worker-service
   repository: file://../testkube-worker-service
   version: 1.29.0
-- name: testkube-logs-service
-  repository: file://../testkube-logs-service
-  version: 1.0.0
 - name: dex
   repository: https://charts.dexidp.io
   version: 0.15.3
@@ -26,5 +23,5 @@ dependencies:
 - name: minio
   repository: https://charts.bitnami.com/bitnami
   version: 12.10.2
-digest: sha256:7a06ca976c04ea180f33ef3f419912a9df30bcbf2bef58d2a69af691097b087f
-generated: "2024-02-28T11:49:35.492151+01:00"
+digest: sha256:aab9069e17bb1b76299aac246c0307f54b38ccad9b6e7a687927fc81d8f3e283
+generated: "2024-03-07T12:33:53.304134+01:00"
