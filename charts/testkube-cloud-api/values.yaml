@@ -164,6 +164,23 @@ api:
     expirationPeriod: 0
     # -- Should be set to `true` if MinIO is behind
     secure: false
+    # -- Toggle whether to verify TLS certificates
+    skipVerify: false
+    # -- If enabled, will also require a CA certificate to be provided
+    mountCACertificate: false
+    certSecret:
+      # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
+      enabled: false
+      # -- Name of the storage client certificate secret
+      name: "storage-client-cert"
+      # -- Base path to mount the client certificate secret
+      baseMountPath: /etc/client-certs/storage
+      # -- Path to client certificate file
+      certFile: "cert.crt"
+      # -- Path to client certificate key file
+      keyFile: "cert.key"
+      # -- Path to ca file (used for self-signed certificates)
+      caFile: "ca.crt"
   sendgrid:
     # -- Sendgrid API key
     apiKey: ""

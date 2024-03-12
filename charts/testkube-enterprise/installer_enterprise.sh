@@ -90,6 +90,9 @@ else
     fi
 fi
 
+# Insert a namespace to deploy an Agent
+read -p "Please enter the namespace to deploy Testkube Agent: " agent_namespace
+
 ## Deploy Testkube Enterprise chart into testkube-enterprise namespace
 # Install Helm chart using the values file
 helm repo add testkubeenterprise https://kubeshop.github.io/testkube-cloud-charts
@@ -219,21 +222,21 @@ helm repo update && helm upgrade --install --create-namespace testkube kubeshop/
   --set testkube-dashboard.enabled=false \
   --set testkube-api.cloud.url=testkube-enterprise-api.testkube-enterprise.svc.cluster.local:8089 \
   --set testkube-api.cloud.tls.enabled=false \
-  --namespace testkube
+  --namespace "$agent_namespace"
 
 # Sleep
 sleep 50
 
 # Wait for all Pods to be ready
 while true; do
-  pod_statuses=$(kubectl get pods -l app.kubernetes.io/instance=testkube -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}' --namespace testkube 2>/dev/null)
+  pod_statuses=$(kubectl get pods -l app.kubernetes.io/instance=testkube -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}' --namespace "$agent_namespace" 2>/dev/null)
   num_ready_pods=$(echo "$pod_statuses" | tr ' ' '\n' | grep -c "True")
 
-  if [ "$num_ready_pods" -eq "$(kubectl get pods -l app.kubernetes.io/instance=testkube --no-headers --namespace testkube | wc -l)" ]; then
+  if [ "$num_ready_pods" -eq "$(kubectl get pods -l app.kubernetes.io/instance=testkube --no-headers --namespace "$agent_namespace" | wc -l)" ]; then
     echo "All pods are ready"
     break
   else
-    echo "Waiting for all pods to be ready. Currently, $num_ready_pods out of $(kubectl get pods -l app.kubernetes.io/instance=testkube --no-headers --namespace testkube | wc -l) pods are ready."
+    echo "Waiting for all pods to be ready. Currently, $num_ready_pods out of $(kubectl get pods -l app.kubernetes.io/instance=testkube --no-headers --namespace "$agent_namespace" | wc -l) pods are ready."
     sleep 2
   fi
 done
