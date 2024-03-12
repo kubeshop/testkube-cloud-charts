@@ -265,7 +265,6 @@ testkube-worker-service:
   api:
     nats:
       uri: "nats://testkube-enterprise-nats:4222"
-
 testkube-logs-service:
   enabled: false
   fullnameOverride: testkube-enterprise-logs-service
