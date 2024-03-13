@@ -1,27 +1,30 @@
 dependencies:
-  - name: common
-    repository: https://charts.bitnami.com/bitnami
-    version: 2.13.3
-  - name: testkube-cloud-api
-    repository: file://../testkube-cloud-api
-    version: 1.33.9
-  - name: testkube-cloud-ui
-    repository: file://../testkube-cloud-ui
-    version: 1.28.3
-  - name: testkube-worker-service
-    repository: file://../testkube-worker-service
-    version: 1.29.1
-  - name: dex
-    repository: https://charts.dexidp.io
-    version: 0.15.3
-  - name: mongodb
-    repository: https://charts.bitnami.com/bitnami
-    version: 14.3.0
-  - name: nats
-    repository: https://nats-io.github.io/k8s/helm/charts/
-    version: 1.1.5
-  - name: minio
-    repository: https://charts.bitnami.com/bitnami
-    version: 12.10.2
-digest: sha256:9b0b0d5559ba26917b56ec6519dfe36f852ebd90aee98e6f1239ac370b0d36d2
-generated: "2024-03-12T13:59:49.842324+01:00"
+- name: common
+  repository: https://charts.bitnami.com/bitnami
+  version: 2.13.3
+- name: testkube-cloud-api
+  repository: file://../testkube-cloud-api
+  version: 1.33.9
+- name: testkube-cloud-ui
+  repository: file://../testkube-cloud-ui
+  version: 1.28.3
+- name: testkube-worker-service
+  repository: file://../testkube-worker-service
+  version: 1.29.1
+- name: testkube-logs-service
+  repository: file://../testkube-logs-service
+  version: 1.0.0
+- name: dex
+  repository: https://charts.dexidp.io
+  version: 0.15.3
+- name: mongodb
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.3.0
+- name: nats
+  repository: https://nats-io.github.io/k8s/helm/charts/
+  version: 1.1.5
+- name: minio
+  repository: https://charts.bitnami.com/bitnami
+  version: 12.10.2
+digest: sha256:1223746e914fe6541520e94348ee18c13c4148d32050c8d4a32750ed0c17d5ce
+generated: "2024-03-13T11:39:24.256737+02:00"
