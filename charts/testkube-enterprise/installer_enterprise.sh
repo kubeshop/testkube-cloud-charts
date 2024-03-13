@@ -97,7 +97,7 @@ read -p "Please enter the namespace to deploy Testkube Agent: " agent_namespace
 # Install Helm chart using the values file
 helm repo add testkubeenterprise https://kubeshop.github.io/testkube-cloud-charts
 echo "Installing testkube-enterprise helm chart into your k8s cluster."
-helm repo update && helm upgrade --install testkube-enterprise testkubeenterprise/testkube-enterprise --namespace "$NAMESPACE" --values https://raw.githubusercontent.com/kubeshop/testkube-cloud-charts/main/charts/testkube-enterprise/local-values.yaml
+helm repo update && helm upgrade --install testkube-enterprise testkubeenterprise/testkube-enterprise --namespace "$NAMESPACE" --values https://raw.githubusercontent.com/kubeshop/testkube-cloud-charts/develop/charts/testkube-enterprise/local-values.yaml
 
 # Wait for the pods to launch
 sleep 40
