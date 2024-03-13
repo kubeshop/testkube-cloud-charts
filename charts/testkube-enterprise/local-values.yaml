@@ -259,7 +259,9 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
+
 testkube-logs-service:
+  enabled: true
   fullnameOverride: testkube-enterprise-logs-service
   api:
     tls:
