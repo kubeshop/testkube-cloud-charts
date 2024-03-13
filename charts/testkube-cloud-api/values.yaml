@@ -42,7 +42,7 @@ replicaCount: 1
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.9.4"
+  tag: "1.9.11"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -83,6 +83,11 @@ payments:
   # -- Payments portal configuration ID (currently only Stripe is supported)
   portalConfigurationId: ""
 api:
+  debug:
+    # -- Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2
+    enableHttp2Logs: false
+    # -- Toggle whether to enable gRPC server logs
+    enableGrpcServerLogs: false
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
     enabled: false
@@ -159,6 +164,23 @@ api:
     expirationPeriod: 0
     # -- Should be set to `true` if MinIO is behind
     secure: false
+    # -- Toggle whether to verify TLS certificates
+    skipVerify: false
+    # -- If enabled, will also require a CA certificate to be provided
+    mountCACertificate: false
+    certSecret:
+      # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
+      enabled: false
+      # -- Name of the storage client certificate secret
+      name: "storage-client-cert"
+      # -- Base path to mount the client certificate secret
+      baseMountPath: /etc/client-certs/storage
+      # -- Path to client certificate file
+      certFile: "cert.crt"
+      # -- Path to client certificate key file
+      keyFile: "cert.key"
+      # -- Path to ca file (used for self-signed certificates)
+      caFile: "ca.crt"
   sendgrid:
     # -- Sendgrid API key
     apiKey: ""
@@ -173,6 +195,8 @@ api:
     host: ""
     # -- Agent port
     port: "443"
+    # -- Toggle whether to enable agent grpc keepalive pings
+    keepAlive: false
   oauth:
     # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`)
     secretRef: ""
