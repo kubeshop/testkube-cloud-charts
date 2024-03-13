@@ -268,7 +268,7 @@ testkube-worker-service:
       uri: "nats://testkube-enterprise-nats:4222"
 
 testkube-logs-service:
-  enabled: false
+  enabled: true
   fullnameOverride: testkube-enterprise-logs-service
   additionalEnv:
     USE_MINIO: true
