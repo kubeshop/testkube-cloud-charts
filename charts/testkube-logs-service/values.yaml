@@ -40,7 +40,7 @@ ingress:
 
 grpcIngress:
   # -- Toggle whether to enable the gRPC API Ingress
-  enabled: true
+  enabled: false
   # -- Additional labels to add to the gRPC Ingress resource
   labels: {}
   # -- Additional annotations to add to the gRPC Ingress resource
