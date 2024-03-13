@@ -81,7 +81,7 @@ api:
     apiPort: 9443
     # -- Agent gRPCS port
     agentPort: 8443
-    # -- TLS secret name which contains the certificate files TODO(emil): conflicts with agent ingress
+    # -- TLS secret name which contains the certificate files
     tlsSecret: testkube-logs-service-api-tls
     certManager:
       # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
