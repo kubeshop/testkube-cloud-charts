@@ -295,7 +295,7 @@ testkube-logs-service:
       certManager:
         # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
         issuerKind: ClusterIssuer
-      tlsSecret: testkube-enterprise-logs-service-tls
+      tlsSecret: testkube-enterprise-api-tls
     mongo:
       # -- Mongo DSN connection string
       dsn: "mongodb://testkube-enterprise-mongodb:27017"
