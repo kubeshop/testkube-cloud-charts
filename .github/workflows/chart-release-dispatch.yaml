@@ -7,6 +7,8 @@ on:
         trigger-workflow-testkube-cloud-api-main,
         trigger-workflow-testkube-cloud-ui-main,
         trigger-workflow-testkube-worker-service-main,
+        trigger-workflow-testkube-enterprise-api-main,
+        trigger-workflow-testkube-enterprise-worker-service-main
       ]
 
 jobs:
