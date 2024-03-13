@@ -143,6 +143,19 @@ testkube-cloud-api:
   ai:
     secretRef: ""
   api:
+    logServer:
+      # -- Log server address
+      grpcAddress: "testkube-enterprise-logs-service:8090"
+      # -- Log server TLS configuration secure connection
+      secure: "false"
+      # -- Log server TLS configuration skip Verify
+      skipVerify: "true"
+      # -- TLS certificate file
+      certFile: ""
+      # -- TLS key file
+      keyFile: ""
+      # -- TLS CA certificate file
+      caFile: ""
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
     inviteMode: email
     smtp:
