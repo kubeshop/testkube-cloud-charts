@@ -287,6 +287,8 @@ testkube-logs-service:
   fullnameOverride: testkube-enterprise-logs-service
   additionalEnv:
     USE_MINIO: true
+  grpcIngress:
+    enabled: true
   api:
     tls:
       serveHTTPS: false

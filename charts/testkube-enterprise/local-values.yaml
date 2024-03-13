@@ -237,19 +237,6 @@ testkube-cloud-api:
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
     # -- External log server connection configuration
-    logServer:
-      # -- Log server address
-      grpcAddress: "testkube-enterprise-logs-service:8089"
-      # -- Log server TLS configuration secure connection
-      secure: "false"
-      # -- Log server TLS configuration skip Verify
-      skipVerify: "true"
-      # -- TLS certificate file
-      certFile: ""
-      # -- TLS key file
-      keyFile: ""
-      # -- TLS CA certificate file
-      caFile: ""
 
   prometheus:
     enabled: false
