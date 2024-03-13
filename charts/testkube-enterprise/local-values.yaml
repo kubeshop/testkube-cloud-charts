@@ -279,9 +279,21 @@ testkube-logs-service:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats:4222"
     minio:
-      endpoint: "testkube-enterprise-minio:9000"
-      accessKeyId: "testkube-enterprise"
-      secretAccessKey: "t3stkub3-3nt3rpr1s3"
+      # -- Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service
+      endpoint: "testkube-enterprise-minio:9000" #'{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}'
+      # -- S3 region
+      region: ""
+      # -- MinIO access key id
+      accessKeyId: *minioRootUser
+      # -- MinIO secret access key
+      secretAccessKey: *minioRootPassword
+      # -- MinIO token
+      token: ""
+      # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
+      credsSecretRef: *minioExistingSecret
+      # -- Expiration period in days
+      expirationPeriod: 0
+      # -- Should be set to `true` if MinIO is exposed through HTTPS
       secure: false
   additionalEnv:
     USE_MINIO: true

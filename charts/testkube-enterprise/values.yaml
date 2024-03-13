@@ -210,6 +210,7 @@ testkube-cloud-api:
         keyFile: "cert.key"
         # -- Path to ca file (used for self-signed certificates)
         caFile: "ca.crt"
+
     sendgrid:
       # -- Sendgrid API key
       apiKey: ""
@@ -269,6 +270,8 @@ testkube-worker-service:
 testkube-logs-service:
   enabled: false
   fullnameOverride: testkube-enterprise-logs-service
+  additionalEnv:
+    USE_MINIO: true
   api:
     tls:
       serveHTTPS: false
@@ -284,6 +287,40 @@ testkube-logs-service:
     nats:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats:4222"
+    minio:
+      # -- Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service
+      endpoint: "{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}"
+      # -- S3 region
+      region: ""
+      # -- MinIO access key id
+      accessKeyId: *minioRootUser
+      # -- MinIO secret access key
+      secretAccessKey: *minioRootPassword
+      # -- MinIO token
+      token: ""
+      # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
+      credsSecretRef: *minioExistingSecret
+      # -- Expiration period in days
+      expirationPeriod: 0
+      # -- Should be set to `true` if MinIO is exposed through HTTPS
+      secure: true
+      # -- Toggle whether to verify TLS certificates
+      skipVerify: false
+      # -- If enabled, will also require a CA certificate to be provided
+      mountCACertificate: false
+      certSecret:
+        # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
+        enabled: false
+        # -- Name of the storage client certificate secret
+        name: "storage-client-cert"
+        # -- Base path to mount the client certificate secret
+        baseMountPath: /etc/client-certs/storage
+        # -- Path to client certificate file
+        certFile: "cert.crt"
+        # -- Path to client certificate key file
+        keyFile: "cert.key"
+        # -- Path to ca file (used for self-signed certificates)
+        caFile: "ca.crt"
   image:
     tag: v0-20240214-145418
 ## NATS chart parameter
