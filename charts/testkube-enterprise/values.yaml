@@ -290,7 +290,7 @@ testkube-logs-service:
     USE_MINIO: true
   grpcIngress:
     enabled: true
-    host: "logs"
+    host: ""
   api:
     tls:
       serveHTTPS: false
