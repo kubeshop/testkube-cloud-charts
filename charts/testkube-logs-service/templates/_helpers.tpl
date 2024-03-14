@@ -73,10 +73,10 @@ Create the name of the service account to use
 Get gRPC Ingress host
 */}}
 {{- define "testkube-log-service.ingress.grpcHost" -}}
-{{- if .Values.global.domain }}
-{{- printf "%s.%s" .Values.global.grpcApiSubdomain .Values.global.domain }}
-{{- else }}
+{{- if .Values.grpcIngress.host }}
 {{- .Values.grpcIngress.host }}
+{{- else if .Values.global.domain }}
+{{- printf "%s.%s" .Values.global.grpcApiSubdomain .Values.global.domain }}
 {{- end }}
 {{- end }}
 
