@@ -14,7 +14,7 @@ global:
   # -- Toggle whether to enable offline license activation in Enterprise mode
   enterpriseOfflineAccess: false
   # -- Domain under which to create Ingress rules
-  domain: "enterprise.testkube.dev"
+  domain: ""
   # -- UI subdomain which get prepended to the domain
   logsSubdomain: "logs"
   # -- UI subdomain which get prepended to the domain
@@ -290,7 +290,7 @@ testkube-logs-service:
     USE_MINIO: true
   grpcIngress:
     enabled: true
-    host: logs.enterprise.testkube.dev
+    host: "logs"
   api:
     tls:
       serveHTTPS: false

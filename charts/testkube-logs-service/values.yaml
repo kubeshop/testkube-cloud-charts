@@ -6,7 +6,7 @@ global:
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- gRPC API subdomain which get prepended to the domain
-  grpcApiSubdomain: "agent"
+  grpcApiSubdomain: "logs"
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
   certManager:

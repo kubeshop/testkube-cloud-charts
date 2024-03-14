@@ -75,8 +75,8 @@ Get gRPC Ingress host
 {{- define "testkube-log-service.ingress.grpcHost" -}}
 {{- if .Values.grpcIngress.host }}
 {{- .Values.grpcIngress.host }}
-{{- else if .Values.global.domain }}
-{{- printf "%s.%s" .Values.global.grpcApiSubdomain .Values.global.domain }}
+{{- else if .Values.global.logsSubdomain }}
+{{- printf "%s.%s" .Values.global.logsSubdomain .Values.global.domain }}
 {{- end }}
 {{- end }}
 
