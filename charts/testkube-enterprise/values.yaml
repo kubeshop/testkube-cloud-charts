@@ -283,6 +283,7 @@ testkube-worker-service:
   api:
     nats:
       uri: "nats://testkube-enterprise-nats:4222"
+
 testkube-logs-service:
   enabled: true
   fullnameOverride: testkube-enterprise-logs-service
@@ -293,10 +294,21 @@ testkube-logs-service:
     host: ""
   api:
     tls:
-      serveHTTPS: false
+      # -- Toggle should the Application terminate TLS instead of the Ingress
+      serveHTTPS: true
+      # -- API HTTPS port
+      apiPort: 9443
+      # -- Agent gRPCS port
+      agentPort: 8443
       certManager:
         # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
         issuerKind: ClusterIssuer
+        # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
+        issuerGroup: cert-manager.io
+      # -- certificate path
+      certPath: /tmp/serving-cert/crt.pem
+      # -- certificate key path
+      keyPath: /tmp/serving-cert/key.pem
     mongo:
       # -- Mongo DSN connection string
       dsn: "mongodb://testkube-enterprise-mongodb:27017"

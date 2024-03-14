@@ -132,6 +132,17 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if or .Values.api.tls.serveHTTPS }}
+          volumeMounts:
+            - mountPath: /tmp/serving-cert/crt.pem
+              readOnly: true
+              name: serving-cert
+              subPath: tls.crt
+            - mountPath: /tmp/serving-cert/key.pem
+              readOnly: true
+              name: serving-cert
+              subPath: tls.key
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -144,3 +155,10 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.api.tls.serveHTTPS }}
+      volumes:
+        - name: serving-cert
+          secret:
+            secretName: {{ .Values.api.tls.tlsSecret }}
+      {{- end }}
+
