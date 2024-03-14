@@ -37,6 +37,7 @@ ingress:
     nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
   # -- Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed)
   className: nginx
+  tlsSecretName: testkube-logs-service-api-tls
 
 grpcIngress:
   # -- Toggle whether to enable the gRPC API Ingress
@@ -81,8 +82,6 @@ api:
     apiPort: 9443
     # -- Agent gRPCS port
     agentPort: 8443
-    # -- TLS secret name which contains the certificate files
-    tlsSecret: testkube-logs-service-api-tls
     certManager:
       # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
       issuerKind: ClusterIssuer
