@@ -47,7 +47,7 @@ spec:
     - host: {{ include "testkube-log-service.ingress.grpcHost" . | quote }}
       http:
         paths:
-          - path: /logs/v2/
+          - path: /
             {{- if semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion }}
             pathType: Prefix
             {{- end }}
