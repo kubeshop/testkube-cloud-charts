@@ -14,7 +14,7 @@ global:
   # -- Toggle whether to enable offline license activation in Enterprise mode
   enterpriseOfflineAccess: false
   # -- Domain under which to create Ingress rules
-  domain: ""
+  domain: "enterprise.testkube.dev"
   # -- UI subdomain which get prepended to the domain
   logsSubdomain: "logs"
   # -- UI subdomain which get prepended to the domain
