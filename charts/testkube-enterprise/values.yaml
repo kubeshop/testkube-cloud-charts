@@ -290,7 +290,7 @@ testkube-logs-service:
     USE_MINIO: true
   grpcIngress:
     enabled: true
-    host: "{{ .Values.global.logsSubdomain }}.{{ .Values.global.domain }}"
+    host: logs.enterprise.testkube.dev
   api:
     tls:
       serveHTTPS: false
