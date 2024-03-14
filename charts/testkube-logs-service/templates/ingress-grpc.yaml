@@ -41,7 +41,7 @@ spec:
   tls:
     - hosts:
         - {{ include "testkube-log-service.ingress.grpcHost" . | quote }}
-      secretName: {{ .Values.api.tls.tlsSecret }}
+      secretName: {{ .Values.ingress.tlsSecretName }}
   rules:
     {{- $tlsConfig := .Values.api.tls }}
     - host: {{ include "testkube-log-service.ingress.grpcHost" . | quote }}
