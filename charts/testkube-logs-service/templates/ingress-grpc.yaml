@@ -21,6 +21,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     nginx.ingress.kubernetes.io/backend-protocol: {{ if .Values.api.tls.serveHTTPS }}GRPCS{{ else }}GRPC{{ end }}
     nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.grpcIngress.maxPayloadSize }}
     nginx.ingress.kubernetes.io/client-header-timeout: "10800"

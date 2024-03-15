@@ -352,7 +352,7 @@ testkube-logs-service:
         # -- Path to ca file (used for self-signed certificates)
         caFile: "ca.crt"
   image:
-    tag: v0-20240315-125236
+    tag: v0-20240315-134446
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
