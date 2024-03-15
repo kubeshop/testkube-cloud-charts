@@ -113,12 +113,9 @@ spec:
             - name: {{ if .Values.api.tls.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.agentPort }}{{ else }}{{ .Values.service.grpcPort }}{{ end }}
               protocol: TCP
-            {{- if .Values.prometheus.enabled }}
             - name: metrics
-              containerPort: 9100
+              containerPort: {{ .Values.service.metricsPort }}
               protocol: TCP
-            {{- end }}
-          {{- if .Values.prometheus.enabled }}
           livenessProbe:
             httpGet:
               path: /metrics
@@ -129,7 +126,6 @@ spec:
               path: /metrics
               scheme: HTTP
               port: metrics
-          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if or .Values.api.tls.serveHTTPS }}
