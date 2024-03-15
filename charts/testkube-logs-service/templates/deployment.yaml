@@ -56,7 +56,7 @@ spec:
             - name: API_MONGO_DB
               value: {{ .Values.api.mongo.database }}
             - name: METRICS_LISTEN_ADDR
-              value: "0.0.0.0:9100"
+              value: "0.0.0.0:{{ .Values.service.metricsPort }}"
             - name: OUTPUTS_BUCKET
               value: "{{ .Values.api.outputsBucket }}"
             - name: NATS_URI

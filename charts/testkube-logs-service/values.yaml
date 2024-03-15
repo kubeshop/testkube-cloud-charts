@@ -146,7 +146,7 @@ service:
   # -- Additional labels to add to the Service resource
   labels: {}
   # -- Metrics port
-  metricsPort: 9000
+  metricsPort: 9100
   # -- GRPC service port (when TLS disabled)
   grpcPort: 8089
 
