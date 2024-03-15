@@ -295,7 +295,7 @@ testkube-logs-service:
   api:
     tls:
       # -- Toggle should the Application terminate TLS instead of the Ingress
-      serveHTTPS: true
+      serveHTTPS: false
       # -- API HTTPS port
       apiPort: 9443
       # -- Agent gRPCS port
