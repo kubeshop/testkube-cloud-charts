@@ -76,8 +76,9 @@ api:
     # -- Should be set to `true` if MinIO is behind
     secure: false
   tls:
+    tlsSecret: testkube-cloud-api-tls
     # -- Toggle should the Application terminate TLS instead of the Ingress
-    serveHTTPS: true
+    serveHTTPS: false
     # -- API HTTPS port
     apiPort: 9443
     # -- Agent gRPCS port
