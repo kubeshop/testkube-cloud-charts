@@ -18,11 +18,9 @@ spec:
       targetPort: {{ if .Values.api.tls.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
       protocol: TCP
       name: {{ if .Values.api.tls.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
-    {{ if .Values.prometheus.enabled }}
     - port: {{ .Values.service.metricsPort }}
       targetPort: metrics
       protocol: TCP
       name: metrics
-    {{ end }}
   selector:
     {{- include "testkube-log-service.selectorLabels" . | nindent 4 }}

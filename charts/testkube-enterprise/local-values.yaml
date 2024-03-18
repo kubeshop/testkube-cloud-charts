@@ -143,6 +143,19 @@ testkube-cloud-api:
   ai:
     secretRef: ""
   api:
+    logServer:
+      # -- Log server address
+      grpcAddress: "testkube-enterprise-logs-service:8090"
+      # -- Log server TLS configuration secure connection
+      secure: "false"
+      # -- Log server TLS configuration skip Verify
+      skipVerify: "true"
+      # -- TLS certificate file
+      certFile: ""
+      # -- TLS key file
+      keyFile: ""
+      # -- TLS CA certificate file
+      caFile: ""
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
     inviteMode: email
     smtp:
@@ -223,6 +236,8 @@ testkube-cloud-api:
     apiAddress: "http://localhost:8090"
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
+    # -- External log server connection configuration
+
   prometheus:
     enabled: false
   ingress:
@@ -244,7 +259,9 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
+
 testkube-logs-service:
+  enabled: true
   fullnameOverride: testkube-enterprise-logs-service
   api:
     tls:
@@ -252,7 +269,7 @@ testkube-logs-service:
       certManager:
         # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
         issuerKind: ClusterIssuer
-      tlsSecret: testkube-enterprise-api-tls
+      tlsSecret: testkube-enterprise-logs-service-tls
     mongo:
       # -- Mongo DSN connection string
       dsn: "mongodb://testkube-enterprise-mongodb:27017"
@@ -261,6 +278,26 @@ testkube-logs-service:
     nats:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats:4222"
+    minio:
+      # -- Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service
+      endpoint: "testkube-enterprise-minio:9000" #'{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}'
+      # -- S3 region
+      region: ""
+      # -- MinIO access key id
+      accessKeyId: *minioRootUser
+      # -- MinIO secret access key
+      secretAccessKey: *minioRootPassword
+      # -- MinIO token
+      token: ""
+      # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
+      credsSecretRef: *minioExistingSecret
+      # -- Expiration period in days
+      expirationPeriod: 0
+      # -- Should be set to `true` if MinIO is exposed through HTTPS
+      secure: false
+  additionalEnv:
+    USE_MINIO: true
+
   image:
     tag: v0-20240214-145418
 testkube-worker-service:

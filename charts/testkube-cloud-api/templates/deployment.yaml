@@ -299,6 +299,18 @@ spec:
               {{- else }}
               value: "{{ .Values.api.minio.token }}"
               {{- end }}
+            - name: LOG_SERVER_GRPC_ADDRESS
+              value: "{{ .Values.api.logServer.grpcAddress }}"
+            - name: LOG_SERVER_SECURE
+              value: "{{ .Values.api.logServer.secure }}"
+            - name: LOG_SERVER_SKIP_VERIFY
+              value: "{{ .Values.api.logServer.skipVerify }}"
+            - name: LOG_SERVER_CERT_FILE
+              value: "{{ .Values.api.logServer.certFile }}"
+            - name: LOG_SERVER_KEY_FILE
+              value: "{{ .Values.api.logServer.keyFile }}"
+            - name: LOG_SERVER_CA_FILE
+              value: "{{ .Values.api.logServer.caFile }}"
             - name: "MINIO_SKIP_VERIFY"
               value: "{{ .Values.api.minio.skipVerify }}"
             {{- if .Values.api.minio.certSecret.enabled }}
