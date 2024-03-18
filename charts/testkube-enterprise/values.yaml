@@ -145,7 +145,7 @@ testkube-cloud-api:
     # -- External log server connection configuration
     logServer:
       # -- Log server address
-      grpcAddress: "testkube-enterprise-logs-service:8090"
+      grpcAddress: "testkube-enterprise-logs-service:8089"
       # -- Log server TLS configuration secure connection
       secure: "false"
       # -- Log server TLS configuration skip Verify
