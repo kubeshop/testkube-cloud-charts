@@ -252,6 +252,10 @@ spec:
               value: {{ if .Values.api.agent.host }}{{ .Values.api.agent.host }}{{ else }}{{ .Values.global.grpcApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: AGENT_PORT
               value: "{{ .Values.api.agent.port }}"
+            - name: LOG_SERVICE_HOST
+              value: {{ if .Values.api.logServer.host }}{{ .Values.api.logServer.host }}{{ else }}{{ .Values.global.grpcLogsSubdomain }}.{{ .Values.global.domain }}{{ end }}
+            - name: LOG_SERVICE_PORT
+              value: "{{ .Values.api.logServer.port }}"
             - name: API_ADDRESS
               value: {{ if .Values.api.apiAddress }}{{ .Values.api.apiAddress }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: DASHBOARD_ADDRESS
