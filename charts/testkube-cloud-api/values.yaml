@@ -21,6 +21,8 @@ global:
   restApiSubdomain: "api"
   # -- gRPC API subdomain which get prepended to the domain
   grpcApiSubdomain: "agent"
+  # -- gRPC Logs subdomain which get prepended to the domain
+  grpcLogsSubdomain: "logs"
   # -- Websocket API subdomain which get prepended to the domain
   websocketApiSubdomain: "websockets"
   # -- Storage API subdomain which get prepended to the domain
@@ -215,7 +217,7 @@ api:
 
   # -- External log server connection configuration
   logServer:
-    # -- Log server address
+    # -- Log server address for internal communication
     grpcAddress: "testkube-logs-service:8090"
     # -- Log server TLS configuration secure connection
     secure: "false"
@@ -227,6 +229,10 @@ api:
     keyFile: ""
     # -- TLS CA certificate file
     caFile: ""
+    # -- Log server address for external communication (example `logs.testkube.xyz`)
+    host: ""
+    # -- Log server port for external communication
+    port: "443"
 
 externalSecrets:
   enabled: false
