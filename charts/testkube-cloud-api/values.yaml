@@ -217,6 +217,8 @@ api:
 
   # -- External log server connection configuration
   logServer:
+    # -- Toggle whether to enable external log server connection
+    enabled: false
     # -- Log server address for internal communication
     grpcAddress: "testkube-logs-service:8090"
     # -- Log server TLS configuration secure connection

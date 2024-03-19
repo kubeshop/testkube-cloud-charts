@@ -252,6 +252,8 @@ spec:
               value: {{ if .Values.api.agent.host }}{{ .Values.api.agent.host }}{{ else }}{{ .Values.global.grpcApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: AGENT_PORT
               value: "{{ .Values.api.agent.port }}"
+            - name: LOG_SERVICE_ENABLED
+              value: {{ if .Values.api.logServer.enabled }}"true"{{ else }}"false"{{ end }}
             - name: LOG_SERVICE_HOST
               value: {{ if .Values.api.logServer.host }}{{ .Values.api.logServer.host }}{{ else }}{{ .Values.global.grpcLogsSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: LOG_SERVICE_PORT
