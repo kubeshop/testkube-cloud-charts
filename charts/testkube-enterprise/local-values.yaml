@@ -144,6 +144,8 @@ testkube-cloud-api:
     secretRef: ""
   api:
     logServer:
+      # -- Toggle whether to enable log server connection
+      enabled: false
       # -- Log server address
       grpcAddress: "testkube-enterprise-logs-service:8090"
       # -- Log server TLS configuration secure connection
