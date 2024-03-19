@@ -1,7 +1,9 @@
 name: Dispatch events based on develop push
 
-# TODO(emil): switch on push to develop
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - develop
 
 jobs:
   dispatch:
