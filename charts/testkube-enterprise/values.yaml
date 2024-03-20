@@ -226,6 +226,8 @@ testkube-cloud-api:
       port: 443
       # -- Toggle whether to enable agent grpc keepalive pings
       keepAlive: false
+      # -- Agent storage host (can be used if a different storage hostname needs to be used from the agent side)
+      storageHost: ""
     oauth:
       # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`)
       secretRef: ""
