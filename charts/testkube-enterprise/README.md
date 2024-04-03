@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.55.14](https://img.shields.io/badge/Version-1.55.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.56.0](https://img.shields.io/badge/Version-1.56.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.35.5 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.36.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.29.9 |
 | file://../testkube-worker-service | testkube-worker-service | 1.29.2 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
@@ -56,6 +56,7 @@ A Helm chart for Testkube Enterprise
 | dex.storage | object | `{}` | Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage) |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
+| global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key. |
 | global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
