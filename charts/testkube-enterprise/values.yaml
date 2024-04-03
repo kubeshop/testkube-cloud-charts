@@ -34,6 +34,8 @@ global:
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
     issuerRef: ""
+  # -- Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key.
+  customCaSecretRef: ""
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
   imagePullSecrets: []
   ingress:

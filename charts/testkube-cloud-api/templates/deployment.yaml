@@ -262,6 +262,10 @@ spec:
               value: "{{ .Values.api.tls.certPath }}"
             - name: TLS_KEY
               value: "{{ .Values.api.tls.keyPath }}"
+            {{- if .Values.global.customCaSecretRef }}
+            - name: SSL_CERT_DIR
+              value: /etc/testkube/certs
+            {{- end }}
             - name: OUTPUTS_BUCKET
               value: "{{ .Values.api.outputsBucket }}"
             - name: MINIO_ENDPOINT
@@ -348,7 +352,7 @@ spec:
               port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef }}
+          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef }}
           volumeMounts:
             {{- if .Values.api.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
@@ -366,6 +370,12 @@ spec:
               name: license-file
               subPath: license.lic
             {{- end }}
+            {{- if .Values.global.customCaSecretRef }}
+            - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+              name: {{ .Values.global.customCaSecretRef }}
+              readOnly: true
+              subPath: ca.crt
+            {{- end }}
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -379,7 +389,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef }}
+      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef }}
       volumes:
         {{- if .Values.api.tls.serveHTTPS }}
         - name: serving-cert
@@ -390,5 +400,11 @@ spec:
         - name: license-file
           secret:
             secretName: {{ .Values.global.enterpriseLicenseSecretRef }}
+        {{- end }}
+        {{- if .Values.global.customCaSecretRef }}
+        - name: {{ .Values.global.customCaSecretRef }}
+          secret:
+            secretName: {{ .Values.global.customCaSecretRef }}
+            defaultMode: 420
         {{- end }}
       {{- end }}
