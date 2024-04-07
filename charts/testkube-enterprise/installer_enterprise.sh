@@ -40,14 +40,6 @@ EOF
 if [ ! -z "${DEBUG}" ];
 then set -x
 fi
-# Exit when any command fails
-#set -e
-
-# keep track of the last executed command
-#trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
-# echo an error message before exiting
-#trap 'echo "ERROR! [\"${last_command}\"] command failed with exit code $?."' ERR
-
 
 ## Logging tools
 LOG_FILE="testkube_installer.log"
@@ -73,7 +65,6 @@ LICENSE_KEY="Undefined"
 LICENSE_ID="Undefined"
 # Function to parse the license key string and extract the License ID
 parse_license_key() {
-  #set +e # Not critical function, disable exit on error in it.
   log 0 "DEBUG" "Trying to obtain license ID."
   local base64_encoded_json_part="${LICENSE_KEY%%.*}"  # Extract the first Base64 part before the first '.'
 
@@ -85,7 +76,6 @@ parse_license_key() {
   LICENSE_ID=$(echo "$decoded_json_filtered" | jq -r '.license.id' 2>>"$LOG_FILE")
   
   log 0 "DEBUG" "License ID identified: $LICENSE_ID"
-  #set -e # Re-enable exit on error in it.
 }
 
 # Function that prints '.' every second while sleep is happening.
@@ -136,7 +126,6 @@ request_license() {
 # Function to send telemetry 
 TELEMETRY_URL="https://webhook.site/e4c0175a-7f60-4731-bf23-e5f9079711fc" #FIXME!
 post_script_progress() {
-  #set +e # Not critical function, disable exit on error in it.
   log 0 "DEBUG" "Sending telemetry: $*"
   
   # Initialize an empty JSON string
@@ -158,7 +147,6 @@ post_script_progress() {
   # Optional: if you want to capture the PID of the background process
   local pid=$!
   log 0 "DEBUG" "Telemetry command executed [PID: $pid]"
-  #set -e # Re-enable exit on error in it.
 }
 
 #############################
