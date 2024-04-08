@@ -125,17 +125,17 @@ request_license() {
 # Tracking function
 # Function to send telemetry 
 TELEMETRY_URL="https://webhook.site/e4c0175a-7f60-4731-bf23-e5f9079711fc" #FIXME!
+SESSION_ID=$(uuidgen 2>>/dev/null || $$ )
 post_script_progress() {
   log 0 "DEBUG" "Sending telemetry: $*"
   
   # Initialize an empty JSON string
   local json_payload="{"
+  # Add session ID
+  json_payload="$json_payload\"session_id\":\"$SESSION_ID\""
   # Loop through the remaining arguments by two
   while [ $# -gt 0 ]; do
-    if [ -n "$json_payload" ] && [ "$json_payload" != "{" ]; then
-      json_payload="$json_payload,"
-    fi
-    json_payload="$json_payload\"$1\":\"$2\""
+    json_payload="$json_payload,\"$1\":\"$2\""
     shift 2 # Remove these two arguments from the list
   done
   json_payload="$json_payload}"
@@ -262,8 +262,8 @@ fi
 ## Step 2 - Checking/Creating required namespace
 #################################################
 
-## Create the testkube-on-prem namespace
-NAMESPACE="testkube-on-prem"
+## Create the testkube-enterprise namespace
+NAMESPACE="testkube-enterprise"
 
 log 1 "INFO" ""
 log 1 "INFO" "  **** Create Namespace ****  "
@@ -350,6 +350,7 @@ while true; do
 
   if [ "$num_ready_pods" -eq "$expected_pods" ]; then
     log 1 "INFO" "All pods are ready. Proceeding with the next steps."
+    break
   elif [ "$attempt_counter" -ge "$max_attempts" ]; then
     log 1 "WARN" "Not all pods have started. Assuming they will start later, proceeding with rest of installation. [$num_ready_pods out of $expected_pods ready]"
     break
@@ -432,6 +433,7 @@ attempt_counter=0
 while true; do
     response=$(curl -s "$api_server$org_endpoint" -H "Authorization: Bearer $access_token" 2>> $LOG_FILE)
     if [ -n "$response" ]; then
+      log 0 "DEBUG" "Raw response from API: $response"
       parsed_response=$("$response" | jq '.')
       log 0 "DEBUG" "Response from API: $parsed_response"
       break
@@ -520,9 +522,13 @@ log 1 "INFO" "  **** Install Testkube Agent ****  "
 log 1 "INFO" ""
 
 log 1 "INFO" "Now proceeding with Testkube agen installation."
+log 1 "INFO" ""
 log 1 "INFO" "The agent will be connected to the default environment created in previous step."
-log 1 "INFO" "You need to specify the namespace where the agent will be installed. The namespace requires to have access to the services you want to test."
-log 1 "INFO" "For a quick first installation of Testkube, you can install the agent in the same namespace of Testkube Control Plane ($NAMESPACE), if the services objective of your testing would be accessible from it"
+log 1 "INFO" ""
+log 1 "INFO" "IMPORTANT: You need to specify the namespace where the agent will be installed. The namespace requires to have access to the services you want to test."
+log 1 "INFO" ""
+log 1 "INFO" "For a quick first installation of Testkube, you can install the agent in the same namespace of Testkube Control Plane ($NAMESPACE), if the services objective of your testing would be accessible from it."
+log 1 "INFO" ""
 post_script_progress "step" "agent_installation" "license_id" "$LICENSE_ID"
 
 # Default to the same namespace of control plane
@@ -539,7 +545,8 @@ agent_namespace="${agent_namespace:-$default_name}"
 log 1 "INFO" "Installing Testkube now..."
 
 helm repo add kubeshop https://kubeshop.github.io/helm-charts >> "$LOG_FILE" 2>&1 
-helm repo update && helm upgrade --install --create-namespace testkube kubeshop/testkube \
+helm repo update >> "$LOG_FILE" 2>&1 
+helm upgrade --install --create-namespace testkube kubeshop/testkube \
   --set testkube-api.cloud.key="$agent_token" \
   --set testkube-api.cloud.orgId="$org_id" \
   --set testkube-api.cloud.envId="$env_id" \
@@ -550,20 +557,31 @@ helm repo update && helm upgrade --install --create-namespace testkube kubeshop/
   --set testkube-api.cloud.tls.enabled=false \
   --namespace "$agent_namespace" >> "$LOG_FILE" 2>&1 
 
-# Sleep
-progress_sleep 50
+# Wait for the pods to launch
+log 1 "INFO" "Testkube Agent installation done. Now waiting for pods to start."
+# Adding a sleep to ensure we wait for some time before checking pods have started.
+progress_sleep 30 #30s first sleep.
 
 # Wait for all Pods to be ready
+sleep_between_attempts=30 #seconds
+max_attempts=5 # 2.5min (plus the initial 30s, 3 min max wait ) 
+attempt_counter=0
 while true; do
   pod_statuses=$(kubectl get pods -l app.kubernetes.io/instance=testkube -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}' --namespace "$agent_namespace" 2>/dev/null)
   num_ready_pods=$(echo "$pod_statuses" | tr ' ' '\n' | grep -c "True")
+  expected_pods=$(kubectl get pods -l app.kubernetes.io/instance=testkube --no-headers --namespace "$agent_namespace" | wc -l | xargs)
 
-  if [ "$num_ready_pods" -eq "$(kubectl get pods -l app.kubernetes.io/instance=testkube --no-headers --namespace "$agent_namespace" | wc -l)" ]; then
+  if [ "$num_ready_pods" -eq "$expected_pods" ]; then
     log 1 "INFO" "All pods are ready."
     break
+  elif [ "$attempt_counter" -ge "$max_attempts" ]; then
+    log 1 "WARN" "Not all pods have started. Assuming they will start later, proceeding with rest of installation. [$num_ready_pods out of $expected_pods ready]"
+    break
   else
-    log 1 "INFO" "...still waiting for all pods to be ready. Currently, $num_ready_pods out of $(kubectl get pods -l app.kubernetes.io/instance=testkube --no-headers --namespace "$agent_namespace" | wc -l) pods are ready."
-    progress_sleep 5
+    log 1 "INFO" "...still waiting for all pods to be ready. Currently, $num_ready_pods out of $expected_pods pods are ready."
+    # Increment the attempt counter
+    ((attempt_counter++))
+    progress_sleep $sleep_between_attempts
   fi
 done
 
@@ -572,8 +590,11 @@ log 1 "INFO" ""
 log 1 "INFO" "  **** Installation finished succesfully! ****  "
 log 1 "INFO" ""
 
-log 1 "INFO" "Testkube Enterprise was deployed along with the Agent into your k8s cluster." 
+log 1 "INFO" "Congratulations!! Testkube Enterprise was deployed along with the Agent into your k8s cluster!!" 
+log 1 "INFO" ""
 log 1 "INFO" "Please note that it may take up to 5 minutes for Agent to be fully running." 
-log 1 "INFO" "Visit http://localhost:8080 to open the Dashboard. Use 'admin@example.com' and 'password' as a username and a password respectively."
+log 1 "INFO" ""
+log 1 "INFO" "Visit http://localhost:8080 to open the Dashboard."
+log 1 "INFO" "Use 'admin@example.com' and 'password' as a username and a password respectively."
 
 post_script_progress "step" "installation_finished" "license_id" "$LICENSE_ID"
