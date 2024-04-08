@@ -434,8 +434,8 @@ while true; do
     response=$(curl -s "$api_server$org_endpoint" -H "Authorization: Bearer $access_token" 2>> $LOG_FILE)
     if [ -n "$response" ]; then
       log 0 "DEBUG" "Raw response from API: $response"
-      parsed_response=$("$response" | jq '.')
-      log 0 "DEBUG" "Response from API: $parsed_response"
+      parsed_response=$(echo "$response" | jq -r '.' 2>> $LOG_FILE)
+      log 0 "DEBUG" "Parsed response from API: $parsed_response"
       break
     elif [ "$attempt_counter" -ge "$max_attempts" ]; then
       log 1 "ERROR" "Failed to generate organization. Aborting. Please, contact support@testkube.io"
@@ -450,15 +450,17 @@ while true; do
 done
 
 #Get Organization ID
-org_id=$(echo "$response" | jq -r '.elements[0].id')
+org_id=$(echo "$response" | jq -r '.elements[0].id' 2>> $LOG_FILE)
 log 0 "DEBUG" "Organization ID: $org_id"
 
 #Rename Organization to admin-personal-org
 log 0 "DEBUG" "Renaming default organization..."
 org_payload='{"id":"'$org_id'","name":"admin-personal-org"}'
+log 0 "DEBUG" "Payload for API call: $org_payload"
 response=$(curl -s -w "%{http_code}" -X PATCH "$api_server$org_endpoint/$org_id" -H "Authorization: Bearer $access_token" -H "Content-Type: application/json" -d "$org_payload" 2>> $LOG_FILE)
-parsed_response=$("$response" | jq '.' 2>> $LOG_FILE)
-log 0 "DEBUG" "Response from API: $parsed_response"
+log 0 "DEBUG" "Raw response from API: $response"
+parsed_response=$(echo "$response" | jq -r '.' 2>> $LOG_FILE)
+log 0 "DEBUG" "Parsed response from API: $parsed_response"
 
 # Extract the status code from the response
 status_code="${response: -3}"
@@ -542,7 +544,7 @@ read -r agent_namespace
 agent_namespace="${agent_namespace:-$default_name}"
 
 # Deploy an Agent
-log 1 "INFO" "Installing Testkube now..."
+log 1 "INFO" "Installing Testkube Agent now..."
 
 helm repo add kubeshop https://kubeshop.github.io/helm-charts >> "$LOG_FILE" 2>&1 
 helm repo update >> "$LOG_FILE" 2>&1 
