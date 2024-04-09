@@ -132,25 +132,29 @@ request_license() {
 
 # Tracking function
 # Function to send telemetry 
-TELEMETRY_URL="https://webhook.site/e4c0175a-7f60-4731-bf23-e5f9079711fc" #FIXME!
+TELEMETRY_URL="https://api.segment.io/v1/track"
 SESSION_ID=$(uuidgen 2>>/dev/null || $$ )
 post_script_progress() {
   log 0 "DEBUG" $NC "Sending telemetry: $*"
   
   # Initialize an empty JSON string
-  local json_payload="{"
+  json_payload="{\"event\": \"on_prem_installation\", \"email\": \"admin@example.com\", \"userId\": \"$SESSION_ID\", \"writeKey\": \"LecFL2h5kyWBvdWFa5eMnWP2nEVSZ0V6\", \"properties\": {"
   # Add session ID
-  json_payload="$json_payload\"session_id\":\"$SESSION_ID\""
+  #json_payload="$json_payload\"session_id\":\"$SESSION_ID\""
   # Loop through the remaining arguments by two
   while [ $# -gt 0 ]; do
-    json_payload="$json_payload,\"$1\":\"$2\""
+    json_payload="$json_payload\"$1\":\"$2\""
     shift 2 # Remove these two arguments from the list
+    if [ $# -gt 0 ]; then
+      json_payload="$json_payload,"
+    fi
   done
-  json_payload="$json_payload}"
+  json_payload="$json_payload}}'"
   log 0 "DEBUG" $NC "Telemetry JSON: $json_payload"
 
   # Execute curl in the background with the JSON payload
-  curl -X POST "$TELEMETRY_URL" -H "Content-Type: application/json" -d "$json_payload" >> $LOG_FILE 2>&1 &
+  echo curl -X POST "$TELEMETRY_URL" -H "'Content-Type: application/json'" -d "$json_payload" >> $LOG_FILE
+  curl -X POST "$TELEMETRY_URL" -H "'Content-Type: application/json'" -d "$json_payload" >> $LOG_FILE 2>&1
 
   # Optional: if you want to capture the PID of the background process
   local pid=$!
