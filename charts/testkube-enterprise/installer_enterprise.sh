@@ -139,8 +139,6 @@ post_script_progress() {
   
   # Initialize an empty JSON string
   json_payload="{\"event\": \"on_prem_installation\", \"email\": \"admin@example.com\", \"userId\": \"$SESSION_ID\", \"writeKey\": \"LecFL2h5kyWBvdWFa5eMnWP2nEVSZ0V6\", \"properties\": {"
-  # Add session ID
-  #json_payload="$json_payload\"session_id\":\"$SESSION_ID\""
   # Loop through the remaining arguments by two
   while [ $# -gt 0 ]; do
     json_payload="$json_payload\"$1\":\"$2\""
@@ -154,7 +152,7 @@ post_script_progress() {
 
   # Execute curl in the background with the JSON payload
   echo curl -X POST "$TELEMETRY_URL" -H "'Content-Type: application/json'" -d "$json_payload" >> $LOG_FILE
-  curl -X POST "$TELEMETRY_URL" -H "'Content-Type: application/json'" -d "$json_payload" >> $LOG_FILE 2>&1
+  curl -X POST "$TELEMETRY_URL" -H "'Content-Type: application/json'" -d "$json_payload" >> $LOG_FILE 2>&1 &
 
   # Optional: if you want to capture the PID of the background process
   local pid=$!
