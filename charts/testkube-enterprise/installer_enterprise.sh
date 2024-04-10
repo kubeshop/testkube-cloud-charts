@@ -533,7 +533,7 @@ log 1 "INFO" $NC ""
 log 1 "INFO" $GREEN "  **** Install Testkube Agent ****  "
 log 1 "INFO" $NC ""
 
-log 1 "INFO" $NC "Now proceeding with Testkube agen installation."
+log 1 "INFO" $NC "Now proceeding with Testkube agent installation."
 log 1 "INFO" $NC ""
 log 1 "INFO" $NC "The agent will be connected to the default environment created in previous step."
 log 1 "INFO" $NC ""
