@@ -602,10 +602,7 @@ log 1 "INFO" $NC ""
 log 1 "INFO" $GREEN "  **** Installation finished succesfully! ****  "
 log 1 "INFO" $NC ""
 
-log 1 "INFO" $GREEN "Congratulations!! Testkube On-Prem dashboard and agent have been deployed into your k8s cluster!!" 
-log 1 "INFO" $NC ""
-log 1 "INFO" $YELLOW "Please note that it may take up to 5 minutes for Agent to be fully running." 
-log 1 "INFO" $NC ""
+log 1 "INFO" $GREEN "Congratulations!! Testkube On-Prem dashboard and agent have been deployed into your k8s cluster!!"
 log 1 "INFO" $BLUE "Visit http://localhost:8080 to open the Dashboard."
 log 1 "INFO" $BLUE "Use 'admin@example.com' and 'password' as a username and a password respectively."
 
