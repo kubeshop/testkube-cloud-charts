@@ -193,6 +193,8 @@ testkube-cloud-api:
       dsn: "mongodb://testkube-enterprise-mongodb:27017"
       # -- Mongo database name
       database: "testkubeEnterpriseDB"
+      # -- Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest)
+      readPreference: secondaryPreferred
     nats:
       # -- NATS URI
       uri: "nats://testkube-enterprise-nats:4222"
@@ -217,6 +219,12 @@ testkube-cloud-api:
       skipVerify: false
       # -- If enabled, will also require a CA certificate to be provided
       mountCACertificate: false
+      # Configure this if you want a different hostname for the presigned PUT URL (used by Agents to upload artifacts)
+      signing:
+        # -- Hostname for the presigned PUT URL
+        hostname: ""
+        # -- Toggle should the presigned URL use HTTPS
+        secure: false
       certSecret:
         # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
         enabled: false
