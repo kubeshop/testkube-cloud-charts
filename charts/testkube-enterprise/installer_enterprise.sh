@@ -132,6 +132,7 @@ request_license() {
 
 # Function to calculate distinct and persistent machine ID
 get_machine_id() {
+    log 0 "DEBUG" $NC "Trying to obtain Machine ID."
     local machine_id
 
     # Check if /etc/machine-id exists (common on most modern Linux distributions)
@@ -166,6 +167,8 @@ get_machine_id() {
         machine_id=$(uuidgen 2>>/dev/null || $$ )
     fi
 
+    log 0 "DEBUG" $NC "Machine ID identified: $machine_id"
+    
     echo "$machine_id"
 }
 
