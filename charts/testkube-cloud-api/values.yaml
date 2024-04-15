@@ -11,7 +11,7 @@ global:
   enterpriseLicenseKey: ""
   # -- Base64-encoded Enterprise License file
   enterpriseLicenseFile: ""
-  # -- Enterprise License file secret ref (secret should contain a file called 'license.lic')
+  # -- Enterprise License file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file.
   enterpriseLicenseSecretRef: ""
   # -- Domain under which to create Ingress rules
   domain: ""
