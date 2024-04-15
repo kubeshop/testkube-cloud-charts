@@ -130,15 +130,58 @@ request_license() {
     parse_license_key
 }
 
+# Function to calculate distinct and persistent machine ID
+get_machine_id() {
+    log 0 "DEBUG" $NC "Trying to obtain Machine ID."
+    local machine_id
+
+    # Check if /etc/machine-id exists (common on most modern Linux distributions)
+    if [ -f /etc/machine-id ]; then
+        machine_id=$(cat /etc/machine-id)
+    # Check if dmidecode is available (common on Linux)
+    elif command -v dmidecode >/dev/null 2>&1; then
+        machine_id=$(sudo dmidecode -s system-uuid)
+    # Check if system_profiler command is available (common on macOS)
+    elif command -v system_profiler >/dev/null 2>&1; then
+        machine_id=$(system_profiler SPHardwareDataType | awk '/UUID/ {print $3}')
+    # Check if ioreg command is available (alternative for macOS)
+    elif command -v ioreg >/dev/null 2>&1; then
+        machine_id=$(ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | awk -F '"' '/UUID/{print $4}')
+    # Check if hostname command is available (fallback)
+    elif command -v hostname >/dev/null 2>&1; then
+        machine_id=$(hostname)
+    else
+        machine_id=""
+    fi
+
+    # If machine ID is not empty, convert it to a UUID
+    if [ -n "$machine_id" ]; then
+        # Remove whitespace and convert to lowercase
+        machine_id=$(echo "$machine_id" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+        
+        # If the length is not standard UUID length (32 characters), add dashes
+        if [ ${#machine_id} -eq 32 ]; then
+            machine_id=$(echo "$machine_id" | sed 's/\(........\)\(....\)\(....\)\(....\)\(............\)/\1-\2-\3-\4-\5/')
+        fi
+    else
+        machine_id=$(uuidgen 2>>/dev/null || $$ )
+    fi
+
+    log 0 "DEBUG" $NC "Machine ID identified: $machine_id"
+    
+    echo "$machine_id"
+}
+
+MACHINE_ID=$(get_machine_id)
+
 # Tracking function
 # Function to send telemetry 
 TELEMETRY_URL="https://api.segment.io/v1/track"
-SESSION_ID=$(uuidgen 2>>/dev/null || $$ )
 post_script_progress() {
   log 0 "DEBUG" $NC "Sending telemetry: $*"
   
   # Initialize an empty JSON string
-  json_payload="{\"event\": \"on_prem_installation\", \"email\": \"admin@example.com\", \"userId\": \"$SESSION_ID\", \"writeKey\": \"LecFL2h5kyWBvdWFa5eMnWP2nEVSZ0V6\", \"properties\": {"
+  json_payload="{\"event\": \"on_prem_installation\", \"email\": \"admin@example.com\", \"userId\": \"$MACHINE_ID\", \"writeKey\": \"LecFL2h5kyWBvdWFa5eMnWP2nEVSZ0V6\", \"properties\": {"
   # Loop through the remaining arguments by two
   while [ $# -gt 0 ]; do
     json_payload="$json_payload\"$1\":\"$2\""
