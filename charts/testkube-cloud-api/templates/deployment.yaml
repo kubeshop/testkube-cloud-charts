@@ -37,6 +37,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: DEMO_ORGANIZATION_ID
+              value: "{{ .Values.demoOrganizationId }}"
             - name: ENTERPRISE_MODE
               value: "{{ .Values.global.enterpriseMode }}"
             {{- if .Values.global.enterpriseMode }}
