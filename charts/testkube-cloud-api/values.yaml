@@ -97,6 +97,11 @@ api:
     useHelmHooks: true
     # -- TTL for the migration job
     ttlSecondsAfterFinished: 90
+  features:
+    disablePersonalOrgs: false
+    bootstapConfig:
+      enabled: false
+      config: {}
   # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
   inviteMode: email
   email:

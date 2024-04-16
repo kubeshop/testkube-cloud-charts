@@ -315,6 +315,16 @@ spec:
               value: "{{ .Values.api.minio.certSecret.baseMountPath }}/{{ .Values.api.minio.certSecret.caFile }}"
             {{- end }}
             {{- end }}
+            {{- if .Values.api.features.disablePersonalOrgs }}
+            - name: "DISABLE_PERSONAL_ORGS"
+              value: "{{.Values.api.features.disablePersonalOrgs }}"
+            {{- end }}
+            {{- if .Values.api.features.bootstapConfig.enabled }}
+            - name: "BOOTSTRAP_CONFIG_ENABLED"
+              value: "{{ .Values.api.features.bootstapConfig.enabled}}"
+            - name: "BOOTSTRAP_CONFIG_PATH"
+              value: "/app/config/config"
+            {{- end }}
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
               value: "{{ $v }}"
@@ -376,6 +386,10 @@ spec:
               readOnly: true
               subPath: ca.crt
             {{- end }}
+            {{- if .Values.api.features.bootstapConfig.enabled }}
+            - mountPath: /app/config
+              name: testkube-config
+            {{- end }}
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -406,5 +420,11 @@ spec:
           secret:
             secretName: {{ .Values.global.customCaSecretRef }}
             defaultMode: 420
+        {{- end }}
+        {{- if .Values.api.features.bootstapConfig.enabled }}
+        - configMap:
+            defaultMode: 420
+            name: {{ include "testkube-cloud-api.fullname" . }}-config
+          name: testkube-config
         {{- end }}
       {{- end }}
