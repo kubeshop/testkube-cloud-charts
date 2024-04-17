@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.36.4](https://img.shields.io/badge/Version-1.36.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.1](https://img.shields.io/badge/AppVersion-1.10.1-informational?style=flat-square)
+![Version: 1.37.0](https://img.shields.io/badge/Version-1.37.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.1](https://img.shields.io/badge/AppVersion-1.10.1-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -42,6 +42,9 @@ A Helm chart for Testkube Cloud API
 | api.debug.enableHttp2Logs | bool | `false` | Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2 |
 | api.email.fromEmail | string | `"noreply@kubeshop.io"` |  |
 | api.email.fromName | string | `"Testkube Cloud"` |  |
+| api.features.bootstapConfig.config | object | `{}` |  |
+| api.features.bootstapConfig.enabled | bool | `false` |  |
+| api.features.disablePersonalOrgs | bool | `false` |  |
 | api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
 | api.migrations.ttlSecondsAfterFinished | int | `90` | TTL for the migration job |
