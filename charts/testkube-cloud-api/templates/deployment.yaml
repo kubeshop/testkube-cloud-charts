@@ -319,9 +319,9 @@ spec:
             - name: "DISABLE_PERSONAL_ORGS"
               value: "{{.Values.api.features.disablePersonalOrgs }}"
             {{- end }}
-            {{- if .Values.api.features.bootstapConfig.enabled }}
+            {{- if .Values.api.features.bootstrapConfig.enabled }}
             - name: "BOOTSTRAP_CONFIG_ENABLED"
-              value: "{{ .Values.api.features.bootstapConfig.enabled}}"
+              value: "{{ .Values.api.features.bootstrapConfig.enabled}}"
             - name: "BOOTSTRAP_CONFIG_PATH"
               value: "/app/config/config"
             {{- end }}
@@ -386,7 +386,7 @@ spec:
               readOnly: true
               subPath: ca.crt
             {{- end }}
-            {{- if .Values.api.features.bootstapConfig.enabled }}
+            {{- if .Values.api.features.bootstrapConfig.enabled }}
             - mountPath: /app/config
               name: testkube-config
             {{- end }}
@@ -421,7 +421,7 @@ spec:
             secretName: {{ .Values.global.customCaSecretRef }}
             defaultMode: 420
         {{- end }}
-        {{- if .Values.api.features.bootstapConfig.enabled }}
+        {{- if .Values.api.features.bootstrapConfig.enabled }}
         - configMap:
             defaultMode: 420
             name: {{ include "testkube-cloud-api.fullname" . }}-config
