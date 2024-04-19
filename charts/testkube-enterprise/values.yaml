@@ -136,6 +136,7 @@ minio:
     tls:
       # -- TLS secret name which contains the certificate files
       tlsSecret: testkube-enterprise-minio-tls
+
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -152,6 +153,18 @@ testkube-cloud-api:
       enableGrpcServerLogs: false
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
     inviteMode: email
+    features:
+      disablePersonalOrgs: false
+      bootstrapConfig:
+        enabled: false
+        config:
+          organizations:
+            - name: workspace
+              environments:
+                - name: default
+                  agentToken:
+                    valueFrom:
+                      envRef: TESTKUBE_DEFAULT_AGENT_TOKEN
     smtp:
       # -- SMTP host
       host: ""
@@ -253,6 +266,7 @@ testkube-cloud-api:
     enabled: false
   ingress:
     className: nginx
+
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
@@ -267,6 +281,22 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
+
+testkube-agent:
+  enabled: false
+  testkube-dashboard:
+    enabled: false
+  mongodb:
+    enabled: false
+  testkube-api:
+    cloud:
+      url: testkube-enterprise-api.testkube-enterprise.svc.cluster.local:8089
+      tls:
+        enabled: false
+      existingSecret:
+        key: testkube-default-agent-token
+        name: agent-token
+
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
