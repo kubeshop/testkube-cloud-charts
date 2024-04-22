@@ -7,11 +7,11 @@ global:
   enterpriseMode: false
   # -- Toggle whether to enable offline license activation in Enterprise mode
   enterpriseOfflineAccess: false
-  # -- Enterprise License key
+  # -- Specifies the enterprise license key, when using an offline license use `enterpriseLicenseSecretRef` and leave this field empty.
   enterpriseLicenseKey: ""
-  # -- Base64-encoded Enterprise License file
+  # -- This field is deprecated. To specify an offline license file use `enterpriseLicenseSecretRef`.
   enterpriseLicenseFile: ""
-  # -- Enterprise License file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file.
+  # -- Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file.
   enterpriseLicenseSecretRef: ""
   # -- Domain under which to create Ingress rules
   domain: ""
