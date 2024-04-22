@@ -4,5 +4,5 @@ helm:
     value: kubeshop/testkube-worker-service
     forcestring: true
   - name: image.tag
-    value: 1.10.3-dev-b2cc2923
+    value: 1.10.3-dev-c7c013fa
     forcestring: true
