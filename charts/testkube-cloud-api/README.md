@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.38.1](https://img.shields.io/badge/Version-1.38.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.4](https://img.shields.io/badge/AppVersion-1.10.4-informational?style=flat-square)
+![Version: 1.39.0](https://img.shields.io/badge/Version-1.39.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.4](https://img.shields.io/badge/AppVersion-1.10.4-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -98,6 +98,7 @@ A Helm chart for Testkube Cloud API
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| demoOrganizationId | string | `""` | Api can allow to set demo organization id where user who don't have Kubernetes cluster can play around |
 | externalSecrets.clusterSecretStoreName | string | `"secret-store"` |  |
 | externalSecrets.enabled | bool | `false` |  |
 | externalSecrets.keys | object | `{}` |  |

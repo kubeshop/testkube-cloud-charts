@@ -54,7 +54,6 @@ additionalEnv: {}
 
 # -- Api can allow to set demo organization id where user who don't have Kubernetes cluster can play around
 demoOrganizationId: ""
-
 analytics:
   segmentio:
     # -- Toggle whether to enable Segment.io analytics
