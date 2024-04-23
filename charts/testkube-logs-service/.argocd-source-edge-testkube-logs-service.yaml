@@ -4,5 +4,5 @@ helm:
     value: kubeshop/testkube-logs-service
     forcestring: true
   - name: image.tag
-    value: 1.10.3-dev-c7c013fa
+    value: 1.10.3-dev-413df585
     forcestring: true
