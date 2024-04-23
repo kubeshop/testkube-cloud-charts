@@ -42,7 +42,7 @@ spec:
             - name: OUTPUTS_BUCKET
               value: "{{ .Values.api.outputsBucket }}"
             - name: NATS_URI
-              value: {{ .Values.api.nats.uri }}
+              value: {{ tpl .Values.api.nats.uri $ | quote }}
             - name: MINIO_ENDPOINT
               value: "{{ tpl .Values.api.minio.endpoint . }}"
             - name: MINIO_REGION

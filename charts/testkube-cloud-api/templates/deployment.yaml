@@ -326,10 +326,16 @@ spec:
               value: "{{ .Values.api.features.bootstrapConfig.enabled}}"
             - name: "BOOTSTRAP_CONFIG_PATH"
               value: "/app/config/config"
+            - name: "TESTKUBE_DEFAULT_AGENT_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: testkube-default-agent-token
+                  key: agent-token
+                  optional: true
             {{- end }}
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
-              value: "{{ $v }}"
+              value: {{ tpl ($v | toString) $ | quote }}
             {{- end}}
             {{- if .Values.externalSecrets.enabled -}}
             {{- range $key, $value := .Values.externalSecrets.keys }}
@@ -364,7 +370,7 @@ spec:
               port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef }}
+          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled }}
           volumeMounts:
             {{- if .Values.api.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
@@ -405,7 +411,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef }}
+      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled }}
       volumes:
         {{- if .Values.api.tls.serveHTTPS }}
         - name: serving-cert
