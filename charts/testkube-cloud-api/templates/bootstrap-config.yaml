@@ -1,3 +1,4 @@
+# Advanced config for multiple orgs/envs/users. Do not use together with bootstrapOrg/Env
 {{- if .Values.api.features.bootstrapConfig.enabled }}
 apiVersion: v1
 kind: ConfigMap
@@ -8,4 +9,37 @@ metadata:
 data:
   config: |-
     {{- .Values.api.features.bootstrapConfig.config | toYaml | nindent 4  }}
+{{- end }}
+
+# Simplified config for single org/env. Do not user together with bootstrapConfig
+{{- if .Values.api.features.bootstrapOrg }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "testkube-cloud-api.fullname" . }}-config
+  labels:
+    {{- include "testkube-cloud-api.labels" . | nindent 4 }}
+data:
+  config: |-
+    organizations:
+      - name: {{ .Values.api.features.bootstrapOrg }}
+        {{- if .Values.api.features.bootstrapAdmin }}
+        members:
+          - email: {{.Values.api.features.bootstrapAdmin}}
+            role: admin
+        {{- end }}
+        {{- if .Values.api.features.bootstrapEnv }}
+        environments:
+          - name: default
+            {{- if .Values.api.features.bootstrapAdmin }}
+            members:
+              - email: {{.Values.api.features.bootstrapAdmin}}
+                role: admin
+            {{- end }}
+            {{- if .Values.api.features.bootstrapAgentTokenSecretRef }}
+            agentToken:
+              valueFrom:
+                envRef: {{ regexReplaceAll "-" .Values.api.features.bootstrapAgentTokenSecretRef "_" | upper | quote }}
+            {{- end }}
+        {{- end }}
 {{- end }}

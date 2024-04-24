@@ -156,24 +156,10 @@ testkube-cloud-api:
     inviteMode: email
     features:
       disablePersonalOrgs: true
-      bootstrapConfig:
-        enabled: true
-        config:
-          organizations:
-            - name: far-strider
-              default_role: member
-              members:
-                - email: admin@example.com
-                  role: admin
-              environments:
-                - name: default
-                  default_role: write
-                  members:
-                    - email: admin@example.com
-                      role: admin
-                  agentToken:
-                    valueFrom:
-                      envRef: TESTKUBE_DEFAULT_AGENT_TOKEN
+      bootstrapOrg: "far-strider"
+      bootstrapEnv: "default"
+      bootstrapAgentTokenSecretRef: "testkube-default-agent-token"
+      bootstrapAdmin: "admin@example.com"
     smtp:
       # -- SMTP host
       host: ""

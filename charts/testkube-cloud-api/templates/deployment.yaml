@@ -321,18 +321,19 @@ spec:
             - name: "DISABLE_PERSONAL_ORGS"
               value: "{{.Values.api.features.disablePersonalOrgs }}"
             {{- end }}
-            {{- if .Values.api.features.bootstrapConfig.enabled }}
+            {{- if or .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
             - name: "BOOTSTRAP_CONFIG_ENABLED"
-              value: "{{ .Values.api.features.bootstrapConfig.enabled}}"
+              value: "{{ or .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg}}"
             - name: "BOOTSTRAP_CONFIG_PATH"
               value: "/app/config/config"
-            - name: "TESTKUBE_DEFAULT_AGENT_TOKEN"
+            {{- end}}
+            {{- if or .Values.api.features.bootstrapAgentTokenSecretRef }}
+            - name: {{ regexReplaceAll "-" .Values.api.features.bootstrapAgentTokenSecretRef "_" | upper | quote }}
               valueFrom:
-                secretKeyRef:
-                  name: testkube-default-agent-token
+                secretRef: 
+                  name: {{ .Values.api.features.bootstrapAgentTokenSecretRef | quote}}
                   key: agent-token
-                  optional: true
-            {{- end }}
+            {{- end}}
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
               value: {{ tpl ($v | toString) $ | quote }}
