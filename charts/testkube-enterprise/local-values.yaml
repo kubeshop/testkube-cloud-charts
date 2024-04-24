@@ -5,14 +5,14 @@
 global:
   # -- Run Testkube in enterprise mode (enables enterprise features)
   enterpriseMode: true
-  # -- Enterprise License key
-  enterpriseLicenseKey: ""
-  # -- Base64-encoded Enterprise License file
-  enterpriseLicenseFile: ""
-  # -- Enterprise License file secret ref (secret should contain a file called 'license.lic')
-  enterpriseLicenseSecretRef: "testkube-enterprise-license"
   # -- Toggle whether to enable offline license activation in Enterprise mode
   enterpriseOfflineAccess: false
+  # -- Specifies the enterprise license key, when using an offline license use `enterpriseLicenseSecretRef` and leave this field empty.
+  enterpriseLicenseKey: ""
+  # -- This field is deprecated. To specify an offline license file use `enterpriseLicenseSecretRef`.
+  enterpriseLicenseFile: ""
+  # -- Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file.
+  enterpriseLicenseSecretRef: "testkube-enterprise-license"
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain
