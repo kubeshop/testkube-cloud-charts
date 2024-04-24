@@ -269,7 +269,7 @@ testkube-agent:
     enabled: false
   testkube-api:
     cloud:
-      url: testkube-enterprise-api.testkube.svc.cluster.local:8089 # FIXME to update to support tpl in https://github.com/kubeshop/helm-charts/blob/develop/charts/testkube-api/templates/deployment.yaml#L308
+      url: testkube-enterprise-api.{{.Release.Namespace}}.svc.cluster.local:8089
       tls:
         enabled: false
       existingSecret:
