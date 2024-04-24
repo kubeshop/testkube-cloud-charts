@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.59.0](https://img.shields.io/badge/Version-1.59.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.60.0](https://img.shields.io/badge/Version-1.60.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.39.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.40.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.29.22 |
 | file://../testkube-worker-service | testkube-worker-service | 1.29.2 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
@@ -59,9 +59,9 @@ A Helm chart for Testkube Enterprise
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key. |
 | global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
-| global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
-| global.enterpriseLicenseKey | string | `""` | Enterprise License key |
-| global.enterpriseLicenseSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
+| global.enterpriseLicenseFile | string | `""` | This field is deprecated. To specify an offline license file use `enterpriseLicenseSecretRef`. |
+| global.enterpriseLicenseKey | string | `""` | Specifies the enterprise license key, when using an offline license use `enterpriseLicenseSecretRef` and leave this field empty. |
+| global.enterpriseLicenseSecretRef | string | `""` | Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file. |
 | global.enterpriseMode | bool | `true` | Run Testkube in enterprise mode (enables enterprise features) |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |

@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.39.0](https://img.shields.io/badge/Version-1.39.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.4](https://img.shields.io/badge/AppVersion-1.10.4-informational?style=flat-square)
+![Version: 1.40.0](https://img.shields.io/badge/Version-1.40.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.4](https://img.shields.io/badge/AppVersion-1.10.4-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -109,9 +109,9 @@ A Helm chart for Testkube Cloud API
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key. |
 | global.dex.issuer | string | `""` | Global Dex issuer url |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
-| global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
-| global.enterpriseLicenseKey | string | `""` | Enterprise License key |
-| global.enterpriseLicenseSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
+| global.enterpriseLicenseFile | string | `""` | This field is deprecated. To specify an offline license file use `enterpriseLicenseSecretRef`. |
+| global.enterpriseLicenseKey | string | `""` | Specifies the enterprise license key, when using an offline license use `enterpriseLicenseSecretRef` and leave this field empty. |
+| global.enterpriseLicenseSecretRef | string | `""` | Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file. |
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
