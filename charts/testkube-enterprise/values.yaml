@@ -44,6 +44,14 @@ global:
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: ""
+
+sharedSecretGenerator:
+  enabled: false
+  securityContext: {}
+  resources: {}
+  ## Optional settings
+  # image:
+
 minio:
   # -- Toggle whether to install MinIO
   enabled: true
@@ -128,6 +136,7 @@ minio:
     tls:
       # -- TLS secret name which contains the certificate files
       tlsSecret: testkube-enterprise-minio-tls
+
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -245,6 +254,7 @@ testkube-cloud-api:
     enabled: false
   ingress:
     className: nginx
+
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
@@ -259,6 +269,10 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
+
+testkube-agent:
+  enabled: false
+
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
@@ -373,6 +387,7 @@ nats:
     merge: {}
     # -- Patch additional fields to the container
     patch: []
+
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -409,6 +424,7 @@ mongodb:
   containerSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  runAsGroup: 1000670000
+
 ## Dex chart parameters
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
