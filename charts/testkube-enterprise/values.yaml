@@ -9,14 +9,10 @@ global:
   enterpriseOfflineAccess: false
   # -- Specifies the enterprise license key, when using an offline license use `enterpriseLicenseSecretRef` and leave this field empty.
   enterpriseLicenseKey: ""
-  # -- Base64-encoded Enterprise License file
   # -- This field is deprecated. To specify an offline license file use `enterpriseLicenseSecretRef`.
   enterpriseLicenseFile: ""
-  # -- Enterprise License file secret ref (secret should contain a file called 'license.lic')
   # -- Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file.
   enterpriseLicenseSecretRef: ""
-  # -- Toggle whether to enable offline license activation in Enterprise mode
-  enterpriseOfflineAccess: false
   # -- Domain under which to create Ingress rules
   domain: ""
   # -- UI subdomain which get prepended to the domain
@@ -402,13 +398,7 @@ mongodb:
   # registry: docker.io
   # repository: bitnami/mongodb
   # tag: 7.0.3-debian-11-r6
-
-  repository: zcube/bitnami-compat-mongodb
-  tag: 6.0.5
   # digest: ""
-  extraEnvVars:
-    - name: EXPERIMENTAL_DOCKER_DESKTOP_FORCE_QEMU
-      value: "1"
 
   # -- MongoDB fullname override
   fullnameOverride: "testkube-enterprise-mongodb"
@@ -468,7 +458,6 @@ dex:
   # inCluster: true
   # -- Inline Dex configuration which will be used to generate the config secret.
   configTemplate:
-    enablePasswordDB: true
     # -- If provided, it will completely override the default config (`base` and `additionalConfig`). This is useful if you want to use a custom config file.
     customConfig: ""
     base: |
