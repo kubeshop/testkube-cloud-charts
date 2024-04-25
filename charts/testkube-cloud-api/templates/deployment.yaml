@@ -323,15 +323,15 @@ spec:
             {{- end }}
             {{- if or .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
             - name: "BOOTSTRAP_CONFIG_ENABLED"
-              value: "{{ or .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg}}"
+              value: "true"
             - name: "BOOTSTRAP_CONFIG_PATH"
               value: "/app/config/config"
             {{- end}}
-            {{- if or .Values.api.features.bootstrapAgentTokenSecretRef }}
-            - name: {{ regexReplaceAll "-" .Values.api.features.bootstrapAgentTokenSecretRef "_" | upper | quote }}
+            {{- with .Values.api.features.bootstrapAgentTokenSecretRef }}
+            - name: {{ snakecase . | upper | quote }}
               valueFrom:
-                secretRef: 
-                  name: {{ .Values.api.features.bootstrapAgentTokenSecretRef | quote}}
+                secretKeyRef: 
+                  name: {{ . | quote}}
                   key: agent-token
             {{- end}}
             {{- range $k, $v := .Values.additionalEnv }}
@@ -371,7 +371,7 @@ spec:
               port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled }}
+          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
           volumeMounts:
             {{- if .Values.api.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
@@ -395,7 +395,7 @@ spec:
               readOnly: true
               subPath: ca.crt
             {{- end }}
-            {{- if .Values.api.features.bootstrapConfig.enabled }}
+            {{- if or .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
             - mountPath: /app/config
               name: testkube-config
             {{- end }}
@@ -412,7 +412,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled }}
+      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
       volumes:
         {{- if .Values.api.tls.serveHTTPS }}
         - name: serving-cert
@@ -430,7 +430,7 @@ spec:
             secretName: {{ .Values.global.customCaSecretRef }}
             defaultMode: 420
         {{- end }}
-        {{- if .Values.api.features.bootstrapConfig.enabled }}
+        {{- if or .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
         - configMap:
             defaultMode: 420
             name: {{ include "testkube-cloud-api.fullname" . }}-config
