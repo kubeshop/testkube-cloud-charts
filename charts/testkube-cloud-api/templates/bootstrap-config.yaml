@@ -1,5 +1,5 @@
-# Advanced config for multiple orgs/envs/users. Do not use together with bootstrapOrg/Env
 {{- if .Values.api.features.bootstrapConfig.enabled }}
+# Advanced config for multiple orgs/envs/users. Do not use together with bootstrapOrg/Env
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,8 +11,8 @@ data:
     {{- .Values.api.features.bootstrapConfig.config | toYaml | nindent 4  }}
 {{- end }}
 
+{{- if and .Values.api.features.bootstrapOrg (not .Values.api.features.bootstrapConfig.enabled) }}
 # Simplified config for single org/env. Do not user together with bootstrapConfig
-{{- if .Values.api.features.bootstrapOrg }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,6 +21,8 @@ metadata:
     {{- include "testkube-cloud-api.labels" . | nindent 4 }}
 data:
   config: |-
+    default_organizations:
+      - {{ .Values.api.features.bootstrapOrg }}
     organizations:
       - name: {{ .Values.api.features.bootstrapOrg }}
         {{- if .Values.api.features.bootstrapAdmin }}
@@ -29,8 +31,10 @@ data:
             role: admin
         {{- end }}
         {{- if .Values.api.features.bootstrapEnv }}
+        default_environments:
+          - {{.Values.api.features.bootstrapEnv}}
         environments:
-          - name: default
+          - name: {{.Values.api.features.bootstrapEnv}}
             {{- if .Values.api.features.bootstrapAdmin }}
             members:
               - email: {{.Values.api.features.bootstrapAdmin}}
@@ -39,7 +43,7 @@ data:
             {{- if .Values.api.features.bootstrapAgentTokenSecretRef }}
             agentToken:
               valueFrom:
-                envRef: {{ regexReplaceAll "-" .Values.api.features.bootstrapAgentTokenSecretRef "_" | upper | quote }}
+                envRef: {{ snakecase .Values.api.features.bootstrapAgentTokenSecretRef | upper | quote }}
             {{- end }}
         {{- end }}
 {{- end }}
