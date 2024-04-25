@@ -38,8 +38,8 @@ testkube-cloud-api:
     inviteMode: email
     features:
       disablePersonalOrgs: true
-      bootstrapOrg: "far-strider"
-      bootstrapEnv: "default"
+      bootstrapOrg: "demo"
+      bootstrapEnv: "my-first-environment"
       bootstrapAgentTokenSecretRef: "testkube-default-agent-token"
       bootstrapAdmin: "admin@example.com"
     migrations:
