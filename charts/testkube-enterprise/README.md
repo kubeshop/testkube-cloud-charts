@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.60.0](https://img.shields.io/badge/Version-1.60.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.61.0](https://img.shields.io/badge/Version-1.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,13 +16,14 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.40.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.29.22 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.41.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.30.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.29.2 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
 | https://charts.bitnami.com/bitnami | mongodb | 14.3.0 |
 | https://charts.dexidp.io | dex | 0.15.3 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 1.17.28 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 1.1.5 |
 
 ## Values
@@ -132,6 +133,10 @@ A Helm chart for Testkube Enterprise
 | nats.reloader.env | object | `{}` | Map of additional env vars |
 | nats.reloader.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.reloader.patch | list | `[]` | Patch additional fields to the container |
+| sharedSecretGenerator.enabled | bool | `false` |  |
+| sharedSecretGenerator.resources | object | `{}` |  |
+| sharedSecretGenerator.securityContext | object | `{}` |  |
+| testkube-agent.enabled | bool | `false` |  |
 | testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |
