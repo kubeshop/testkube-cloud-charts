@@ -26,6 +26,7 @@ data:
     organizations:
       - name: {{ .Values.api.features.bootstrapOrg }}
         {{- if .Values.api.features.bootstrapAdmin }}
+        default_role: admin
         members:
           - email: {{.Values.api.features.bootstrapAdmin}}
             role: admin
@@ -36,6 +37,7 @@ data:
         environments:
           - name: {{.Values.api.features.bootstrapEnv}}
             {{- if .Values.api.features.bootstrapAdmin }}
+            default_role: admin
             members:
               - email: {{.Values.api.features.bootstrapAdmin}}
                 role: admin
