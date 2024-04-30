@@ -24,7 +24,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: latest
+    tag: 1.10.5
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
     OAUTH_ENABLED: true
@@ -94,7 +94,7 @@ testkube-cloud-ui:
     rootRoute: "http://testkube-enterprise-ui.{{.Release.Namespace}}.svc.cluster.local:8080"
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: latest
+    tag: 1.9.4
 
 testkube-agent:
   enabled: true
