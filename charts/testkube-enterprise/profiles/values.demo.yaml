@@ -4,7 +4,7 @@ global:
   # -- Run Testkube in enterprise mode (enables enterprise features)
   enterpriseMode: true
   # -- Enterprise License key
-  enterpriseLicenseKey: "key/eyJhY2NvdW50Ijp7ImlkIjoiN2I2NmFlNmUtMDdkMy00NTJlLWExOTAtODJmYWZiYzcxZjEzIn0sInByb2R1Y3QiOnsiaWQiOiJiYjk1ODZkZi1iMDkzLTRmZWQtYjQ4ZS0zMTUzMGNmZmU0NzAifSwicG9saWN5Ijp7ImlkIjoiMTJlYzU2NjItNzNhMS00NzlkLTkxOTQtNWRlNzQxMmY1NGFjIiwiZHVyYXRpb24iOjE1NTUyMDAwfSwidXNlciI6bnVsbCwibGljZW5zZSI6eyJpZCI6ImQ1YjZjNjJhLWI5NTctNGFjZS05OThjLTdlNTdjYzEyNTU5MSIsImNyZWF0ZWQiOiIyMDI0LTA0LTEyVDEyOjIwOjU0LjA0MFoiLCJleHBpcnkiOiIyMDI0LTEwLTEwVDA3OjU1OjI0LjA0MFoifX0=.prQZHmiz4Tm_Z24DNz-ZBIp_9W3rTZ7plcYzCSoC6f9zSoJ-Z0jP0ein1V_J_IOoRw6RjdbXjtVYIIGMR8MYQQqj9B0rb8xilv15hp-4F_lTe1om2RJQehKmAPvTxwsOcxQYu7KrVA_gQzEp9DPjJf-gyVEEYEk1B0HmOyQ9wTPFgnm_JYofV7WlSm15289Vmh3UjfF7f1J8JginqiSRM9Daq4mmaaEIymx1p7vZ-K5Fc4UZ9fXsQDntHUmBqRxT5Vu-9dgv3HoAiT-9wOUNghQuQBzOOW4tzZc0Hc8fiXDHeWX-L5B7tvpJOozn5X-gl6iT9oDFKKSwqJArNe1nHg==" # REQUIRED TO SET
+  enterpriseLicenseKey: ""
   # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
   certificateProvider: ""
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
