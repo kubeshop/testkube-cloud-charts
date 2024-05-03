@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.35.1](https://img.shields.io/badge/Version-1.35.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.15](https://img.shields.io/badge/AppVersion-1.9.15-informational?style=flat-square)
+![Version: 1.42.1](https://img.shields.io/badge/Version-1.42.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.5](https://img.shields.io/badge/AppVersion-1.10.5-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -42,6 +42,9 @@ A Helm chart for Testkube Cloud API
 | api.debug.enableHttp2Logs | bool | `false` | Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2 |
 | api.email.fromEmail | string | `"noreply@kubeshop.io"` |  |
 | api.email.fromName | string | `"Testkube Cloud"` |  |
+| api.features.bootstrapConfig.config | object | `{}` |  |
+| api.features.bootstrapConfig.enabled | bool | `false` |  |
+| api.features.disablePersonalOrgs | bool | `false` |  |
 | api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
 | api.migrations.ttlSecondsAfterFinished | int | `90` | TTL for the migration job |
@@ -95,6 +98,7 @@ A Helm chart for Testkube Cloud API
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| demoOrganizationId | string | `""` | Api can allow to set demo organization id where user who don't have Kubernetes cluster can play around |
 | externalSecrets.clusterSecretStoreName | string | `"secret-store"` |  |
 | externalSecrets.enabled | bool | `false` |  |
 | externalSecrets.keys | object | `{}` |  |
@@ -102,11 +106,12 @@ A Helm chart for Testkube Cloud API
 | fullnameOverride | string | `""` |  |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
+| global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key. |
 | global.dex.issuer | string | `""` | Global Dex issuer url |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
-| global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
-| global.enterpriseLicenseKey | string | `""` | Enterprise License key |
-| global.enterpriseLicenseSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
+| global.enterpriseLicenseFile | string | `""` | This field is deprecated. To specify an offline license file use `enterpriseLicenseSecretRef`. |
+| global.enterpriseLicenseKey | string | `""` | Specifies the enterprise license key, when using an offline license use `enterpriseLicenseSecretRef` and leave this field empty. |
+| global.enterpriseLicenseSecretRef | string | `""` | Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file. |
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
@@ -123,7 +128,7 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.9.15"` |  |
+| image.tag | string | `"1.10.5"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |

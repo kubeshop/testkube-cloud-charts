@@ -341,9 +341,26 @@ spec:
               value: "{{ .Values.api.minio.certSecret.baseMountPath }}/{{ .Values.api.minio.certSecret.caFile }}"
             {{- end }}
             {{- end }}
+            {{- if .Values.api.features.disablePersonalOrgs }}
+            - name: "DISABLE_PERSONAL_ORGS"
+              value: "{{.Values.api.features.disablePersonalOrgs }}"
+            {{- end }}
+            {{- if or .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
+            - name: "BOOTSTRAP_CONFIG_ENABLED"
+              value: "true"
+            - name: "BOOTSTRAP_CONFIG_PATH"
+              value: "/app/config/config"
+            {{- end}}
+            {{- with .Values.api.features.bootstrapAgentTokenSecretRef }}
+            - name: {{ snakecase . | upper | quote }}
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ . | quote}}
+                  key: agent-token
+            {{- end}}
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
-              value: "{{ $v }}"
+              value: {{ tpl ($v | toString) $ | quote }}
             {{- end}}
             {{- if .Values.externalSecrets.enabled -}}
             {{- range $key, $value := .Values.externalSecrets.keys }}
@@ -378,7 +395,7 @@ spec:
               port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef }}
+          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
           volumeMounts:
             {{- if .Values.api.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
@@ -402,6 +419,10 @@ spec:
               readOnly: true
               subPath: ca.crt
             {{- end }}
+            {{- if or .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
+            - mountPath: /app/config
+              name: testkube-config
+            {{- end }}
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -415,7 +436,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef }}
+      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
       volumes:
         {{- if .Values.api.tls.serveHTTPS }}
         - name: serving-cert
@@ -432,5 +453,11 @@ spec:
           secret:
             secretName: {{ .Values.global.customCaSecretRef }}
             defaultMode: 420
+        {{- end }}
+        {{- if or .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
+        - configMap:
+            defaultMode: 420
+            name: {{ include "testkube-cloud-api.fullname" . }}-config
+          name: testkube-config
         {{- end }}
       {{- end }}

@@ -1,0 +1,29 @@
+{{- if .Values.sharedSecretGenerator.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: testkube-secret-generator
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
+spec:
+  template:
+    spec:
+      securityContext: {{- toYaml .Values.sharedSecretGenerator.securityContext | nindent 8 }}
+      serviceAccountName: testkube-secret-generator
+      restartPolicy: Never
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ default "registry.gitlab.com/gitlab-org/build/cng/kubectl" .Values.sharedSecretGenerator.image }}
+          command: ['/bin/bash', '/scripts/generate-secrets']
+          volumeMounts:
+            - name: scripts
+              mountPath: /scripts
+          resources:
+            {{- toYaml .Values.sharedSecretGenerator.resources | nindent 12 }}
+      volumes:
+      - name: scripts
+        configMap:
+          name: testkube-secret-generator
+{{- end }}

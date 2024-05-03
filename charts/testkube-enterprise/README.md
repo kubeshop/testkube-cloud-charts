@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.55.5](https://img.shields.io/badge/Version-1.55.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.63.5](https://img.shields.io/badge/Version-1.63.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,13 +16,14 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.35.1 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.29.4 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.42.1 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.30.4 |
 | file://../testkube-worker-service | testkube-worker-service | 1.29.2 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
 | https://charts.bitnami.com/bitnami | mongodb | 14.3.0 |
 | https://charts.dexidp.io | dex | 0.15.3 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 1.17.28 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 1.1.5 |
 
 ## Values
@@ -56,11 +57,12 @@ A Helm chart for Testkube Enterprise
 | dex.storage | object | `{}` | Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage) |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
+| global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key. |
 | global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
-| global.enterpriseLicenseFile | string | `""` | Base64-encoded Enterprise License file |
-| global.enterpriseLicenseKey | string | `""` | Enterprise License key |
-| global.enterpriseLicenseSecretRef | string | `""` | Enterprise License file secret ref (secret should contain a file called 'license.lic') |
+| global.enterpriseLicenseFile | string | `""` | This field is deprecated. To specify an offline license file use `enterpriseLicenseSecretRef`. |
+| global.enterpriseLicenseKey | string | `""` | Specifies the enterprise license key, when using an offline license use `enterpriseLicenseSecretRef` and leave this field empty. |
+| global.enterpriseLicenseSecretRef | string | `""` | Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file. |
 | global.enterpriseMode | bool | `true` | Run Testkube in enterprise mode (enables enterprise features) |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
@@ -131,6 +133,10 @@ A Helm chart for Testkube Enterprise
 | nats.reloader.env | object | `{}` | Map of additional env vars |
 | nats.reloader.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.reloader.patch | list | `[]` | Patch additional fields to the container |
+| sharedSecretGenerator.enabled | bool | `false` |  |
+| sharedSecretGenerator.resources | object | `{}` |  |
+| sharedSecretGenerator.securityContext | object | `{}` |  |
+| testkube-agent.enabled | bool | `false` |  |
 | testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |
@@ -180,12 +186,12 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.9.15"` |  |
+| testkube-cloud-api.image.tag | string | `"1.10.5"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"1.7.16"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.9.5"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |

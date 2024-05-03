@@ -46,6 +46,12 @@ global:
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: ""
+sharedSecretGenerator:
+  enabled: false
+  securityContext: {}
+  resources: {}
+  ## Optional settings
+  # image:
 minio:
   # -- Toggle whether to install MinIO
   enabled: true
@@ -135,7 +141,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.9.15
+    tag: 1.10.5
   ai:
     secretRef: ""
   api:
@@ -279,14 +285,15 @@ testkube-cloud-ui:
     authStrategy: ""
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: 1.7.16
+    tag: 1.9.5
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
-
+testkube-agent:
+  enabled: false
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
