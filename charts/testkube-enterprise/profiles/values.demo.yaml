@@ -35,13 +35,12 @@ testkube-cloud-api:
     OAUTH_JWKS_URL: http://testkube-enterprise-dex.{{.Release.Namespace}}.svc.cluster.local:5556/keys
   api:
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
-    inviteMode: email
+    inviteMode: auto-accept
     features:
       disablePersonalOrgs: true
       bootstrapOrg: "demo"
       bootstrapEnv: "my-first-environment"
       bootstrapAgentTokenSecretRef: "testkube-default-agent-token"
-      bootstrapAdmin: "admin@example.com"
     migrations:
       enabled: false
     mongo:

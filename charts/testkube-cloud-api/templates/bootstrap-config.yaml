@@ -24,28 +24,28 @@ data:
     default_organizations:
       - {{ .Values.api.features.bootstrapOrg }}
     organizations:
-      - name: {{ .Values.api.features.bootstrapOrg }}
-        {{- if .Values.api.features.bootstrapAdmin }}
-        default_role: admin
-        members:
-          - email: {{.Values.api.features.bootstrapAdmin}}
-            role: admin
-        {{- end }}
+      - name: {{ .Values.api.features.bootstrapOrg }}        
         {{- if .Values.api.features.bootstrapEnv }}
         default_environments:
           - {{.Values.api.features.bootstrapEnv}}
         environments:
           - name: {{.Values.api.features.bootstrapEnv}}
-            {{- if .Values.api.features.bootstrapAdmin }}
-            default_role: admin
-            members:
-              - email: {{.Values.api.features.bootstrapAdmin}}
-                role: admin
-            {{- end }}
             {{- if .Values.api.features.bootstrapAgentTokenSecretRef }}
             agentToken:
               valueFrom:
                 envRef: {{ snakecase .Values.api.features.bootstrapAgentTokenSecretRef | upper | quote }}
             {{- end }}
+            default_role: admin
+            {{- if .Values.api.features.bootstrapAdmin }}
+            members:
+              - email: {{.Values.api.features.bootstrapAdmin}}
+                role: admin
+            {{- end }}
+        {{- end }}
+        default_role: admin
+        {{- if .Values.api.features.bootstrapAdmin }}
+        members:
+          - email: {{.Values.api.features.bootstrapAdmin}}
+            role: admin
         {{- end }}
 {{- end }}
