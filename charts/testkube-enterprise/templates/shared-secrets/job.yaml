@@ -15,7 +15,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ default "registry.gitlab.com/gitlab-org/build/cng/kubectl" .Values.sharedSecretGenerator.image }}
+          image: {{ include "testkube-shared-secrets.image" . }}
           command: ['/bin/bash', '/scripts/generate-secrets']
           volumeMounts:
             - name: scripts

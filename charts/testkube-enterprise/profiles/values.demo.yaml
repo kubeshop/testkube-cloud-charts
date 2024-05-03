@@ -17,8 +17,7 @@ sharedSecretGenerator:
   enabled: true
   securityContext: {}
   resources: {}
-  ## Optional settings
-  # image:
+  image: {}
 
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
