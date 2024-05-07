@@ -1,0 +1,129 @@
+name: Release Helm charts - main
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/chart-release.yaml'
+      - 'charts/testkube-cloud-api/**'
+      - '!charts/testkube-cloud-api/.argocd-**'
+      - 'charts/testkube-cloud-ui/**'
+      - '!charts/testkube-cloud-ui/.argocd-**'
+      - 'charts/testkube-enterprise/**'
+      - '!charts/testkube-enterprise/.argocd-**'
+      - '!charts/testkube-enterprise/Chart.lock'
+      - 'charts/testkube-logs-service/templates/**'
+      - '!charts/testkube-logs-service/.argocd-**'
+      - 'charts/testkube-worker-service/**'
+      - '!charts/testkube-worker-service/.argocd-**'
+
+jobs:
+  release-helm-charts:
+    name: Release Helm charts
+    runs-on: ubuntu-22.04
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "testkube-cloud-ci-bot"
+          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.0
+
+      - name: Update Helm chart with changes files
+        run: |
+          echo "Testkube Helm charts diff"
+          changed_files=$(git --no-pager diff HEAD~1 charts)
+
+          if [[ "$changed_files" == *"testkube-cloud-api/"* ]]; then
+            echo "Changes detected in files within the 'testkube-cloud-api' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-cloud-api --strategy minor
+          else
+            echo "No changes detected in the specified directories."
+          fi
+
+          if [[ "$changed_files" == *"testkube-cloud-ui/"* ]]; then
+            echo "Changes detected in files within the 'testkube-cloud-ui' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-cloud-ui --strategy minor
+          else
+            echo "No changes detected in the specified directories."
+          fi
+
+          if [[ "$changed_files" == *"testkube-logs-service/"* ]]; then
+            echo "Changes detected in files within the 'testkube-logs-service' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-logs-service --strategy minor
+          else
+            echo "No changes detected in the specified directories."
+          fi
+
+          if [[ "$changed_files" == *"testkube-worker-service/"* ]]; then
+            echo "Changes detected in files within the 'testkube-worker-service' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-worker-service --strategy minor
+          else
+            echo "No changes detected in the specified directories."
+          fi
+
+          tk_api_chart_version=$(./scripts/update.sh -c testkube-cloud-api --print-chart-version)
+          echo "New testkube-cloud-api chart version is $tk_api_chart_version" >> $GITHUB_STEP_SUMMARY
+          echo "API_CHART_VERSION=$tk_api_chart_version" >> $GITHUB_ENV
+
+          tk_ui_chart_version=$(./scripts/update.sh -c testkube-cloud-ui --print-chart-version)
+          echo "New testkube-cloud-ui chart version is $tk_ui_chart_version" >> $GITHUB_STEP_SUMMARY
+          echo "UI_CHART_VERSION=$tk_ui_chart_version" >> $GITHUB_ENV
+
+      - name: Sync & Update Testkube Enterprise Helm chart
+        run: |
+          bump_strategy="minor"
+          changed=$(git status --porcelain charts/testkube-enterprise | wc -l)
+          if [ $changed -gt 0 ]; then
+            bump_strategy="none"
+          fi
+
+          echo "Syncing subchart versions in testkube-enterprise Helm chart"
+          ./scripts/sync.sh
+
+          echo "Updating testkube-enterprise Helm chart version with bump strategy: $bump_strategy"
+          ./scripts/update.sh -c testkube-enterprise -s $bump_strategy --verbose
+
+          enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
+          echo "ENTERPRISE_CHART_VERSION=$enterprise_chart_version" >> $GITHUB_ENV
+
+          echo -e "### Testkube Enterprise Helm chart diff" >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
+          git --no-pager diff charts/testkube-enterprise >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Check for changes in generated Helm docs models (helm-docs)
+        run: |
+          ./scripts/helm-docs.sh
+
+      - name: Commit & push changes
+        run: |
+          git status
+          git add **/*Chart.yaml **/*README.md charts/testkube-enterprise/Chart.lock charts/testkube-enterprise/local-values.yaml **/*values.yaml
+          git commit -m "updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}"
+          git push --force
+
+      - name: Installing repositories
+        run: |
+          helm repo add dex https://charts.dexidp.io
+          helm repo add nats https://nats-io.github.io/k8s/helm/charts/
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add kubeshop https://kubeshop.github.io/helm-charts
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        with:
+          charts_dir: charts
+        env:
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CR_SKIP_EXISTING: true
