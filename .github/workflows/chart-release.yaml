@@ -1,4 +1,4 @@
-name: Update Helm charts - main
+name: Release Helm charts
 
 on:
   workflow_dispatch:
