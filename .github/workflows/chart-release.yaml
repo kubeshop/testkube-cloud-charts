@@ -1,22 +1,7 @@
-name: Release Helm charts - main
+name: Update Helm charts - main
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/chart-release.yaml'
-      - 'charts/testkube-cloud-api/**'
-      - '!charts/testkube-cloud-api/.argocd-**'
-      - 'charts/testkube-cloud-ui/**'
-      - '!charts/testkube-cloud-ui/.argocd-**'
-      - 'charts/testkube-enterprise/**'
-      - '!charts/testkube-enterprise/.argocd-**'
-      - '!charts/testkube-enterprise/Chart.lock'
-      - 'charts/testkube-logs-service/templates/**'
-      - '!charts/testkube-logs-service/.argocd-**'
-      - 'charts/testkube-worker-service/**'
-      - '!charts/testkube-worker-service/.argocd-**'
+  workflow_dispatch:
 
 jobs:
   release-helm-charts:
