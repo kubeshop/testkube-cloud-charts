@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.63.5](https://img.shields.io/badge/Version-1.63.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.64.0](https://img.shields.io/badge/Version-1.64.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,9 +16,9 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.42.1 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.30.4 |
-| file://../testkube-worker-service | testkube-worker-service | 1.29.2 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.43.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.31.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.30.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
 | https://charts.bitnami.com/bitnami | mongodb | 14.3.0 |
@@ -68,6 +68,7 @@ A Helm chart for Testkube Enterprise
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui |
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
+| global.logsSubdomain | string | `"logs"` | UI subdomain which get prepended to the domain |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
@@ -146,6 +147,14 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.debug.enableGrpcServerLogs | bool | `false` | Toggle whether to enable gRPC server logs |
 | testkube-cloud-api.api.debug.enableHttp2Logs | bool | `false` | Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2 |
 | testkube-cloud-api.api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
+| testkube-cloud-api.api.logServer | object | `{"caFile":"","certFile":"","enabled":false,"grpcAddress":"testkube-enterprise-logs-service:8089","keyFile":"","secure":"false","skipVerify":"true"}` | External log server connection configuration |
+| testkube-cloud-api.api.logServer.caFile | string | `""` | TLS CA certificate file |
+| testkube-cloud-api.api.logServer.certFile | string | `""` | TLS certificate file |
+| testkube-cloud-api.api.logServer.enabled | bool | `false` | Toggle whether to enable external log server connection |
+| testkube-cloud-api.api.logServer.grpcAddress | string | `"testkube-enterprise-logs-service:8089"` | Log server address |
+| testkube-cloud-api.api.logServer.keyFile | string | `""` | TLS key file |
+| testkube-cloud-api.api.logServer.secure | string | `"false"` | Log server TLS configuration secure connection |
+| testkube-cloud-api.api.logServer.skipVerify | string | `"true"` | Log server TLS configuration skip Verify |
 | testkube-cloud-api.api.migrations.enabled | bool | `false` | Toggle whether to run database migrations |
 | testkube-cloud-api.api.migrations.image.repository | string | `"testkubeenterprise/testkube-enterprise-api-migrations"` | Migrations image repository |
 | testkube-cloud-api.api.migrations.ttlSecondsAfterFinished | int | `90` |  |
@@ -164,10 +173,13 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.minio.region | string | `""` | S3 region |
 | testkube-cloud-api.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` | MinIO secret access key |
 | testkube-cloud-api.api.minio.secure | bool | `true` | Should be set to `true` if MinIO is exposed through HTTPS |
+| testkube-cloud-api.api.minio.signing.hostname | string | `""` | Hostname for the presigned PUT URL |
+| testkube-cloud-api.api.minio.signing.secure | bool | `false` | Toggle should the presigned URL use HTTPS |
 | testkube-cloud-api.api.minio.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
 | testkube-cloud-api.api.minio.token | string | `""` | MinIO token |
 | testkube-cloud-api.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
 | testkube-cloud-api.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
+| testkube-cloud-api.api.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | testkube-cloud-api.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
 | testkube-cloud-api.api.oauth.clientId | string | `"testkube-enterprise"` | OAuth Client ID for the configured static client in Dex |
 | testkube-cloud-api.api.oauth.clientSecret | string | `"QWkVzs3nct6HZM5hxsPzwaZtq"` | OAuth Client ID for the configured static client in Dex |
@@ -195,15 +207,38 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
+| testkube-logs-service.additionalEnv.USE_MINIO | bool | `true` |  |
+| testkube-logs-service.api.minio.accessKeyId | string | `"testkube-enterprise"` | MinIO access key id |
+| testkube-logs-service.api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
+| testkube-logs-service.api.minio.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
+| testkube-logs-service.api.minio.certSecret.certFile | string | `"cert.crt"` | Path to client certificate file |
+| testkube-logs-service.api.minio.certSecret.enabled | bool | `false` | Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt) |
+| testkube-logs-service.api.minio.certSecret.keyFile | string | `"cert.key"` | Path to client certificate key file |
+| testkube-logs-service.api.minio.certSecret.name | string | `"storage-client-cert"` | Name of the storage client certificate secret |
+| testkube-logs-service.api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
+| testkube-logs-service.api.minio.endpoint | string | `"{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}"` | Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service |
+| testkube-logs-service.api.minio.expirationPeriod | int | `0` | Expiration period in days |
+| testkube-logs-service.api.minio.mountCACertificate | bool | `false` | If enabled, will also require a CA certificate to be provided |
+| testkube-logs-service.api.minio.region | string | `""` | S3 region |
+| testkube-logs-service.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` | MinIO secret access key |
+| testkube-logs-service.api.minio.secure | bool | `true` | Should be set to `true` if MinIO is exposed through HTTPS |
+| testkube-logs-service.api.minio.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
+| testkube-logs-service.api.minio.token | string | `""` | MinIO token |
 | testkube-logs-service.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
 | testkube-logs-service.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
 | testkube-logs-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
+| testkube-logs-service.api.tls.agentPort | int | `8443` | Agent gRPCS port |
+| testkube-logs-service.api.tls.apiPort | int | `9443` | API HTTPS port |
+| testkube-logs-service.api.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
 | testkube-logs-service.api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
-| testkube-logs-service.api.tls.serveHTTPS | bool | `false` |  |
-| testkube-logs-service.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
-| testkube-logs-service.enabled | bool | `false` |  |
+| testkube-logs-service.api.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | certificate path |
+| testkube-logs-service.api.tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | certificate key path |
+| testkube-logs-service.api.tls.serveHTTPS | bool | `false` | Toggle should the Application terminate TLS instead of the Ingress |
+| testkube-logs-service.enabled | bool | `true` |  |
 | testkube-logs-service.fullnameOverride | string | `"testkube-enterprise-logs-service"` |  |
-| testkube-logs-service.image.tag | string | `"v0-20240214-145418"` |  |
+| testkube-logs-service.grpcIngress.enabled | bool | `true` |  |
+| testkube-logs-service.grpcIngress.host | string | `""` |  |
+| testkube-logs-service.image.tag | string | `"v0-20240315-134446"` |  |
 | testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.repository | string | `"testkubeenterprise/testkube-enterprise-worker-service"` |  |

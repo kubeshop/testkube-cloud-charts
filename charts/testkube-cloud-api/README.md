@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.42.1](https://img.shields.io/badge/Version-1.42.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.5](https://img.shields.io/badge/AppVersion-1.10.5-informational?style=flat-square)
+![Version: 1.43.0](https://img.shields.io/badge/Version-1.43.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.5](https://img.shields.io/badge/AppVersion-1.10.5-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -46,6 +46,16 @@ A Helm chart for Testkube Cloud API
 | api.features.bootstrapConfig.enabled | bool | `false` |  |
 | api.features.disablePersonalOrgs | bool | `false` |  |
 | api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
+| api.logServer | object | `{"caFile":"","certFile":"","enabled":false,"grpcAddress":"testkube-logs-service:8089","host":"","keyFile":"","port":"443","secure":"false","skipVerify":"true"}` | External log server connection configuration |
+| api.logServer.caFile | string | `""` | TLS CA certificate file |
+| api.logServer.certFile | string | `""` | TLS certificate file |
+| api.logServer.enabled | bool | `false` | Toggle whether to enable external log server connection |
+| api.logServer.grpcAddress | string | `"testkube-logs-service:8089"` | Log server address for internal communication |
+| api.logServer.host | string | `""` | Log server address for external communication (example `logs.testkube.xyz`) |
+| api.logServer.keyFile | string | `""` | TLS key file |
+| api.logServer.port | string | `"443"` | Log server port for external communication |
+| api.logServer.secure | string | `"false"` | Log server TLS configuration secure connection |
+| api.logServer.skipVerify | string | `"true"` | Log server TLS configuration skip Verify |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
 | api.migrations.ttlSecondsAfterFinished | int | `90` | TTL for the migration job |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
@@ -63,11 +73,14 @@ A Helm chart for Testkube Cloud API
 | api.minio.region | string | `""` | S3 region |
 | api.minio.secretAccessKey | string | `""` | MinIO secret access key |
 | api.minio.secure | bool | `false` | Should be set to `true` if MinIO is behind |
+| api.minio.signing.hostname | string | `""` | Hostname for the presigned PUT URL |
+| api.minio.signing.secure | bool | `false` | Toggle should the presigned URL use HTTPS |
 | api.minio.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
 | api.minio.token | string | `""` | MinIO token |
 | api.mongo.database | string | `"testkubecloud"` | Mongo database name |
 | api.mongo.dsn | string | `"mongodb://mongodb.testkube.svc.cluster.local:27017"` | if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string |
 | api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
+| api.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | api.nats.uri | string | `"nats://nats.messaging.svc.cluster.local:4222"` | NATS URI |
 | api.oauth.allowedExternalRedirectURIs | string | `""` | Comma-separated list of allowed external redirect URIs (example: `https://cloud.testkube.xyz,http://localhost:3000`) |
 | api.oauth.cliClientId | string | `""` | if oauth.secretRef is empty (""), then oauth.clientId field will be used for the OAuth cli client ID |
@@ -115,6 +128,7 @@ A Helm chart for Testkube Cloud API
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
+| global.grpcLogsSubdomain | string | `"logs"` | gRPC Logs subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |

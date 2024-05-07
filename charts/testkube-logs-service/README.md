@@ -1,6 +1,6 @@
 # testkube-logs-service
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Testkube log Service
 
@@ -41,8 +41,8 @@ A Helm chart for Testkube log Service
 | api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | api.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | certificate path |
 | api.tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | certificate key path |
-| api.tls.serveHTTPS | bool | `true` | Toggle should the Application terminate TLS instead of the Ingress |
-| api.tls.tlsSecret | string | `"testkube-cloud-api-tls"` | TLS secret name which contains the certificate files TODO(emil): conflicts with agent ingress |
+| api.tls.serveHTTPS | bool | `false` | Toggle should the Application terminate TLS instead of the Ingress |
+| api.tls.tlsSecret | string | `"testkube-cloud-api-tls"` |  |
 | autoscaling.enabled | bool | `false` | Toggle whether to enable Horizontal Pod Autoscaler |
 | autoscaling.maxReplicas | int | `10` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -56,11 +56,11 @@ A Helm chart for Testkube log Service
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
-| global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
+| global.logsSubdomain | string | `"logs"` | logs gRPC subdomain which get prepended to the default domain when host is not set |
 | grpcIngress.annotations | object | `{}` | Additional annotations to add to the gRPC Ingress resource |
-| grpcIngress.enabled | bool | `true` | Toggle whether to enable the gRPC API Ingress |
+| grpcIngress.enabled | bool | `false` | Toggle whether to enable the gRPC API Ingress |
 | grpcIngress.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
 | grpcIngress.labels | object | `{}` | Additional labels to add to the gRPC Ingress resource |
 | grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
@@ -70,6 +70,7 @@ A Helm chart for Testkube log Service
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
+| ingress.tlsSecretName | string | `"testkube-logs-service-api-tls"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
@@ -87,7 +88,7 @@ A Helm chart for Testkube log Service
 | service.annotations | object | `{}` | Additional annotations to add to the Service resource |
 | service.grpcPort | int | `8089` | GRPC service port (when TLS disabled) |
 | service.labels | object | `{}` | Additional labels to add to the Service resource |
-| service.metricsPort | int | `9000` | Metrics port |
+| service.metricsPort | int | `9100` | Metrics port |
 | service.type | string | `"ClusterIP"` | Service type |
 | serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |
 | serviceAccount.create | bool | `false` | Toggle whether to create a ServiceAccount resource |

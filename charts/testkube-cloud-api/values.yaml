@@ -231,7 +231,6 @@ api:
     redirectUri: ""
     # -- Comma-separated list of allowed external redirect URIs (example: `https://cloud.testkube.xyz,http://localhost:3000`)
     allowedExternalRedirectURIs: ""
-
   # -- External log server connection configuration
   logServer:
     # -- Toggle whether to enable external log server connection
@@ -252,7 +251,6 @@ api:
     host: ""
     # -- Log server port for external communication
     port: "443"
-
 externalSecrets:
   enabled: false
   refreshInterval: 5m

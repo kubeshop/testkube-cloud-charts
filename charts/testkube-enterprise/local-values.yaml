@@ -239,7 +239,6 @@ testkube-cloud-api:
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
     # -- External log server connection configuration
-
   prometheus:
     enabled: false
   ingress:
@@ -261,7 +260,6 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
-
 testkube-logs-service:
   enabled: true
   fullnameOverride: testkube-enterprise-logs-service
@@ -299,7 +297,6 @@ testkube-logs-service:
       secure: false
   additionalEnv:
     USE_MINIO: true
-
   image:
     tag: v0-20240214-145418
 testkube-worker-service:
