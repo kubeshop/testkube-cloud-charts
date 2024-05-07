@@ -1,4 +1,4 @@
-name: Release Helm charts - main on dispatch
+name: Update application version on dispatch
 
 on:
   repository_dispatch:
@@ -74,17 +74,3 @@ jobs:
           git commit -m "updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}"
           git push --force
 
-      - name: Installing repositories
-        run: |
-          helm repo add dex https://charts.dexidp.io
-          helm repo add nats https://nats-io.github.io/k8s/helm/charts/
-          helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo add kubeshop https://kubeshop.github.io/helm-charts
-
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
-        with:
-          charts_dir: charts
-        env:
-          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CR_SKIP_EXISTING: true
