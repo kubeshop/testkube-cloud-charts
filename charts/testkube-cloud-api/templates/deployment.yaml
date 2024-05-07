@@ -184,6 +184,8 @@ spec:
               {{- end }}
             - name: API_MONGO_DB
               value: {{ .Values.api.mongo.database }}
+            - name: API_MONGO_READ_PREFERENCE
+              value: {{ .Values.api.mongo.readPreference }}
               {{- if .Values.api.oauth.secretRef }}
             - name: OAUTH_CLIENT_ID
               valueFrom:
@@ -254,6 +256,12 @@ spec:
               value: {{ if .Values.api.agent.host }}{{ .Values.api.agent.host }}{{ else }}{{ .Values.global.grpcApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: AGENT_PORT
               value: "{{ .Values.api.agent.port }}"
+            - name: LOG_SERVICE_ENABLED
+              value: {{ if .Values.api.logServer.enabled }}"true"{{ else }}"false"{{ end }}
+            - name: LOG_SERVICE_HOST
+              value: {{ if .Values.api.logServer.host }}{{ .Values.api.logServer.host }}{{ else }}{{ .Values.global.grpcLogsSubdomain }}.{{ .Values.global.domain }}{{ end }}
+            - name: LOG_SERVICE_PORT
+              value: "{{ .Values.api.logServer.port }}"
             - name: API_ADDRESS
               value: {{ if .Values.api.apiAddress }}{{ .Values.api.apiAddress }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: DASHBOARD_ADDRESS
@@ -305,8 +313,24 @@ spec:
               {{- else }}
               value: "{{ .Values.api.minio.token }}"
               {{- end }}
+            - name: LOG_SERVER_GRPC_ADDRESS
+              value: "{{ .Values.api.logServer.grpcAddress }}"
+            - name: LOG_SERVER_SECURE
+              value: "{{ .Values.api.logServer.secure }}"
+            - name: LOG_SERVER_SKIP_VERIFY
+              value: "{{ .Values.api.logServer.skipVerify }}"
+            - name: LOG_SERVER_CERT_FILE
+              value: "{{ .Values.api.logServer.certFile }}"
+            - name: LOG_SERVER_KEY_FILE
+              value: "{{ .Values.api.logServer.keyFile }}"
+            - name: LOG_SERVER_CA_FILE
+              value: "{{ .Values.api.logServer.caFile }}"
             - name: "MINIO_SKIP_VERIFY"
               value: "{{ .Values.api.minio.skipVerify }}"
+            - name: "AGENT_STORAGE_HOSTNAME"
+              value: "{{ .Values.api.minio.signing.hostname }}"
+            - name: "AGENT_STORAGE_SSL"
+              value: "{{ .Values.api.minio.signing.secure }}"
             {{- if .Values.api.minio.certSecret.enabled }}
             - name: "MINIO_CERT_FILE"
               value: "{{ .Values.api.minio.certSecret.baseMountPath }}/{{ .Values.api.minio.certSecret.certFile }}"

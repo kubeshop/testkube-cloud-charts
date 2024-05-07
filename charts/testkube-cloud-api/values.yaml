@@ -21,6 +21,8 @@ global:
   restApiSubdomain: "api"
   # -- gRPC API subdomain which get prepended to the domain
   grpcApiSubdomain: "agent"
+  # -- gRPC Logs subdomain which get prepended to the domain
+  grpcLogsSubdomain: "logs"
   # -- Websocket API subdomain which get prepended to the domain
   websocketApiSubdomain: "websockets"
   # -- Storage API subdomain which get prepended to the domain
@@ -153,6 +155,8 @@ api:
     dsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
     # -- Mongo database name
     database: "testkubecloud"
+    # -- Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest)
+    readPreference: secondaryPreferred
   nats:
     # -- NATS URI
     uri: "nats://nats.messaging.svc.cluster.local:4222"
@@ -177,6 +181,12 @@ api:
     skipVerify: false
     # -- If enabled, will also require a CA certificate to be provided
     mountCACertificate: false
+    # Configure this if you want a different hostname for the presigned PUT URL (used by Agents to upload artifacts)
+    signing:
+      # -- Hostname for the presigned PUT URL
+      hostname: ""
+      # -- Toggle should the presigned URL use HTTPS
+      secure: false
     certSecret:
       # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
       enabled: false
@@ -221,6 +231,28 @@ api:
     redirectUri: ""
     # -- Comma-separated list of allowed external redirect URIs (example: `https://cloud.testkube.xyz,http://localhost:3000`)
     allowedExternalRedirectURIs: ""
+
+  # -- External log server connection configuration
+  logServer:
+    # -- Toggle whether to enable external log server connection
+    enabled: false
+    # -- Log server address for internal communication
+    grpcAddress: "testkube-logs-service:8089"
+    # -- Log server TLS configuration secure connection
+    secure: "false"
+    # -- Log server TLS configuration skip Verify
+    skipVerify: "true"
+    # -- TLS certificate file
+    certFile: ""
+    # -- TLS key file
+    keyFile: ""
+    # -- TLS CA certificate file
+    caFile: ""
+    # -- Log server address for external communication (example `logs.testkube.xyz`)
+    host: ""
+    # -- Log server port for external communication
+    port: "443"
+
 externalSecrets:
   enabled: false
   refreshInterval: 5m

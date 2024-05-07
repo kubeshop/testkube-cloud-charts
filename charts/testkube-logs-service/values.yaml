@@ -5,8 +5,8 @@
 global:
   # -- Domain under which to create Ingress rules
   domain: ""
-  # -- gRPC API subdomain which get prepended to the domain
-  grpcApiSubdomain: "agent"
+  # -- logs gRPC subdomain which get prepended to the default domain when host is not set
+  logsSubdomain: "logs"
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
   certManager:
@@ -37,10 +37,11 @@ ingress:
     nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
   # -- Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed)
   className: nginx
+  tlsSecretName: testkube-logs-service-api-tls
 
 grpcIngress:
   # -- Toggle whether to enable the gRPC API Ingress
-  enabled: true
+  enabled: false
   # -- Additional labels to add to the gRPC Ingress resource
   labels: {}
   # -- Additional annotations to add to the gRPC Ingress resource
@@ -75,14 +76,13 @@ api:
     # -- Should be set to `true` if MinIO is behind
     secure: false
   tls:
+    tlsSecret: testkube-cloud-api-tls
     # -- Toggle should the Application terminate TLS instead of the Ingress
-    serveHTTPS: true
+    serveHTTPS: false
     # -- API HTTPS port
     apiPort: 9443
     # -- Agent gRPCS port
     agentPort: 8443
-    # -- TLS secret name which contains the certificate files TODO(emil): conflicts with agent ingress
-    tlsSecret: testkube-cloud-api-tls
     certManager:
       # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
       issuerKind: ClusterIssuer
@@ -146,7 +146,7 @@ service:
   # -- Additional labels to add to the Service resource
   labels: {}
   # -- Metrics port
-  metricsPort: 9000
+  metricsPort: 9100
   # -- GRPC service port (when TLS disabled)
   grpcPort: 8089
 

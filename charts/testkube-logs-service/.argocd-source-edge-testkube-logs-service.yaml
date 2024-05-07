@@ -1,7 +1,7 @@
 helm:
   parameters:
   - name: image.name
-    value: kubeshop/testkube-worker-service
+    value: kubeshop/testkube-logs-service
     forcestring: true
   - name: image.tag
     value: 1.10.5-dev-45f32f0e

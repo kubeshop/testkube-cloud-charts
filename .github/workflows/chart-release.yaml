@@ -6,19 +6,17 @@ on:
       - main
     paths:
       - '.github/workflows/chart-release.yaml'
-      - 'charts/testkube-cloud-api/templates/**'
-      - 'charts/testkube-cloud-api/Chart.yaml'
-      - 'charts/testkube-cloud-api/values.yaml'
-      - 'charts/testkube-cloud-api/README.md'
-      - 'charts/testkube-cloud-ui/templates/**'
-      - 'charts/testkube-cloud-ui/Chart.yaml'
-      - 'charts/testkube-cloud-ui/values.yaml'
-      - 'charts/testkube-cloud-ui/README.md'
-      - 'charts/testkube-enterprise/templates/**'
-      - 'charts/testkube-enterprise/Chart.yaml'
-      - 'charts/testkube-enterprise/values.yaml'
-      - 'charts/testkube-enterprise/local-values.yaml'
-      - 'charts/testkube-enterprise/README.md'
+      - 'charts/testkube-cloud-api/**'
+      - '!charts/testkube-cloud-api/.argocd-**'
+      - 'charts/testkube-cloud-ui/**'
+      - '!charts/testkube-cloud-ui/.argocd-**'
+      - 'charts/testkube-enterprise/**'
+      - '!charts/testkube-enterprise/.argocd-**'
+      - '!charts/testkube-enterprise/Chart.lock'
+      - 'charts/testkube-logs-service/templates/**'
+      - '!charts/testkube-logs-service/.argocd-**'
+      - 'charts/testkube-worker-service/**'
+      - '!charts/testkube-worker-service/.argocd-**'
 
 jobs:
   release-helm-charts:
@@ -56,6 +54,20 @@ jobs:
           if [[ "$changed_files" == *"testkube-cloud-ui/"* ]]; then
             echo "Changes detected in files within the 'testkube-cloud-ui' directory. Updating the chart minor version."
             ./scripts/update.sh -c testkube-cloud-ui --strategy minor
+          else
+            echo "No changes detected in the specified directories."
+          fi
+
+          if [[ "$changed_files" == *"testkube-logs-service/"* ]]; then
+            echo "Changes detected in files within the 'testkube-logs-service' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-logs-service --strategy minor
+          else
+            echo "No changes detected in the specified directories."
+          fi
+
+          if [[ "$changed_files" == *"testkube-worker-service/"* ]]; then
+            echo "Changes detected in files within the 'testkube-worker-service' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-worker-service --strategy minor
           else
             echo "No changes detected in the specified directories."
           fi
