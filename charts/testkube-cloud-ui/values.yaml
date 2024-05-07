@@ -51,6 +51,7 @@ ui:
     writeKey: ""
   # -- Force disabling telemetry on the UI
   disableTelemetry: false
+additionalEnv: {}
 externalSecrets:
   enabled: false
   refreshInterval: 5m
