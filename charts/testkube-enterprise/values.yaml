@@ -141,7 +141,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.10.5
+    tag: 1.10.6
   ai:
     secretRef: ""
   api:
