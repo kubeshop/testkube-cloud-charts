@@ -276,6 +276,10 @@ testkube-cloud-api:
     enabled: false
   ingress:
     className: nginx
+  ##Test Connection pod
+  testConnection:
+    enabled: false
+
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
@@ -369,6 +373,10 @@ testkube-logs-service:
         caFile: "ca.crt"
   image:
     tag: v0-20240315-134446
+  ##Test Connection pod
+  testConnection:
+    enabled: false
+
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
