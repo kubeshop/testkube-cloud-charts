@@ -352,3 +352,7 @@ prometheus:
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
+##Test Connection pod
+testConnection:
+  enabled: false
