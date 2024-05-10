@@ -34,8 +34,8 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: {{ include "testkube-api.image" . }}
+          imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           env:
             - name: DEMO_ORGANIZATION_ID
               value: "{{ .Values.demoOrganizationId }}"

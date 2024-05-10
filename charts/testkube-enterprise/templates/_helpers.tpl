@@ -26,3 +26,26 @@ Get Storage Ingress host
 {{- .Values.minio.customIngress.host }}
 {{- end }}
 {{- end }}
+
+{{/*
+Define API image
+*/}}
+{{- define "testkube-shared-secrets.image" -}}
+{{- $registryName := default "docker.io" .Values.sharedSecretGenerator.image.registry -}}
+{{- $repositoryName := default "bitnami/kubectl" .Values.sharedSecretGenerator.image.repository -}}
+{{- $tag := default "1.28.2" .Values.sharedSecretGenerator.image.tag | toString -}}
+{{- $separator := ":" -}}
+{{- if .Values.sharedSecretGenerator.image.digest }}
+    {{- $separator = "@" -}}
+    {{- $tag = .Values.sharedSecretGenerator.image.digest | toString -}}
+{{- end -}}
+{{- if .Values.global }}
+    {{- if .Values.global.imageRegistry }}
+        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
+    {{- else -}}
+        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- end -}}
+{{- else -}}
+    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+{{- end -}}
+{{- end -}}

@@ -110,6 +110,29 @@ Get Websockets Ingress host
 {{- end }}
 
 {{/*
+Define API image
+*/}}
+{{- define "testkube-api.image" -}}
+{{- $registryName := default "docker.io" .Values.image.registry -}}
+{{- $repositoryName := .Values.image.repository -}}
+{{- $tag := default .Values.image.tag .Chart.AppVersion | toString -}}
+{{- $separator := ":" -}}
+{{- if .Values.image.digest }}
+    {{- $separator = "@" -}}
+    {{- $tag = .Values.image.digest | toString -}}
+{{- end -}}
+{{- if .Values.global }}
+    {{- if .Values.global.imageRegistry }}
+        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
+    {{- else -}}
+        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- end -}}
+{{- else -}}
+    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 THIS IS A HACK TO WORKAROUND LET'S ENCRYPT RATE LIMITS
 */}}
 {{- define "testkube-cloud-api.ingress.hackHost" -}}
