@@ -4,7 +4,7 @@ global:
   # -- Run Testkube in enterprise mode (enables enterprise features)
   enterpriseMode: true
   # -- Enterprise License key
-  enterpriseLicenseKey: ""
+  enterpriseLicenseKey: "0A97EB-693056-663905-0F56FF-82FF49-V3"
   # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
   certificateProvider: ""
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
@@ -23,7 +23,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.10.5
+    tag: 1.10.7
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
     OAUTH_ENABLED: true
@@ -123,6 +123,8 @@ testkube-worker-service:
     minio:
       endpoint: "testkube-enterprise-minio:9000"
       credsSecretRef: testkube-minio-credentials
+      accessKeyId: "testkube-enterprise"
+      secretAccessKey: "t3stkub3-3nt3rpr1s3"
       secure: false
   additionalEnv:
     USE_MINIO: true
@@ -149,6 +151,11 @@ nats:
     enabled: true
   natsBox:
     enabled: true
+    container:
+      image:
+        repository: natsio/nats-box #used to fix this: https://github.com/nats-io/nats-box/pull/66
+        tag: 0.14.3-nonroot
+
   promExporter:
     enabled: true
 
@@ -169,8 +176,13 @@ mongodb:
       cpu: 150m
       memory: 128Mi
   tolerations: []
-  podSecurityContext: {}
-  containerSecurityContext: {}
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001010000
+    runAsNonRoot: true
+
 
 ## See https://github.com/dexidp/helm-charts
 dex:
@@ -229,3 +241,10 @@ minio:
   enabled: true
   auth:
     existingSecret: testkube-minio-credentials
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001010000
+    runAsNonRoot: true
+
