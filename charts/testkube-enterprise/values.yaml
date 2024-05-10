@@ -46,13 +46,11 @@ global:
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: ""
-
 sharedSecretGenerator:
   enabled: false
   securityContext: {}
   resources: {}
   image: {}
-
 minio:
   # -- Toggle whether to install MinIO
   enabled: true

@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.31.1](https://img.shields.io/badge/Version-1.31.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.6](https://img.shields.io/badge/AppVersion-1.9.6-informational?style=flat-square)
+![Version: 1.32.0](https://img.shields.io/badge/Version-1.32.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.6](https://img.shields.io/badge/AppVersion-1.9.6-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -20,6 +20,7 @@ A Helm chart for Testkube Cloud UI
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| additionalEnv | object | `{}` |  |
 | affinity | object | `{}` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `10` |  |

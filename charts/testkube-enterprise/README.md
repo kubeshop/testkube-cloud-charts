@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.67.0](https://img.shields.io/badge/Version-1.67.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.68.0](https://img.shields.io/badge/Version-1.68.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,9 +16,9 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.45.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.31.1 |
-| file://../testkube-worker-service | testkube-worker-service | 1.30.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.46.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.32.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.31.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
 | https://charts.bitnami.com/bitnami | mongodb | 14.3.0 |
@@ -135,6 +135,7 @@ A Helm chart for Testkube Enterprise
 | nats.reloader.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.reloader.patch | list | `[]` | Patch additional fields to the container |
 | sharedSecretGenerator.enabled | bool | `false` |  |
+| sharedSecretGenerator.image | object | `{}` |  |
 | sharedSecretGenerator.resources | object | `{}` |  |
 | sharedSecretGenerator.securityContext | object | `{}` |  |
 | testkube-agent.enabled | bool | `false` |  |
