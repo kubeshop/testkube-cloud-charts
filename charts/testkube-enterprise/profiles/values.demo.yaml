@@ -4,7 +4,7 @@ global:
   # -- Run Testkube in enterprise mode (enables enterprise features)
   enterpriseMode: true
   # -- Enterprise License key
-  enterpriseLicenseKey: "0A97EB-693056-663905-0F56FF-82FF49-V3"
+  enterpriseLicenseKey: ""
   # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
   certificateProvider: ""
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
