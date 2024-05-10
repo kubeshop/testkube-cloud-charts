@@ -279,7 +279,6 @@ testkube-cloud-api:
   ##Test Connection pod
   testConnection:
     enabled: false
-
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
@@ -376,7 +375,6 @@ testkube-logs-service:
   ##Test Connection pod
   testConnection:
     enabled: false
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:

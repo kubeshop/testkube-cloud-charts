@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.69.1](https://img.shields.io/badge/Version-1.69.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.70.0](https://img.shields.io/badge/Version-1.70.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,8 +16,8 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.47.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.32.1 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.48.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.33.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.31.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
@@ -202,6 +202,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.image.tag | string | `"1.10.8"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
+| testkube-cloud-api.testConnection.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.tag | string | `"1.9.7"` |  |
@@ -240,6 +241,7 @@ A Helm chart for Testkube Enterprise
 | testkube-logs-service.grpcIngress.enabled | bool | `true` |  |
 | testkube-logs-service.grpcIngress.host | string | `""` |  |
 | testkube-logs-service.image.tag | string | `"v0-20240315-134446"` |  |
+| testkube-logs-service.testConnection.enabled | bool | `false` |  |
 | testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.repository | string | `"testkubeenterprise/testkube-enterprise-worker-service"` |  |

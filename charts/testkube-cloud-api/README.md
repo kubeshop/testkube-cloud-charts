@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.47.0](https://img.shields.io/badge/Version-1.47.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.8](https://img.shields.io/badge/AppVersion-1.10.8-informational?style=flat-square)
+![Version: 1.48.0](https://img.shields.io/badge/Version-1.48.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.8](https://img.shields.io/badge/AppVersion-1.10.8-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -179,6 +179,7 @@ A Helm chart for Testkube Cloud API
 | serviceAccount.create | bool | `false` | Toggle whether to create a ServiceAccount resource |
 | serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| testConnection.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | websocketsIngress.enabled | bool | `true` | Toggle whether to enable the Websocket API Ingress |
