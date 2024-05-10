@@ -32,6 +32,7 @@ testkube-cloud-api:
     OAUTH_TOKEN_URL: http://testkube-enterprise-dex.{{.Release.Namespace}}.svc.cluster.local:5556/token
     OAUTH_USER_INFO_URL: http://testkube-enterprise-dex.{{.Release.Namespace}}.svc.cluster.local:5556/userinfo
     OAUTH_JWKS_URL: http://testkube-enterprise-dex.{{.Release.Namespace}}.svc.cluster.local:5556/keys
+    DEX_SIGNUP_ORIGIN: http://testkube-enterprise-dex.{{.Release.Namespace}}.svc.cluster.local:5557
   api:
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
     inviteMode: auto-accept
