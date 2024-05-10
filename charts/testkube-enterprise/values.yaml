@@ -284,7 +284,7 @@ testkube-cloud-ui:
     authStrategy: ""
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: 1.9.5
+    tag: 1.9.6
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
