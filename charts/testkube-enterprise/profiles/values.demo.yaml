@@ -175,8 +175,8 @@ mongodb:
       cpu: 150m
       memory: 128Mi
   tolerations: []
-  podSecurityContext: { }
-  containerSecurityContext: { }
+  podSecurityContext: {}
+  containerSecurityContext: {}
 ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
 #  podSecurityContext:
 #    enabled: false

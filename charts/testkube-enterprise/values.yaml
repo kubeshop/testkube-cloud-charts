@@ -115,6 +115,13 @@ minio:
       drop: ["ALL"]
     seccompProfile:
       type: "RuntimeDefault"
+  ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
+  #  podSecurityContext:
+  #    enabled: false
+  #  containerSecurityContext:
+  #    enabled: true
+  #    runAsUser: 1001010000
+  #    runAsNonRoot: true
   metrics:
     serviceMonitor:
       # -- Toggle whether to create ServiceMonitor resource for scraping metrics using Prometheus Operator
@@ -429,6 +436,11 @@ nats:
     # tag: 0.14.1
     # pullPolicy:
     # registry:
+    ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
+    #    container:
+    #      image:
+    #        repository: natsio/nats-box #used to fix this: https://github.com/nats-io/nats-box/pull/66
+    #        tag: 0.14.3-nonroot
 
     # -- Map of additional env vars
     env: {}
@@ -483,14 +495,16 @@ mongodb:
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
   podSecurityContext: {}
-  # For OpenShift clusters use the following settings:
-  #  fsGroup: 1000670000
-
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
   containerSecurityContext: {}
-  # For OpenShift clusters use the following settings:
-  #  runAsGroup: 1000670000
+  ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
+  #  podSecurityContext:
+  #    enabled: false
+  #  containerSecurityContext:
+  #    enabled: true
+  #    runAsUser: 1001010000
+  #    runAsNonRoot: true
 ## Dex chart parameters
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
