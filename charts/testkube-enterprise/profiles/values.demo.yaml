@@ -123,8 +123,6 @@ testkube-worker-service:
     minio:
       endpoint: "testkube-enterprise-minio:9000"
       credsSecretRef: testkube-minio-credentials
-      accessKeyId: "testkube-enterprise"
-      secretAccessKey: "t3stkub3-3nt3rpr1s3"
       secure: false
   additionalEnv:
     USE_MINIO: true
@@ -177,6 +175,8 @@ mongodb:
       cpu: 150m
       memory: 128Mi
   tolerations: []
+  podSecurityContext: { }
+  containerSecurityContext: { }
 ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
 #  podSecurityContext:
 #    enabled: false
