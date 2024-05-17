@@ -1,9 +1,9 @@
-name: Dispatch events based on develop push
+name: Dispatch events based on main push
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   dispatch:
