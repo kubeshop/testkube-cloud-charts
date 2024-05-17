@@ -115,7 +115,7 @@ Define API image
 {{- define "testkube-api.image" -}}
 {{- $registryName := default "docker.io" .Values.image.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
-{{- $tag := default .Values.image.tag .Chart.AppVersion | toString -}}
+{{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
 {{- $separator := ":" -}}
 {{- if .Values.image.digest }}
     {{- $separator = "@" -}}
