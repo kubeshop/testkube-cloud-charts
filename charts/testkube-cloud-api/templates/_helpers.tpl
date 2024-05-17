@@ -131,10 +131,3 @@ Define API image
     {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 {{- end -}}
-
-{{/*
-THIS IS A HACK TO WORKAROUND LET'S ENCRYPT RATE LIMITS
-*/}}
-{{- define "testkube-cloud-api.ingress.hackHost" -}}
-{{- printf "health.%s" .Values.global.domain }}
-{{- end }}
