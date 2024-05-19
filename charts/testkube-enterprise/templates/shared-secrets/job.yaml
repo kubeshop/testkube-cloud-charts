@@ -20,6 +20,7 @@ spec:
           volumeMounts:
             - name: scripts
               mountPath: /scripts
+          securityContext: {{- toYaml .Values.sharedSecretGenerator.containerSecurityContext | nindent 12 }}
           resources:
             {{- toYaml .Values.sharedSecretGenerator.resources | nindent 12 }}
       volumes:
