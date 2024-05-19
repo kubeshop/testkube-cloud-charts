@@ -22,7 +22,7 @@ sharedSecretGenerator:
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
-    repository: testkubeenterprise/testkube-enterprise-api
+    repository: kubeshop/testkube-enterprise-api
     tag: 1.10.5
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
@@ -94,7 +94,7 @@ testkube-cloud-ui:
   additionalEnv:
     REACT_APP_ENABLE_SIGNUP: "true"
   image:
-    repository: testkubeenterprise/testkube-enterprise-ui
+    repository: kubeshop/testkube-enterprise-ui
     tag: 1.9.4
 
 testkube-agent:
@@ -115,7 +115,7 @@ testkube-agent:
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
-    repository: testkubeenterprise/testkube-enterprise-worker-service
+    repository: kubeshop/testkube-enterprise-worker-service
     tag: 1.9.4
   api:
     nats:

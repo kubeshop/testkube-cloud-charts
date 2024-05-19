@@ -48,11 +48,23 @@ global:
     issuer: ""
   # -- Common labels which will be added to all resources
   labels: &common_labels {}
+
+# Testkube requires a variety of secrets to operate.
+# Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
+  # -- Toggle whether to enable the Shared Secret Generator Job
   enabled: false
+  # -- Pod Security Context for the Shared Secret Generator Job
   securityContext: {}
+  # -- Container Security Context for the Shared Secret Generator Job
+  containerSecurityContext: {}
+  # -- Resources for the Shared Secret Generator Job
   resources: {}
-  image: {}
+  image:
+    registry: docker.io
+    repository: bitnami/kubectl
+    tag: 1.28.2
+
 minio:
   # -- Toggle whether to install MinIO
   enabled: true
@@ -150,7 +162,7 @@ minio:
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
-    repository: testkubeenterprise/testkube-enterprise-api
+    repository: kubeshop/testkube-enterprise-api
     tag: 1.10.13
   ai:
     secretRef: ""
@@ -201,7 +213,7 @@ testkube-cloud-api:
       useHelmHooks: false
       image:
         # -- Migrations image repository
-        repository: testkubeenterprise/testkube-enterprise-api-migrations
+        repository: kubeshop/testkube-enterprise-api-migrations
         # -- clean up finished jobs
       ttlSecondsAfterFinished: 90
     mongo:
@@ -297,7 +309,7 @@ testkube-cloud-ui:
     # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector
     authStrategy: ""
   image:
-    repository: testkubeenterprise/testkube-enterprise-ui
+    repository: kubeshop/testkube-enterprise-ui
     tag: 1.10.0
   ingress:
     # -- Name of the TLS secret which contains the certificate files
@@ -313,7 +325,7 @@ testkube-agent:
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
-    repository: testkubeenterprise/testkube-enterprise-worker-service
+    repository: kubeshop/testkube-enterprise-worker-service
     tag: 1.9.4
   api:
     nats:
