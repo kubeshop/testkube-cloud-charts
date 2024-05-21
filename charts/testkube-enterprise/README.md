@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.76.1](https://img.shields.io/badge/Version-1.76.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.77.0](https://img.shields.io/badge/Version-1.77.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -17,7 +17,7 @@ A Helm chart for Testkube Enterprise
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.50.2 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.36.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.37.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.31.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
@@ -242,6 +242,9 @@ A Helm chart for Testkube Enterprise
 | testkube-logs-service.grpcIngress.host | string | `""` |  |
 | testkube-logs-service.image.tag | string | `"v0-20240315-134446"` |  |
 | testkube-logs-service.testConnection.enabled | bool | `false` |  |
+| testkube-worker-service.additionalEnv.USE_MINIO | bool | `true` |  |
+| testkube-worker-service.api.minio.accessKeyId | string | `"testkube-enterprise"` |  |
+| testkube-worker-service.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` |  |
 | testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.repository | string | `"testkubeenterprise/testkube-enterprise-worker-service"` |  |
