@@ -313,6 +313,7 @@ testkube-worker-service:
     minio:
       accessKeyId: *minioRootUser
       secretAccessKey: *minioRootPassword
+      endpoint: testkube-enterprise-minio.testkube-enterprise.svc.cluster.local:9000
   additionalEnv:
     USE_MINIO: true
 testkube-logs-service:
