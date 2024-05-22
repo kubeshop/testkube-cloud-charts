@@ -30,6 +30,7 @@ A Helm chart for Testkube Enterprise
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| dex.commonLabels | object | `{}` | Common labels which will be added to all Dex resources |
 | dex.configSecret.create | bool | `false` | This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret. |
 | dex.configSecret.createCustom | bool | `true` | Toggle whether to create a custom config secret for Dex (templates/dex-config-secret.yaml). If set to `true`, the `configTemplate` field will be used to generate the config secret. |
 | dex.configSecret.name | string | `"testkube-enterprise-dex-config"` | The name of the secret to mount as configuration in the pod. Set `createCustom: false` and edit the secret manually to use a custom config secret. |
@@ -68,6 +69,7 @@ A Helm chart for Testkube Enterprise
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui |
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
+| global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.logsSubdomain | string | `"logs"` | UI subdomain which get prepended to the domain |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
@@ -79,6 +81,7 @@ A Helm chart for Testkube Enterprise
 | minio.auth.existingSecret | string | `""` | Use existing secret for credentials details (`auth.rootUser` and `auth.rootPassword` will be ignored and picked up from this secret). The secret has to contain the keys `root-user` and `root-password`) |
 | minio.auth.rootPassword | string | `"t3stkub3-3nt3rpr1s3"` | MinIO root password (secret key) |
 | minio.auth.rootUser | string | `"testkube-enterprise"` | MinIO root username (access key) |
+| minio.commonLabels | object | `{}` | Common labels which will be added to all MinIO resources |
 | minio.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
 | minio.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | minio.containerSecurityContext.enabled | bool | `true` | Toggle whether to render the container security context |
@@ -107,6 +110,7 @@ A Helm chart for Testkube Enterprise
 | minio.tls.existingSecret | string | `""` | Name of an existing secret holding the certificate information |
 | minio.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | mongodb.auth.enabled | bool | `false` | Toggle whether to enable MongoDB authentication |
+| mongodb.commonLabels | object | `{}` | Common labels which will be added to all MongoDB resources |
 | mongodb.containerSecurityContext | object | `{}` | Security Context for MongoDB container |
 | mongodb.enabled | bool | `true` | Toggle whether to install MongoDB |
 | mongodb.fullnameOverride | string | `"testkube-enterprise-mongodb"` | MongoDB fullname override |
@@ -115,12 +119,13 @@ A Helm chart for Testkube Enterprise
 | mongodb.tolerations | list | `[]` |  |
 | nats.config.cluster.enabled | bool | `true` | Enable cluster mode (HA) |
 | nats.config.cluster.replicas | int | `3` | NATS cluster replicas |
-| nats.config.jetstream.enabled | bool | `true` |  |
+| nats.config.jetstream.enabled | bool | `true` | Toggle whether to enable JetStream (Testkube requires JetStream to be enabled, so this setting should always be on) |
 | nats.config.jetstream.fileStore.pvc.enabled | bool | `true` |  |
 | nats.config.jetstream.fileStore.pvc.size | string | `"10Gi"` |  |
 | nats.config.jetstream.fileStore.pvc.storageClassName | string | `nil` |  |
 | nats.config.merge | object | `{"cluster":{"name":"<< testkube-enterprise >>"},"max_payload":"<< 8MB >>"}` | Merge additional fields to nats config https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.config.patch | list | `[]` | Patch additional fields to nats config |
+| nats.enabled | bool | `true` | Toggle whether to install NATS |
 | nats.fullnameOverride | string | `"testkube-enterprise-nats"` |  |
 | nats.natsBox.enabled | bool | `true` |  |
 | nats.natsBox.env | object | `{}` | Map of additional env vars |
@@ -138,7 +143,7 @@ A Helm chart for Testkube Enterprise
 | sharedSecretGenerator.image | object | `{}` |  |
 | sharedSecretGenerator.resources | object | `{}` |  |
 | sharedSecretGenerator.securityContext | object | `{}` |  |
-| testkube-agent.enabled | bool | `false` |  |
+| testkube-agent.enabled | bool | `false` | Toggle whether to install & connect Testkube Agent in the same cluster |
 | testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |
@@ -209,7 +214,8 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
-| testkube-logs-service.additionalEnv.USE_MINIO | bool | `true` |  |
+| testkube-logs-service.additionalEnv | object | `{"USE_MINIO":true}` | Additional env vars to set |
+| testkube-logs-service.additionalEnv.USE_MINIO | bool | `true` | Enterprise should use MinIO for storage and this envvar should not be changed |
 | testkube-logs-service.api.minio.accessKeyId | string | `"testkube-enterprise"` | MinIO access key id |
 | testkube-logs-service.api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
 | testkube-logs-service.api.minio.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
@@ -236,9 +242,9 @@ A Helm chart for Testkube Enterprise
 | testkube-logs-service.api.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | certificate path |
 | testkube-logs-service.api.tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | certificate key path |
 | testkube-logs-service.api.tls.serveHTTPS | bool | `false` | Toggle should the Application terminate TLS instead of the Ingress |
-| testkube-logs-service.enabled | bool | `true` |  |
+| testkube-logs-service.enabled | bool | `true` | Toggle whether to install Testkube Logs Service |
 | testkube-logs-service.fullnameOverride | string | `"testkube-enterprise-logs-service"` |  |
-| testkube-logs-service.grpcIngress.enabled | bool | `true` |  |
+| testkube-logs-service.grpcIngress.enabled | bool | `true` | Toggle whether to enable gRPC Ingress for Logs Service |
 | testkube-logs-service.grpcIngress.host | string | `""` |  |
 | testkube-logs-service.image.tag | string | `"v0-20240315-134446"` |  |
 | testkube-logs-service.testConnection.enabled | bool | `false` |  |
@@ -252,4 +258,4 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.image.tag | string | `"1.9.4"` |  |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+Autogenerated from chart metadata using [helm-docs v1.13.1](https://github.com/norwoodj/helm-docs/releases/v1.13.1)

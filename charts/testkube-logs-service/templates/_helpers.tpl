@@ -38,6 +38,9 @@ app.kubernetes.io/version: {{ .Values.image.tag | quote }}
 app.kubernetes.io/component: backend
 {{ include "testkube-log-service.selectorLabels" . }}
 {{ include "testkube-log-service.baseLabels" . }}
+{{- if .Values.global.labels }}
+{{ toYaml .Values.global.labels }}
+{{- end }}
 {{- end }}
 
 {{/*

@@ -40,6 +40,9 @@ app.kubernetes.io/version: {{ .Values.image.tag | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/component: frontend
 app.kubernetes.io/part-of: testkube-{{ if .Values.global.enterpriseMode }}enterprise{{ else }}cloud{{ end }}
+{{- if .Values.global.labels }}
+{{ toYaml .Values.global.labels }}
+{{- end }}
 {{- end }}
 
 {{/*
