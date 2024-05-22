@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.78.0](https://img.shields.io/badge/Version-1.78.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.79.0](https://img.shields.io/badge/Version-1.79.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -244,7 +244,7 @@ A Helm chart for Testkube Enterprise
 | testkube-logs-service.testConnection.enabled | bool | `false` |  |
 | testkube-worker-service.additionalEnv.USE_MINIO | bool | `true` |  |
 | testkube-worker-service.api.minio.accessKeyId | string | `"testkube-enterprise"` |  |
-| testkube-worker-service.api.minio.endpoint | string | `"testkube-enterprise-minio.testkube-enterprise.svc.cluster.local:9000"` |  |
+| testkube-worker-service.api.minio.endpoint | string | `"testkube-enterprise-minio:9000"` |  |
 | testkube-worker-service.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` |  |
 | testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
