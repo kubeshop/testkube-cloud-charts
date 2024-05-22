@@ -42,7 +42,11 @@ global:
   dex:
     # -- Global Dex issuer url
     issuer: ""
+  # -- Common labels which will be added to all resources
+  labels: {}
+
 replicaCount: 1
+
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
