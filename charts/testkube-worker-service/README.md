@@ -43,6 +43,7 @@ A Helm chart for Testkube Worker Service
 | externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
 | global.imagePullSecrets | list | `[]` |  |
+| global.labels | object | `{}` | Common labels which will be added to all resources |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-worker-service"` |  |
 | image.tag | string | `"1.9.4"` |  |

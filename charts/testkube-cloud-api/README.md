@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.51.0](https://img.shields.io/badge/Version-1.51.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.11](https://img.shields.io/badge/AppVersion-1.10.11-informational?style=flat-square)
+![Version: 1.51.1](https://img.shields.io/badge/Version-1.51.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.12](https://img.shields.io/badge/AppVersion-1.10.12-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -131,6 +131,7 @@ A Helm chart for Testkube Cloud API
 | global.grpcLogsSubdomain | string | `"logs"` | gRPC Logs subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
+| global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.storageApiSubdomain | string | `"storage"` | Storage API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
@@ -142,7 +143,7 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.10.11"` |  |
+| image.tag | string | `"1.10.12"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |

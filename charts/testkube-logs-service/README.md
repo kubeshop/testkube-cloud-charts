@@ -58,6 +58,7 @@ A Helm chart for Testkube log Service
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
+| global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.logsSubdomain | string | `"logs"` | logs gRPC subdomain which get prepended to the default domain when host is not set |
 | grpcIngress.annotations | object | `{}` | Additional annotations to add to the gRPC Ingress resource |
 | grpcIngress.enabled | bool | `false` | Toggle whether to enable the gRPC API Ingress |

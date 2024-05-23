@@ -48,20 +48,17 @@ global:
     issuer: ""
   # -- Common labels which will be added to all resources
   labels: &common_labels {}
-
 sharedSecretGenerator:
   enabled: false
   securityContext: {}
   resources: {}
   image: {}
-
 minio:
   # -- Toggle whether to install MinIO
   enabled: true
   fullnameOverride: &minioFullnameOverride testkube-enterprise-minio
   # -- Common labels which will be added to all MinIO resources
   commonLabels: *common_labels
-
   # Uncomment if you want to provide different image settings
   # image:
   # registry: docker.io
@@ -75,7 +72,6 @@ minio:
   # repository: bitnami/minio-client
   # tag: 2023.11.20-debian-11-r0
   # digest: ""
-
   auth:
     # -- MinIO root username (access key)
     rootUser: &minioRootUser "testkube-enterprise"
@@ -150,13 +146,12 @@ minio:
     tls:
       # -- TLS secret name which contains the certificate files
       tlsSecret: testkube-enterprise-minio-tls
-
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: testkubeenterprise/testkube-enterprise-api
-    tag: 1.10.11
+    tag: 1.10.12
   ai:
     secretRef: ""
   api:
@@ -295,7 +290,6 @@ testkube-cloud-api:
   ##Test Connection pod
   testConnection:
     enabled: false
-
 ## Testkube Cloud UI chart parameters
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
@@ -311,12 +305,10 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
-
 ## Testkube chart parameters
 testkube-agent:
   # -- Toggle whether to install & connect Testkube Agent in the same cluster
   enabled: false
-
 ## Testkube Worker Service chart parameters
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
@@ -332,7 +324,6 @@ testkube-worker-service:
       endpoint: testkube-enterprise-minio:9000
   additionalEnv:
     USE_MINIO: true
-
 ## Testkube Logs Service chart parameters
 testkube-logs-service:
   # -- Toggle whether to install Testkube Logs Service
@@ -410,7 +401,6 @@ testkube-logs-service:
   ## Test Connection pod
   testConnection:
     enabled: false
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
@@ -505,13 +495,11 @@ nats:
     merge: {}
     # -- Patch additional fields to the container
     patch: []
-
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
   # -- Toggle whether to install MongoDB
   enabled: true
-
   # Uncomment if you want to provide different image settings
   # image:
   # registry: docker.io
@@ -547,14 +535,12 @@ mongodb:
   #    enabled: true
   #    runAsUser: 1001010000
   #    runAsNonRoot: true
-
 ## Dex chart parameters
 ## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
 dex:
   # -- Toggle whether to install Dex
   enabled: true
   fullnameOverride: testkube-enterprise-dex
-
   # Uncomment if you want to provide different image settings
   # image:
   # repository: ghcr.io/dexidp/dex
@@ -563,7 +549,6 @@ dex:
 
   # -- Common labels which will be added to all Dex resources
   commonLabels: *common_labels
-
   rbac:
     # -- Specifies whether RBAC resources should be created.
     # If disabled, the operator is responsible for creating the necessary resources based on the templates.

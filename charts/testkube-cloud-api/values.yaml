@@ -44,13 +44,11 @@ global:
     issuer: ""
   # -- Common labels which will be added to all resources
   labels: {}
-
 replicaCount: 1
-
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.10.11"
+  tag: "1.10.12"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

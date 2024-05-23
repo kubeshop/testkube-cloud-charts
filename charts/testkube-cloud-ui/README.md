@@ -38,6 +38,7 @@ A Helm chart for Testkube Cloud UI
 | global.enterpriseMode | bool | `false` | Toggle whether UI is installed in Enterprise mode |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
+| global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
