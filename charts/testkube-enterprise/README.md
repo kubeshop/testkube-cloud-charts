@@ -65,6 +65,7 @@ A Helm chart for Testkube Enterprise
 | global.enterpriseLicenseSecretRef | string | `""` | Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file. |
 | global.enterpriseMode | bool | `true` | Run Testkube in enterprise mode (enables enterprise features) |
 | global.enterpriseOfflineAccess | bool | `false` | Toggle whether to enable offline license activation in Enterprise mode |
+| global.enterpriseArtifactsEndpoint | string | `""` | Enterprise artifacts endpoint used by the ui when downloading the artifacts|
 | global.grpcApiSubdomain | string | `"agent"` | gRPC API subdomain which get prepended to the domain |
 | global.imagePullSecrets | list | `[]` | Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui |
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |

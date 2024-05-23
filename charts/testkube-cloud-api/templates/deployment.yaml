@@ -60,6 +60,10 @@ spec:
             - name: ENTERPRISE_LICENSE_FILE
               value: "{{ .Values.global.enterpriseLicenseFile }}"
             {{- end }}
+            {{- if .Values.global.enterpriseArtifactsEndpoint}}
+            - name: ENTERPRISE_ARTIFACTS_ENDPOINT
+              value: "{{ .Values.global.enterpriseArtifactsEndpoint }}"
+            {{- end }}
             {{- if .Values.api.debug.enableHttp2Logs }}
             - name: GODEBUG
               value: http2debug=2
