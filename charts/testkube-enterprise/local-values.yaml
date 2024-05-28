@@ -259,7 +259,7 @@ testkube-cloud-ui:
     rootRoute: "http://testkube-enterprise-ui.testkube-enterprise.svc.cluster.local:8080"
   image:
     repository: testkubeenterprise/testkube-enterprise-ui
-    tag: 1.9.11
+    tag: 1.10.0
   ingress:
     enabled: false
     # -- Name of the TLS secret which contains the certificate files
