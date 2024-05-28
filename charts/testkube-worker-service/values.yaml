@@ -41,6 +41,14 @@ api:
     expirationPeriod: 0
     # -- Should be set to `true` if MinIO is behind
     secure: false
+  mongo:
+    # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
+    dsnSecretRef: ""
+    # -- if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string
+    dsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
+    # -- Mongo database name
+    database: "testkubecloud"
+
 externalSecrets:
   enabled: false
   refreshInterval: 5m
