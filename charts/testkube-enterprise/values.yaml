@@ -322,6 +322,12 @@ testkube-worker-service:
       accessKeyId: *minioRootUser
       secretAccessKey: *minioRootPassword
       endpoint: testkube-enterprise-minio:9000
+    mongo:
+      # -- Mongo DSN connection string
+      dsn: "mongodb://testkube-enterprise-mongodb:27017"
+      # -- Mongo database name
+      database: "testkubeEnterpriseDB"
+
   additionalEnv:
     USE_MINIO: true
 ## Testkube Logs Service chart parameters

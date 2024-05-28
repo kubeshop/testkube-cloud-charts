@@ -43,6 +43,18 @@ spec:
               value: "{{ .Values.api.outputsBucket }}"
             - name: NATS_URI
               value: {{ tpl .Values.api.nats.uri $ | quote }}
+              {{- if .Values.api.mongo.dsnSecretRef }}
+            - name: API_MONGO_DSN
+              valueFrom:
+                secretKeyRef:
+                  key: MONGO_DSN
+                  name: {{ .Values.api.mongo.dsnSecretRef }}
+              {{- else if .Values.api.mongo.dsn }}
+            - name: API_MONGO_DSN
+              value: {{ .Values.api.mongo.dsn }}
+              {{- end }}
+            - name: API_MONGO_DB
+              value: {{ .Values.api.mongo.database }}
             - name: MINIO_ENDPOINT
               value: "{{ tpl .Values.api.minio.endpoint . }}"
             - name: MINIO_REGION
