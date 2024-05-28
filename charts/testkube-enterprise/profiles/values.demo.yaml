@@ -116,7 +116,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.9.4
+    tag: 1.9.1
   api:
     nats:
       uri: "nats://testkube-enterprise-nats.{{.Release.Namespace}}.svc.cluster.local:4222"
