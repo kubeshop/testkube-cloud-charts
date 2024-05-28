@@ -48,7 +48,6 @@ api:
     dsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
     # -- Mongo database name
     database: "testkubecloud"
-
 externalSecrets:
   enabled: false
   refreshInterval: 5m

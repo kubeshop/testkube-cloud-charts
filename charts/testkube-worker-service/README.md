@@ -30,6 +30,9 @@ A Helm chart for Testkube Worker Service
 | api.minio.secretAccessKey | string | `""` | MinIO secret access key |
 | api.minio.secure | bool | `false` | Should be set to `true` if MinIO is behind |
 | api.minio.token | string | `""` | MinIO token |
+| api.mongo.database | string | `"testkubecloud"` | Mongo database name |
+| api.mongo.dsn | string | `"mongodb://mongodb.testkube.svc.cluster.local:27017"` | if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string |
+| api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | api.nats.uri | string | `"nats://nats.messaging.svc.cluster.local:4222"` | NATS URI |
 | api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which outputs are stored |
 | autoscaling.enabled | bool | `false` | Toggle whether to enable Horizontal Pod Autoscaler |

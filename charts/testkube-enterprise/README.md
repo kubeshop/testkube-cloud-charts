@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.81.1](https://img.shields.io/badge/Version-1.81.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.82.0](https://img.shields.io/badge/Version-1.82.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -17,7 +17,7 @@ A Helm chart for Testkube Enterprise
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.53.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.38.1 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.39.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.32.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
@@ -252,6 +252,8 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.api.minio.accessKeyId | string | `"testkube-enterprise"` |  |
 | testkube-worker-service.api.minio.endpoint | string | `"testkube-enterprise-minio:9000"` |  |
 | testkube-worker-service.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` |  |
+| testkube-worker-service.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
+| testkube-worker-service.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
 | testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.repository | string | `"testkubeenterprise/testkube-enterprise-worker-service"` |  |

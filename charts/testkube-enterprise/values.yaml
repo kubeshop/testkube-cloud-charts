@@ -327,7 +327,6 @@ testkube-worker-service:
       dsn: "mongodb://testkube-enterprise-mongodb:27017"
       # -- Mongo database name
       database: "testkubeEnterpriseDB"
-
   additionalEnv:
     USE_MINIO: true
 ## Testkube Logs Service chart parameters
