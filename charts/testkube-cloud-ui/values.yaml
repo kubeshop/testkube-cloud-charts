@@ -35,7 +35,7 @@ image:
   repository: kubeshop/testkube-cloud-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.10.0"
+  tag: "1.10.1"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

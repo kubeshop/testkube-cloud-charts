@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.82.0](https://img.shields.io/badge/Version-1.82.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.82.1](https://img.shields.io/badge/Version-1.82.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -17,7 +17,7 @@ A Helm chart for Testkube Enterprise
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.53.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.39.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.39.1 |
 | file://../testkube-worker-service | testkube-worker-service | 1.32.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
@@ -139,10 +139,13 @@ A Helm chart for Testkube Enterprise
 | nats.reloader.env | object | `{}` | Map of additional env vars |
 | nats.reloader.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.reloader.patch | list | `[]` | Patch additional fields to the container |
-| sharedSecretGenerator.enabled | bool | `false` |  |
-| sharedSecretGenerator.image | object | `{}` |  |
-| sharedSecretGenerator.resources | object | `{}` |  |
-| sharedSecretGenerator.securityContext | object | `{}` |  |
+| sharedSecretGenerator.containerSecurityContext | object | `{}` | Container Security Context for the Shared Secret Generator Job |
+| sharedSecretGenerator.enabled | bool | `false` | Toggle whether to enable the Shared Secret Generator Job |
+| sharedSecretGenerator.image.registry | string | `"docker.io"` |  |
+| sharedSecretGenerator.image.repository | string | `"bitnami/kubectl"` |  |
+| sharedSecretGenerator.image.tag | string | `"1.28.2"` |  |
+| sharedSecretGenerator.resources | object | `{}` | Resources for the Shared Secret Generator Job |
+| sharedSecretGenerator.securityContext | object | `{}` | Pod Security Context for the Shared Secret Generator Job |
 | testkube-agent.enabled | bool | `false` | Toggle whether to install & connect Testkube Agent in the same cluster |
 | testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
@@ -162,7 +165,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.logServer.secure | string | `"false"` | Log server TLS configuration secure connection |
 | testkube-cloud-api.api.logServer.skipVerify | string | `"true"` | Log server TLS configuration skip Verify |
 | testkube-cloud-api.api.migrations.enabled | bool | `false` | Toggle whether to run database migrations |
-| testkube-cloud-api.api.migrations.image.repository | string | `"testkubeenterprise/testkube-enterprise-api-migrations"` | Migrations image repository |
+| testkube-cloud-api.api.migrations.image.repository | string | `"kubeshop/testkube-enterprise-api-migrations"` | Migrations image repository |
 | testkube-cloud-api.api.migrations.ttlSecondsAfterFinished | int | `90` |  |
 | testkube-cloud-api.api.migrations.useHelmHooks | bool | `false` | Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart) |
 | testkube-cloud-api.api.minio.accessKeyId | string | `"testkube-enterprise"` | MinIO access key id |
@@ -203,14 +206,14 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.repository | string | `"testkubeenterprise/testkube-enterprise-api"` |  |
+| testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.tag | string | `"1.10.13"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-api.testConnection.enabled | bool | `false` |  |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.repository | string | `"testkubeenterprise/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"1.10.0"` |  |
+| testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.10.1"` |  |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
@@ -256,7 +259,7 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
 | testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
-| testkube-worker-service.image.repository | string | `"testkubeenterprise/testkube-enterprise-worker-service"` |  |
+| testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.tag | string | `"1.9.4"` |  |
 
 ----------------------------------------------

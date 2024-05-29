@@ -48,7 +48,6 @@ global:
     issuer: ""
   # -- Common labels which will be added to all resources
   labels: &common_labels {}
-
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -64,7 +63,6 @@ sharedSecretGenerator:
     registry: docker.io
     repository: bitnami/kubectl
     tag: 1.28.2
-
 minio:
   # -- Toggle whether to install MinIO
   enabled: true
@@ -310,7 +308,7 @@ testkube-cloud-ui:
     authStrategy: ""
   image:
     repository: kubeshop/testkube-enterprise-ui
-    tag: 1.10.0
+    tag: 1.10.1
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
@@ -326,7 +324,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.9.1
+    tag: 1.9.4
   api:
     nats:
       uri: "nats://testkube-enterprise-nats:4222"
