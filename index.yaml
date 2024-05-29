@@ -5358,6 +5358,54 @@ entries:
     version: 1.1.0
   testkube-enterprise:
   - apiVersion: v2
+    created: "2024-05-29T19:46:59.587437757Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      version: 2.13.3
+    - name: testkube-cloud-api
+      repository: file://../testkube-cloud-api
+      version: 1.53.0
+    - name: testkube-cloud-ui
+      repository: file://../testkube-cloud-ui
+      version: 1.40.0
+    - name: testkube-worker-service
+      repository: file://../testkube-worker-service
+      version: 1.33.0
+    - alias: testkube-agent
+      condition: testkube-agent.enabled
+      name: testkube
+      repository: https://kubeshop.github.io/helm-charts
+      version: 1.17.28
+    - condition: dex.enabled
+      name: dex
+      repository: https://charts.dexidp.io
+      version: 0.15.3
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.3.0
+    - condition: nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 1.1.5
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.10.2
+    description: A Helm chart for Testkube Enterprise
+    digest: d223a77d396352de196394322aa9f8da83cd75aed1ad0fe275c114d72b5f0489
+    home: https://github.com/kubeshop/testkube-cloud-charts
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    maintainers:
+    - name: testkube
+      url: https://testkube.io
+    name: testkube-enterprise
+    type: application
+    urls:
+    - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-enterprise-1.84.0/testkube-enterprise-1.84.0.tgz
+    version: 1.84.0
+  - apiVersion: v2
     created: "2024-05-29T14:32:48.682477276Z"
     dependencies:
     - name: common
@@ -12305,6 +12353,23 @@ entries:
   testkube-worker-service:
   - apiVersion: v2
     appVersion: 1.9.4
+    created: "2024-05-29T19:46:59.717053904Z"
+    description: A Helm chart for Testkube Worker Service
+    digest: 7d2e5a2b931bb8176e2f5e0e5c0892c93408b76042b8dee8e02d07e0fee13d8e
+    home: https://github.com/kubeshop/testkube-cloud-charts
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    maintainers:
+    - name: testkube
+      url: https://testkube.io
+    name: testkube-worker-service
+    sources:
+    - https://github.com/kubeshop/testkube-cloud-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.33.0/testkube-worker-service-1.33.0.tgz
+    version: 1.33.0
+  - apiVersion: v2
+    appVersion: 1.9.4
     created: "2024-05-23T11:23:09.078703864Z"
     description: A Helm chart for Testkube Worker Service
     digest: d5005e72ed530e6ad73c58abdec06eeaa11887952d61b390d63673fbdde7512e
@@ -12405,4 +12470,4 @@ entries:
     urls:
     - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.29.0/testkube-worker-service-1.29.0.tgz
     version: 1.29.0
-generated: "2024-05-29T14:32:48.956478064Z"
+generated: "2024-05-29T19:46:59.71798372Z"
