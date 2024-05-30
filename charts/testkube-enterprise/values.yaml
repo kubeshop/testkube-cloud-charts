@@ -539,10 +539,10 @@ mongodb:
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
-#  podSecurityContext: {}
+  podSecurityContext: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
-#  containerSecurityContext: {}
+  containerSecurityContext: {}
   ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
 #  podSecurityContext:
 #    fsGroup: 1001010000
