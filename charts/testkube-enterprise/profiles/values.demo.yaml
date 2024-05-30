@@ -228,9 +228,10 @@ dex:
     additionalStaticClients: []
     additionalConfig: |
       staticClients:
-      - id: testkube-entrprise
+      - id: testkube-enterprise
         redirectURIs:
           - http://localhost:8090/auth/callback
+        name: Testkube
         secret: QWkVzs3nct6HZM5hxsPzwaZtq
       enablePasswordDB: true
       staticPasswords:
