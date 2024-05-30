@@ -3,6 +3,10 @@ global:
     enabled: false
   # -- Run Testkube in enterprise mode (enables enterprise features)
   enterpriseMode: true
+  # -- Toggle whether to enable offline license activation in Enterprise mode
+  enterpriseOfflineAccess: false
+  # -- Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file.
+  enterpriseLicenseSecretRef: ""
   # -- Enterprise License key
   enterpriseLicenseKey: ""
   # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
@@ -175,16 +179,15 @@ mongodb:
       cpu: 150m
       memory: 128Mi
   tolerations: []
-  podSecurityContext: {}
-  containerSecurityContext: {}
+#  podSecurityContext: {}
+#  containerSecurityContext: {}
 ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
 #  podSecurityContext:
-#    enabled: false
+#    fsGroup: 1001010000
 #  containerSecurityContext:
 #    enabled: true
 #    runAsUser: 1001010000
 #    runAsNonRoot: true
-
 
 ## See https://github.com/dexidp/helm-charts
 dex:
@@ -224,6 +227,11 @@ dex:
         passwordConnector: local
     additionalStaticClients: []
     additionalConfig: |
+      staticClients:
+      - id: testkube-entrprise
+        redirectURIs:
+          - http://localhost:8090/auth/callback
+        secret: QWkVzs3nct6HZM5hxsPzwaZtq
       enablePasswordDB: true
       staticPasswords:
         - email: "admin@example.com"
@@ -245,7 +253,7 @@ minio:
     existingSecret: testkube-minio-credentials
 ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
 #  podSecurityContext:
-#    enabled: false
+#    fsGroup: 1001010000
 #  containerSecurityContext:
 #    enabled: true
 #    runAsUser: 1001010000
