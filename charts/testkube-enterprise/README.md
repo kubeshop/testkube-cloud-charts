@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.85.0](https://img.shields.io/badge/Version-1.85.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.85.1](https://img.shields.io/badge/Version-1.85.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.53.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.53.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.40.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.33.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
@@ -60,7 +60,7 @@ A Helm chart for Testkube Enterprise
 | global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key. |
 | global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
-| global.domain | string | `""` | Domain under which to create Ingress rules |
+| global.domain | string | `""` | Domain under which endpoints are exposed |
 | global.enterpriseLicenseFile | string | `""` | This field is deprecated. To specify an offline license file use `enterpriseLicenseSecretRef`. |
 | global.enterpriseLicenseKey | string | `""` | Specifies the enterprise license key, when using an offline license use `enterpriseLicenseSecretRef` and leave this field empty. |
 | global.enterpriseLicenseSecretRef | string | `""` | Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file. |
@@ -207,7 +207,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.10.13"` |  |
+| testkube-cloud-api.image.tag | string | `"1.10.15"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-api.testConnection.enabled | bool | `false` |  |
