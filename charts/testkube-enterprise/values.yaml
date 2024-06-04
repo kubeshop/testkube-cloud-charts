@@ -162,6 +162,15 @@ testkube-cloud-api:
   image:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.15
+  serviceAccount:
+    # -- Toggle whether to create a ServiceAccount resource
+    create: false
+    # -- Additional labels to add to the ServiceAccount resource
+    labels: {}
+    # -- Additional annotations to add to the ServiceAccount resource
+    annotations: {}
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+    name: ""
   ai:
     secretRef: ""
   api:
