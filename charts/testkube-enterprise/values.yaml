@@ -580,7 +580,7 @@ mongodb:
       cpu: 500m
       memory: 1Gi
     limits:
-      cpu: 500m
+      cpu: 2
       memory: 2Gi
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
