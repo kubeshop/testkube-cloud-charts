@@ -82,6 +82,13 @@ minio:
   # repository: bitnami/minio-client
   # tag: 2023.11.20-debian-11-r0
   # digest: ""
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 2
+      memory: 2Gi
   auth:
     # -- MinIO root username (access key)
     rootUser: &minioRootUser "testkube-enterprise"
@@ -162,6 +169,13 @@ testkube-cloud-api:
   image:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.15
+  resources:
+    requests:
+      cpu: 1
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 512Mi
   ai:
     secretRef: ""
   api:
@@ -309,6 +323,13 @@ testkube-cloud-ui:
   image:
     repository: kubeshop/testkube-enterprise-ui
     tag: 1.10.2
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
@@ -325,6 +346,13 @@ testkube-worker-service:
   image:
     repository: kubeshop/testkube-enterprise-worker-service
     tag: 1.9.4
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
   api:
     nats:
       uri: "nats://testkube-enterprise-nats:4222"
@@ -413,6 +441,13 @@ testkube-logs-service:
         caFile: "ca.crt"
   image:
     tag: v0-20240315-134446
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
   ## Test Connection pod
   testConnection:
     enabled: false
@@ -423,7 +458,15 @@ nats:
   enabled: true
   fullnameOverride: testkube-enterprise-nats
   # Uncomment if you want to provide a different image or pullPolicy
-  # container:
+  container:
+    merge:
+      resources:
+        requests:
+          cpu: "1"
+          memory: 512Mi
+        limits:
+          cpu: "1"
+          memory: 512Mi
   # image:
   # repository: nats
   # tag: 2.10.5-alpine
@@ -534,8 +577,11 @@ mongodb:
   # -- MongoDB resource settings
   resources:
     requests:
-      cpu: 150m
-      memory: 128Mi
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 500m
+      memory: 2Gi
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
@@ -611,7 +657,9 @@ dex:
     requests:
       cpu: 100m
       memory: 128Mi
-    limits: {}
+    limits:
+      cpu: 100m
+      memory: 128Mi
   ingress:
     # -- Toggle whether to enable ingress for Dex
     enabled: true
