@@ -82,6 +82,7 @@ minio:
   # repository: bitnami/minio-client
   # tag: 2023.11.20-debian-11-r0
   # digest: ""
+  # -- Set resources requests and limits for MinIO
   resources:
     requests:
       cpu: 500m
