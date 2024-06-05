@@ -10,7 +10,7 @@ replicaCount: 1
 image:
   repository: kubeshop/testkube-worker-service
   pullPolicy: IfNotPresent
-  tag: "1.9.5"
+  tag: "1.9.6"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

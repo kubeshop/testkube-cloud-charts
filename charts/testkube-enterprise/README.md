@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.87.1](https://img.shields.io/badge/Version-1.87.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.87.2](https://img.shields.io/badge/Version-1.87.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -18,7 +18,7 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.53.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.42.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.33.1 |
+| file://../testkube-worker-service | testkube-worker-service | 1.33.2 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
 | https://charts.bitnami.com/bitnami | mongodb | 14.3.0 |
@@ -267,7 +267,7 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
-| testkube-worker-service.image.tag | string | `"1.9.5"` |  |
+| testkube-worker-service.image.tag | string | `"1.9.6"` |  |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"250m","memory":"256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Set resources requests and limits for Testkube Worker Service |
 
 ----------------------------------------------
