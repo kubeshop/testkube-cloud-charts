@@ -82,6 +82,14 @@ minio:
   # repository: bitnami/minio-client
   # tag: 2023.11.20-debian-11-r0
   # digest: ""
+  # -- Set resources requests and limits for MinIO
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 2
+      memory: 2Gi
   auth:
     # -- MinIO root username (access key)
     rootUser: &minioRootUser "testkube-enterprise"
@@ -162,6 +170,14 @@ testkube-cloud-api:
   image:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.15
+  # -- Set resources requests and limits for Testkube Api
+  resources:
+    requests:
+      cpu: 1
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 512Mi
   serviceAccount:
     # -- Toggle whether to create a ServiceAccount resource
     create: false
@@ -318,6 +334,14 @@ testkube-cloud-ui:
   image:
     repository: kubeshop/testkube-enterprise-ui
     tag: 1.10.3
+  # -- Set resources requests and limits for Testkube UI
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
@@ -334,6 +358,14 @@ testkube-worker-service:
   image:
     repository: kubeshop/testkube-enterprise-worker-service
     tag: 1.9.4
+  # -- Set resources requests and limits for Testkube Worker Service
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
   api:
     nats:
       uri: "nats://testkube-enterprise-nats:4222"
@@ -422,6 +454,14 @@ testkube-logs-service:
         caFile: "ca.crt"
   image:
     tag: v0-20240315-134446
+  # -- Set resources requests and limits for Testkube Logs Service
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
   ## Test Connection pod
   testConnection:
     enabled: false
@@ -432,7 +472,16 @@ nats:
   enabled: true
   fullnameOverride: testkube-enterprise-nats
   # Uncomment if you want to provide a different image or pullPolicy
-  # container:
+  container:
+    merge:
+  # -- Set resources requests and limits for NATS container
+      resources:
+        requests:
+          cpu: 1
+          memory: 512Mi
+        limits:
+          cpu: 1
+          memory: 512Mi
   # image:
   # repository: nats
   # tag: 2.10.5-alpine
@@ -540,11 +589,14 @@ mongodb:
     # -- Toggle whether to enable MongoDB authentication
     enabled: false
     # rootPassword: "123DefaultOne321"
-  # -- MongoDB resource settings
+  # -- Set resources requests and limits for MongoDB
   resources:
     requests:
-      cpu: 150m
-      memory: 128Mi
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 2
+      memory: 2Gi
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
@@ -611,16 +663,19 @@ dex:
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: ""
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-  # -- Security Context for MongoDB container
+  # -- Security Context for Dex container
   securityContext: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  # -- MongoDB Pod Security Context
-  podSecurityContext:
+  # -- Dex Pod Security Context
+  podSecurityContext: {}
+  # -- Set resources requests and limits for Dex Service
   resources:
     requests:
       cpu: 100m
       memory: 128Mi
-    limits: {}
+    limits:
+      cpu: 100m
+      memory: 128Mi
   ingress:
     # -- Toggle whether to enable ingress for Dex
     enabled: true
