@@ -169,6 +169,7 @@ testkube-cloud-api:
   image:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.15
+  # -- Set resources requests and limits for Testkube Api
   resources:
     requests:
       cpu: 1
@@ -176,6 +177,15 @@ testkube-cloud-api:
     limits:
       cpu: 1
       memory: 512Mi
+  serviceAccount:
+    # -- Toggle whether to create a ServiceAccount resource
+    create: false
+    # -- Additional labels to add to the ServiceAccount resource
+    labels: {}
+    # -- Additional annotations to add to the ServiceAccount resource
+    annotations: {}
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+    name: ""
   ai:
     secretRef: ""
   api:
@@ -322,7 +332,8 @@ testkube-cloud-ui:
     authStrategy: ""
   image:
     repository: kubeshop/testkube-enterprise-ui
-    tag: 1.10.2
+    tag: 1.10.3
+  # -- Set resources requests and limits for Testkube UI
   resources:
     requests:
       cpu: 250m
@@ -346,6 +357,7 @@ testkube-worker-service:
   image:
     repository: kubeshop/testkube-enterprise-worker-service
     tag: 1.9.4
+  # -- Set resources requests and limits for Testkube Worker Service
   resources:
     requests:
       cpu: 250m
@@ -441,6 +453,7 @@ testkube-logs-service:
         caFile: "ca.crt"
   image:
     tag: v0-20240315-134446
+  # -- Set resources requests and limits for Testkube Logs Service
   resources:
     requests:
       cpu: 250m
@@ -460,6 +473,7 @@ nats:
   # Uncomment if you want to provide a different image or pullPolicy
   container:
     merge:
+  # -- Set resources requests and limits for NATS container
       resources:
         requests:
           cpu: 1
@@ -574,7 +588,7 @@ mongodb:
     # -- Toggle whether to enable MongoDB authentication
     enabled: false
     # rootPassword: "123DefaultOne321"
-  # -- MongoDB resource settings
+  # -- Set resources requests and limits for MongoDB
   resources:
     requests:
       cpu: 500m
@@ -648,11 +662,12 @@ dex:
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: ""
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-  # -- Security Context for MongoDB container
+  # -- Security Context for Dex container
   securityContext: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  # -- MongoDB Pod Security Context
-  podSecurityContext:
+  # -- Dex Pod Security Context
+  podSecurityContext: {}
+  # -- Set resources requests and limits for Dex Service
   resources:
     requests:
       cpu: 100m
