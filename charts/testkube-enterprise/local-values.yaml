@@ -310,7 +310,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: testkubeenterprise/testkube-enterprise-worker-service
-    tag: 1.9.4
+    tag: 1.9.5
   api:
     nats:
       # -- NATS URI

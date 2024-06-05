@@ -357,7 +357,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.9.4
+    tag: 1.9.5
   # -- Set resources requests and limits for Testkube Worker Service
   resources:
     requests:
@@ -474,7 +474,7 @@ nats:
   # Uncomment if you want to provide a different image or pullPolicy
   container:
     merge:
-  # -- Set resources requests and limits for NATS container
+      # -- Set resources requests and limits for NATS container
       resources:
         requests:
           cpu: 1

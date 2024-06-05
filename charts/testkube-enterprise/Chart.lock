@@ -10,7 +10,7 @@ dependencies:
   version: 1.42.0
 - name: testkube-worker-service
   repository: file://../testkube-worker-service
-  version: 1.33.0
+  version: 1.33.1
 - name: testkube
   repository: https://kubeshop.github.io/helm-charts
   version: 1.17.28
@@ -26,5 +26,5 @@ dependencies:
 - name: minio
   repository: https://charts.bitnami.com/bitnami
   version: 12.10.2
-digest: sha256:314aa08687d3ffad55d8f00efcc7cf1f86acd5e32ea471a2ebdee45c9f377176
-generated: "2024-06-04T10:15:59.499153357Z"
+digest: sha256:4b1d07bcf63a77f1b2f2046024f45e9f512837383398457a2276afc37e93c02a
+generated: "2024-06-05T10:20:14.309725484Z"
