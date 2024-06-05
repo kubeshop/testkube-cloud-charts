@@ -212,18 +212,21 @@ testkube-cloud-api:
       # -- TLS CA certificate file
       caFile: ""
     # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
-    inviteMode: email
-    smtp:
-      # -- SMTP host
-      host: ""
-      # -- SMTP port
-      port: 587
-      # -- SMTP username
-      username: ""
-      # -- SMTP password
-      password: ""
-      # -- SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined
-      passwordSecretRef: ""
+    inviteMode: auto-accept
+#   email:
+#     fromEmail: "noreply@kubeshop.io"
+#     fromName: "Testkube Cloud"
+#   smtp:
+#     # -- SMTP host
+#     host: smtp.example.com
+#     # -- SMTP port
+#     port: 587
+#     # -- SMTP username
+#     username: ""
+#     # -- SMTP password
+#     password: ""
+#     # -- SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined
+#      passwordSecretRef: ""
     tls:
       certManager:
         # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
