@@ -18,7 +18,7 @@ dependencies:
     repository: file://../testkube-worker-service
   - name: testkube
     alias: testkube-agent
-    version: 1.17.54
+    version: 1.17.80
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex
