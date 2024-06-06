@@ -27,7 +27,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.5
+    tag: 1.10.15
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
     OAUTH_ENABLED: true
@@ -99,7 +99,7 @@ testkube-cloud-ui:
     REACT_APP_ENABLE_SIGNUP: "true"
   image:
     repository: kubeshop/testkube-enterprise-ui
-    tag: 1.9.4
+    tag: 1.10.3
 
 testkube-agent:
   enabled: true
