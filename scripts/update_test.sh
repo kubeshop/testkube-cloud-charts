@@ -19,7 +19,7 @@ assert_equal() {
 }
 
 echo "Test case 1: Update with specific app version and Helm version"
-output=$($target_script -d "$script_dir" -a v1.2.3 -v 2.3.4 -c $test_chart --dry-run | tail +3)
+output=$($target_script -d "$script_dir" -a v1.2.3 -v 2.3.4 -g 1.2.3 -c $test_chart --dry-run | tail +3)
 expected_output=$(cat << EOF
 apiVersion: v2
 name: testkube-test-chart
