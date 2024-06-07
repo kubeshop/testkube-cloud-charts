@@ -333,7 +333,7 @@ testkube-cloud-ui:
     authStrategy: ""
   image:
     repository: kubeshop/testkube-enterprise-ui
-    tag: 1.10.3
+    tag: ..
   # -- Set resources requests and limits for Testkube UI
   resources:
     requests:

@@ -16,18 +16,16 @@ global:
   dex:
     # -- Global Dex issuer url which is configured both in Dex and API
     issuer: http://localhost:5556
-
 sharedSecretGenerator:
   enabled: true
   securityContext: {}
   resources: {}
   image: {}
-
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.15
+    tag: 1.10.16
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
     OAUTH_ENABLED: true
@@ -87,7 +85,6 @@ testkube-cloud-api:
     outputsBucket: testkube-cloud-outputs
   prometheus:
     enabled: false
-
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
@@ -99,8 +96,7 @@ testkube-cloud-ui:
     REACT_APP_ENABLE_SIGNUP: "true"
   image:
     repository: kubeshop/testkube-enterprise-ui
-    tag: 1.10.3
-
+    tag: ..
 testkube-agent:
   enabled: true
   testkube-dashboard:
@@ -115,12 +111,11 @@ testkube-agent:
       existingSecret:
         name: testkube-default-agent-token
         key: agent-token
-
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.9.1
+    tag: 1.9.6
   api:
     nats:
       uri: "nats://testkube-enterprise-nats.{{.Release.Namespace}}.svc.cluster.local:4222"
@@ -130,7 +125,6 @@ testkube-worker-service:
       secure: false
   additionalEnv:
     USE_MINIO: true
-
 # See https://artifacthub.io/packages/helm/nats/nats
 nats:
   fullnameOverride: testkube-enterprise-nats
@@ -154,14 +148,13 @@ nats:
   natsBox:
     enabled: true
     ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
-#    container:
-#      image:
-#        repository: natsio/nats-box #used to fix this: https://github.com/nats-io/nats-box/pull/66
-#        tag: 0.14.3-nonroot
+  #    container:
+  #      image:
+  #        repository: natsio/nats-box #used to fix this: https://github.com/nats-io/nats-box/pull/66
+  #        tag: 0.14.3-nonroot
 
   promExporter:
     enabled: true
-
 # See https://artifacthub.io/packages/helm/bitnami/mongodb
 mongodb:
   enabled: true
@@ -245,7 +238,6 @@ dex:
       cpu: 100m
       memory: 128Mi
     limits: {}
-
 # see https://artifacthub.io/packages/helm/bitnami/minio
 minio:
   nameOverride: minio
@@ -259,4 +251,3 @@ minio:
 #    enabled: true
 #    runAsUser: 1001010000
 #    runAsNonRoot: true
-
