@@ -96,7 +96,7 @@ testkube-cloud-ui:
     REACT_APP_ENABLE_SIGNUP: "true"
   image:
     repository: kubeshop/testkube-enterprise-ui
-    tag: ..
+    tag: 1.11.1
 testkube-agent:
   enabled: true
   testkube-dashboard:
