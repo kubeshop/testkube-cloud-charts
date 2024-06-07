@@ -48,9 +48,10 @@ err() { echo "$@" 1>&2; }
 
 # function to display script usage
 usage() {
-  echo "Usage: $0 -a|--app-version <version> -v|--helm-version <version> -c|--chart <chart_name> [--bump-path|--bump-minor|--bump-major] [--strategy <strategy>]"
+  echo "Usage: $0 -a|--app-version <version> -g|--agent-version <version> -v|--helm-version <version> -c|--chart <chart_name> [--bump-path|--bump-minor|--bump-major] [--strategy <strategy>]"
   echo "Options:"
   echo "  -a, --app-version        Specify the application version"
+  echo "  -g, --agent-version      Specify OSS Agent version"
   echo "  -v, --helm-version       Specify the Helm version"
   echo "  -c, --chart              Specify the chart name"
   echo "  -d, --base-dir           Specify the base charts directory (default: charts)"
@@ -104,6 +105,12 @@ update_chart_yaml() {
       sed -i '' -e "s/^appVersion:.*$/appVersion: $app_version/" -e "s/^version:.*$/version: $helm_version/" "$chart_yaml_path"
     fi
     show "$chart_yaml_path updated with appVersion: $app_version and version: $helm_version"
+
+    if [[ -n $agent_version ]]; then
+      sed -i "/^ *- name: testkube$/,/^ *- / s/^\( *version: \).*/\1$agent_version/" "$chart_yaml_path"
+    else
+      echo "Agent version was not provided, skipping update"
+    fi
   else
     err "$chart_yaml_path not found"
   fi
@@ -146,6 +153,11 @@ while [[ $# -gt 0 ]]; do
   case $key in
     -a|--app-version)
     app_version="$2"
+    shift
+    shift
+    ;;
+    -g|--agent-version)
+    agent_version="$2"
     shift
     shift
     ;;
