@@ -48,9 +48,10 @@ err() { echo "$@" 1>&2; }
 
 # function to display script usage
 usage() {
-  echo "Usage: $0 -a|--app-version <version> -v|--helm-version <version> -c|--chart <chart_name> [--bump-path|--bump-minor|--bump-major] [--strategy <strategy>]"
+  echo "Usage: $0 -a|--app-version <version> -g|--agent-version <version> -v|--helm-version <version> -c|--chart <chart_name> [--bump-path|--bump-minor|--bump-major] [--strategy <strategy>]"
   echo "Options:"
   echo "  -a, --app-version        Specify the application version"
+  echo "  -g, --agent-version      Specify OSS Agent version  "
   echo "  -v, --helm-version       Specify the Helm version"
   echo "  -c, --chart              Specify the chart name"
   echo "  -d, --base-dir           Specify the base charts directory (default: charts)"
