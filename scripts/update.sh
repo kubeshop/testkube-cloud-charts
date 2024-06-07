@@ -106,7 +106,7 @@ update_chart_yaml() {
     show "$chart_yaml_path updated with appVersion: $app_version and version: $helm_version"
 
     if [[ -n $agent_version ]]; then
-      sed -i.bak  "/^ *- name: testkube$/,/^ *- / s/^\( *version: \).*/\1$agent_version/" "$chart_yaml_path"
+      sed -i "/^ *- name: testkube$/,/^ *- / s/^\( *version: \).*/\1$agent_version/" "$chart_yaml_path"
     else
       echo "Agent version was not provided, skipping update"
     fi
