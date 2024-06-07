@@ -104,6 +104,12 @@ update_chart_yaml() {
       sed -i '' -e "s/^appVersion:.*$/appVersion: $app_version/" -e "s/^version:.*$/version: $helm_version/" "$chart_yaml_path"
     fi
     show "$chart_yaml_path updated with appVersion: $app_version and version: $helm_version"
+
+    if [[ -n $agent_version ]]; then
+      sed -i.bak  "/^ *- name: testkube$/,/^ *- / s/^\( *version: \).*/\1$agent_version/" "$chart_yaml_path"
+    else
+      echo "Agent version was not provided, skipping update"
+    fi
   else
     err "$chart_yaml_path not found"
   fi
@@ -146,6 +152,11 @@ while [[ $# -gt 0 ]]; do
   case $key in
     -a|--app-version)
     app_version="$2"
+    shift
+    shift
+    ;;
+    -g|--agent-version)
+    agent_version="$2"
     shift
     shift
     ;;

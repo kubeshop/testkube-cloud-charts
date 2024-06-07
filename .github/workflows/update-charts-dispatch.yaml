@@ -8,6 +8,7 @@ on:
         trigger-workflow-testkube-cloud-ui-main,
         trigger-workflow-testkube-worker-service-main,
         trigger-workflow-testkube-logs-service-main,
+        trigger-workflow-testkube-agent-main
       ]
 
 jobs:
@@ -31,6 +32,7 @@ jobs:
           version: v3.10.0
 
       - name: Update Helm chart with changes files
+        if: ${{ github.event.client_payload.app }} && ${{ github.event.client_payload.appVersion }}
         run: |
           # update application version
            ./scripts/update.sh                              \
@@ -47,7 +49,14 @@ jobs:
            new_chart_version=$(./scripts/update.sh -c ${{ github.event.client_payload.app }} --print-chart-version)
            echo "CHART_VERSION=$new_chart_version" >> $GITHUB_ENV
 
+      - name: Update Agent version
+        if: ${{ github.event.client_payload.agentVersion }}
+        run: |
+          echo "Bumping testkube-enterprise and Agent Helm-chart version"
+          ./scripts/update.sh -c testkube-enterprise -g ${{ github.event.client_payload.agentVersion }}
+
       - name: Sync & Update Testkube Enterprise Helm chart
+        if: ${{ github.event.client_payload.app }} && ${{ github.event.client_payload.appVersion }}
         run: |
           echo "Syncing subchart versions in testkube-enterprise Helm chart"
           ./scripts/sync.sh
@@ -70,7 +79,7 @@ jobs:
       - name: Commit & push changes
         run: |
           git status
-          git add **/*Chart.yaml **/*README.md charts/testkube-enterprise/Chart.lock charts/testkube-enterprise/local-values.yaml **/*values.yaml
+          git add **/*Chart.yaml **/*README.md charts/testkube-enterprise/Chart.lock charts/testkube-enterprise/local-values.yaml charts/testkube-enterprise/profiles/values.demo.yaml **/*values.yaml
           git commit -m "updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}"
           git push --force
 
