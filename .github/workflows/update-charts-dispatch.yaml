@@ -32,7 +32,7 @@ jobs:
           version: v3.10.0
 
       - name: Update Helm chart with changes files
-        if: ${{ github.event.client_payload.app }} && ${{ github.event.client_payload.appVersion }}
+        if: github.event.action != 'trigger-workflow-testkube-agent-main'
         run: |
           # update application version
            ./scripts/update.sh                              \
@@ -50,13 +50,13 @@ jobs:
            echo "CHART_VERSION=$new_chart_version" >> $GITHUB_ENV
 
       - name: Update Agent version
-        if: ${{ github.event.client_payload.agentVersion }}
+        if: github.event.action == 'trigger-workflow-testkube-agent-main'
         run: |
           echo "Bumping testkube-enterprise and Agent Helm-chart version"
           ./scripts/update.sh -c testkube-enterprise -g ${{ github.event.client_payload.agentVersion }}
 
       - name: Sync & Update Testkube Enterprise Helm chart
-        if: ${{ github.event.client_payload.app }} && ${{ github.event.client_payload.appVersion }}
+        if: github.event.action != 'trigger-workflow-testkube-agent-main'
         run: |
           echo "Syncing subchart versions in testkube-enterprise Helm chart"
           ./scripts/sync.sh
