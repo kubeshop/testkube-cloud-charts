@@ -354,7 +354,7 @@ nats:
       max_payload: << 8MB >>
       cluster:
         name: << testkube-enterprise >>
-      # Enable debug for NATS
+      # -- Enable debug for NATS
       debug: false
     # -- Patch additional fields to nats config
     patch: []
@@ -459,7 +459,10 @@ mongodb:
   #    enabled: true
   #    runAsUser: 1001010000
   #    runAsNonRoot: true
-  # All existing Pods are killed before new ones are created with Recreate type of updateStrategy:
+  # -- Enables Recreate updateStrategy
+  # MongoDB uses ReadWriteOnce access mode for PV. It means that the volume can be accessed by pods that reside on the same node.
+  # If during an upgrade a new Mongo pod with RollingUpdate strategy is scheduled on a different node, the upgrade will fail with the error: Volume is already used by pod.
+  # Therefore, it is required to use Recreate strategy to kill existing pods on upgrade before creating new ones.
   updateStrategy:
     type: Recreate
 ## Dex chart parameters
