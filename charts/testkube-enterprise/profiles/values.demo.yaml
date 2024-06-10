@@ -98,7 +98,7 @@ testkube-cloud-ui:
     repository: kubeshop/testkube-enterprise-ui
     tag: 1.11.2
 testkube-agent:
-  enabled: false
+  enabled: true
   testkube-dashboard:
     enabled: false
   mongodb:
