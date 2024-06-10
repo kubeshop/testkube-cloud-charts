@@ -507,6 +507,8 @@ nats:
       max_payload: << 8MB >>
       cluster:
         name: << testkube-enterprise >>
+    # Enable debug for NATS
+      debug: false
     # -- Patch additional fields to nats config
     patch: []
   # Reloader container settings
@@ -604,6 +606,9 @@ mongodb:
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
   containerSecurityContext: {}
+  # All existing Pods are killed before new ones are created with Recreate type of updateStrategy:
+  updateStrategy:
+    type: Recreate
   ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
 #  podSecurityContext:
 #    fsGroup: 1001010000
