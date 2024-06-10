@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.94.2](https://img.shields.io/badge/Version-1.94.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.95.0](https://img.shields.io/badge/Version-1.95.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -116,13 +116,15 @@ A Helm chart for Testkube Enterprise
 | mongodb.podSecurityContext | object | `{}` | MongoDB Pod Security Context |
 | mongodb.resources | object | `{"limits":{"cpu":2,"memory":"2Gi"},"requests":{"cpu":"500m","memory":"1Gi"}}` | Set resources requests and limits for MongoDB |
 | mongodb.tolerations | list | `[]` |  |
+| mongodb.updateStrategy | object | `{"type":"Recreate"}` | Enables Recreate updateStrategy MongoDB uses ReadWriteOnce access mode for PV. It means that the volume can be accessed by pods that reside on the same node. If during an upgrade a new Mongo pod with RollingUpdate strategy is scheduled on a different node, the upgrade will fail with the error: Volume is already used by pod. Therefore, it is required to use Recreate strategy to kill existing pods on upgrade before creating new ones. |
 | nats.config.cluster.enabled | bool | `true` | Enable cluster mode (HA) |
 | nats.config.cluster.replicas | int | `3` | NATS cluster replicas |
 | nats.config.jetstream.enabled | bool | `true` | Toggle whether to enable JetStream (Testkube requires JetStream to be enabled, so this setting should always be on) |
 | nats.config.jetstream.fileStore.pvc.enabled | bool | `true` |  |
 | nats.config.jetstream.fileStore.pvc.size | string | `"10Gi"` |  |
 | nats.config.jetstream.fileStore.pvc.storageClassName | string | `nil` |  |
-| nats.config.merge | object | `{"cluster":{"name":"<< testkube-enterprise >>"},"max_payload":"<< 8MB >>"}` | Merge additional fields to nats config https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.config.merge | object | `{"cluster":{"name":"<< testkube-enterprise >>"},"debug":false,"max_payload":"<< 8MB >>"}` | Merge additional fields to nats config https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.config.merge.debug | bool | `false` | Enable debug for NATS |
 | nats.config.patch | list | `[]` | Patch additional fields to nats config |
 | nats.container.merge.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":1,"memory":"512Mi"}}` | Set resources requests and limits for NATS container |
 | nats.enabled | bool | `true` | Toggle whether to install NATS |

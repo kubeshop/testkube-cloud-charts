@@ -612,7 +612,7 @@ mongodb:
   # Therefore, it is required to use Recreate strategy to kill existing pods on upgrade before creating new ones.
   updateStrategy:
     type: Recreate
-  ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
+    ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
 #  podSecurityContext:
 #    fsGroup: 1001010000
 #  containerSecurityContext:
