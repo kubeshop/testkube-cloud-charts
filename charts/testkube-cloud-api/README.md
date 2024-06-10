@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.54.0](https://img.shields.io/badge/Version-1.54.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.16](https://img.shields.io/badge/AppVersion-1.10.16-informational?style=flat-square)
+![Version: 1.55.0](https://img.shields.io/badge/Version-1.55.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.16](https://img.shields.io/badge/AppVersion-1.10.16-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -40,12 +40,10 @@ A Helm chart for Testkube Cloud API
 | api.dashboardAddress | string | `""` | Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`) |
 | api.debug.enableGrpcServerLogs | bool | `false` | Toggle whether to enable gRPC server logs |
 | api.debug.enableHttp2Logs | bool | `false` | Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2 |
-| api.email.fromEmail | string | `"noreply@kubeshop.io"` |  |
-| api.email.fromName | string | `"Testkube Cloud"` |  |
 | api.features.bootstrapConfig.config | object | `{}` |  |
 | api.features.bootstrapConfig.enabled | bool | `false` |  |
 | api.features.disablePersonalOrgs | bool | `false` |  |
-| api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
+| api.inviteMode | string | `"auto-accept"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.logServer | object | `{"caFile":"","certFile":"","enabled":false,"grpcAddress":"testkube-logs-service:8089","host":"","keyFile":"","port":"443","secure":"false","skipVerify":"true"}` | External log server connection configuration |
 | api.logServer.caFile | string | `""` | TLS CA certificate file |
 | api.logServer.certFile | string | `""` | TLS certificate file |
@@ -93,11 +91,6 @@ A Helm chart for Testkube Cloud API
 | api.redirectSubdomain | string | `""` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | api.sendgrid.apiKey | string | `""` | Sendgrid API key |
 | api.sendgrid.secretRef | string | `""` | Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`) |
-| api.smtp.host | string | `"smtp.example.com"` | SMTP host |
-| api.smtp.password | string | `""` | SMTP password |
-| api.smtp.passwordSecretRef | string | `""` | SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined |
-| api.smtp.port | int | `587` | SMTP port |
-| api.smtp.username | string | `""` | SMTP username |
 | api.tls.agentPort | int | `8443` | Agent gRPCS port |
 | api.tls.apiPort | int | `9443` | API HTTPS port |
 | api.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
