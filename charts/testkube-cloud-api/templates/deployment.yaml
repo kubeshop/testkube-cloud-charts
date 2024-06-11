@@ -170,24 +170,28 @@ spec:
                 secretKeyRef:
                   key: SENDGRID_API_KEY
                   name: {{ .Values.api.sendgrid.secretRef }}
-              {{- else if .Values.api.sendgrid.apiKey }}
+            {{- else if .Values.api.sendgrid.apiKey }}
             - name: SENDGRID_API_KEY
               value: "{{ .Values.api.sendgrid.apiKey }}"
-              {{- end }}
-              {{- if .Values.api.mongo.dsnSecretRef }}
+            {{- end }}
+            {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
+            {{- $mongoDsn := .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
+            {{- $mongoDatabase := .Values.global.mongo.database | default .Values.api.mongo.database }}
+            {{- $mongoReadPreference := .Values.global.mongo.readPreference | default .Values.api.mongo.readPreference }}
+            {{- if $mongoDsnSecretRef }}
             - name: API_MONGO_DSN
               valueFrom:
                 secretKeyRef:
                   key: MONGO_DSN
-                  name: {{ .Values.api.mongo.dsnSecretRef }}
-              {{- else if .Values.api.mongo.dsn }}
+                  name: {{ $mongoDsnSecretRef }}
+            {{- else if $mongoDsn }}
             - name: API_MONGO_DSN
-              value: {{ .Values.api.mongo.dsn }}
-              {{- end }}
+              value: {{ $mongoDsn }}
+            {{- end }}
             - name: API_MONGO_DB
-              value: {{ .Values.api.mongo.database }}
+              value: {{ $mongoDatabase }}
             - name: API_MONGO_READ_PREFERENCE
-              value: {{ .Values.api.mongo.readPreference }}
+              value: {{ $mongoReadPreference }}
               {{- if .Values.api.oauth.secretRef }}
             - name: OAUTH_CLIENT_ID
               valueFrom:
@@ -238,8 +242,9 @@ spec:
             - name: OAUTH_REDIRECT_URI
               value: "{{ if .Values.api.oauth.redirectUri }}{{ .Values.api.oauth.redirectUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/auth/callback{{ end }}"
               {{- end }}
+            {{- $natsUri := .Values.global.nats.uri | default .Values.api.nats.uri }}
             - name: NATS_URI
-              value: {{ .Values.api.nats.uri }}
+              value: {{ $natsUri }}
             {{- $dashboardAddress := "" }}
             {{- if .Values.api.dashboardAddress }}
             {{- $dashboardAddress = .Values.api.dashboardAddress }}
@@ -356,7 +361,7 @@ spec:
             {{- with .Values.api.features.bootstrapAgentTokenSecretRef }}
             - name: {{ snakecase . | upper | quote }}
               valueFrom:
-                secretKeyRef: 
+                secretKeyRef:
                   name: {{ . | quote}}
                   key: agent-token
             {{- end}}

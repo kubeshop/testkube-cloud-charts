@@ -41,20 +41,27 @@ spec:
               value: "0.0.0.0:9100"
             - name: OUTPUTS_BUCKET
               value: "{{ .Values.api.outputsBucket }}"
+            {{- $natsUri := .Values.global.nats.uri | default .Values.api.nats.uri }}
             - name: NATS_URI
-              value: {{ tpl .Values.api.nats.uri $ | quote }}
-              {{- if .Values.api.mongo.dsnSecretRef }}
+              value: {{ $natsUri | quote }}
+            {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
+            {{- $mongoDsn := .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
+            {{- $mongoDatabase := .Values.global.mongo.database | default .Values.api.mongo.database }}
+            {{- $mongoReadPreference := .Values.global.mongo.readPreference | default .Values.api.mongo.readPreference }}
+            {{- if $mongoDsnSecretRef }}
             - name: API_MONGO_DSN
               valueFrom:
                 secretKeyRef:
                   key: MONGO_DSN
-                  name: {{ .Values.api.mongo.dsnSecretRef }}
-              {{- else if .Values.api.mongo.dsn }}
+                  name: {{ $mongoDsnSecretRef }}
+            {{- else if $mongoDsn }}
             - name: API_MONGO_DSN
-              value: {{ .Values.api.mongo.dsn }}
-              {{- end }}
+              value: {{ $mongoDsn }}
+            {{- end }}
             - name: API_MONGO_DB
-              value: {{ .Values.api.mongo.database }}
+              value: {{ $mongoDatabase }}
+            - name: API_MONGO_READ_PREFERENCE
+              value: {{ $mongoReadPreference }}
             - name: MINIO_ENDPOINT
               value: "{{ tpl .Values.api.minio.endpoint . }}"
             - name: MINIO_REGION
