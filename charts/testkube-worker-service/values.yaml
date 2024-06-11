@@ -25,14 +25,39 @@ global:
   nats:
     # -- NATS URI
     uri: ""
+  ## Global S3 configuration for Testkube Pro
+  storage:
+    # -- S3 bucket in which Test Artifacts & Logs will be stored
+    outputsBucket: ""
+    # -- Endpoint to a S3 compatible storage service (without protocol)
+    endpoint: ""
+    # -- S3 region
+    region: ""
+    # -- Toggle whether to use HTTPS when connecting to the S3 server
+    secure: null
+    # -- Toggle whether to skip verifying TLS certificates
+    skipVerify: null
+    # -- S3 Access Key ID
+    accessKeyId: ""
+    # -- S3 Secret Access Key
+    secretAccessKey: ""
+    # -- S3 Token
+    token: ""
+    # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
+    credsSecretRef: ""
+
 replicaCount: 1
+
 image:
   repository: kubeshop/testkube-worker-service
   pullPolicy: IfNotPresent
   tag: "1.9.6"
+
 imagePullSecrets: []
+
 nameOverride: ""
 fullnameOverride: ""
+
 # -- Additional env vars to be added to the deployment
 additionalEnv: {}
 # FOO: bar
@@ -60,6 +85,8 @@ api:
     expirationPeriod: 0
     # -- Should be set to `true` if MinIO is behind
     secure: false
+    # -- Toggle whether to skip verifying TLS certificates
+    skipVerify: false
   mongo:
     # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
     dsnSecretRef: ""
@@ -69,11 +96,13 @@ api:
     database: "testkubecloud"
     # -- Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest)
     readPreference: secondaryPreferred
+
 externalSecrets:
   enabled: false
   refreshInterval: 5m
   clusterSecretStoreName: secret-store
   keys: {}
+
 serviceAccount:
   # -- Toggle whether to create a ServiceAccount resource
   create: false
