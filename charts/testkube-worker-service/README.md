@@ -33,6 +33,7 @@ A Helm chart for Testkube Worker Service
 | api.mongo.database | string | `"testkubecloud"` | Mongo database name |
 | api.mongo.dsn | string | `"mongodb://mongodb.testkube.svc.cluster.local:27017"` | if mongoDsnSecretRef is empty (""), mongoDsn field will be used for setting the Mongo DSN connection string |
 | api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
+| api.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | api.nats.uri | string | `"nats://nats.messaging.svc.cluster.local:4222"` | NATS URI |
 | api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which outputs are stored |
 | autoscaling.enabled | bool | `false` | Toggle whether to enable Horizontal Pod Autoscaler |
@@ -45,8 +46,15 @@ A Helm chart for Testkube Worker Service
 | externalSecrets.keys | object | `{}` |  |
 | externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
-| global.imagePullSecrets | list | `[]` |  |
+| global.imagePullPolicy | string | `""` | Image pull policy |
+| global.imagePullSecrets | list | `[]` | Image pull secrets |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
+| global.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
+| global.mongo.database | string | `""` | Mongo database name |
+| global.mongo.dsn | string | `""` | Mongo DSN connection string |
+| global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
+| global.mongo.readPreference | string | `""` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
+| global.nats.uri | string | `""` | NATS URI |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-worker-service"` |  |
 | image.tag | string | `"1.9.6"` |  |
