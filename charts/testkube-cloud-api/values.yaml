@@ -44,12 +44,32 @@ global:
     issuer: ""
   # -- Common labels which will be added to all resources
   labels: {}
+  ## Global MongoDB configuration for Testkube Pro API
+  mongo:
+    # -- Mongo DSN connection string
+    dsn: ""
+    # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
+    dsnSecretRef: ""
+    # -- Mongo database name
+    database: ""
+    # -- Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest)
+    readPreference: ""
+    # -- Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit.
+    allowDiskUse: false
+  ## Global NATS configuration for Testkube Pro API
+  nats:
+    # -- NATS URI
+    uri: ""
+
 replicaCount: 1
+
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
   tag: "1.10.16"
+
 imagePullSecrets: []
+
 nameOverride: ""
 fullnameOverride: ""
 # -- Additional env vars to be added to the deployment

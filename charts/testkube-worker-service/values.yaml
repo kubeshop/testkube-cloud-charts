@@ -3,17 +3,41 @@
 # Declare variables to be passed into your templates.
 
 global:
+  # -- Image pull secrets
   imagePullSecrets: []
+  # -- Image pull policy
+  imagePullPolicy: ""
   # -- Common labels which will be added to all resources
   labels: {}
+  ## Global MongoDB configuration for Testkube Pro API
+  mongo:
+    # -- Mongo DSN connection string
+    dsn: ""
+    # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
+    dsnSecretRef: ""
+    # -- Mongo database name
+    database: ""
+    # -- Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest)
+    readPreference: ""
+    # -- Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit.
+    allowDiskUse: false
+  ## Global NATS configuration for Testkube Pro API
+  nats:
+    # -- NATS URI
+    uri: ""
+
 replicaCount: 1
+
 image:
   repository: kubeshop/testkube-worker-service
   pullPolicy: IfNotPresent
   tag: "1.9.6"
+
 imagePullSecrets: []
+
 nameOverride: ""
 fullnameOverride: ""
+
 # -- Additional env vars to be added to the deployment
 additionalEnv: {}
 # FOO: bar
@@ -48,6 +72,8 @@ api:
     dsn: "mongodb://mongodb.testkube.svc.cluster.local:27017"
     # -- Mongo database name
     database: "testkubecloud"
+    # -- Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest)
+    readPreference: secondaryPreferred
 externalSecrets:
   enabled: false
   refreshInterval: 5m

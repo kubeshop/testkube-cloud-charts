@@ -69,6 +69,12 @@ A Helm chart for Testkube Enterprise
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.logsSubdomain | string | `"logs"` | UI subdomain which get prepended to the domain |
+| global.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
+| global.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
+| global.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
+| global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
+| global.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
+| global.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
@@ -116,7 +122,7 @@ A Helm chart for Testkube Enterprise
 | mongodb.podSecurityContext | object | `{}` | MongoDB Pod Security Context |
 | mongodb.resources | object | `{"limits":{"cpu":2,"memory":"2Gi"},"requests":{"cpu":"500m","memory":"1Gi"}}` | Set resources requests and limits for MongoDB |
 | mongodb.tolerations | list | `[]` |  |
-| mongodb.updateStrategy | object | `{"type":"Recreate"}` | Enables Recreate updateStrategy MongoDB uses ReadWriteOnce access mode for PV. It means that the volume can be accessed by pods that reside on the same node. If during an upgrade a new Mongo pod with RollingUpdate strategy is scheduled on a different node, the upgrade will fail with the error: Volume is already used by pod. Therefore, it is required to use Recreate strategy to kill existing pods on upgrade before creating new ones. |
+| mongodb.updateStrategy.type | string | `"Recreate"` | Update Strategy type |
 | nats.config.cluster.enabled | bool | `true` | Enable cluster mode (HA) |
 | nats.config.cluster.replicas | int | `3` | NATS cluster replicas |
 | nats.config.jetstream.enabled | bool | `true` | Toggle whether to enable JetStream (Testkube requires JetStream to be enabled, so this setting should always be on) |
@@ -124,7 +130,9 @@ A Helm chart for Testkube Enterprise
 | nats.config.jetstream.fileStore.pvc.size | string | `"10Gi"` |  |
 | nats.config.jetstream.fileStore.pvc.storageClassName | string | `nil` |  |
 | nats.config.merge | object | `{"cluster":{"name":"<< testkube-enterprise >>"},"debug":false,"max_payload":"<< 8MB >>"}` | Merge additional fields to nats config https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.config.merge.cluster.name | string | `"<< testkube-enterprise >>"` | NATS cluster name |
 | nats.config.merge.debug | bool | `false` | Enable debug for NATS |
+| nats.config.merge.max_payload | string | `"<< 8MB >>"` | NATS message maximum payload size |
 | nats.config.patch | list | `[]` | Patch additional fields to nats config |
 | nats.container.merge.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":1,"memory":"512Mi"}}` | Set resources requests and limits for NATS container |
 | nats.enabled | bool | `true` | Toggle whether to install NATS |
@@ -188,8 +196,10 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.minio.signing.secure | bool | `false` | Toggle should the presigned URL use HTTPS |
 | testkube-cloud-api.api.minio.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
 | testkube-cloud-api.api.minio.token | string | `""` | MinIO token |
+| testkube-cloud-api.api.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | testkube-cloud-api.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
 | testkube-cloud-api.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
+| testkube-cloud-api.api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | testkube-cloud-api.api.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | testkube-cloud-api.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
 | testkube-cloud-api.api.oauth.clientId | string | `"testkube-enterprise"` | OAuth Client ID for the configured static client in Dex |
@@ -220,52 +230,20 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.resources | object | `{"limits":{"cpu":"250m","memory":"256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Set resources requests and limits for Testkube UI |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
-| testkube-logs-service.additionalEnv | object | `{"USE_MINIO":true}` | Additional env vars to set |
-| testkube-logs-service.additionalEnv.USE_MINIO | bool | `true` | Enterprise should use MinIO for storage and this envvar should not be changed |
-| testkube-logs-service.api.minio.accessKeyId | string | `"testkube-enterprise"` | MinIO access key id |
-| testkube-logs-service.api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
-| testkube-logs-service.api.minio.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
-| testkube-logs-service.api.minio.certSecret.certFile | string | `"cert.crt"` | Path to client certificate file |
-| testkube-logs-service.api.minio.certSecret.enabled | bool | `false` | Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt) |
-| testkube-logs-service.api.minio.certSecret.keyFile | string | `"cert.key"` | Path to client certificate key file |
-| testkube-logs-service.api.minio.certSecret.name | string | `"storage-client-cert"` | Name of the storage client certificate secret |
-| testkube-logs-service.api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
-| testkube-logs-service.api.minio.endpoint | string | `"{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}"` | Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service |
-| testkube-logs-service.api.minio.expirationPeriod | int | `0` | Expiration period in days |
-| testkube-logs-service.api.minio.mountCACertificate | bool | `false` | If enabled, will also require a CA certificate to be provided |
-| testkube-logs-service.api.minio.region | string | `""` | S3 region |
-| testkube-logs-service.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` | MinIO secret access key |
-| testkube-logs-service.api.minio.secure | bool | `true` | Should be set to `true` if MinIO is exposed through HTTPS |
-| testkube-logs-service.api.minio.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
-| testkube-logs-service.api.minio.token | string | `""` | MinIO token |
-| testkube-logs-service.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
-| testkube-logs-service.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
-| testkube-logs-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
-| testkube-logs-service.api.tls.agentPort | int | `8443` | Agent gRPCS port |
-| testkube-logs-service.api.tls.apiPort | int | `9443` | API HTTPS port |
-| testkube-logs-service.api.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
-| testkube-logs-service.api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
-| testkube-logs-service.api.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | certificate path |
-| testkube-logs-service.api.tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | certificate key path |
-| testkube-logs-service.api.tls.serveHTTPS | bool | `false` | Toggle should the Application terminate TLS instead of the Ingress |
-| testkube-logs-service.enabled | bool | `true` | Toggle whether to install Testkube Logs Service |
-| testkube-logs-service.fullnameOverride | string | `"testkube-enterprise-logs-service"` |  |
-| testkube-logs-service.grpcIngress.enabled | bool | `true` | Toggle whether to enable gRPC Ingress for Logs Service |
-| testkube-logs-service.grpcIngress.host | string | `""` |  |
-| testkube-logs-service.image.tag | string | `"v0-20240315-134446"` |  |
-| testkube-logs-service.resources | object | `{"limits":{"cpu":"250m","memory":"256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Set resources requests and limits for Testkube Logs Service |
-| testkube-logs-service.testConnection.enabled | bool | `false` |  |
 | testkube-worker-service.additionalEnv.USE_MINIO | bool | `true` |  |
 | testkube-worker-service.api.minio.accessKeyId | string | `"testkube-enterprise"` |  |
 | testkube-worker-service.api.minio.endpoint | string | `"testkube-enterprise-minio:9000"` |  |
 | testkube-worker-service.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` |  |
+| testkube-worker-service.api.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | testkube-worker-service.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
 | testkube-worker-service.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
-| testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
+| testkube-worker-service.api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
+| testkube-worker-service.api.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
+| testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.tag | string | `"1.9.6"` |  |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"250m","memory":"256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Set resources requests and limits for Testkube Worker Service |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+Autogenerated from chart metadata using [helm-docs v1.13.1](https://github.com/norwoodj/helm-docs/releases/v1.13.1)
