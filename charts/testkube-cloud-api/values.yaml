@@ -60,16 +60,12 @@ global:
   nats:
     # -- NATS URI
     uri: ""
-
 replicaCount: 1
-
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
   tag: "1.10.16"
-
 imagePullSecrets: []
-
 nameOverride: ""
 fullnameOverride: ""
 # -- Additional env vars to be added to the deployment

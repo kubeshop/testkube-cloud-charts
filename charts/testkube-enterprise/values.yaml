@@ -62,7 +62,6 @@ global:
   nats: &global_nats_config
     # -- NATS URI
     uri: "nats://testkube-enterprise-nats:4222"
-
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -78,7 +77,6 @@ sharedSecretGenerator:
     registry: docker.io
     repository: bitnami/kubectl
     tag: 1.28.2
-
 ## MinIO chart parameters
 minio:
   # -- Toggle whether to install MinIO
@@ -181,7 +179,6 @@ minio:
     tls:
       # -- TLS secret name which contains the certificate files
       tlsSecret: testkube-enterprise-minio-tls
-
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
@@ -338,7 +335,6 @@ testkube-cloud-api:
   ##Test Connection pod
   testConnection:
     enabled: false
-
 ## Testkube Cloud UI chart parameters
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
@@ -362,12 +358,10 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
-
 ## Testkube chart parameters
 testkube-agent:
   # -- Toggle whether to install & connect Testkube Agent in the same cluster
   enabled: false
-
 ## Testkube Worker Service chart parameters
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
@@ -391,7 +385,6 @@ testkube-worker-service:
     mongo: *global_mongo_config
   additionalEnv:
     USE_MINIO: true
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
@@ -499,7 +492,6 @@ nats:
     merge: {}
     # -- Patch additional fields to the container
     patch: []
-
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -542,7 +534,7 @@ mongodb:
   updateStrategy:
     # -- Update Strategy type
     type: Recreate
-  ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
+    ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
 #  podSecurityContext:
 #    fsGroup: 1001010000
 #  containerSecurityContext:

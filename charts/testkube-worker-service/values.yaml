@@ -25,19 +25,14 @@ global:
   nats:
     # -- NATS URI
     uri: ""
-
 replicaCount: 1
-
 image:
   repository: kubeshop/testkube-worker-service
   pullPolicy: IfNotPresent
   tag: "1.9.6"
-
 imagePullSecrets: []
-
 nameOverride: ""
 fullnameOverride: ""
-
 # -- Additional env vars to be added to the deployment
 additionalEnv: {}
 # FOO: bar
