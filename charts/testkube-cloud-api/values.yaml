@@ -60,14 +60,39 @@ global:
   nats:
     # -- NATS URI
     uri: ""
+  ## Global S3 configuration for Testkube Pro
+  storage:
+    # -- S3 bucket in which Test Artifacts & Logs will be stored
+    outputsBucket: ""
+    # -- Endpoint to a S3 compatible storage service (without protocol)
+    endpoint: ""
+    # -- S3 region
+    region: ""
+    # -- Toggle whether to use HTTPS when connecting to the S3 server
+    secure: null
+    # -- Toggle whether to skip verifying TLS certificates
+    skipVerify: null
+    # -- S3 Access Key ID
+    accessKeyId: ""
+    # -- S3 Secret Access Key
+    secretAccessKey: ""
+    # -- S3 Token
+    token: ""
+    # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
+    credsSecretRef: ""
+
 replicaCount: 1
+
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
   tag: "1.10.16"
+
 imagePullSecrets: []
+
 nameOverride: ""
 fullnameOverride: ""
+
 # -- Additional env vars to be added to the deployment
 additionalEnv: {}
 # FOO: bar

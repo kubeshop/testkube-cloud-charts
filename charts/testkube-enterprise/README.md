@@ -78,6 +78,15 @@ A Helm chart for Testkube Enterprise
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.statusPagesApiSubdomain | string | `"status"` | Status Pages API subdomain which get prepended to the domain |
+| global.storage.accessKeyId | string | `""` | S3 Access Key ID |
+| global.storage.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
+| global.storage.endpoint | string | `"{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}"` | Endpoint to a S3 compatible storage service (without protocol) |
+| global.storage.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which Test Artifacts & Logs will be stored |
+| global.storage.region | string | `""` | S3 region |
+| global.storage.secretAccessKey | string | `""` | S3 Secret Access Key |
+| global.storage.secure | bool | `true` | Toggle whether to use HTTPS when connecting to the S3 server |
+| global.storage.skipVerify | bool | `false` | Toggle whether to skip verifying TLS certificates |
+| global.storage.token | string | `""` | S3 Token |
 | global.storageApiSubdomain | string | `"storage"` | Storage API subdomain which get prepended to the domain |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
@@ -178,24 +187,16 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.migrations.image.repository | string | `"kubeshop/testkube-enterprise-api-migrations"` | Migrations image repository |
 | testkube-cloud-api.api.migrations.ttlSecondsAfterFinished | int | `90` |  |
 | testkube-cloud-api.api.migrations.useHelmHooks | bool | `false` | Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart) |
-| testkube-cloud-api.api.minio.accessKeyId | string | `"testkube-enterprise"` | MinIO access key id |
 | testkube-cloud-api.api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
 | testkube-cloud-api.api.minio.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
 | testkube-cloud-api.api.minio.certSecret.certFile | string | `"cert.crt"` | Path to client certificate file |
 | testkube-cloud-api.api.minio.certSecret.enabled | bool | `false` | Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt) |
 | testkube-cloud-api.api.minio.certSecret.keyFile | string | `"cert.key"` | Path to client certificate key file |
 | testkube-cloud-api.api.minio.certSecret.name | string | `"storage-client-cert"` | Name of the storage client certificate secret |
-| testkube-cloud-api.api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
-| testkube-cloud-api.api.minio.endpoint | string | `"{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}"` | Define the MinIO service endpoint. Leave empty to auto-generate when using bundled MinIO. Specify if using an external MinIO service |
 | testkube-cloud-api.api.minio.expirationPeriod | int | `0` | Expiration period in days |
 | testkube-cloud-api.api.minio.mountCACertificate | bool | `false` | If enabled, will also require a CA certificate to be provided |
-| testkube-cloud-api.api.minio.region | string | `""` | S3 region |
-| testkube-cloud-api.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` | MinIO secret access key |
-| testkube-cloud-api.api.minio.secure | bool | `true` | Should be set to `true` if MinIO is exposed through HTTPS |
 | testkube-cloud-api.api.minio.signing.hostname | string | `""` | Hostname for the presigned PUT URL |
 | testkube-cloud-api.api.minio.signing.secure | bool | `false` | Toggle should the presigned URL use HTTPS |
-| testkube-cloud-api.api.minio.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
-| testkube-cloud-api.api.minio.token | string | `""` | MinIO token |
 | testkube-cloud-api.api.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | testkube-cloud-api.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
 | testkube-cloud-api.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
@@ -231,9 +232,6 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.resources | object | `{"limits":{"cpu":"250m","memory":"256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Set resources requests and limits for Testkube UI |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
 | testkube-worker-service.additionalEnv.USE_MINIO | bool | `true` |  |
-| testkube-worker-service.api.minio.accessKeyId | string | `"testkube-enterprise"` |  |
-| testkube-worker-service.api.minio.endpoint | string | `"testkube-enterprise-minio:9000"` |  |
-| testkube-worker-service.api.minio.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` |  |
 | testkube-worker-service.api.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | testkube-worker-service.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
 | testkube-worker-service.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
@@ -246,4 +244,4 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"250m","memory":"256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Set resources requests and limits for Testkube Worker Service |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+Autogenerated from chart metadata using [helm-docs v1.13.1](https://github.com/norwoodj/helm-docs/releases/v1.13.1)

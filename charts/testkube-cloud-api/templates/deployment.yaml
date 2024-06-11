@@ -176,8 +176,6 @@ spec:
             {{- end }}
             {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
             {{- $mongoDsn := .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
-            {{- $mongoDatabase := .Values.global.mongo.database | default .Values.api.mongo.database }}
-            {{- $mongoReadPreference := .Values.global.mongo.readPreference | default .Values.api.mongo.readPreference }}
             {{- if $mongoDsnSecretRef }}
             - name: API_MONGO_DSN
               valueFrom:
@@ -188,8 +186,10 @@ spec:
             - name: API_MONGO_DSN
               value: {{ $mongoDsn }}
             {{- end }}
+            {{- $mongoDatabase := .Values.global.mongo.database | default .Values.api.mongo.database }}
             - name: API_MONGO_DB
               value: {{ $mongoDatabase }}
+            {{- $mongoReadPreference := .Values.global.mongo.readPreference | default .Values.api.mongo.readPreference }}
             - name: API_MONGO_READ_PREFERENCE
               value: {{ $mongoReadPreference }}
               {{- if .Values.api.oauth.secretRef }}
@@ -283,42 +283,53 @@ spec:
             - name: SSL_CERT_DIR
               value: /etc/testkube/certs
             {{- end }}
+            {{- $outputsBucket := .Values.global.storage.outputsBucket | default .Values.api.outputsBucket }}
             - name: OUTPUTS_BUCKET
-              value: "{{ .Values.api.outputsBucket }}"
+              value: "{{ $outputsBucket }}"
+            {{- $minioEndpoint := .Values.global.storage.endpoint | default .Values.api.minio.endpoint }}
             - name: MINIO_ENDPOINT
-              value: "{{ tpl .Values.api.minio.endpoint . }}"
+              value: "{{ tpl $minioEndpoint . }}"
+            {{- $minioRegion := .Values.global.storage.region | default .Values.api.minio.region }}
             - name: MINIO_REGION
-              value: "{{ .Values.api.minio.region }}"
+              value: "{{ $minioRegion }}"
+            {{- $minioSecure := .Values.global.storage.secure | default .Values.api.minio.secure }}
             - name: MINIO_SSL
-              value: "{{ .Values.api.minio.secure }}"
+              value: "{{ $minioSecure }}"
+            {{- $minioSkipVerify := .Values.global.storage.skipVerify | default .Values.api.minio.skipVerify }}
+            - name: "MINIO_SKIP_VERIFY"
+              value: "{{ $minioSkipVerify }}"
             - name: MINIO_EXPIRATION
               value: "{{ .Values.api.minio.expirationPeriod }}"
+            {{- $minioCredsSecretRef := .Values.global.storage.credsSecretRef | default .Values.api.minio.credsSecretRef }}
+            {{- $minioAccessKeyId := .Values.global.storage.accessKeyId | default .Values.api.minio.accessKeyId }}
+            {{- $minioSecretAccessKey := .Values.global.storage.secretAccessKey | default .Values.api.minio.secretAccessKey }}
+            {{- $minioToken := .Values.global.storage.token | default .Values.api.minio.token }}
             - name: MINIO_ACCESS_KEY_ID
-              {{- if .Values.api.minio.credsSecretRef }}
+              {{- if $minioCredsSecretRef }}
               valueFrom:
                 secretKeyRef:
                   key: root-user
-                  name: {{ .Values.api.minio.credsSecretRef }}
+                  name: {{ $minioCredsSecretRef }}
               {{- else }}
-              value: "{{ .Values.api.minio.accessKeyId }}"
+              value: "{{ $minioAccessKeyId }}"
               {{- end }}
             - name: MINIO_SECRET_ACCESS_KEY
-              {{- if .Values.api.minio.credsSecretRef }}
+              {{- if $minioCredsSecretRef }}
               valueFrom:
                 secretKeyRef:
                   key: root-password
-                  name: {{ .Values.api.minio.credsSecretRef }}
+                  name: {{ $minioCredsSecretRef }}
               {{- else }}
-              value: "{{ .Values.api.minio.secretAccessKey }}"
+              value: "{{ $minioSecretAccessKey }}"
               {{- end }}
             - name: MINIO_TOKEN
-              {{- if .Values.api.minio.credsSecretRef }}
+              {{- if $minioCredsSecretRef }}
               valueFrom:
                 secretKeyRef:
                   key: token
-                  name: {{ .Values.api.minio.credsSecretRef }}
+                  name: {{ $minioCredsSecretRef }}
               {{- else }}
-              value: "{{ .Values.api.minio.token }}"
+              value: "{{ $minioToken }}"
               {{- end }}
             - name: LOG_SERVER_GRPC_ADDRESS
               value: "{{ .Values.api.logServer.grpcAddress }}"
@@ -332,8 +343,6 @@ spec:
               value: "{{ .Values.api.logServer.keyFile }}"
             - name: LOG_SERVER_CA_FILE
               value: "{{ .Values.api.logServer.caFile }}"
-            - name: "MINIO_SKIP_VERIFY"
-              value: "{{ .Values.api.minio.skipVerify }}"
             - name: "AGENT_STORAGE_HOSTNAME"
               value: "{{ .Values.api.minio.signing.hostname }}"
             - name: "AGENT_STORAGE_SSL"

@@ -3,6 +3,10 @@ global:
     enabled: false
   dex:
     issuer: http://localhost:5556
+  storage:
+    endpoint: "testkube-enterprise-minio:9000"
+    credsSecretRef: testkube-minio-credentials
+    secure: false
 
 sharedSecretGenerator:
   enabled: true
@@ -23,11 +27,6 @@ testkube-cloud-api:
       bootstrapOrg: "demo"
       bootstrapEnv: "my-first-environment"
       bootstrapAgentTokenSecretRef: "testkube-default-agent-token"
-    minio:
-      endpoint: "testkube-enterprise-minio:9000"
-      credsSecretRef: testkube-minio-credentials
-      expirationPeriod: 0
-      secure: false
     agent:
       host: "testkube-enterprise-api:grpcs"
       port: 80
@@ -70,11 +69,6 @@ testkube-agent:
         key: agent-token
 
 testkube-worker-service:
-  api:
-    minio:
-      endpoint: "testkube-enterprise-minio:9000"
-      credsSecretRef: testkube-minio-credentials
-      secure: false
   additionalEnv:
     USE_MINIO: true
 
