@@ -1,102 +1,59 @@
 global:
   ingress:
     enabled: false
-  # -- Run Testkube in enterprise mode (enables enterprise features)
-  enterpriseMode: true
-  # -- Toggle whether to enable offline license activation in Enterprise mode
-  enterpriseOfflineAccess: false
-  # -- Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file.
-  enterpriseLicenseSecretRef: ""
-  # -- Enterprise License key
-  enterpriseLicenseKey: ""
-  # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
-  certificateProvider: ""
-  # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
-  imagePullSecrets: []
   dex:
-    # -- Global Dex issuer url which is configured both in Dex and API
     issuer: http://localhost:5556
+
 sharedSecretGenerator:
   enabled: true
-  securityContext: {}
-  resources: {}
-  image: {}
+
 testkube-cloud-api:
-  fullnameOverride: testkube-enterprise-api
-  image:
-    repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.16
   additionalEnv:
-    OAUTH_CLI_CLIENT_ID: teskube-cloud-cli
+    OAUTH_CLI_CLIENT_ID: testkube-cloud-cli
     OAUTH_ENABLED: true
     OAUTH_SKIP_DISCOVERY: true
     OAUTH_AUTH_URL: http://localhost:5556/auth
-    OAUTH_TOKEN_URL: http://testkube-enterprise-dex.{{.Release.Namespace}}.svc.cluster.local:5556/token
-    OAUTH_USER_INFO_URL: http://testkube-enterprise-dex.{{.Release.Namespace}}.svc.cluster.local:5556/userinfo
-    OAUTH_JWKS_URL: http://testkube-enterprise-dex.{{.Release.Namespace}}.svc.cluster.local:5556/keys
-    DEX_SIGNUP_ORIGIN: testkube-enterprise-dex.{{.Release.Namespace}}.svc.cluster.local:5557
+    OAUTH_TOKEN_URL: http://testkube-enterprise-dex:5556/token
+    OAUTH_USER_INFO_URL: http://testkube-enterprise-dex:5556/userinfo
+    OAUTH_JWKS_URL: http://testkube-enterprise-dex:5556/keys
+    DEX_SIGNUP_ORIGIN: testkube-enterprise-dex:5557
   api:
-    # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
-    inviteMode: auto-accept
     features:
       disablePersonalOrgs: true
       bootstrapOrg: "demo"
       bootstrapEnv: "my-first-environment"
       bootstrapAgentTokenSecretRef: "testkube-default-agent-token"
-    migrations:
-      enabled: false
-    mongo:
-      dsn: "mongodb://testkube-enterprise-mongodb:27017"
-      database: "testkubeEnterpriseDB"
-    nats:
-      uri: "nats://testkube-enterprise-nats:4222"
     minio:
       endpoint: "testkube-enterprise-minio:9000"
       credsSecretRef: testkube-minio-credentials
       expirationPeriod: 0
       secure: false
-    sendgrid:
-      # -- Sendgrid API key
-      apiKey: ""
-      # -- Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`)
-      secretRef: ""
     agent:
-      hide: false
-      # -- Agent host (without protocol) is used for building agent install commands (if blank, api will autogenerate it based on the value of `global.domain`)
       host: "testkube-enterprise-api:grpcs"
-      # -- Agent port - used for building agent install commands
       port: 80
     tls:
       serveHTTPS: false
     oauth:
-      # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`)
       secretRef: ""
-      # -- OAuth Client ID for the configured static client in Dex
       clientId: "testkube-enterprise"
-      # -- OAuth Client ID for the configured static client in Dex
       clientSecret: "QWkVzs3nct6HZM5hxsPzwaZtq"
-      # -- If oauth.secretRef is empty (""), then oauth.redirectUri field will be used for the OAuth redirect URI
       redirectUri: "http://localhost:8090/auth/callback"
-      # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL
       issuerUrl: ""
     dashboardAddress: "http://localhost:8080"
     apiAddress: "http://localhost:8090"
-    # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
   prometheus:
     enabled: false
+
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
-    # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector
     authStrategy: ""
     apiServerEndpoint: "http://localhost:8090"
-    rootRoute: "http://testkube-enterprise-ui.{{.Release.Namespace}}.svc.cluster.local:8080"
+    rootRoute: "http://testkube-enterprise-ui:8080"
   additionalEnv:
     REACT_APP_ENABLE_SIGNUP: "true"
-  image:
-    repository: kubeshop/testkube-enterprise-ui
-    tag: 1.11.2
+
 testkube-agent:
   enabled: true
   testkube-dashboard:
@@ -105,95 +62,46 @@ testkube-agent:
     enabled: false
   testkube-api:
     cloud:
-      url: testkube-enterprise-api.{{.Release.Namespace}}.svc.cluster.local:8089
+      url: testkube-enterprise-api:8089
       tls:
         enabled: false
       existingSecret:
         name: testkube-default-agent-token
         key: agent-token
+
 testkube-worker-service:
-  fullnameOverride: testkube-enterprise-worker-service
-  image:
-    repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.9.6
   api:
-    nats:
-      uri: "nats://testkube-enterprise-nats.{{.Release.Namespace}}.svc.cluster.local:4222"
     minio:
       endpoint: "testkube-enterprise-minio:9000"
       credsSecretRef: testkube-minio-credentials
       secure: false
   additionalEnv:
     USE_MINIO: true
-# See https://artifacthub.io/packages/helm/nats/nats
+
 nats:
   fullnameOverride: testkube-enterprise-nats
   config:
     cluster:
-      enabled: true
-      replicas: 3
+      enabled: false
     jetstream:
       enabled: true
-      fileStore:
-        pvc:
-          enabled: true
-          size: 10Gi
-          storageClassName:
-    merge:
-      max_payload: << 8MB >>
-      cluster:
-        name: << testkube-enterprise >>
-      # -- Enable debug for NATS
-      debug: false
-  reloader:
-    enabled: true
-  natsBox:
-    enabled: true
-    ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
-  #    container:
-  #      image:
-  #        repository: natsio/nats-box #used to fix this: https://github.com/nats-io/nats-box/pull/66
-  #        tag: 0.14.3-nonroot
 
-  promExporter:
-    enabled: true
-# See https://artifacthub.io/packages/helm/bitnami/mongodb
 mongodb:
   enabled: true
   image:
     registry: docker.io
     repository: zcube/bitnami-compat-mongodb
     tag: 6.0.5
-  fullnameOverride: "testkube-enterprise-mongodb"
-  auth:
-    # -- Toggle whether to enable MongoDB authentication
-    enabled: false
-    # rootPassword: "123DefaultOne321"
   resources:
     requests:
       cpu: 150m
       memory: 128Mi
-  tolerations: []
-  podSecurityContext: {}
-  containerSecurityContext: {}
-  # -- Enables Recreate updateStrategy
-  # MongoDB uses ReadWriteOnce access mode for PV. It means that the volume can be accessed by pods that reside on the same node.
-  # If during an upgrade a new Mongo pod with RollingUpdate strategy is scheduled on a different node, the upgrade will fail with the error: Volume is already used by pod.
-  # Therefore, it is required to use Recreate strategy to kill existing pods on upgrade before creating new ones.
-  updateStrategy:
-    type: Recreate
-## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
-#  podSecurityContext:
-#    fsGroup: 1001010000
-#  containerSecurityContext:
-#    enabled: true
-#    runAsUser: 1001010000
-#    runAsNonRoot: true
 
-## See https://github.com/dexidp/helm-charts
+minio:
+  auth:
+    existingSecret: testkube-minio-credentials
+
 dex:
-  enabled: true
-  fullnameOverride: testkube-enterprise-dex
   ingress:
     enabled: false
   configSecret:
@@ -241,21 +149,3 @@ dex:
           hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W"
           username: "admin"
           userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128Mi
-    limits: {}
-# see https://artifacthub.io/packages/helm/bitnami/minio
-minio:
-  nameOverride: minio
-  enabled: true
-  auth:
-    existingSecret: testkube-minio-credentials
-## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
-#  podSecurityContext:
-#    fsGroup: 1001010000
-#  containerSecurityContext:
-#    enabled: true
-#    runAsUser: 1001010000
-#    runAsNonRoot: true
