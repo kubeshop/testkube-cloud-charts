@@ -45,19 +45,14 @@ global:
     token: ""
     # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
     credsSecretRef: ""
-
 replicaCount: 1
-
 image:
   repository: kubeshop/testkube-worker-service
   pullPolicy: IfNotPresent
   tag: "1.9.6"
-
 imagePullSecrets: []
-
 nameOverride: ""
 fullnameOverride: ""
-
 # -- Additional env vars to be added to the deployment
 additionalEnv: {}
 # FOO: bar
@@ -96,13 +91,11 @@ api:
     database: "testkubecloud"
     # -- Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest)
     readPreference: secondaryPreferred
-
 externalSecrets:
   enabled: false
   refreshInterval: 5m
   clusterSecretStoreName: secret-store
   keys: {}
-
 serviceAccount:
   # -- Toggle whether to create a ServiceAccount resource
   create: false

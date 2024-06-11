@@ -80,19 +80,14 @@ global:
     token: ""
     # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
     credsSecretRef: ""
-
 replicaCount: 1
-
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
   tag: "1.10.16"
-
 imagePullSecrets: []
-
 nameOverride: ""
 fullnameOverride: ""
-
 # -- Additional env vars to be added to the deployment
 additionalEnv: {}
 # FOO: bar
