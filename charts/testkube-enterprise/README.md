@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.101.0](https://img.shields.io/badge/Version-1.101.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.101.1](https://img.shields.io/badge/Version-1.101.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -23,7 +23,7 @@ A Helm chart for Testkube Enterprise
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
 | https://charts.bitnami.com/bitnami | mongodb | 14.3.0 |
 | https://charts.dexidp.io | dex | 0.15.3 |
-| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 1.17.91 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 1.17.94 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 1.1.5 |
 
 ## Values
@@ -174,7 +174,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.agent.port | int | `443` | Agent port - used for building agent install commands |
 | testkube-cloud-api.api.debug.enableGrpcServerLogs | bool | `false` | Toggle whether to enable gRPC server logs |
 | testkube-cloud-api.api.debug.enableHttp2Logs | bool | `false` | Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2 |
-| testkube-cloud-api.api.inviteMode | string | `"auto-accept"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
+| testkube-cloud-api.api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | testkube-cloud-api.api.logServer | object | `{"caFile":"","certFile":"","enabled":false,"grpcAddress":"testkube-enterprise-logs-service:8089","keyFile":"","secure":"false","skipVerify":"true"}` | External log server connection configuration |
 | testkube-cloud-api.api.logServer.caFile | string | `""` | TLS CA certificate file |
 | testkube-cloud-api.api.logServer.certFile | string | `""` | TLS certificate file |
