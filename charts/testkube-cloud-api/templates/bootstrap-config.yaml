@@ -39,13 +39,13 @@ data:
             {{- if .Values.api.features.bootstrapAdmin }}
             members:
               - email: {{.Values.api.features.bootstrapAdmin}}
-                role: admin
+                role: owner
             {{- end }}
         {{- end }}
         default_role: admin
         {{- if .Values.api.features.bootstrapAdmin }}
         members:
           - email: {{.Values.api.features.bootstrapAdmin}}
-            role: admin
+            role: owner
         {{- end }}
 {{- end }}
