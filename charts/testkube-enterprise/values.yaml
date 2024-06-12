@@ -544,7 +544,7 @@ mongodb:
 #    runAsUser: 1001010000
 #    runAsNonRoot: true
 ## Dex chart parameters
-## For more configuration parameters of NATS chart please look here: https://github.com/dexidp/helm-charts
+## For more configuration parameters of Dex chart please look here: https://github.com/dexidp/helm-charts
 dex:
   # -- Toggle whether to install Dex
   enabled: true
