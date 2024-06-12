@@ -79,7 +79,7 @@ jobs:
       - name: Commit & push changes
         run: |
           git status
-          git add **/*Chart.yaml **/*README.md charts/testkube-enterprise/Chart.lock charts/testkube-enterprise/local-values.yaml charts/testkube-enterprise/profiles/values.demo.yaml **/*values.yaml
+          git add **/*Chart.yaml **/*README.md charts/testkube-enterprise/Chart.lock charts/testkube-enterprise/profiles/values.demo.yaml **/*values.yaml
           git commit -m "updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}"
           git push --force
 
