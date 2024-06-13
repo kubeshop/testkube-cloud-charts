@@ -22,6 +22,7 @@ testkube-cloud-api:
     OAUTH_JWKS_URL: http://testkube-enterprise-dex:5556/keys
     DEX_SIGNUP_ORIGIN: testkube-enterprise-dex:5557
   api:
+    inviteMode: "auto-accept"
     features:
       disablePersonalOrgs: true
       bootstrapOrg: "demo"

@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.57.0](https://img.shields.io/badge/Version-1.57.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.17](https://img.shields.io/badge/AppVersion-1.10.17-informational?style=flat-square)
+![Version: 1.58.0](https://img.shields.io/badge/Version-1.58.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.17](https://img.shields.io/badge/AppVersion-1.10.17-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -43,7 +43,7 @@ A Helm chart for Testkube Cloud API
 | api.features.bootstrapConfig.config | object | `{}` |  |
 | api.features.bootstrapConfig.enabled | bool | `false` |  |
 | api.features.disablePersonalOrgs | bool | `false` |  |
-| api.inviteMode | string | `"auto-accept"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
+| api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.logServer | object | `{"caFile":"","certFile":"","enabled":false,"grpcAddress":"testkube-logs-service:8089","host":"","keyFile":"","port":"443","secure":"false","skipVerify":"true"}` | External log server connection configuration |
 | api.logServer.caFile | string | `""` | TLS CA certificate file |
 | api.logServer.certFile | string | `""` | TLS certificate file |
