@@ -325,10 +325,6 @@ service:
   # -- Metrics port
   metricsPort: 9000
 ingress:
-  # -- Common annotations which will be added to all Ingress resources
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
   # -- Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed)
   className: nginx
 restIngress:
