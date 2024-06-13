@@ -20,7 +20,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   annotations:
+    {{- if eq .Values.minio.customIngress.className "nginx"}}
     nginx.ingress.kubernetes.io/backend-protocol: {{ if .Values.minio.tls.enabled }}HTTPS{{ else }}HTTP{{ end }}
+    {{- end }}
     {{- if eq .Values.global.certificateProvider "cert-manager" }}
     cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
     {{- end }}
