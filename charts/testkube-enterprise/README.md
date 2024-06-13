@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.103.0](https://img.shields.io/badge/Version-1.103.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.104.0](https://img.shields.io/badge/Version-1.104.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,8 +16,8 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.58.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.46.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.59.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.47.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.34.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 12.10.2 |
@@ -227,6 +227,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.tag | string | `"1.11.2"` |  |
+| testkube-cloud-ui.ingress.className | string | `"nginx"` | Ingress classname |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.resources | object | `{"limits":{"cpu":"250m","memory":"256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Set resources requests and limits for Testkube UI |

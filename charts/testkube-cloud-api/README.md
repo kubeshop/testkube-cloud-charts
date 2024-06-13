@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.58.0](https://img.shields.io/badge/Version-1.58.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.17](https://img.shields.io/badge/AppVersion-1.10.17-informational?style=flat-square)
+![Version: 1.59.0](https://img.shields.io/badge/Version-1.59.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.17](https://img.shields.io/badge/AppVersion-1.10.17-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -153,7 +153,6 @@ A Helm chart for Testkube Cloud API
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
 | image.tag | string | `"1.10.17"` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/force-ssl-redirect":"true","nginx.ingress.kubernetes.io/preserve-trailing-slash":"true"}` | Common annotations which will be added to all Ingress resources |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
