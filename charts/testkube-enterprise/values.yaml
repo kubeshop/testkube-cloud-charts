@@ -267,7 +267,7 @@ testkube-cloud-api:
     sendgrid:
       # -- Sendgrid API key
       apiKey: ""
-      # -- Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`)
+      # -- Secret API key secret ref (secret must contain key SENDGRID_API_KEY)
       secretRef: ""
     tls:
       certManager:
