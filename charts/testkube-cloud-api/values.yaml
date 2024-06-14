@@ -163,7 +163,7 @@ api:
   sendgrid:
     # -- Sendgrid API key
     apiKey: ""
-    # -- Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`)
+    # -- Secret API key secret ref (secret must contain key SENDGRID_API_KEY)
     secretRef: ""
   tls:
     # -- Toggle should the Application terminate TLS instead of the Ingress
