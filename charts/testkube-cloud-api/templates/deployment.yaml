@@ -107,7 +107,7 @@ spec:
                   key: SMTP_PASS
                   name: {{ .Values.api.smtp.passwordSecretRef }}
               {{- else }}
-              value: "{{ required ".Values.api.smtp.password is required with .Values.api.inviteMode set to \"email\"" .Values.api.smtp.password }}"
+              value: "{{ required ".Values.api.smtp.password or .Values.api.smtp.passwordSecretRef is required with .Values.api.inviteMode set to \"email\"" .Values.api.smtp.password }}"
               {{- end }}
             {{- end }}
             {{- end }}

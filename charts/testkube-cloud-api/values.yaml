@@ -159,7 +159,7 @@ api:
     # -- SMTP password
     password: ""
     # -- SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined
-  #      passwordSecretRef: ""
+    passwordSecretRef: ""
   sendgrid:
     # -- Sendgrid API key
     apiKey: ""
