@@ -147,7 +147,9 @@ api:
   # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
   inviteMode: auto-accept
   email:
+    # -- Email to use for sending outgoing emails
     fromEmail: ""
+    # -- Name to use for sending outgoing emails
     fromName: ""
   smtp:
     # -- SMTP host
