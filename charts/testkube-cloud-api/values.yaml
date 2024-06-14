@@ -145,21 +145,28 @@ api:
       enabled: false
       config: {}
   # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
-  inviteMode: email
-  # email:
-  #   fromEmail: "noreply@kubeshop.io"
-  #   fromName: "Testkube Cloud"
-  # smtp:
-  #   # -- SMTP host
-  #   host: smtp.example.com
-  #   # -- SMTP port
-  #   port: 587
-  #   # -- SMTP username
-  #   username: ""
-  #   # -- SMTP password
-  #   password: ""
-  #   # -- SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined
-  #    passwordSecretRef: ""
+  inviteMode: auto-accept
+  email:
+    # -- Email to use for sending outgoing emails
+    fromEmail: ""
+    # -- Name to use for sending outgoing emails
+    fromName: ""
+  smtp:
+    # -- SMTP host
+    host: ""
+    # -- SMTP port
+    port: 587
+    # -- SMTP username
+    username: ""
+    # -- SMTP password
+    password: ""
+    # -- SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined
+    passwordSecretRef: ""
+  sendgrid:
+    # -- Sendgrid API key
+    apiKey: ""
+    # -- Secret API key secret ref (secret must contain key SENDGRID_API_KEY)
+    secretRef: ""
   tls:
     # -- Toggle should the Application terminate TLS instead of the Ingress
     serveHTTPS: true
@@ -238,11 +245,6 @@ api:
       keyFile: "cert.key"
       # -- Path to ca file (used for self-signed certificates)
       caFile: "ca.crt"
-  sendgrid:
-    # -- Sendgrid API key
-    apiKey: ""
-    # -- Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`)
-    secretRef: ""
   agent:
     healthcheck:
       # -- Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once

@@ -26,8 +26,8 @@ metadata:
     nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
     nginx.ingress.kubernetes.io/backend-protocol: {{ if .Values.api.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
     {{- if and (not .Values.api.tls.serveHTTPS) (eq .Values.global.certificateProvider "cert-manager") }}
-    {{- end }}
     cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
+    {{- end }}
     {{- end }}
     {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}

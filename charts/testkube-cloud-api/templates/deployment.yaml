@@ -88,6 +88,7 @@ spec:
               value: "{{ .Values.api.inviteMode }}"
             {{- if eq .Values.api.inviteMode "email" }}
             {{- $check := required ".Values.api.email needs to be configured with .Values.api.inviteMode set to \"email\"" .Values.api.email -}}
+            {{- if not (or .Values.api.sendgrid.secretRef .Values.api.sendgrid.apiKey) }}
             {{- $check := required ".Values.api.smtp needs to be configured with .Values.api.inviteMode set to \"email\"" .Values.api.smtp }}
             - name: FROM_EMAIL
               value: "{{ required ".Values.api.email.fromEmail is required with .Values.api.inviteMode set to \"email\"" .Values.api.email.fromEmail }}"
@@ -106,8 +107,19 @@ spec:
                   key: SMTP_PASS
                   name: {{ .Values.api.smtp.passwordSecretRef }}
               {{- else }}
-              value: "{{ required ".Values.api.smtp.password is required with .Values.api.inviteMode set to \"email\"" .Values.api.smtp.password }}"
+              value: "{{ required ".Values.api.smtp.password or .Values.api.smtp.passwordSecretRef is required with .Values.api.inviteMode set to \"email\"" .Values.api.smtp.password }}"
               {{- end }}
+            {{- end }}
+            {{- end }}
+            {{- if .Values.api.sendgrid.secretRef }}
+            - name: SENDGRID_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: SENDGRID_API_KEY
+                  name: {{ .Values.api.sendgrid.secretRef }}
+            {{- else if .Values.api.sendgrid.apiKey }}
+            - name: SENDGRID_API_KEY
+              value: "{{ .Values.api.sendgrid.apiKey }}"
             {{- end }}
             - name: ROOT_DOMAIN
               value: "{{ .Values.global.domain }}"
@@ -163,16 +175,6 @@ spec:
               {{- else }}
               value: {{ .Values.analytics.hubspot.apiKey }}
               {{- end }}
-            {{- end }}
-              {{- if .Values.api.sendgrid.secretRef }}
-            - name: SENDGRID_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  key: SENDGRID_API_KEY
-                  name: {{ .Values.api.sendgrid.secretRef }}
-            {{- else if .Values.api.sendgrid.apiKey }}
-            - name: SENDGRID_API_KEY
-              value: "{{ .Values.api.sendgrid.apiKey }}"
             {{- end }}
             {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
             {{- $mongoDsn := .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
