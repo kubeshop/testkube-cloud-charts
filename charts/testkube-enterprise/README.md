@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.104.0](https://img.shields.io/badge/Version-1.104.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.104.1](https://img.shields.io/badge/Version-1.104.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -174,7 +174,9 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.agent.port | int | `443` | Agent port - used for building agent install commands |
 | testkube-cloud-api.api.debug.enableGrpcServerLogs | bool | `false` | Toggle whether to enable gRPC server logs |
 | testkube-cloud-api.api.debug.enableHttp2Logs | bool | `false` | Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2 |
-| testkube-cloud-api.api.inviteMode | string | `"email"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
+| testkube-cloud-api.api.email.fromEmail | string | `""` | Email to use for sending outgoing emails |
+| testkube-cloud-api.api.email.fromName | string | `""` | Name to use for sending outgoing emails |
+| testkube-cloud-api.api.inviteMode | string | `"auto-accept"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | testkube-cloud-api.api.logServer | object | `{"caFile":"","certFile":"","enabled":false,"grpcAddress":"testkube-enterprise-logs-service:8089","keyFile":"","secure":"false","skipVerify":"true"}` | External log server connection configuration |
 | testkube-cloud-api.api.logServer.caFile | string | `""` | TLS CA certificate file |
 | testkube-cloud-api.api.logServer.certFile | string | `""` | TLS certificate file |
@@ -210,7 +212,12 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.oauth.secretRef | string | `""` | OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`) |
 | testkube-cloud-api.api.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which to store logs & artifacts |
 | testkube-cloud-api.api.sendgrid.apiKey | string | `""` | Sendgrid API key |
-| testkube-cloud-api.api.sendgrid.secretRef | string | `""` | Secret API key secret ref (secret must contain key SENDGRID_API_KEY) (default is `sendgrid-api-key`) |
+| testkube-cloud-api.api.sendgrid.secretRef | string | `""` | Secret API key secret ref (secret must contain key SENDGRID_API_KEY) |
+| testkube-cloud-api.api.smtp.host | string | `""` | SMTP host |
+| testkube-cloud-api.api.smtp.password | string | `""` | SMTP password |
+| testkube-cloud-api.api.smtp.passwordSecretRef | string | `""` | SMTP secret ref (secret must contain key SMTP_PASSWORD), overrides password field if defined |
+| testkube-cloud-api.api.smtp.port | int | `587` | SMTP port |
+| testkube-cloud-api.api.smtp.username | string | `""` | SMTP username |
 | testkube-cloud-api.api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
