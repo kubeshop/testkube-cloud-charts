@@ -7,10 +7,8 @@ global:
     endpoint: "testkube-enterprise-minio:9000"
     credsSecretRef: testkube-minio-credentials
     secure: false
-
 sharedSecretGenerator:
   enabled: true
-
 testkube-cloud-api:
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: testkube-cloud-cli
@@ -44,7 +42,8 @@ testkube-cloud-api:
     outputsBucket: testkube-cloud-outputs
   prometheus:
     enabled: false
-
+  image:
+    tag: 1.10.18
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
@@ -53,7 +52,8 @@ testkube-cloud-ui:
     rootRoute: "http://testkube-enterprise-ui:8080"
   additionalEnv:
     REACT_APP_ENABLE_SIGNUP: "true"
-
+  image:
+    tag: 1.11.2
 testkube-agent:
   enabled: true
   testkube-dashboard:
@@ -68,11 +68,11 @@ testkube-agent:
       existingSecret:
         name: testkube-default-agent-token
         key: agent-token
-
 testkube-worker-service:
   additionalEnv:
     USE_MINIO: true
-
+  image:
+    tag: 1.9.6
 nats:
   fullnameOverride: testkube-enterprise-nats
   config:
@@ -80,7 +80,6 @@ nats:
       enabled: false
     jetstream:
       enabled: true
-
 mongodb:
   enabled: true
   image:
@@ -91,11 +90,9 @@ mongodb:
     requests:
       cpu: 150m
       memory: 128Mi
-
 minio:
   auth:
     existingSecret: testkube-minio-credentials
-
 dex:
   ingress:
     enabled: false
