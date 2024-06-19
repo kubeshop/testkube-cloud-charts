@@ -43,7 +43,7 @@ testkube-cloud-api:
   prometheus:
     enabled: false
   image:
-    tag: 1.10.20
+    tag: 1.10.21
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
   ui:
