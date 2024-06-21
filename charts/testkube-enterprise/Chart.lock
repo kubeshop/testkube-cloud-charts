@@ -15,7 +15,7 @@ dependencies:
   repository: https://kubeshop.github.io/helm-charts
   version: 2.0.6
 - name: dex
-  repository: https://charts.dexidp.io
+  repository: file://./charts/dex
   version: 0.18.0
 - name: mongodb
   repository: https://charts.bitnami.com/bitnami
