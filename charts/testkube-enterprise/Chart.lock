@@ -15,8 +15,8 @@ dependencies:
   repository: https://kubeshop.github.io/helm-charts
   version: 1.17.98
 - name: dex
-  repository: https://charts.dexidp.io
-  version: 0.15.3
+  repository: file://./charts/dex
+  version: 0.18.0
 - name: mongodb
   repository: https://charts.bitnami.com/bitnami
   version: 14.3.0
@@ -26,5 +26,5 @@ dependencies:
 - name: minio
   repository: https://charts.bitnami.com/bitnami
   version: 12.10.2
-digest: sha256:93b91e158c32c38b2dc0628be0dbfc237d65b50857dbc417ff28910be2b612bc
-generated: "2024-06-21T10:01:05.428449937Z"
+digest: sha256:ca5e744f1cfd4f3efa3a79705addffb48f62d8e9022053a922d6a4ce6554cccf
+generated: "2024-06-21T15:04:58.262048+02:00"
