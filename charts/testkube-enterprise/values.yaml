@@ -122,8 +122,8 @@ minio:
   # -- Set resources requests and limits for MinIO
   resources:
     requests:
-      cpu: 500m
-      memory: 512Mi
+      cpu: 100m
+      memory: 128Mi
     limits:
       cpu: 2
       memory: 2Gi
@@ -210,8 +210,8 @@ testkube-cloud-api:
   # -- Set resources requests and limits for Testkube Api
   resources:
     requests:
-      cpu: 1
-      memory: 512Mi
+      cpu: 50m
+      memory: 64Mi
     limits:
       cpu: 1
       memory: 512Mi
@@ -355,11 +355,11 @@ testkube-cloud-ui:
   # -- Set resources requests and limits for Testkube UI
   resources:
     requests:
-      cpu: 250m
-      memory: 256Mi
+      cpu: 50m
+      memory: 64Mi
     limits:
-      cpu: 250m
-      memory: 256Mi
+      cpu: 150m
+      memory: 128Mi
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
@@ -381,11 +381,11 @@ testkube-worker-service:
   # -- Set resources requests and limits for Testkube Worker Service
   resources:
     requests:
-      cpu: 250m
-      memory: 256Mi
+      cpu: 75m
+      memory: 64Mi
     limits:
-      cpu: 250m
-      memory: 256Mi
+      cpu: 500m
+      memory: 512Mi
   api:
     nats: *global_nats_config
     mongo: *global_mongo_config
@@ -403,10 +403,10 @@ nats:
       # -- Set resources requests and limits for NATS container
       resources:
         requests:
-          cpu: 1
-          memory: 512Mi
+          cpu: 50m
+          memory: 64Mi
         limits:
-          cpu: 1
+          cpu: 500m
           memory: 512Mi
   # image:
   # repository: nats
@@ -522,8 +522,8 @@ mongodb:
   # -- Set resources requests and limits for MongoDB
   resources:
     requests:
-      cpu: 500m
-      memory: 1Gi
+      cpu: 150m
+      memory: 256Mi
     limits:
       cpu: 2
       memory: 2Gi
@@ -607,11 +607,11 @@ dex:
   # -- Set resources requests and limits for Dex Service
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 50m
+      memory: 64Mi
     limits:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 250m
+      memory: 392Mi
   ingress:
     # -- Toggle whether to enable ingress for Dex
     enabled: true
