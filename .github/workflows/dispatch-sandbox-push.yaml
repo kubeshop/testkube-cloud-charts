@@ -14,5 +14,5 @@ jobs:
         with:
           token: ${{ secrets.DISPATCH_GITHUB_TOKEN }}
           repository: kubeshop/testkube-deployment
-          event-type: sandbox_values_update
+          event-type: sandbox_charts_update
           client-payload: '{"ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
