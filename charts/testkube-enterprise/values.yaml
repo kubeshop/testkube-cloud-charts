@@ -470,7 +470,7 @@ nats:
     patch: []
   # NATS Box container settings
   natsBox:
-    enabled: true
+    enabled: false
     container:
       # -- Merge additional fields to the container
       merge:
