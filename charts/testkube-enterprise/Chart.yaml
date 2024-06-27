@@ -35,7 +35,7 @@ dependencies:
     condition: nats.enabled
   - name: minio
     version: 14.6.16
-    repository: https://charts.bitnami.com/bitnami
+    repository: file://./charts/minio
     condition: minio.enabled
 maintainers:
   - name: testkube
