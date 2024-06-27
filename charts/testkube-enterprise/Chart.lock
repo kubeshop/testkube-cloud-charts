@@ -24,7 +24,7 @@ dependencies:
   repository: https://nats-io.github.io/k8s/helm/charts/
   version: 1.1.5
 - name: minio
-  repository: https://charts.bitnami.com/bitnami
+  repository: file://./charts/minio
   version: 12.10.2
-digest: sha256:ca5e744f1cfd4f3efa3a79705addffb48f62d8e9022053a922d6a4ce6554cccf
-generated: "2024-06-21T15:04:58.262048+02:00"
+digest: sha256:5a7f140bc50ba9e6b117bb1058e82e1a1aba5f5906bd39660d18d0e91cc1fe50
+generated: "2024-06-27T17:09:23.927+02:00"
