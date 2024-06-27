@@ -60,6 +60,10 @@ spec:
             {{- $mongoReadPreference := .Values.global.mongo.readPreference | default .Values.api.mongo.readPreference }}
             - name: API_MONGO_READ_PREFERENCE
               value: {{ $mongoReadPreference }}
+            {{- if .Values.global.customCaSecretRef }}
+            - name: SSL_CERT_DIR
+              value: /etc/testkube/certs
+            {{- end }}
             {{- $outputsBucket := .Values.global.storage.outputsBucket | default .Values.api.outputsBucket }}
             - name: OUTPUTS_BUCKET
               value: "{{ $outputsBucket }}"
@@ -141,6 +145,13 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.global.customCaSecretRef }}
+          volumeMounts:
+            - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+              name: {{ .Values.global.customCaSecretRef }}
+              readOnly: true
+              subPath: ca.crt
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -152,4 +163,11 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.global.customCaSecretRef }}
+      volumes:
+        - name: {{ .Values.global.customCaSecretRef }}
+          secret:
+            secretName: {{ .Values.global.customCaSecretRef }}
+            defaultMode: 420
       {{- end }}
