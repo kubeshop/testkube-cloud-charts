@@ -89,9 +89,9 @@ Get the credentials secret.
 Return true if a secret object should be created
 */}}
 {{- define "minio.createSecret" -}}
-{{- if .Values.auth.existingSecret -}}
+{{- if or (not .Values.useSecret) .Values.auth.existingSecret -}}
 {{- else -}}
-    {{- .Values.auth.useSecret -}}
+    {{- true -}}
 {{- end -}}
 {{- end -}}
 
