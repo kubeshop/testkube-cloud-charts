@@ -12,9 +12,15 @@ helm:
   - name: image.tag
     value: ""
     forcestring: true
-  - name: sandboxWorker.image.repository
+  - name: testkube-cloud-api.image.repository
     value: kubeshop/testkube-sandbox
     forcestring: true
-  - name: sandboxWorker.image.tag
+  - name: testkube-cloud-api.image.tag
+    value: enterprise-api-foo-bar-0e38f33f
+    forcestring: true
+  - name: testkube-worker-service.image.repository
+    value: kubeshop/testkube-sandbox
+    forcestring: true
+  - name: testkube-worker-service.image.tag
     value: enterprise-worker-service-foo-bar-12c32a2e
     forcestring: true
