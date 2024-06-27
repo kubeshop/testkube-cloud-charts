@@ -4,7 +4,7 @@ helm:
     value: kubeshop/testkube-sandbox
     forcestring: true
   - name: testkube-cloud-api.image.tag
-    value: enterprise-api-foo-bar-0e38f33f
+    value: enterprise-api-foo-bar-12c32a2e
     forcestring: true
   - name: testkube-worker-service.image.repository
     value: kubeshop/testkube-sandbox
