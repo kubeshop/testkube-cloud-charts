@@ -459,7 +459,7 @@ nats:
     patch: []
   # NATS Box container settings
   natsBox:
-    enabled: true
+    enabled: false
     # Uncomment if you want to provide a different image or pullPolicy
     # container:
     # image:
