@@ -227,6 +227,11 @@ testkube-cloud-api:
   ai:
     secretRef: ""
   api:
+    features:
+      # -- Toggle whether to disable personal organizations when a user signs up for the first time
+      disablePersonalOrgs: false
+      # -- Toggle whether to enable support for legacy tests (Test, TestSuite)
+      legacyTests: false
     debug:
       # -- Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2
       enableHttp2Logs: false

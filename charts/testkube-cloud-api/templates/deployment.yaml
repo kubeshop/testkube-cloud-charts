@@ -389,6 +389,8 @@ spec:
                   name: api-external-secrets
             {{ end }}
             {{- end}}
+            - name: TESTKUBE_ENABLE_LEGACY_TESTS
+              value: "{{ .Values.api.features.legacyTests }}"
           ports:
             - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}

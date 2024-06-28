@@ -140,10 +140,13 @@ api:
     # -- TTL for the migration job
     ttlSecondsAfterFinished: 90
   features:
+    # -- Toggle whether to disable personal organizations when a user signs up for the first time
     disablePersonalOrgs: false
     bootstrapConfig:
       enabled: false
       config: {}
+    # -- Toggle whether to enable support for legacy tests (Test, TestSuite)
+    legacyTests: false
   # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
   inviteMode: auto-accept
   email:
