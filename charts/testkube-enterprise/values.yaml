@@ -206,7 +206,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.26
+    tag: 1.10.27
   # -- Set resources requests and limits for Testkube Api
   resources:
     requests:
