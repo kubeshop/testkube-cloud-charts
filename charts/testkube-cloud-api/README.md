@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.61.0](https://img.shields.io/badge/Version-1.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.22](https://img.shields.io/badge/AppVersion-1.10.22-informational?style=flat-square)
+![Version: 1.63.0](https://img.shields.io/badge/Version-1.63.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.27](https://img.shields.io/badge/AppVersion-1.10.27-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -44,7 +44,8 @@ A Helm chart for Testkube Cloud API
 | api.email.fromName | string | `""` | Name to use for sending outgoing emails |
 | api.features.bootstrapConfig.config | object | `{}` |  |
 | api.features.bootstrapConfig.enabled | bool | `false` |  |
-| api.features.disablePersonalOrgs | bool | `false` |  |
+| api.features.disablePersonalOrgs | bool | `false` | Toggle whether to disable personal organizations when a user signs up for the first time |
+| api.features.legacyTests | bool | `false` | Toggle whether to enable support for legacy tests (Test, TestSuite) |
 | api.inviteMode | string | `"auto-accept"` | Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them |
 | api.logServer | object | `{"caFile":"","certFile":"","enabled":false,"grpcAddress":"testkube-logs-service:8089","host":"","keyFile":"","port":"443","secure":"false","skipVerify":"true"}` | External log server connection configuration |
 | api.logServer.caFile | string | `""` | TLS CA certificate file |
@@ -158,7 +159,7 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.10.22"` |  |
+| image.tag | string | `"1.10.27"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | nameOverride | string | `""` |  |

@@ -55,6 +55,9 @@ jobs:
           echo "Bumping testkube-enterprise and Agent Helm-chart version"
           ./scripts/update.sh -c testkube-enterprise -g ${{ github.event.client_payload.agentVersion }}
 
+          # update Chart.lock
+          helm dependency update charts/testkube-enterprise
+
       - name: Sync & Update Testkube Enterprise Helm chart
         if: github.event.action != 'trigger-workflow-testkube-agent-main'
         run: |
