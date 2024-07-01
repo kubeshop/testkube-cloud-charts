@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.63.0](https://img.shields.io/badge/Version-1.63.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.27](https://img.shields.io/badge/AppVersion-1.10.27-informational?style=flat-square)
+![Version: 1.63.1](https://img.shields.io/badge/Version-1.63.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.28](https://img.shields.io/badge/AppVersion-1.10.28-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -159,7 +159,7 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.10.27"` |  |
+| image.tag | string | `"1.10.28"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | nameOverride | string | `""` |  |
