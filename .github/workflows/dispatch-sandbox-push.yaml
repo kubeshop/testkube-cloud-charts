@@ -1,4 +1,4 @@
-name: Dispatch events based on main push
+name: Dispatch events based on push to sandbox branch
 
 on:
   push:
