@@ -45,9 +45,9 @@ spec:
             - name: ENTERPRISE_OFFLINE_ACTIVATION
               value: "{{ .Values.global.enterpriseOfflineAccess }}"
             - name: ENTERPRISE_LICENSE_KEY_PATH
-              value: "{{ .Values.global.enterpriseLicenseKeyPath }}"
+              value: "{{ .Values.enterpriseLicenseKeyPath }}"
             - name: ENTERPRISE_LICENSE_FILE_PATH
-              value: "{{ .Values.global.enterpriseLicenseFilePath }}"
+              value: "{{ .Values.enterpriseLicenseFilePath }}"
             - name: ENTERPRISE_LICENSE_KEY
               {{- if .Values.global.enterpriseLicenseSecretRef }}
               valueFrom:

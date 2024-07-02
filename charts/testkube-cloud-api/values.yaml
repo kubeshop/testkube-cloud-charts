@@ -13,10 +13,6 @@ global:
   enterpriseLicenseFile: ""
   # -- Enterprise license file secret reference. Place the license key under the key `LICENSE_KEY` key in the secret, and in case of an offline license place the license file under the key `license.lic` in the same secret. Make sure that the license key file does not have any new line characters at the end of the file.
   enterpriseLicenseSecretRef: ""
-  # -- Specifies the path where the license key should be mounted.
-  enterpriseLicenseKeyPath: /testkube/license.key
-  # -- Specifies the path where the license file should be mounted.
-  enterpriseLicenseFilePath: /testkube/license.lic
   # -- Domain under which endpoints are exposed
   domain: ""
   # -- UI subdomain which get prepended to the domain
@@ -95,6 +91,11 @@ fullnameOverride: ""
 # -- Additional env vars to be added to the deployment
 additionalEnv: {}
 # FOO: bar
+
+# -- Specifies the path where the license key should be mounted.
+enterpriseLicenseKeyPath: /testkube/license.key
+# -- Specifies the path where the license file should be mounted.
+enterpriseLicenseFilePath: /testkube/license.lic
 
 # -- Api can allow to set demo organization id where user who don't have Kubernetes cluster can play around
 demoOrganizationId: ""
