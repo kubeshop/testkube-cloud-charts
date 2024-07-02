@@ -1,0 +1,20 @@
+helm:
+  parameters:
+  - name: testkube-cloud-api.image.repository
+    value: kubeshop/testkube-sandbox
+    forcestring: true
+  - name: testkube-cloud-api.image.tag
+    value: enterprise-api-feat-file-sandbox-09675eef
+    forcestring: true
+  - name: testkube-worker-service.image.repository
+    value: kubeshop/testkube-sandbox
+    forcestring: true
+  - name: testkube-worker-service.image.tag
+    value: enterprise-worker-service-feat-file-sandbox-09675eef
+    forcestring: true
+  - name: testkube-cloud-ui.image.repository
+    value: kubeshop/testkube-sandbox
+    forcestring: true
+  - name: testkube-cloud-ui.image.tag
+    value: ""
+    forcestring: true
