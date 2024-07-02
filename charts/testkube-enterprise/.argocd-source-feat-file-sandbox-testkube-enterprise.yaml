@@ -16,5 +16,5 @@ helm:
     value: kubeshop/testkube-sandbox
     forcestring: true
   - name: testkube-cloud-ui.image.tag
-    value: cloud-ui-feat-file-sandbox-09675eef
+    value: ""
     forcestring: true
