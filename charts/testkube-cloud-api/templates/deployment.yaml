@@ -44,8 +44,10 @@ spec:
             {{- if .Values.global.enterpriseMode }}
             - name: ENTERPRISE_OFFLINE_ACTIVATION
               value: "{{ .Values.global.enterpriseOfflineAccess }}"
-            {{- end }}
-            {{- if .Values.global.enterpriseMode }}
+            - name: ENTERPRISE_LICENSE_KEY_PATH
+              value: "{{ .Values.global.enterpriseLicenseKeyPath }}"
+            - name: ENTERPRISE_LICENSE_FILE_PATH
+              value: "{{ .Values.global.enterpriseLicenseFilePath }}"
             - name: ENTERPRISE_LICENSE_KEY
               {{- if .Values.global.enterpriseLicenseSecretRef }}
               valueFrom:
@@ -428,7 +430,7 @@ spec:
               subPath: tls.key
             {{- end }}
             {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
-            - mountPath: /testkube/license.lic
+            - mountPath: {{ .Values.global.enterpriseLicenseFilePath }}
               readOnly: true
               name: license-file
               subPath: license.lic
