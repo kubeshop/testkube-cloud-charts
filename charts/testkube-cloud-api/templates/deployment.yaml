@@ -285,9 +285,10 @@ spec:
               value: "{{ .Values.api.tls.certPath }}"
             - name: TLS_KEY
               value: "{{ .Values.api.tls.keyPath }}"
-            {{- if .Values.global.customCaSecretRef }}
+            {{- if or .Values.global.customCaSecretRef .Values.customCaDirPath }}
+            {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
             - name: SSL_CERT_DIR
-              value: /etc/testkube/certs
+              value: "{{ $certsDir }}"
             {{- end }}
             {{- $outputsBucket := .Values.global.storage.outputsBucket | default .Values.api.outputsBucket }}
             - name: OUTPUTS_BUCKET
@@ -438,7 +439,8 @@ spec:
               subPath: license.lic
             {{- end }}
             {{- if .Values.global.customCaSecretRef }}
-            - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+            {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
+            - mountPath: {{ $certsDir }}/testkube-custom-ca.pem
               name: {{ .Values.global.customCaSecretRef }}
               readOnly: true
               subPath: ca.crt
