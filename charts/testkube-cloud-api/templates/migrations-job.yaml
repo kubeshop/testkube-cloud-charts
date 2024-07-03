@@ -33,8 +33,11 @@ spec:
             {{- if .Values.global.enterpriseMode }}
             - name: ENTERPRISE_OFFLINE_ACTIVATION
               value: "{{ .Values.global.enterpriseOfflineAccess }}"
-            {{- end }}
-            {{- if .Values.global.enterpriseMode }}
+            - name: ENTERPRISE_LICENSE_KEY_PATH
+              value: "{{ .Values.enterpriseLicenseKeyPath }}"
+            - name: ENTERPRISE_LICENSE_FILE_PATH
+              value: "{{ .Values.enterpriseLicenseFilePath }}"
+            {{ if or .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseLicenseKey }}
             - name: ENTERPRISE_LICENSE_KEY
               {{- if .Values.global.enterpriseLicenseSecretRef }}
               valueFrom:
@@ -44,6 +47,7 @@ spec:
               {{- else }}
               value: "{{ .Values.global.enterpriseLicenseKey }}"
               {{- end }}
+            {{- end }}
             {{- end }}
             {{- if .Values.global.enterpriseLicenseFile }}
             - name: ENTERPRISE_LICENSE_FILE
@@ -89,6 +93,19 @@ spec:
               {{- end }}
             - name: API_MONGO_DB
               value: {{ .Values.api.mongo.database }}
+          {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
+          volumeMounts:
+            - mountPath: {{ .Values.global.enterpriseLicenseFilePath }}
+              readOnly: true
+              name: license-file
+              subPath: license.lic
+          {{- end }}
+      {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
+      volumes:
+        - name: license-file
+          secret:
+            secretName: {{ .Values.global.enterpriseLicenseSecretRef }}
+      {{- end }}
       restartPolicy: Never
   backoffLimit: 3
 {{- end }}
