@@ -4,5 +4,5 @@ helm:
     value: docker.io/kubeshop/testkube-logs-service
     forcestring: true
   - name: image.tag
-    value: 1.10.29-dev-96633c8e
+    value: 1.10.29-dev-c61e065d
     forcestring: true
