@@ -459,12 +459,27 @@ nats:
     env: {}
     # -- Merge additional fields to the container
     # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
-    merge: {}
-    # -- Patch additional fields to the container
+    merge:
+      resources:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+        limits:
+          cpu: 100m
+          memory: 256Mi
     patch: []
   # NATS Box container settings
   natsBox:
     enabled: true
+    container:
+      merge:
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 100m
+            memory: 128Mi
     # Uncomment if you want to provide a different image or pullPolicy
     # container:
     # image:
