@@ -106,7 +106,7 @@ spec:
               value: {{ .Values.api.mongo.database }}
           {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
           volumeMounts:
-            - mountPath: {{ .Values.global.enterpriseLicenseFilePath }}
+            - mountPath: {{ .Values.enterpriseLicenseFilePath }}
               readOnly: true
               name: license-file
               subPath: license.lic
