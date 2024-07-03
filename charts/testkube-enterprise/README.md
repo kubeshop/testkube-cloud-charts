@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.117.0](https://img.shields.io/badge/Version-1.117.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.118.0](https://img.shields.io/badge/Version-1.118.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -146,6 +146,7 @@ A Helm chart for Testkube Enterprise
 | nats.container.merge.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for NATS container |
 | nats.enabled | bool | `true` | Toggle whether to install NATS |
 | nats.fullnameOverride | string | `"testkube-enterprise-nats"` |  |
+| nats.natsBox.container.merge | object | `{"resources":{"limits":{"cpu":"100m","memory":"128Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}}` | Merge additional fields to the container |
 | nats.natsBox.enabled | bool | `true` |  |
 | nats.natsBox.env | object | `{}` | Map of additional env vars |
 | nats.natsBox.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
@@ -156,8 +157,8 @@ A Helm chart for Testkube Enterprise
 | nats.promExporter.patch | list | `[]` | Patch additional fields to the container |
 | nats.reloader.enabled | bool | `true` | Toggle whether to install Reloader |
 | nats.reloader.env | object | `{}` | Map of additional env vars |
-| nats.reloader.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
-| nats.reloader.patch | list | `[]` | Patch additional fields to the container |
+| nats.reloader.merge | object | `{"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.reloader.patch | list | `[]` |  |
 | sharedSecretGenerator.containerSecurityContext | object | `{}` | Container Security Context for the Shared Secret Generator Job |
 | sharedSecretGenerator.enabled | bool | `false` | Toggle whether to enable the Shared Secret Generator Job |
 | sharedSecretGenerator.image.registry | string | `"docker.io"` |  |
