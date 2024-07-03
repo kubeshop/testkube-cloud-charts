@@ -19,6 +19,9 @@ spec:
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
+      {{- if hasKey .Values.podAnnotations "vault.hashicorp.com/agent-inject" }}
+        vault.hashicorp.com/agent-pre-populate-only: "true"
+      {{- end }}
       {{- end }}
     spec:
       {{- if .Values.global.imagePullSecrets }}
