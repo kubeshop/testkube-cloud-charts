@@ -405,6 +405,10 @@ testkube-worker-service:
     mongo: *global_mongo_config
   additionalEnv:
     USE_MINIO: true
+
+  # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
+  customCaDirPath: ""
+
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
