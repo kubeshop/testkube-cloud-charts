@@ -41,34 +41,6 @@ spec:
               containerPort: 8080
               protocol: TCP
           env:
-            - name: API_SERVER_ENDPOINT
-              value: {{ if .Values.ui.apiServerEndpoint}}{{ .Values.ui.apiServerEndpoint }}{{ else }}https://api.{{ .Values.global.domain }}{{ end }}
-            - name: API_ROOT_ROUTE
-              value: {{ if .Values.ui.rootRoute}}{{ tpl .Values.ui.rootRoute $ }}{{ else }}https://{{ .Values.global.uiSubdomain }}.{{ .Values.global.domain }}{{ end }}
-            {{- if .Values.ui.authStrategy }}
-            - name: AUTH_STRATEGY
-              value: {{ .Values.ui.authStrategy }}
-            {{- end }}
-            {{- if .Values.sentry.enabled }}
-            - name: SENTRY_KEY
-              {{- if .Values.sentry.secretRef }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.sentry.secretRef }}
-                  key: "SENTRY_KEY"
-              {{- else }}
-              value: "{{ .Values.sentry.url }}"
-              {{- end }}
-            {{- end }}
-            {{- if .Values.ui.disableTelemetry }}
-            - name: DISABLE_TELEMETRY
-              value: "true"
-            {{- end }}
-
-            # START LEGACY ENVS
-            # Dashboard migrated from CreateReactApp to Vite.
-            # Keep these envs a while for backwards compatibility with older images.
-            # This can be deleted if it was commited more than a month ago.
             - name: REACT_APP_API_SERVER_ENDPOINT
               value: {{ if .Values.ui.apiServerEndpoint}}{{ .Values.ui.apiServerEndpoint }}{{ else }}https://api.{{ .Values.global.domain }}{{ end }}
             - name: REACT_APP_API_ROOT_ROUTE
@@ -92,8 +64,6 @@ spec:
             - name: REACT_APP_DISABLE_TELEMETRY
               value: "true"
             {{- end }}
-            # ENV LEGACY ENVS
-
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
               value: {{ tpl ($v | toString) $ | quote }}
