@@ -3,10 +3,12 @@
 # Declare variables to be passed into your templates.
 
 global:
-  # -- Image pull secrets
+  # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
-  # -- Image pull policy
+  # -- Global image pull policy (provided usually by a parent chart like testkube-enterprise)
   imagePullPolicy: ""
+  # -- Global image registry (provided usually by a parent chart like testkube-enterprise)
+  imageRegistry: ""
   # -- Common labels which will be added to all resources
   labels: {}
   ## Global MongoDB configuration for Testkube Pro API
@@ -50,6 +52,11 @@ image:
   repository: kubeshop/testkube-worker-service
   pullPolicy: IfNotPresent
   tag: "1.9.6"
+sandboxImage:
+  # -- Sandbox image repository
+  repository: kubeshop/testkube-sandbox
+  # -- Sandbox image tag
+  tag: ""
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

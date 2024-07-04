@@ -18,6 +18,10 @@ global:
     issuerRef: ""
   # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
+  # -- Global image pull policy (provided usually by a parent chart like testkube-enterprise)
+  imagePullPolicy: ""
+  # -- Global image registry (provided usually by a parent chart like testkube-enterprise)
+  imageRegistry: ""
   ingress:
     # -- Global toggle whether to create Ingress resources
     enabled: true
@@ -36,6 +40,11 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "2.0.0"
+sandboxImage:
+  # -- Sandbox image repository
+  repository: kubeshop/testkube-sandbox
+  # -- Sandbox image tag
+  tag: ""
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

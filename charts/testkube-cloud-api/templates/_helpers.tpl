@@ -124,13 +124,14 @@ Define API image
     {{- $separator = "@" -}}
     {{- $tag = .Values.image.digest | toString -}}
 {{- end -}}
+{{- if .Values.sandboxImage.tag }}
+    {{- $repositoryName = .Values.sandboxImage.repository -}}
+    {{- $tag = .Values.sandboxImage.tag -}}
+{{- end -}}
 {{- if .Values.global }}
     {{- if .Values.global.imageRegistry }}
-        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
-    {{- else -}}
-        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+        {{- $registryName = .Values.global.imageRegistry -}}
     {{- end -}}
-{{- else -}}
-    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
+{{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}

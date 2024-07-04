@@ -36,6 +36,10 @@ global:
   customCaSecretRef: ""
   # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
+  # -- Global image pull policy (provided usually by a parent chart like testkube-enterprise)
+  imagePullPolicy: ""
+  # -- Global image registry (provided usually by a parent chart like testkube-enterprise)
+  imageRegistry: ""
   ingress:
     # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
     enabled: true
@@ -85,6 +89,11 @@ image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
   tag: "1.10.29"
+sandboxImage:
+  # -- Sandbox image repository
+  repository: kubeshop/testkube-sandbox
+  # -- Sandbox image tag
+  tag: ""
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
