@@ -26,5 +26,5 @@ dependencies:
 - name: minio
   repository: file://./charts/minio
   version: 14.6.16
-digest: sha256:41080816602862ad1b14cab10dc598102500fa67c670a200c3d8ed7c7c729e6c
-generated: "2024-07-05T14:40:34.944934+02:00"
+digest: sha256:4ebafcda2df816ebafdb50f1f8ee3eb50f389a80cedcff86f8d761fd31a588d3
+generated: "2024-07-05T15:56:18.892063+02:00"
