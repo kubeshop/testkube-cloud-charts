@@ -303,6 +303,8 @@ testkube-cloud-api:
     mongo: *global_mongo_config
     nats: *global_nats_config
     minio:
+      # -- Path to where a Minio credential file should be mounted
+      credsFilePath: ""
       # -- Expiration period in days
       expirationPeriod: 0
       # -- If enabled, will also require a CA certificate to be provided
@@ -403,6 +405,9 @@ testkube-worker-service:
   api:
     nats: *global_nats_config
     mongo: *global_mongo_config
+    minio:
+      # -- Path to where a Minio credential file should be mounted
+      credsFilePath: ""
   additionalEnv:
     USE_MINIO: true
 

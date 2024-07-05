@@ -307,6 +307,10 @@ spec:
               value: "{{ $minioSkipVerify }}"
             - name: MINIO_EXPIRATION
               value: "{{ .Values.api.minio.expirationPeriod }}"
+            {{- if .Values.api.minio.credsFilePath }}
+            - name: MINIO_SHARED_CREDENTIALS_FILE
+              value: "{{ .Values.api.minio.credsFilePath }}"
+            {{- else }}
             {{- $minioCredsSecretRef := .Values.global.storage.credsSecretRef | default .Values.api.minio.credsSecretRef }}
             {{- $minioAccessKeyId := .Values.global.storage.accessKeyId | default .Values.api.minio.accessKeyId }}
             {{- $minioSecretAccessKey := .Values.global.storage.secretAccessKey | default .Values.api.minio.secretAccessKey }}
@@ -338,6 +342,7 @@ spec:
               {{- else }}
               value: "{{ $minioToken }}"
               {{- end }}
+            {{- end }}
             - name: LOG_SERVER_GRPC_ADDRESS
               value: "{{ .Values.api.logServer.grpcAddress }}"
             - name: LOG_SERVER_SECURE
