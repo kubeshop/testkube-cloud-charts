@@ -4,7 +4,7 @@ dependencies:
   version: 2.13.3
 - name: testkube-cloud-api
   repository: file://../testkube-cloud-api
-  version: 1.66.0
+  version: 1.67.0
 - name: testkube-cloud-ui
   repository: file://../testkube-cloud-ui
   version: 1.57.0
@@ -13,7 +13,7 @@ dependencies:
   version: 1.37.0
 - name: testkube
   repository: https://kubeshop.github.io/helm-charts
-  version: 2.0.6
+  version: 2.0.9
 - name: dex
   repository: file://./charts/dex
   version: 0.18.0
