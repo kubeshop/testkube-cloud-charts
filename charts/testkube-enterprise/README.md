@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.126.2](https://img.shields.io/badge/Version-1.126.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.126.3](https://img.shields.io/badge/Version-1.126.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.67.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.67.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.57.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.37.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
@@ -225,7 +225,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.10.33"` |  |
+| testkube-cloud-api.image.tag | string | `"1.10.34"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-api.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Api |
