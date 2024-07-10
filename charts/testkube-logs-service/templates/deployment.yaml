@@ -69,6 +69,10 @@ spec:
               value: "{{ .Values.api.minio.secure }}"
             - name: MINIO_EXPIRATION
               value: "{{ .Values.api.minio.expirationPeriod }}"
+            {{- if .Values.api.minio.credsFilePath }}
+            - name: MINIO_SHARED_CREDENTIALS_FILE
+              value: "{{ .Values.api.minio.credsFilePath }}"
+            {{- else }}
             - name: MINIO_ACCESS_KEY_ID
               {{- if .Values.api.minio.credsSecretRef }}
               valueFrom:
@@ -96,6 +100,7 @@ spec:
               {{- else }}
               value: "{{ .Values.api.minio.token }}"
               {{- end }}
+            {{- end }}
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
               value: "{{ $v }}"

@@ -207,6 +207,15 @@ testkube-cloud-api:
   image:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.36
+
+  # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
+  customCaDirPath: ""
+
+  # -- Specifies the path where the license key should be mounted.
+  enterpriseLicenseKeyPath: /testkube/license.key
+  # -- Specifies the path where the license file should be mounted.
+  enterpriseLicenseFilePath: /testkube/license.lic
+
   # -- Set resources requests and limits for Testkube Api
   resources:
     requests:
@@ -294,6 +303,8 @@ testkube-cloud-api:
     mongo: *global_mongo_config
     nats: *global_nats_config
     minio:
+      # -- Path to where a Minio credential file should be mounted
+      credsFilePath: ""
       # -- Expiration period in days
       expirationPeriod: 0
       # -- If enabled, will also require a CA certificate to be provided
@@ -394,8 +405,15 @@ testkube-worker-service:
   api:
     nats: *global_nats_config
     mongo: *global_mongo_config
+    minio:
+      # -- Path to where a Minio credential file should be mounted
+      credsFilePath: ""
   additionalEnv:
     USE_MINIO: true
+
+  # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
+  customCaDirPath: ""
+
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
@@ -470,7 +488,7 @@ nats:
     patch: []
   # NATS Box container settings
   natsBox:
-    enabled: true
+    enabled: false
     container:
       # -- Merge additional fields to the container
       merge:

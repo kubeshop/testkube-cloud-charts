@@ -3,6 +3,8 @@
 # Declare variables to be passed into your templates.
 
 global:
+  # -- Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key.
+  customCaSecretRef: ""
   # -- Image pull secrets
   imagePullSecrets: []
   # -- Image pull policy
@@ -57,6 +59,9 @@ fullnameOverride: ""
 additionalEnv: {}
 # FOO: bar
 
+# -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
+customCaDirPath: ""
+
 api:
   # -- S3 bucket in which outputs are stored
   outputsBucket: testkube-cloud-outputs
@@ -76,6 +81,8 @@ api:
     token: ""
     # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
     credsSecretRef: ""
+    # -- Path to where a Minio credential file should be mounted
+    credsFilePath: ""
     # -- Expiration period in days
     expirationPeriod: 0
     # -- Should be set to `true` if MinIO is behind
