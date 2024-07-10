@@ -207,15 +207,12 @@ testkube-cloud-api:
   image:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.36
-
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
   customCaDirPath: ""
-
   # -- Specifies the path where the license key should be mounted.
   enterpriseLicenseKeyPath: /testkube/license.key
   # -- Specifies the path where the license file should be mounted.
   enterpriseLicenseFilePath: /testkube/license.lic
-
   # -- Set resources requests and limits for Testkube Api
   resources:
     requests:
@@ -393,7 +390,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.9.6
+    tag: 1.10.36
   # -- Set resources requests and limits for Testkube Worker Service
   resources:
     requests:
@@ -410,10 +407,8 @@ testkube-worker-service:
       credsFilePath: ""
   additionalEnv:
     USE_MINIO: true
-
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
   customCaDirPath: ""
-
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:

@@ -94,12 +94,10 @@ additionalEnv: {}
 
 # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
 customCaDirPath: ""
-
 # -- Specifies the path where the license key should be mounted.
 enterpriseLicenseKeyPath: /testkube/license.key
 # -- Specifies the path where the license file should be mounted.
 enterpriseLicenseFilePath: /testkube/license.lic
-
 # -- Api can allow to set demo organization id where user who don't have Kubernetes cluster can play around
 demoOrganizationId: ""
 analytics:

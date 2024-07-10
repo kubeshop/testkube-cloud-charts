@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.129.1](https://img.shields.io/badge/Version-1.129.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.129.2](https://img.shields.io/badge/Version-1.129.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -18,11 +18,11 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.70.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.57.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.37.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.37.1 |
+| file://./charts/dex | dex | 0.18.0 |
+| file://./charts/minio | minio | 14.6.16 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
-| https://charts.bitnami.com/bitnami | minio | 14.6.16 |
 | https://charts.bitnami.com/bitnami | mongodb | 14.11.1 |
-| https://charts.dexidp.io | dex | 0.18.0 |
 | https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.0.10 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 1.2.0 |
 
@@ -147,7 +147,7 @@ A Helm chart for Testkube Enterprise
 | nats.enabled | bool | `true` | Toggle whether to install NATS |
 | nats.fullnameOverride | string | `"testkube-enterprise-nats"` |  |
 | nats.natsBox.container.merge | object | `{"resources":{"limits":{"cpu":"100m","memory":"128Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}}` | Merge additional fields to the container |
-| nats.natsBox.enabled | bool | `true` |  |
+| nats.natsBox.enabled | bool | `false` |  |
 | nats.natsBox.env | object | `{}` | Map of additional env vars |
 | nats.natsBox.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.natsBox.patch | list | `[]` | Patch additional fields to the container |
@@ -198,6 +198,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.minio.certSecret.enabled | bool | `false` | Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt) |
 | testkube-cloud-api.api.minio.certSecret.keyFile | string | `"cert.key"` | Path to client certificate key file |
 | testkube-cloud-api.api.minio.certSecret.name | string | `"storage-client-cert"` | Name of the storage client certificate secret |
+| testkube-cloud-api.api.minio.credsFilePath | string | `""` | Path to where a Minio credential file should be mounted |
 | testkube-cloud-api.api.minio.expirationPeriod | int | `0` | Expiration period in days |
 | testkube-cloud-api.api.minio.mountCACertificate | bool | `false` | If enabled, will also require a CA certificate to be provided |
 | testkube-cloud-api.api.minio.signing.hostname | string | `""` | Hostname for the presigned PUT URL |
@@ -223,6 +224,9 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.smtp.username | string | `""` | SMTP username |
 | testkube-cloud-api.api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
+| testkube-cloud-api.customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
+| testkube-cloud-api.enterpriseLicenseFilePath | string | `"/testkube/license.lic"` | Specifies the path where the license file should be mounted. |
+| testkube-cloud-api.enterpriseLicenseKeyPath | string | `"/testkube/license.key"` | Specifies the path where the license key should be mounted. |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.tag | string | `"1.10.36"` |  |
@@ -243,15 +247,17 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.resources | object | `{"limits":{"cpu":"150m","memory":"128Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube UI |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
 | testkube-worker-service.additionalEnv.USE_MINIO | bool | `true` |  |
+| testkube-worker-service.api.minio.credsFilePath | string | `""` | Path to where a Minio credential file should be mounted |
 | testkube-worker-service.api.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | testkube-worker-service.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
 | testkube-worker-service.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
 | testkube-worker-service.api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | testkube-worker-service.api.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
+| testkube-worker-service.customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
-| testkube-worker-service.image.tag | string | `"1.9.6"` |  |
+| testkube-worker-service.image.tag | string | `"1.10.36"` |  |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"75m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Worker Service |
 
 ----------------------------------------------

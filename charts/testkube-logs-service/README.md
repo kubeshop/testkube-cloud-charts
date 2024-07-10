@@ -23,6 +23,7 @@ A Helm chart for Testkube log Service
 | additionalEnv | object | `{}` | Additional env vars to be added to the deployment |
 | affinity | object | `{}` |  |
 | api.minio.accessKeyId | string | `""` | MinIO access key id |
+| api.minio.credsFilePath | string | `""` | Path to where a Minio credential file should be mounted |
 | api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
 | api.minio.endpoint | string | `"minio.testkube.svc.cluster.local:9000"` | MinIO endpoint |
 | api.minio.expirationPeriod | int | `0` | Expiration period in days |

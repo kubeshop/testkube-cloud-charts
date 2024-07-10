@@ -1,6 +1,6 @@
 # testkube-worker-service
 
-![Version: 1.37.0](https://img.shields.io/badge/Version-1.37.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.6](https://img.shields.io/badge/AppVersion-1.9.6-informational?style=flat-square)
+![Version: 1.37.1](https://img.shields.io/badge/Version-1.37.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.36](https://img.shields.io/badge/AppVersion-1.10.36-informational?style=flat-square)
 
 A Helm chart for Testkube Worker Service
 
@@ -23,6 +23,7 @@ A Helm chart for Testkube Worker Service
 | additionalEnv | object | `{}` | Additional env vars to be added to the deployment |
 | affinity | object | `{}` |  |
 | api.minio.accessKeyId | string | `""` | MinIO access key id |
+| api.minio.credsFilePath | string | `""` | Path to where a Minio credential file should be mounted |
 | api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
 | api.minio.endpoint | string | `"minio.testkube.svc.cluster.local:9000"` | MinIO endpoint |
 | api.minio.expirationPeriod | int | `0` | Expiration period in days |
@@ -42,11 +43,13 @@ A Helm chart for Testkube Worker Service
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
 | externalSecrets.clusterSecretStoreName | string | `"secret-store"` |  |
 | externalSecrets.enabled | bool | `false` |  |
 | externalSecrets.keys | object | `{}` |  |
 | externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
+| global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key. |
 | global.imagePullPolicy | string | `""` | Image pull policy |
 | global.imagePullSecrets | list | `[]` | Image pull secrets |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
@@ -67,7 +70,7 @@ A Helm chart for Testkube Worker Service
 | global.storage.token | string | `""` | S3 Token |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-worker-service"` |  |
-| image.tag | string | `"1.9.6"` |  |
+| image.tag | string | `"1.10.36"` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |

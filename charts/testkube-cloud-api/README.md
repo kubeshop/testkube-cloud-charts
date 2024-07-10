@@ -67,6 +67,7 @@ A Helm chart for Testkube Cloud API
 | api.minio.certSecret.enabled | bool | `false` | Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt) |
 | api.minio.certSecret.keyFile | string | `"cert.key"` | Path to client certificate key file |
 | api.minio.certSecret.name | string | `"storage-client-cert"` | Name of the storage client certificate secret |
+| api.minio.credsFilePath | string | `""` | Path to where a Minio credential file should be mounted |
 | api.minio.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
 | api.minio.endpoint | string | `"minio.testkube.svc.cluster.local:9000"` | MinIO endpoint |
 | api.minio.expirationPeriod | int | `0` | Expiration period in days |
@@ -112,7 +113,10 @@ A Helm chart for Testkube Cloud API
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
 | demoOrganizationId | string | `""` | Api can allow to set demo organization id where user who don't have Kubernetes cluster can play around |
+| enterpriseLicenseFilePath | string | `"/testkube/license.lic"` | Specifies the path where the license file should be mounted. |
+| enterpriseLicenseKeyPath | string | `"/testkube/license.key"` | Specifies the path where the license key should be mounted. |
 | externalSecrets.clusterSecretStoreName | string | `"secret-store"` |  |
 | externalSecrets.enabled | bool | `false` |  |
 | externalSecrets.keys | object | `{}` |  |
