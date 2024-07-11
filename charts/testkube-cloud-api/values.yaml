@@ -84,7 +84,7 @@ replicaCount: 1
 image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.10.36"
+  tag: "1.10.37"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

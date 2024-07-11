@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.129.3](https://img.shields.io/badge/Version-1.129.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.129.4](https://img.shields.io/badge/Version-1.129.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.70.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.70.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.57.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.37.1 |
 | file://./charts/dex | dex | 0.18.0 |
@@ -229,7 +229,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.enterpriseLicenseKeyPath | string | `"/testkube/license.key"` | Specifies the path where the license key should be mounted. |
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.10.36"` |  |
+| testkube-cloud-api.image.tag | string | `"1.10.37"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-api.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Api |
