@@ -9,6 +9,10 @@ jobs:
     if: startsWith(github.event.pull_request.head.ref, 'sandbox/')
     runs-on: ubuntu-latest
     steps:
+      - name: Hello from sandbox
+        run: |
+          echo ${{ github.event.pull_request.head.ref }}
+
       - uses: actions/create-github-app-token@v1
         id: app-token
         with:
