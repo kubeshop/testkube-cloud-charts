@@ -40,6 +40,7 @@ A Helm chart for Testkube Cloud UI
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
+| global.restApiSubdomain | string | `"api"` | REST API subdomain |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-cloud-ui"` |  |
