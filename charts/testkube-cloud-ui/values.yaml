@@ -11,6 +11,8 @@ global:
   uiSubdomain: "cloud"
   # -- Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled.
   redirectSubdomain: "app"
+  # -- REST API subdomain
+  restApiSubdomain: "api"
   # -- TLS provider (possible values: "", "cert-manager")
   certificateProvider: ""
   certManager:
