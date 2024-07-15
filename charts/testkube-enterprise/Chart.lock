@@ -4,7 +4,7 @@ dependencies:
   version: 2.13.3
 - name: testkube-cloud-api
   repository: file://../testkube-cloud-api
-  version: 1.70.1
+  version: 1.70.2
 - name: testkube-cloud-ui
   repository: file://../testkube-cloud-ui
   version: 1.58.0
@@ -26,5 +26,5 @@ dependencies:
 - name: minio
   repository: file://./charts/minio
   version: 14.6.16
-digest: sha256:447157132accc4f1c305bc1ca2b99dffec92f20a8e6ef1734d9e1145bc098a2b
-generated: "2024-07-12T08:35:50.125338852Z"
+digest: sha256:8209b8018ed0e6924523ea092cdc3a5db705d423c217632a29e811dc2c267883
+generated: "2024-07-15T08:53:35.904140679Z"
