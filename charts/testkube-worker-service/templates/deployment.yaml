@@ -30,6 +30,27 @@ spec:
       serviceAccountName: {{ include "testkube-worker-service.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: wait-for-mongo
+          image: alpine/mongosh:2.0.2
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              until mongosh "$API_MONGO_DSN" --eval "print('MongoDB is ready')" > /dev/null 2>&1; do
+                echo "Waiting for MongoDB ($API_MONGO_DSN) to become ready..."
+                sleep 5
+              done
+              echo "MongoDB is ready"
+          env:
+            - name: API_MONGO_DSN
+              {{- if (or .Values.global.mongo.dsnSecretRef .Values.api.mongo.dsnSecretRef) }}
+              valueFrom:
+                secretKeyRef:
+                  key: MONGO_DSN
+                  name: {{ .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
+              {{- else }}
+              value: {{ .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
+              {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
