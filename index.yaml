@@ -2,6 +2,23 @@ apiVersion: v1
 entries:
   testkube-cloud-api:
   - apiVersion: v2
+    appVersion: 1.10.40
+    created: "2024-07-24T10:24:35.4960746Z"
+    description: A Helm chart for Testkube Cloud API
+    digest: 167f3cf333e71efe0e14d483eaae638761146a5f831767cd2a1f39acaf3b45b7
+    home: https://github.com/kubeshop/testkube-cloud-charts
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    maintainers:
+    - name: testkube
+      url: https://testkube.io
+    name: testkube-cloud-api
+    sources:
+    - https://github.com/kubeshop/testkube-cloud-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-cloud-api-1.73.0/testkube-cloud-api-1.73.0.tgz
+    version: 1.73.0
+  - apiVersion: v2
     appVersion: 1.10.39
     created: "2024-07-23T12:31:07.819803Z"
     description: A Helm chart for Testkube Cloud API
@@ -3657,6 +3674,23 @@ entries:
     version: 1.1.0
   testkube-cloud-ui:
   - apiVersion: v2
+    appVersion: 2.0.2
+    created: "2024-07-24T10:24:35.726508059Z"
+    description: A Helm chart for Testkube Cloud UI
+    digest: 86b7b5ae9e132d508455027edf6dffac0197b9a0b33d06e34c89f469b6fa67b6
+    home: https://github.com/kubeshop/testkube-cloud-charts
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    maintainers:
+    - name: testkube
+      url: https://testkube.io
+    name: testkube-cloud-ui
+    sources:
+    - https://github.com/kubeshop/testkube-cloud-ui
+    type: application
+    urls:
+    - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-cloud-ui-1.58.1/testkube-cloud-ui-1.58.1.tgz
+    version: 1.58.1
+  - apiVersion: v2
     appVersion: 2.0.1
     created: "2024-07-12T08:36:17.208083439Z"
     description: A Helm chart for Testkube Cloud UI
@@ -6139,6 +6173,54 @@ entries:
     - charts/testkube-cloud-ui-1.1.0.tgz
     version: 1.1.0
   testkube-enterprise:
+  - apiVersion: v2
+    created: "2024-07-24T10:24:36.041312705Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      version: 2.13.3
+    - name: testkube-cloud-api
+      repository: file://../testkube-cloud-api
+      version: 1.73.0
+    - name: testkube-cloud-ui
+      repository: file://../testkube-cloud-ui
+      version: 1.58.1
+    - name: testkube-worker-service
+      repository: file://../testkube-worker-service
+      version: 1.37.1
+    - alias: testkube-agent
+      condition: testkube-agent.enabled
+      name: testkube
+      repository: https://kubeshop.github.io/helm-charts
+      version: 2.0.19
+    - condition: dex.enabled
+      name: dex
+      repository: file://./charts/dex
+      version: 0.18.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.11.1
+    - condition: nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 1.2.0
+    - condition: minio.enabled
+      name: minio
+      repository: file://./charts/minio
+      version: 14.6.16
+    description: A Helm chart for Testkube Enterprise
+    digest: 16d9f463d0a5c04bbddc14a05ad10c0e9d3b46546fae85581fe8686425582b32
+    home: https://github.com/kubeshop/testkube-cloud-charts
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    maintainers:
+    - name: testkube
+      url: https://testkube.io
+    name: testkube-enterprise
+    type: application
+    urls:
+    - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-enterprise-1.133.0/testkube-enterprise-1.133.0.tgz
+    version: 1.133.0
   - apiVersion: v2
     created: "2024-07-23T12:31:08.212854968Z"
     dependencies:
@@ -15675,4 +15757,4 @@ entries:
     urls:
     - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.29.0/testkube-worker-service-1.29.0.tgz
     version: 1.29.0
-generated: "2024-07-23T12:31:08.535466143Z"
+generated: "2024-07-24T10:24:36.513519513Z"
