@@ -9,6 +9,8 @@ global:
   imagePullSecrets: []
   # -- Image pull policy
   imagePullPolicy: ""
+  # -- Global image registry to be prepended for to all images (usually defined in parent chart)
+  imageRegistry: ""
   # -- Common labels which will be added to all resources
   labels: {}
   ## Global MongoDB configuration for Testkube Pro API
@@ -52,6 +54,8 @@ global:
   #skipVerify: false
 replicaCount: 1
 image:
+  # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+  registry: ""
   repository: kubeshop/testkube-worker-service
   pullPolicy: IfNotPresent
   tag: "1.10.41"

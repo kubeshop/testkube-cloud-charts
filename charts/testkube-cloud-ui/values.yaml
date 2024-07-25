@@ -20,6 +20,8 @@ global:
     issuerRef: ""
   # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
+  # -- Global image registry to be prepended for to all images (usually defined in parent chart)
+  imageRegistry: ""
   ingress:
     # -- Global toggle whether to create Ingress resources
     enabled: true
@@ -34,6 +36,8 @@ sentry:
   # -- Sentry.io authenticated URL
   url: ""
 image:
+  # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+  registry: ""
   repository: kubeshop/testkube-cloud-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
