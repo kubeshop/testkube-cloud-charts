@@ -1,6 +1,6 @@
 # testkube-worker-service
 
-![Version: 1.38.0](https://img.shields.io/badge/Version-1.38.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.36](https://img.shields.io/badge/AppVersion-1.10.36-informational?style=flat-square)
+![Version: 1.38.1](https://img.shields.io/badge/Version-1.38.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.41](https://img.shields.io/badge/AppVersion-1.10.41-informational?style=flat-square)
 
 A Helm chart for Testkube Worker Service
 
@@ -70,7 +70,7 @@ A Helm chart for Testkube Worker Service
 | global.storage.token | string | `""` | S3 Token |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"kubeshop/testkube-worker-service"` |  |
-| image.tag | string | `"1.10.36"` |  |
+| image.tag | string | `"1.10.41"` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |

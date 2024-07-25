@@ -390,7 +390,7 @@ testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.10.36
+    tag: 1.10.41
   # -- Set resources requests and limits for Testkube Worker Service
   resources:
     requests:

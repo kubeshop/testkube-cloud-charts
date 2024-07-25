@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.134.0](https://img.shields.io/badge/Version-1.134.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.134.1](https://img.shields.io/badge/Version-1.134.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -18,7 +18,7 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.73.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.58.1 |
-| file://../testkube-worker-service | testkube-worker-service | 1.38.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.38.1 |
 | file://./charts/dex | dex | 0.18.0 |
 | file://./charts/minio | minio | 14.6.16 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
@@ -257,7 +257,7 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
-| testkube-worker-service.image.tag | string | `"1.10.36"` |  |
+| testkube-worker-service.image.tag | string | `"1.10.41"` |  |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"75m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Worker Service |
 
 ----------------------------------------------
