@@ -36,6 +36,8 @@ global:
   customCaSecretRef: ""
   # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
+  # -- Global image registry to be prepended for to all images (usually defined in parent chart)
+  imageRegistry: ""
   ingress:
     # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
     enabled: true
@@ -82,6 +84,8 @@ global:
     credsSecretRef: ""
 replicaCount: 1
 image:
+  # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+  registry: ""
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
   tag: "1.10.41"

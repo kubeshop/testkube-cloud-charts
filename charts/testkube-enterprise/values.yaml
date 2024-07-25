@@ -40,6 +40,8 @@ global:
   customCaSecretRef: ""
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
   imagePullSecrets: []
+  # -- Global image registry to be prepended for to all images (usually defined in parent chart)
+  imageRegistry: ""
   ingress:
     # -- Global toggle whether to create Ingress resources
     enabled: true
@@ -205,6 +207,8 @@ minio:
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
+    # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+    registry: ""
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.41
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
@@ -363,6 +367,8 @@ testkube-cloud-ui:
     # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector
     authStrategy: ""
   image:
+    # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+    registry: ""
     repository: kubeshop/testkube-enterprise-ui
     tag: 2.0.2
   # -- Set resources requests and limits for Testkube UI
@@ -389,6 +395,8 @@ testkube-agent:
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
   image:
+    # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+    registry: ""
     repository: kubeshop/testkube-enterprise-worker-service
     tag: 1.10.36
   # -- Set resources requests and limits for Testkube Worker Service
