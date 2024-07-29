@@ -47,6 +47,9 @@ global:
     token: ""
     # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
     credsSecretRef: ""
+  tls: {}
+    # -- Toggle whether to globally skip certificate verification
+    #skipVerify: false
 replicaCount: 1
 image:
   repository: kubeshop/testkube-worker-service
@@ -84,9 +87,9 @@ api:
     credsFilePath: ""
     # -- Expiration period in days
     expirationPeriod: 0
-    # -- Should be set to `true` if MinIO is behind
+    # -- Should be set to `true` if MinIO is deployed with a TLS certificate in front.
     secure: false
-    # -- Toggle whether to skip verifying TLS certificates
+    # -- Toggle whether to verify TLS certificates
     skipVerify: false
   mongo:
     # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)

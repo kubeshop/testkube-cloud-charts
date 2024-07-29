@@ -98,9 +98,6 @@ spec:
             {{- $minioSecure := .Values.global.storage.secure | default .Values.api.minio.secure }}
             - name: MINIO_SSL
               value: "{{ $minioSecure }}"
-            {{- $minioSkipVerify := .Values.global.storage.skipVerify | default .Values.api.minio.skipVerify }}
-            - name: "MINIO_SKIP_VERIFY"
-              value: "{{ $minioSkipVerify }}"
             - name: MINIO_EXPIRATION
               value: "{{ .Values.api.minio.expirationPeriod }}"
             {{- if .Values.api.minio.credsFilePath }}
@@ -138,6 +135,8 @@ spec:
               {{- $minioToken := .Values.global.storage.token | default .Values.api.minio.token }}
               value: "{{ $minioToken }}"
               {{- end }}
+            - name: "MINIO_SKIP_VERIFY"
+              value: "{{ if hasKey .Values.global.tls "skipVerify" }}{{ .Values.global.tls.skipVerify }}{{ else }}{{ .Values.api.minio.skipVerify }}{{ end }}"
             {{- end }}
             {{- range $k, $v := .Values.additionalEnv }}
             - name: {{ $k }}
