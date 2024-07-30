@@ -48,8 +48,8 @@ global:
     # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
     credsSecretRef: ""
   tls: {}
-    # -- Toggle whether to globally skip certificate verification
-    #skipVerify: false
+  # -- Toggle whether to globally skip certificate verification
+  #skipVerify: false
 replicaCount: 1
 image:
   repository: kubeshop/testkube-worker-service
