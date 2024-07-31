@@ -209,7 +209,7 @@ testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
   image:
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.41
+    tag: 1.10.42
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
   customCaDirPath: ""
   # -- Specifies the path where the license key should be mounted.
