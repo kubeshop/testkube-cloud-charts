@@ -188,6 +188,7 @@ api:
     agentPort: 8443
     # -- TLS secret name which contains the certificate files
     tlsSecret: testkube-cloud-api-tls
+    apitlsSecret: testkube-cloud-api
     certManager:
       # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
       issuerKind: ClusterIssuer
