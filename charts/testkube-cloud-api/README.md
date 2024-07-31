@@ -169,6 +169,10 @@ A Helm chart for Testkube Cloud API
 | image.tag | string | `"1.10.42"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
+| init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
+| init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
+| init.mongo.image.repository | string | `"alpine/mongosh"` | MongoSH image repository |
+| init.mongo.image.tag | string | `"2.0.2"` | MongoSH image tag |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | payments.apiKey | string | `""` | Payments API key (currently only Stripe is supported) |

@@ -234,6 +234,10 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.tag | string | `"1.10.42"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
+| testkube-cloud-api.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
+| testkube-cloud-api.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
+| testkube-cloud-api.init.mongo.image.repository | string | `"alpine/mongosh"` | MongoSH image repository |
+| testkube-cloud-api.init.mongo.image.tag | string | `"2.0.2"` | MongoSH image tag |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-api.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Api |
 | testkube-cloud-api.serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |

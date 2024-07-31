@@ -214,6 +214,18 @@ testkube-cloud-api:
     registry: ""
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.42
+  ## Init block defines settings for the dependency check containers
+  init:
+    # -- Toggle whether to enable the dependency check containers
+    enabled: false
+    mongo:
+      image:
+        # -- MongoSH image repository
+        repository: alpine/mongosh
+        # -- MongoSH image tag
+        tag: 2.0.2
+        # -- MongoSH image pull policy
+        pullPolicy: IfNotPresent
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
   customCaDirPath: ""
   # -- Specifies the path where the license key should be mounted.
