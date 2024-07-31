@@ -30,9 +30,11 @@ spec:
       serviceAccountName: {{ include "testkube-cloud-api.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.init.enabled }}
       initContainers:
         - name: wait-for-mongo
-          image: alpine/mongosh:2.0.2
+          image: {{ .Values.init.mongo.image.repository }}:{{ .Values.init.mongo.image.tag }}
+          imagePullPolicy: {{ .Values.init.mongo.image.pullPolicy }}
           command: ["/bin/sh", "-c"]
           args:
             - |
@@ -51,6 +53,7 @@ spec:
               {{- else }}
               value: {{ .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
               {{- end }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:

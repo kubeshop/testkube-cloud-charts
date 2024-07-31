@@ -12,6 +12,8 @@ sharedSecretGenerator:
   enabled: true
 
 testkube-cloud-api:
+  init:
+    enabled: true
   additionalEnv:
     OAUTH_CLI_CLIENT_ID: testkube-cloud-cli
     OAUTH_ENABLED: true

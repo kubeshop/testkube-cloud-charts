@@ -103,6 +103,20 @@ enterpriseLicenseKeyPath: /testkube/license.key
 enterpriseLicenseFilePath: /testkube/license.lic
 # -- Api can allow to set demo organization id where user who don't have Kubernetes cluster can play around
 demoOrganizationId: ""
+
+## Init block defines settings for the dependency check containers
+init:
+  # -- Toggle whether to enable the dependency check containers
+  enabled: false
+  mongo:
+    image:
+      # -- MongoSH image repository
+      repository: alpine/mongosh
+      # -- MongoSH image tag
+      tag: 2.0.2
+      # -- MongoSH image pull policy
+      pullPolicy: IfNotPresent
+
 analytics:
   segmentio:
     # -- Toggle whether to enable Segment.io analytics
