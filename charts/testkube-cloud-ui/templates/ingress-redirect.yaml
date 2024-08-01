@@ -25,12 +25,6 @@ metadata:
     {{- if eq .Values.ingress.className "nginx"}}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      add_header X-Frame-Options "sameorigin";
-      add_header X-XSS-Protection "1; mode=block";
-      add_header X-Content-Type-Options nosniff;
-      add_header Referrer-Policy 'same-origin';
-      add_header Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()";
     {{- end }}
     {{- if (eq .Values.global.certificateProvider "cert-manager") }}
     cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
