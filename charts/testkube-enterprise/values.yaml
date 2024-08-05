@@ -558,12 +558,15 @@ nats:
 mongodb:
   # -- Toggle whether to install MongoDB
   enabled: true
-  # Uncomment if you want to provide different image settings
-  # image:
-  # registry: docker.io
-  # repository: bitnami/mongodb
-  # tag: 7.0.3-debian-11-r6
-  # digest: ""
+
+  image:
+    registry: docker.io
+    # We have forked the Bitnami image as it did not support arm64, and the
+    # zcube/bitnami-compat-mongodb image that we previously used for the demo
+    # installer is unmaintained, stuck on Mongo 6, and incompatible with the
+    # latest Bitnami charts:
+    repository: kubeshop/bitnami-mongodb
+    tag: 7.0.12
 
   # -- MongoDB fullname override
   fullnameOverride: "testkube-enterprise-mongodb"
