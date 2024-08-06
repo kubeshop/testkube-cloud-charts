@@ -19,12 +19,12 @@ dependencies:
   version: 0.18.0
 - name: mongodb
   repository: https://charts.bitnami.com/bitnami
-  version: 14.11.1
+  version: 15.6.16
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
   version: 1.2.0
 - name: minio
   repository: file://./charts/minio
   version: 14.6.16
-digest: sha256:6e0ae371766571b0069962686cd92f86b2af62d00827dc345a1d8585008a35e1
-generated: "2024-08-01T12:01:28.027753888Z"
+digest: sha256:81b4d332ac9c84f8df3481cba79183a9df81603bfde3c40b4a953c4aa6054b19
+generated: "2024-08-05T09:19:48.885234+02:00"
