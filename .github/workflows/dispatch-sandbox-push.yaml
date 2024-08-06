@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - sandbox/**
+  pull_request:
+    types:
+      - opened
 
 jobs:
   dispatch:
