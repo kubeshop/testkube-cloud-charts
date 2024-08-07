@@ -301,6 +301,8 @@ api:
     redirectUri: ""
     # -- Comma-separated list of allowed external redirect URIs (example: `https://cloud.testkube.xyz,http://localhost:3000`)
     allowedExternalRedirectURIs: ""
+    # -- Toggle whether to skip TLS verification for OAuth issuer
+    skipVerify: false
   # -- External log server connection configuration
   logServer:
     # -- Toggle whether to enable external log server connection

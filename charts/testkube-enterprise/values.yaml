@@ -16,8 +16,6 @@ global:
   # -- Domain under which endpoints are exposed
   domain: ""
   # -- UI subdomain which get prepended to the domain
-  logsSubdomain: "logs"
-  # -- UI subdomain which get prepended to the domain
   uiSubdomain: "dashboard"
   # -- Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled.
   redirectSubdomain: "app"
@@ -27,8 +25,6 @@ global:
   grpcApiSubdomain: "agent"
   # -- Websocket API subdomain which get prepended to the domain
   websocketApiSubdomain: "websockets"
-  # -- Status Pages API subdomain which get prepended to the domain
-  statusPagesApiSubdomain: "status"
   # -- Storage API subdomain which get prepended to the domain
   storageApiSubdomain: "storage"
   # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
@@ -87,8 +83,8 @@ global:
     # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
     credsSecretRef: ""
   tls: {}
-  # -- Toggle whether to globally skip certificate verification
-  #skipVerify: false
+    # -- Toggle whether to globally skip certificate verification
+    #skipVerify: true
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -366,13 +362,15 @@ testkube-cloud-api:
       redirectUri: ""
       # -- if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL
       issuerUrl: ""
+      # -- Toggle whether to skip TLS verification for OAuth issuer
+      skipVerify: false
     # -- S3 bucket in which to store logs & artifacts
     outputsBucket: testkube-cloud-outputs
   prometheus:
     enabled: false
   ingress:
     className: nginx
-  ##Test Connection pod
+  ## Test Connection pod
   testConnection:
     enabled: false
 ## Testkube Cloud UI chart parameters
