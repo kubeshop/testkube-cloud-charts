@@ -213,7 +213,7 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.43
+    tag: 1.10.44
   ## Init block defines settings for the dependency check containers
   init:
     # -- Toggle whether to enable the dependency check containers
