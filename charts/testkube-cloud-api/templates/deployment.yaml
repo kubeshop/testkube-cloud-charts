@@ -272,6 +272,8 @@ spec:
             - name: OAUTH_REDIRECT_URI
               value: "{{ if .Values.api.oauth.redirectUri }}{{ .Values.api.oauth.redirectUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/auth/callback{{ end }}"
               {{- end }}
+            - name: "OAUTH_SKIP_VERIFY"
+              value: "{{ if hasKey .Values.global.tls "skipVerify" }}{{ .Values.global.tls.skipVerify }}{{ else }}{{ .Values.api.oauth.skipVerify }}{{ end }}"
             {{- $natsUri := .Values.global.nats.uri | default .Values.api.nats.uri }}
             - name: NATS_URI
               value: {{ $natsUri }}
