@@ -60,7 +60,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  name: grpcs
+                  name: grpc
               {{- else }}
               serviceName: {{ $fullName }}
               servicePort: {{ if $tlsConfig.serveHTTPS }}grpcs{{ else }}grpc{{ end }}
