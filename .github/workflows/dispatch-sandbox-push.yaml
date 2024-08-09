@@ -41,6 +41,8 @@ jobs:
           # Replace slashes with dashes using sed
           echo branch_identifier=$(echo "$branch_identifier" | sed 's/\//-/g') >> $GITHUB_ENV
 
+          echo "sandbox test"
+
       - name: Output summary
         if: startsWith(github.ref, 'refs/heads/sandbox/')
         run: |
