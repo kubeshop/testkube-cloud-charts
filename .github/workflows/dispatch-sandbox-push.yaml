@@ -73,7 +73,7 @@ jobs:
         id: template
         uses: chuhlomin/render-template@v1.4
         with:
-          template: .github/sandbox-comment-template.md
+          template: sandbox-comment-template.md
           vars: |
             branch_ref: ${{ env.branch_ref }}
 
