@@ -558,7 +558,6 @@ nats:
 mongodb:
   # -- Toggle whether to install MongoDB
   enabled: true
-
   image:
     registry: docker.io
     # We have forked the Bitnami image as it did not support arm64, and the
@@ -567,7 +566,6 @@ mongodb:
     # latest Bitnami charts:
     repository: kubeshop/bitnami-mongodb
     tag: 7.0.12
-
   # -- MongoDB fullname override
   fullnameOverride: "testkube-enterprise-mongodb"
   # -- Common labels which will be added to all MongoDB resources

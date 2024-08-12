@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.138.1](https://img.shields.io/badge/Version-1.138.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.139.0](https://img.shields.io/badge/Version-1.139.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -22,7 +22,7 @@ A Helm chart for Testkube Enterprise
 | file://./charts/dex | dex | 0.18.0 |
 | file://./charts/minio | minio | 14.6.16 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
-| https://charts.bitnami.com/bitnami | mongodb | 14.11.1 |
+| https://charts.bitnami.com/bitnami | mongodb | 15.6.16 |
 | https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.0.31 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 1.2.0 |
 
@@ -128,6 +128,9 @@ A Helm chart for Testkube Enterprise
 | mongodb.containerSecurityContext | object | `{}` | Security Context for MongoDB container |
 | mongodb.enabled | bool | `true` | Toggle whether to install MongoDB |
 | mongodb.fullnameOverride | string | `"testkube-enterprise-mongodb"` | MongoDB fullname override |
+| mongodb.image.registry | string | `"docker.io"` |  |
+| mongodb.image.repository | string | `"kubeshop/bitnami-mongodb"` |  |
+| mongodb.image.tag | string | `"7.0.12"` |  |
 | mongodb.podSecurityContext | object | `{}` | MongoDB Pod Security Context |
 | mongodb.resources | object | `{"limits":{"cpu":2,"memory":"2Gi"},"requests":{"cpu":"150m","memory":"256Mi"}}` | Set resources requests and limits for MongoDB |
 | mongodb.tolerations | list | `[]` |  |
