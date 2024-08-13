@@ -113,12 +113,16 @@ init:
   enabled: false
   mongo:
     image:
+      # -- MongoSH image registry
+      registry: "docker.io"
       # -- MongoSH image repository
       repository: alpine/mongosh
       # -- MongoSH image tag
       tag: 2.0.2
       # -- MongoSH image pull policy
       pullPolicy: IfNotPresent
+      # -- MongoSH image digest
+      digest: ""
 analytics:
   segmentio:
     # -- Toggle whether to enable Segment.io analytics
