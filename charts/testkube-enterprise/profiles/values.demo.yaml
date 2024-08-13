@@ -25,6 +25,8 @@ testkube-cloud-api:
     DEX_SIGNUP_ORIGIN: testkube-enterprise-dex:5557
   api:
     inviteMode: "auto-accept"
+    migrations:
+      enabled: true
     features:
       disablePersonalOrgs: true
       bootstrapOrg: "demo"
