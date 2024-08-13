@@ -134,3 +134,23 @@ Define API image
     {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Define Mongo init image
+TODO: Implement this using dict and reuse the same for each image
+*/}}
+{{- define "testkube-cloud-api.init-mongo-image" -}}
+{{- $registryName := default "docker.io" .Values.init.mongo.image.registry -}}
+{{- if .Values.global.imageRegistry -}}
+    {{- $registryName = .Values.global.imageRegistry -}}
+{{- end -}}
+{{- $repositoryName := .Values.init.mongo.image.repository -}}
+{{- $tag := default .Chart.AppVersion .Values.init.mongo.image.tag | toString -}}
+{{- $separator := ":" -}}
+{{- if .Values.init.mongo.image.digest -}}
+  {{- $separator = "@" -}}
+  {{- $tag = .Values.init.mongo.image.digest | toString -}}
+{{- end -}}
+
+{{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+{{- end -}}

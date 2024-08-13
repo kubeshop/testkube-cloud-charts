@@ -33,7 +33,7 @@ spec:
       {{- if .Values.init.enabled }}
       initContainers:
         - name: wait-for-mongo
-          image: {{ .Values.init.mongo.image.repository }}:{{ .Values.init.mongo.image.tag }}
+          image: {{ include "testkube-cloud-api.init-mongo-image" . }}
           imagePullPolicy: {{ .Values.init.mongo.image.pullPolicy }}
           command: ["/bin/sh", "-c"]
           args:
