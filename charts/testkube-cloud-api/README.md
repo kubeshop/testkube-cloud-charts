@@ -171,7 +171,9 @@ A Helm chart for Testkube Cloud API
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
+| init.mongo.image.digest | string | `""` | MongoSH image digest |
 | init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
+| init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |
 | init.mongo.image.repository | string | `"alpine/mongosh"` | MongoSH image repository |
 | init.mongo.image.tag | string | `"2.0.2"` | MongoSH image tag |
 | nameOverride | string | `""` |  |
