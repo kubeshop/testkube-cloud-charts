@@ -2,13 +2,13 @@ apiVersion: v2
 name: testkube-enterprise
 description: A Helm chart for Testkube Enterprise
 type: application
-version: 1.139.1
+version: 1.139.2
 dependencies:
   - name: common
     version: 2.13.3
     repository: https://charts.bitnami.com/bitnami
   - name: testkube-cloud-api
-    version: 1.76.0
+    version: 1.76.1
     repository: file://../testkube-cloud-api
   - name: testkube-cloud-ui
     version: 1.58.2
