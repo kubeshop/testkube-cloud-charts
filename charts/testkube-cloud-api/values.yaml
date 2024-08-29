@@ -91,7 +91,7 @@ image:
   registry: ""
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.10.48"
+  tag: "1.10.49"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
