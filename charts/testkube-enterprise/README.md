@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.147.0](https://img.shields.io/badge/Version-1.147.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.148.0](https://img.shields.io/badge/Version-1.148.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -191,7 +191,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.logServer.keyFile | string | `""` | TLS key file |
 | testkube-cloud-api.api.logServer.secure | string | `"false"` | Log server TLS configuration secure connection |
 | testkube-cloud-api.api.logServer.skipVerify | string | `"true"` | Log server TLS configuration skip Verify |
-| testkube-cloud-api.api.migrations.enabled | bool | `false` | Toggle whether to run database migrations |
+| testkube-cloud-api.api.migrations.enabled | bool | `true` | Toggle whether to run database migrations |
 | testkube-cloud-api.api.migrations.image.repository | string | `"kubeshop/testkube-enterprise-api-migrations"` | Migrations image repository |
 | testkube-cloud-api.api.migrations.ttlSecondsAfterFinished | int | `90` |  |
 | testkube-cloud-api.api.migrations.useHelmHooks | bool | `false` | Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart) |
