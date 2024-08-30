@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.145.0](https://img.shields.io/badge/Version-1.145.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.146.0](https://img.shields.io/badge/Version-1.146.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -18,7 +18,7 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.79.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.59.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.39.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.40.0 |
 | file://./charts/dex | dex | 0.18.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 14.7.0 |
