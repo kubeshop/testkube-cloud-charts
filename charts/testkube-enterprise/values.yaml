@@ -304,7 +304,7 @@ testkube-cloud-api:
       tlsSecret: testkube-enterprise-api-tls
     migrations:
       # -- Toggle whether to run database migrations
-      enabled: false
+      enabled: true
       # -- Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart)
       useHelmHooks: false
       image:
