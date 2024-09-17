@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.151.7](https://img.shields.io/badge/Version-1.151.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.151.8](https://img.shields.io/badge/Version-1.151.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -34,7 +34,7 @@ A Helm chart for Testkube Enterprise
 | dex.configSecret.create | bool | `false` | This should be set to `false` so Dex does not create the config secret. Refer to the `createCustom` field for more info on creating config secret. |
 | dex.configSecret.createCustom | bool | `true` | Toggle whether to create a custom config secret for Dex (templates/dex-config-secret.yaml). If set to `true`, the `configTemplate` field will be used to generate the config secret. |
 | dex.configSecret.name | string | `"testkube-enterprise-dex-config"` | The name of the secret to mount as configuration in the pod. Set `createCustom: false` and edit the secret manually to use a custom config secret. |
-| dex.configTemplate | object | `{"additionalConfig":"","additionalStaticClients":[],"base":"logger:\n  level: debug\n  format: json\n","customConfig":""}` | Inline Dex configuration which will be used to generate the config secret. |
+| dex.configTemplate | object | `{"additionalConfig":"","additionalStaticClients":[],"base":"logger:\n  level: debug\n  format: json\nweb:\n  http: 0.0.0.0:5556\nexpiry:\n  deviceRequests: \"5m\"\n  signingKeys: \"6h\"\n  idTokens: \"24h\"\n  refreshTokens:\n    disableRotation: false\n    reuseInterval: \"3s\"\n    validIfNotUsedFor: \"2160h\" # 90 days\n    absoluteLifetime: \"3960h\" # 165 days\noauth2:\n  responseTypes: [\"code\"]\n  skipApprovalScreen: true\n  alwaysShowLoginScreen: false\n  passwordConnector: local\n","customConfig":""}` | Inline Dex configuration which will be used to generate the config secret. |
 | dex.configTemplate.additionalConfig | string | `""` | Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`... |
 | dex.configTemplate.additionalStaticClients | list | `[]` | Additional static clients which will be appended to the dex staticClients config |
 | dex.configTemplate.customConfig | string | `""` | If provided, it will completely override the default config (`base` and `additionalConfig`). This is useful if you want to use a custom config file. |
