@@ -3,8 +3,10 @@
 # Declare variables to be passed into your templates.
 
 global:
-  # -- Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key.
+  # -- Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey.
   customCaSecretRef: ""
+  # -- Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef.
+  customCaSecretKey: "ca.crt"
   # -- Image pull secrets
   imagePullSecrets: []
   # -- Image pull policy

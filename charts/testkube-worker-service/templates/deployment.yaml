@@ -177,7 +177,7 @@ spec:
             - mountPath: {{ $certsDir }}/testkube-custom-ca.pem
               name: {{ .Values.global.customCaSecretRef }}
               readOnly: true
-              subPath: ca.crt
+              subPath: {{ .Values.global.customCaSecretKey }}
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
