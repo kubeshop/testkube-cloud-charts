@@ -1,6 +1,6 @@
 # testkube-worker-service
 
-![Version: 1.40.0](https://img.shields.io/badge/Version-1.40.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.41](https://img.shields.io/badge/AppVersion-1.10.41-informational?style=flat-square)
+![Version: 1.41.0](https://img.shields.io/badge/Version-1.41.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.41](https://img.shields.io/badge/AppVersion-1.10.41-informational?style=flat-square)
 
 A Helm chart for Testkube Worker Service
 
@@ -49,7 +49,8 @@ A Helm chart for Testkube Worker Service
 | externalSecrets.keys | object | `{}` |  |
 | externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
-| global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the ca.crt key. |
+| global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
+| global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
 | global.imagePullPolicy | string | `""` | Image pull policy |
 | global.imagePullSecrets | list | `[]` | Image pull secrets |
 | global.imageRegistry | string | `""` | Global image registry to be prepended for to all images (usually defined in parent chart) |
