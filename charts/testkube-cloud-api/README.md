@@ -58,7 +58,7 @@ A Helm chart for Testkube Cloud API
 | api.logServer.secure | string | `"false"` | Log server TLS configuration secure connection |
 | api.logServer.skipVerify | string | `"true"` | Log server TLS configuration skip Verify |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
-| api.migrations.ttlSecondsAfterFinished | int | `0` | TTL for the migration job, defaults to 0 - disable TTL |
+| api.migrations.ttlSecondsAfterFinished | int | `259200` | TTL for the migration job, defaults to 3 days |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
 | api.minio.accessKeyId | string | `""` | MinIO access key id |
 | api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
