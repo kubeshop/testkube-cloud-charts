@@ -168,8 +168,8 @@ api:
     enabled: false
     # -- Toggle whether to enable pre-install & pre-upgrade hooks
     useHelmHooks: true
-    # -- TTL for the migration job, defaults to 3 days
-    ttlSecondsAfterFinished: 259200
+    # -- TTL for the migration job, defaults to 4 days
+    ttlSecondsAfterFinished: 345600
   features:
     # -- Toggle whether to disable personal organizations when a user signs up for the first time
     disablePersonalOrgs: false
