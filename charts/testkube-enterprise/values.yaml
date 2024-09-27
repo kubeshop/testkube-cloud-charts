@@ -312,7 +312,6 @@ testkube-cloud-api:
       image:
         # -- Migrations image repository
         repository: kubeshop/testkube-enterprise-api-migrations
-        # -- don't clean up finished jobs (pass value in seconds to clean migrations job after completenes)
       # -- TTL for the migration job, defaults to 4 days
       ttlSecondsAfterFinished: 345600
     mongo: *global_mongo_config
