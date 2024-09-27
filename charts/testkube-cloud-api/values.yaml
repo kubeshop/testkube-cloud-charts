@@ -168,7 +168,7 @@ api:
     enabled: false
     # -- Toggle whether to enable pre-install & pre-upgrade hooks
     useHelmHooks: true
-    # -- TTL for the migration ob, defaults to nil - disable TTL
+    # -- TTL for the migration job, defaults to nil - disable TTL
     ttlSecondsAfterFinished: nil
   features:
     # -- Toggle whether to disable personal organizations when a user signs up for the first time
