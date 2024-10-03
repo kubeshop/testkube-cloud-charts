@@ -28,6 +28,9 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.grpcIngress.maxPayloadSize }}
     nginx.ingress.kubernetes.io/client-header-timeout: "10800"
     nginx.ingress.kubernetes.io/client-body-timeout: "10800"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "10800"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "10800"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "10800"
     {{- end }}
     {{- if and (not .Values.api.tls.serveHTTPS) (eq .Values.global.certificateProvider "cert-manager") }}
     cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
