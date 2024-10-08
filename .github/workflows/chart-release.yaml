@@ -1,7 +1,13 @@
 name: Release Helm charts
 
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows: [ "Update application version on dispatch" ]
+    types:
+      - completed
+  push:
+    branches:
+      - main
 
 jobs:
   release-helm-charts:
