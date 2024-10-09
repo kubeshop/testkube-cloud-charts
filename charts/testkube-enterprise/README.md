@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.160.0](https://img.shields.io/badge/Version-1.160.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.160.1](https://img.shields.io/badge/Version-1.160.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -23,7 +23,7 @@ A Helm chart for Testkube Enterprise
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 14.7.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 15.6.16 |
-| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.44 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.46 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 1.2.0 |
 
 ## Values
