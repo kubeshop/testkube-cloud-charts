@@ -249,6 +249,14 @@ testkube-cloud-api:
     name: ""
   ai:
     secretRef: ""
+  audit:
+    cleanup:
+      # -- Toggle whether to enable audit log cleanup
+      enabled: true
+      # -- Cron expression for audit log cleanup. Timezone is UTC. Only simple cron expressions are supported, '/', '-', and ',' expression are not supported.
+      cronInterval: "0 3 * * *"
+      # -- Audit log retention period in days
+      retentionPeriod: 30
   api:
     features:
       # -- Toggle whether to disable personal organizations when a user signs up for the first time
