@@ -156,6 +156,14 @@ payments:
   endpointSecret: ""
   # -- Payments portal configuration ID (currently only Stripe is supported)
   portalConfigurationId: ""
+audit:
+  cleanup:
+    # -- Toggle whether to enable audit log cleanup
+    enabled: true
+    # -- Cron expression for audit log cleanup. Timezone is UTC. Only simple cron expressions are supported, '/', '-', and ',' expression are not supported.
+    cronInterval: "0 3 * * *"
+    # -- Audit log retention period in days
+    retentionPeriod: 30
 api:
   debug:
     # -- Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2

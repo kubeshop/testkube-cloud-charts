@@ -427,6 +427,12 @@ spec:
             {{- end}}
             - name: TESTKUBE_ENABLE_LEGACY_TESTS
               value: "{{ .Values.api.features.legacyTests }}"
+            - name: AUDIT_LOG_CLEANUP_ENABLED
+              value: "{{ .Values.audit.cleanup.enabled }}"
+            - name: AUDIT_LOG_RETENTION_PERIOD_DAYS
+              value: "{{ .Values.audit.cleanup.retentionPeriod }}"
+            - name: AUDIT_LOG_CLEANUP_CRON_INTERVAL
+              value: "{{ .Values.audit.cleanup.cronInterval }}"
           ports:
             - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}
