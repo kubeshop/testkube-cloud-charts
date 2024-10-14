@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.166.0](https://img.shields.io/badge/Version-1.166.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.167.0](https://img.shields.io/badge/Version-1.167.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.87.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.88.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.63.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.41.0 |
 | file://./charts/dex | dex | 0.18.0 |
@@ -229,6 +229,9 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.smtp.username | string | `""` | SMTP username |
 | testkube-cloud-api.api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
+| testkube-cloud-api.audit.cleanup.cronInterval | string | `"0 3 * * *"` | Cron expression for audit log cleanup. Timezone is UTC. Only simple cron expressions are supported, '/', '-', and ',' expression are not supported. |
+| testkube-cloud-api.audit.cleanup.enabled | bool | `true` | Toggle whether to enable audit log cleanup |
+| testkube-cloud-api.audit.cleanup.retentionPeriod | int | `30` | Audit log retention period in days |
 | testkube-cloud-api.customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
 | testkube-cloud-api.enterpriseLicenseFilePath | string | `"/testkube/license.lic"` | Specifies the path where the license file should be mounted. |
 | testkube-cloud-api.enterpriseLicenseKeyPath | string | `"/testkube/license.key"` | Specifies the path where the license key should be mounted. |

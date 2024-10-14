@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.87.0](https://img.shields.io/badge/Version-1.87.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.63](https://img.shields.io/badge/AppVersion-1.10.63-informational?style=flat-square)
+![Version: 1.88.0](https://img.shields.io/badge/Version-1.88.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.63](https://img.shields.io/badge/AppVersion-1.10.63-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -109,6 +109,9 @@ A Helm chart for Testkube Cloud API
 | api.tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | certificate key path |
 | api.tls.serveHTTPS | bool | `true` | Toggle should the Application terminate TLS instead of the Ingress |
 | api.tls.tlsSecret | string | `"testkube-cloud-api-tls"` | TLS secret name which contains the certificate files |
+| audit.cleanup.cronInterval | string | `"0 3 * * *"` | Cron expression for audit log cleanup. Timezone is UTC. Only simple cron expressions are supported, '/', '-', and ',' expression are not supported. |
+| audit.cleanup.enabled | bool | `true` | Toggle whether to enable audit log cleanup |
+| audit.cleanup.retentionPeriod | int | `30` | Audit log retention period in days |
 | autoscaling.enabled | bool | `false` | Toggle whether to enable Horizontal Pod Autoscaler |
 | autoscaling.maxReplicas | int | `10` |  |
 | autoscaling.minReplicas | int | `1` |  |
