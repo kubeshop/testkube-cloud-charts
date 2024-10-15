@@ -4,5 +4,5 @@ helm:
     value: docker.io/kubeshop/testkube-cloud-api
     forcestring: true
   - name: image.tag
-    value: 1.10.63-rc-12eca367
+    value: 1.10.63-rc-ca066dbd
     forcestring: true
