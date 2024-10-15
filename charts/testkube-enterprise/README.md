@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.172.0](https://img.shields.io/badge/Version-1.172.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.172.1](https://img.shields.io/badge/Version-1.172.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.89.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.89.1 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.64.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.41.0 |
 | file://./charts/dex | dex | 0.18.0 |
@@ -238,7 +238,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.10.63"` |  |
+| testkube-cloud-api.image.tag | string | `"1.10.64"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
 | testkube-cloud-api.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
