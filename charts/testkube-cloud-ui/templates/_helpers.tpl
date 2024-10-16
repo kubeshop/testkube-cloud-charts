@@ -36,7 +36,9 @@ Common labels
 {{- define "testkube-cloud-ui.labels" -}}
 helm.sh/chart: {{ include "testkube-cloud-ui.chart" . }}
 {{ include "testkube-cloud-ui.selectorLabels" . }}
+{{- if not (.Values.global.noVersionLabel | default false) }}
 app.kubernetes.io/version: {{ .Values.image.tag | quote }}
+{{- end}}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/component: frontend
 app.kubernetes.io/part-of: testkube-{{ if .Values.global.enterpriseMode }}enterprise{{ else }}cloud{{ end }}

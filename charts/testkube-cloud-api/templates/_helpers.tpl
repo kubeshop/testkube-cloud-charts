@@ -34,7 +34,9 @@ Create chart name and version as used by the chart label.
 Common Testkube labels
 */}}
 {{- define "testkube-cloud-api.labels" -}}
+{{- if not (.Values.global.noVersionLabel | default false) }}
 app.kubernetes.io/version: {{ .Values.image.tag | quote }}
+{{- end }}
 app.kubernetes.io/component: backend
 {{ include "testkube-cloud-api.selectorLabels" . }}
 {{ include "testkube-cloud-api.baseLabels" . }}
