@@ -4,7 +4,7 @@ dependencies:
   version: 2.13.3
 - name: testkube-cloud-api
   repository: file://../testkube-cloud-api
-  version: 1.92.1
+  version: 1.93.0
 - name: testkube-cloud-ui
   repository: file://../testkube-cloud-ui
   version: 1.66.0
@@ -26,5 +26,5 @@ dependencies:
 - name: minio
   repository: https://charts.bitnami.com/bitnami
   version: 14.7.0
-digest: sha256:d4ecd4458e0f9318b584225e299ff7569286df0e896da3f27122d56d7d80ecb1
-generated: "2024-10-18T13:36:12.485281843Z"
+digest: sha256:903e29dff4871988010cccb2264089cd2322fc988fe5721f163dcda5ed2974c4
+generated: "2024-10-18T13:36:57.093617631Z"
