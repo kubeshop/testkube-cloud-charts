@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.181.1](https://img.shields.io/badge/Version-1.181.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.182.0](https://img.shields.io/badge/Version-1.182.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.93.1 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.94.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.66.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.42.0 |
 | file://./charts/dex | dex | 0.18.0 |
