@@ -6752,6 +6752,54 @@ entries:
     version: 1.1.0
   testkube-enterprise:
   - apiVersion: v2
+    created: "2024-10-21T12:47:58.280134866Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      version: 2.13.3
+    - name: testkube-cloud-api
+      repository: file://../testkube-cloud-api
+      version: 1.93.0
+    - name: testkube-cloud-ui
+      repository: file://../testkube-cloud-ui
+      version: 1.66.0
+    - name: testkube-worker-service
+      repository: file://../testkube-worker-service
+      version: 1.42.0
+    - alias: testkube-agent
+      condition: testkube-agent.enabled
+      name: testkube
+      repository: https://kubeshop.github.io/helm-charts
+      version: 2.1.57
+    - condition: dex.enabled
+      name: dex
+      repository: file://./charts/dex
+      version: 0.18.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.6.16
+    - condition: nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 1.2.0
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.7.0
+    description: A Helm chart for Testkube Enterprise
+    digest: 4af26c4a23fb646a9523de5ef2253b195b4fad4c99bfd2818c448ef9f74bf13f
+    home: https://github.com/kubeshop/testkube-cloud-charts
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    maintainers:
+    - name: testkube
+      url: https://testkube.io
+    name: testkube-enterprise
+    type: application
+    urls:
+    - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-enterprise-1.181.0/testkube-enterprise-1.181.0.tgz
+    version: 1.181.0
+  - apiVersion: v2
     created: "2024-10-18T13:36:13.073861667Z"
     dependencies:
     - name: common
@@ -18693,4 +18741,4 @@ entries:
     urls:
     - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.29.0/testkube-worker-service-1.29.0.tgz
     version: 1.29.0
-generated: "2024-10-18T13:37:38.653071993Z"
+generated: "2024-10-21T12:47:58.578755995Z"
