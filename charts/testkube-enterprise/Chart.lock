@@ -22,7 +22,7 @@ dependencies:
   version: 15.6.16
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
-  version: 1.2.0
+  version: 1.2.6
 - name: minio
   repository: https://charts.bitnami.com/bitnami
   version: 14.7.0
