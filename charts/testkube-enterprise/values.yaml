@@ -473,7 +473,7 @@ nats:
           memory: 512Mi
   # image:
   # repository: nats
-  # tag: 2.10.5-alpine
+  # tag: 2.10.21-alpine
   # pullPolicy: IfNotPresent
   # registry:
   config:
@@ -509,7 +509,7 @@ nats:
     # Uncomment if you want to provide a different image or pullPolicy
     # image:
     # repository: natsio/nats-server-config-reloader
-    # tag: 0.13.0
+    # tag: 0.16.0
     # pullPolicy:
     # registry:
 
@@ -543,14 +543,14 @@ nats:
     # container:
     # image:
     # repository: natsio/nats-box
-    # tag: 0.14.1
+    # tag: 0.14.5
     # pullPolicy:
     # registry:
     ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
     #    container:
     #      image:
     #        repository: natsio/nats-box #used to fix this: https://github.com/nats-io/nats-box/pull/66
-    #        tag: 0.14.3-nonroot
+    #        tag: 0.14.5-nonroot
 
     # -- Map of additional env vars
     env: {}
@@ -566,7 +566,7 @@ nats:
     # Uncomment if you want to provide a different image or pullPolicy
     # image:
     # repository: natsio/prometheus-nats-exporter
-    # tag: 0.12.0
+    # tag: 0.15.0
     # pullPolicy:
     # registry:
 
