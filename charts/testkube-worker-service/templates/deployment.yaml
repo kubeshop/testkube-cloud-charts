@@ -32,7 +32,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
         - name: wait-for-mongo
-          image: alpine/mongosh:2.0.2
+          image: {{ include "testkube-worker.init-mongo-image" . }}
           command: ["/bin/sh", "-c"]
           args:
             - |
