@@ -68,6 +68,20 @@ fullnameOverride: ""
 additionalEnv: {}
 # FOO: bar
 
+# -- Mongo Init Container values
+init:
+  mongo:
+    image:
+      # -- MongoSH image registry
+      registry: "docker.io"
+      # -- MongoSH image repository
+      repository: alpine/mongosh
+      # -- MongoSH image tag
+      tag: 2.0.2
+      # -- MongoSH image pull policy
+      pullPolicy: IfNotPresent
+      # -- MongoSH image digest
+      digest: ""
 # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
 customCaDirPath: ""
 api:
