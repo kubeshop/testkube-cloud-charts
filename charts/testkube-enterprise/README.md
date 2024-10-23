@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.182.0](https://img.shields.io/badge/Version-1.182.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.183.0](https://img.shields.io/badge/Version-1.183.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -18,7 +18,7 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.94.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.66.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.42.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.43.0 |
 | file://./charts/dex | dex | 0.18.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 14.7.0 |
@@ -273,6 +273,12 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.tag | string | `"1.10.41"` |  |
+| testkube-worker-service.init | object | `{"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"alpine/mongosh","tag":"2.0.2"}}}` | Mongo Init Container values |
+| testkube-worker-service.init.mongo.image.digest | string | `""` | MongoSH image digest |
+| testkube-worker-service.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
+| testkube-worker-service.init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |
+| testkube-worker-service.init.mongo.image.repository | string | `"alpine/mongosh"` | MongoSH image repository |
+| testkube-worker-service.init.mongo.image.tag | string | `"2.0.2"` | MongoSH image tag |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"75m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Worker Service |
 
 ----------------------------------------------
