@@ -636,7 +636,7 @@ dex:
   # Uncomment if you want to provide different image settings
   # image:
   # repository: ghcr.io/dexidp/dex
-  # tag: v2.36.0-alpine
+  # tag: v2.41.1
   # pullPolicy: IfNotPresent
 
   # -- Common labels which will be added to all Dex resources
