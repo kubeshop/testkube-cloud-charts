@@ -7,7 +7,7 @@ CP_IMAGES=images.txt
 helm dependency build ../charts/testkube-enterprise
 
 # Get images from the control plane chart
-helm template test testkubeenterprise/testkube-enterprise --skip-crds --set global.imageRegistry=$REPO --set global.certificateProvider="" --set global.testWorkflows.createOfficialTemplates=false | grep "image:" | grep -v "{" | sed 's/"//g' | sed 's/docker.io\///g' | awk '{ print $2 }' | awk 'NF && !seen[$0]++' | sort > "$CP_IMAGES"
+helm template test ../charts/testkube-enterprise --skip-crds --set global.imageRegistry=$REPO --set global.certificateProvider="" --set global.testWorkflows.createOfficialTemplates=false | grep "image:" | grep -v "{" | sed 's/"//g' | sed 's/docker.io\///g' | awk '{ print $2 }' | awk 'NF && !seen[$0]++' | sort > "$CP_IMAGES"
 
 # Check for images that do not start with the image registry
 failure=false
