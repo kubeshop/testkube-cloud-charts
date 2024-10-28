@@ -3,11 +3,6 @@
 REPO=myownrepo.com/prefix
 CP_IMAGES=images.txt
 
-# Add repos
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm repo add kubeshop https://kubeshop.github.io/helm-charts
-helm repo add nats https://nats-io.github.io/k8s/helm/charts/
-
 # Build the dependencies
 helm dependency build ../charts/testkube-enterprise
 
