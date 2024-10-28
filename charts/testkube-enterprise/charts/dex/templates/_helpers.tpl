@@ -74,3 +74,14 @@ Create the name of the secret containing the config file to use
 {{- default "default" .Values.configSecret.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+The name of the image
+*/}}
+{{- define "dex.image" }}
+{{- $image := printf "%s:%s" .Values.image.repository (default .Chart.AppVersion .Values.image.tag) }}
+{{- if or .Values.image.registry .global.imageRegistry }}
+{{- $image = printf "%s/%s" (default .Values.image.registry .Values.global.imageRegistry) $image }}
+{{- end -}}
+image: {{ $image }}
+{{- end }}
