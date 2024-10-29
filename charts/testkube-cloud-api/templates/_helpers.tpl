@@ -162,9 +162,9 @@ Define podSecurityContext
 */}}
 {{- define "testkube-cloud-api.podSecurityContext" -}}
 {{- if .Values.global.podSecurityContext }}
-{{ toYaml .Values.global.podSecurityContext | trim }}
+{{ toYaml .Values.global.podSecurityContext }}
 {{- else }}
-{{ toYaml .Values.podSecurityContext | trim }}
+{{ toYaml .Values.podSecurityContext }}
 {{- end }}
 {{- end }}
 
@@ -174,8 +174,8 @@ Define containerSecurityContext
 */}}
 {{- define "testkube-cloud-api.containerSecurityContext" -}}
 {{- if .Values.global.securityContext }}
-{{- toYaml .Values.global.securityContext | trim }}
+{{- toYaml .Values.global.securityContext}}
 {{- else }}
-{{- toYaml .Values.securityContext | trim  }}
+{{- toYaml .Values.securityContext }}
 {{- end }}
 {{- end }}
