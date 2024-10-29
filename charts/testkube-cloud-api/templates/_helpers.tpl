@@ -156,3 +156,26 @@ TODO: Implement this using dict and reuse the same for each image
 
 {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
+
+{{/*
+Define podSecurityContext
+*/}}
+{{- define "testkube-cloud-api.podSecurityContext" -}}
+{{- if .Values.global.podSecurityContext }}
+{{ toYaml .Values.global.podSecurityContext | trim }}
+{{- else }}
+{{ toYaml .Values.podSecurityContext | trim }}
+{{- end }}
+{{- end }}
+
+
+{{/*
+Define containerSecurityContext
+*/}}
+{{- define "testkube-cloud-api.containerSecurityContext" -}}
+{{- if .Values.global.securityContext }}
+{{- toYaml .Values.global.securityContext | trim }}
+{{- else }}
+{{- toYaml .Values.securityContext | trim  }}
+{{- end }}
+{{- end }}

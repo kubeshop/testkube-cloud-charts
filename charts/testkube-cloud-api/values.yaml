@@ -352,8 +352,8 @@ serviceAccount:
   name: ""
 podAnnotations: {}
 # -- Pod Security Context
-podSecurityContext: {}
-# fsGroup: 2000
+podSecurityContext:
+  fsGroup: 2000
 
 # -- Security Context for app container
 securityContext:
