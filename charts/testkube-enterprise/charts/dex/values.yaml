@@ -5,6 +5,8 @@
 global:
   # -- Global image registry to be prepended for to all images (usually defined in parent chart)
   imageRegistry: ""
+  # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
+  imagePullSecrets: []
 
 # -- Number of replicas (pods) to launch.
 replicaCount: 1
