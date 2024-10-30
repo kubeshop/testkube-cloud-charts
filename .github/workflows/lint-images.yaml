@@ -19,8 +19,13 @@ jobs:
         run: bash ./image_pull_secrets_check.sh
         working-directory: ./scripts
 
-      - uses: docker-practice/actions-setup-docker@master
-        timeout-minutes: 12
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Install Docker Scout
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh | sh
+          sudo mv docker-scout /usr/local/bin/
 
       - name: Check to make sure that images do not have critical CVEs
         run: bash ./image_cve_check.sh
