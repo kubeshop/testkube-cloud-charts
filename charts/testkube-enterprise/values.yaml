@@ -219,9 +219,9 @@ testkube-cloud-api:
     mongo:
       image:
         # -- MongoSH image repository
-        repository: alpine/mongosh
+        repository: kubeshop/bitnami-mongodb
         # -- MongoSH image tag
-        tag: 2.0.2
+        tag: 7.0.12
         # -- MongoSH image pull policy
         pullPolicy: IfNotPresent
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
@@ -429,9 +429,9 @@ testkube-worker-service:
         # -- MongoSH image registry
         registry: "docker.io"
         # -- MongoSH image repository
-        repository: alpine/mongosh
+        repository: kubeshop/bitnami-mongodb
         # -- MongoSH image tag
-        tag: 2.0.2
+        tag: 7.0.12
         # -- MongoSH image pull policy
         pullPolicy: IfNotPresent
         # -- MongoSH image digest
