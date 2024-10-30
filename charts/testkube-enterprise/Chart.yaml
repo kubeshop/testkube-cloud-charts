@@ -30,9 +30,9 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: mongodb.enabled
   - name: nats
-    version: 1.2.6
-    repository: https://nats-io.github.io/k8s/helm/charts/
-    condition: nats.enabled
+    condition: testkube-api.nats.enabled
+    version: 1.2.6-1
+    repository: "file://./charts/nats"
   - name: minio
     version: 14.7.0
     repository: https://charts.bitnami.com/bitnami
