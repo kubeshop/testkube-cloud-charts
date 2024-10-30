@@ -16,15 +16,16 @@ helm template test ../charts/testkube-enterprise --skip-crds --set global.certif
 failure=false
 while IFS= read -r image; do
 
-    echo "*******************"
-    echo "DOCKER SCOUT OUTPUT"
-    echo "==================="
-    docker scout cves $image --platform linux/amd64 --exit-code --only-severity critical 
+    docker scout cves $image --platform linux/amd64 --exit-code --only-severity critical -o /tmp/scout.log
     ec=$?
-    echo "==================="
 
     if [ $ec -ne 0 ]; then
         echo "Failure: The '$image' has critical CVEs."
+        echo "*******************"
+        echo "DOCKER SCOUT OUTPUT"
+        echo "==================="
+        cat /tmp/scout.log
+        echo "==================="
         failure=true
     fi
 done < "$CP_IMAGES"
