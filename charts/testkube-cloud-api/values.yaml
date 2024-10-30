@@ -87,6 +87,11 @@ global:
   tls: {}
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: false
+  # -- Global security Context for all containers
+  securityContext: {}
+  # -- Global security Context for all pods
+  podSecurityContext:
+    fsGroup: 2000
 replicaCount: 1
 image:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
@@ -111,7 +116,7 @@ demoOrganizationId: ""
 ## Init block defines settings for the dependency check containers
 init:
   # -- Toggle whether to enable the dependency check containers
-  enabled: false
+  enabled: true
   mongo:
     image:
       # -- MongoSH image registry
@@ -124,6 +129,8 @@ init:
       pullPolicy: IfNotPresent
       # -- MongoSH image digest
       digest: ""
+      # -- Init container Security Context
+    securityContext: {}
 analytics:
   segmentio:
     # -- Toggle whether to enable Segment.io analytics
@@ -172,7 +179,7 @@ api:
     enableGrpcServerLogs: false
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
-    enabled: false
+    enabled: true
     # -- Toggle whether to enable pre-install & pre-upgrade hooks
     useHelmHooks: true
     # -- TTL for the migration job, defaults to 4 days

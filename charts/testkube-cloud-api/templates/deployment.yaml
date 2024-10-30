@@ -35,6 +35,8 @@ spec:
         - name: wait-for-mongo
           image: {{ include "testkube-cloud-api.init-mongo-image" . }}
           imagePullPolicy: {{ .Values.init.mongo.image.pullPolicy }}
+          securityContext:
+            {{ include "init-wait-for-mongo.containerSecurityContext" . | nindent 12 }}
           command: ["/bin/sh", "-c"]
           args:
             - |
@@ -57,7 +59,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{ include "testkube-cloud-api.containerSecurityContext" . | trim | nindent 12 }}
+            {{ include "testkube-cloud-api.containerSecurityContext" . | nindent 12 }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           env:
