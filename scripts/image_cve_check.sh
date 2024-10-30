@@ -15,9 +15,13 @@ helm template test ../charts/testkube-enterprise --skip-crds --set global.certif
 # Check for images that do not start with the image registry
 failure=false
 while IFS= read -r image; do
+
+    echo "DOCKER SCOUT OUTPUT\n==================="
     docker scout cves $image --platform linux/amd64 --exit-code --only-severity critical 
     ec=$?
-    if [ $ec -ne 0]; then
+    echo "===================\n"
+
+    if [ $ec -ne 0 ]; then
         echo "Failure: The '$image' has critical CVEs."
         failure=true
     fi
