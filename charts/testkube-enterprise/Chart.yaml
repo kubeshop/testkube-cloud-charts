@@ -2,7 +2,7 @@ apiVersion: v2
 name: testkube-enterprise
 description: A Helm chart for Testkube Enterprise
 type: application
-version: 1.205.0
+version: 2.0.0
 dependencies:
   - name: common
     version: 2.13.3
@@ -22,7 +22,7 @@ dependencies:
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex
-    version: 0.18.0
+    version: 0.19.1-2
     repository: file://./charts/dex
     condition: dex.enabled
   - name: mongodb
@@ -30,9 +30,9 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: mongodb.enabled
   - name: nats
-    version: 1.2.0
-    repository: https://nats-io.github.io/k8s/helm/charts/
-    condition: nats.enabled
+    condition: testkube-api.nats.enabled
+    version: 1.2.6-1
+    repository: "file://./charts/nats"
   - name: minio
     version: 14.7.0
     repository: https://charts.bitnami.com/bitnami
