@@ -90,8 +90,7 @@ global:
   # -- Global security Context for all containers
   securityContext: {}
   # -- Global security Context for all pods
-  podSecurityContext:
-    fsGroup: 2000
+  podSecurityContext: {}
 replicaCount: 1
 image:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
@@ -361,8 +360,7 @@ podAnnotations: {}
 # -- Pod Security Context
 podSecurityContext: {}
 # fsGroup: 2000
-
-# -- Security Context for app container
+# -- Container Security Context
 securityContext:
   readOnlyRootFilesystem: true
 service:

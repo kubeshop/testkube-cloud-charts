@@ -29,11 +29,11 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "testkube-cloud-ui.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{ include "testkube-cloud-ui.podSecurityContext" . | trim }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{ include "testkube-cloud-ui.containerSecurityContext" . | trim }}
           image: {{ include "testkube-dashboard.image" . }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           ports:

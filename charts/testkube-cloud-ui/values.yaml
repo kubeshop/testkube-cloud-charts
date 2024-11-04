@@ -27,6 +27,10 @@ global:
     enabled: true
   # -- Common labels which will be added to all resources
   labels: {}
+  # -- Global security Context for all containers
+  securityContext: {}
+  # -- Global security Context for all pods
+  podSecurityContext: {}
 replicaCount: 1
 sentry:
   # -- Toggle whether to enable Sentry.io error reporting
@@ -78,10 +82,8 @@ podAnnotations: {}
 # -- Pod Security Context
 podSecurityContext: {}
 # fsGroup: 2000
-
 # -- Container Security Context
-securityContext:
-  readOnlyRootFilesystem: true
+securityContext: {}
 service:
   type: ClusterIP
   port: 8080
