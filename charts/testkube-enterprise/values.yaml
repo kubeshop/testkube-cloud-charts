@@ -634,10 +634,11 @@ dex:
   enabled: true
   fullnameOverride: testkube-enterprise-dex
   # Uncomment if you want to provide different image settings
-  # image:
-  # repository: ghcr.io/dexidp/dex
-  # tag: v2.41.1
-  # pullPolicy: IfNotPresent
+  #image:
+  #  registry: ghcr.io
+  #  repository: dexidp/dex
+  #  tag: ""
+  #  pullPolicy: IfNotPresent
 
   # -- Common labels which will be added to all Dex resources
   commonLabels: *common_labels
