@@ -1,329 +1,252 @@
-# NATS Server
+# nats
 
----
+![Version: 1.2.6-1](https://img.shields.io/badge/Version-1.2.6--1-informational?style=flat-square) ![AppVersion: 2.10.22](https://img.shields.io/badge/AppVersion-2.10.22-informational?style=flat-square)
 
-[NATS](https://nats.io) is a simple, secure and performant communications system for digital systems, services and devices.
-NATS is part of the Cloud Native Computing Foundation ([CNCF](https://cncf.io)).
-NATS has over [30 client language implementations](https://nats.io/download/), and its server can run on-premise, in the cloud, at the edge, and even on a Raspberry Pi.
-NATS can secure and simplify design and operation of modern distributed systems.
+A Helm chart for the NATS.io High Speed Cloud Native Distributed Communications Technology.
 
-```shell
-helm repo add nats https://nats-io.github.io/k8s/helm/charts/
-helm upgrade --install nats nats/nats
-```
+**Homepage:** <http://github.com/nats-io/k8s>
 
-## Upgrade Nodes
+## Maintainers
 
-- **Upgrading from 0.x**: The `values.yaml` schema changed significantly from 0.x to 1.x.  Read [UPGRADING.md](UPGRADING.md) for instructions on upgrading a 0.x release to 1.x.
+| Name | Email | Url |
+| ---- | ------ | --- |
+| The NATS Authors | <info@nats.io> | <https://github.com/nats-io> |
 
 ## Values
 
-There are a handful of explicitly defined options which are documented with comments in the [values.yaml](values.yaml) file.
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| config.cluster.enabled | bool | `false` |  |
+| config.cluster.merge | object | `{}` |  |
+| config.cluster.patch | list | `[]` |  |
+| config.cluster.port | int | `6222` |  |
+| config.cluster.replicas | int | `3` |  |
+| config.cluster.routeURLs.k8sClusterDomain | string | `"cluster.local"` |  |
+| config.cluster.routeURLs.password | string | `nil` |  |
+| config.cluster.routeURLs.useFQDN | bool | `false` |  |
+| config.cluster.routeURLs.user | string | `nil` |  |
+| config.cluster.tls.cert | string | `"tls.crt"` |  |
+| config.cluster.tls.dir | string | `"/etc/nats-certs/cluster"` |  |
+| config.cluster.tls.enabled | bool | `false` |  |
+| config.cluster.tls.key | string | `"tls.key"` |  |
+| config.cluster.tls.merge | object | `{}` |  |
+| config.cluster.tls.patch | list | `[]` |  |
+| config.cluster.tls.secretName | string | `nil` |  |
+| config.gateway.enabled | bool | `false` |  |
+| config.gateway.merge | object | `{}` |  |
+| config.gateway.patch | list | `[]` |  |
+| config.gateway.port | int | `7222` |  |
+| config.gateway.tls.cert | string | `"tls.crt"` |  |
+| config.gateway.tls.dir | string | `"/etc/nats-certs/gateway"` |  |
+| config.gateway.tls.enabled | bool | `false` |  |
+| config.gateway.tls.key | string | `"tls.key"` |  |
+| config.gateway.tls.merge | object | `{}` |  |
+| config.gateway.tls.patch | list | `[]` |  |
+| config.gateway.tls.secretName | string | `nil` |  |
+| config.jetstream.enabled | bool | `false` |  |
+| config.jetstream.fileStore.dir | string | `"/data"` |  |
+| config.jetstream.fileStore.enabled | bool | `true` |  |
+| config.jetstream.fileStore.maxSize | string | `nil` |  |
+| config.jetstream.fileStore.pvc.enabled | bool | `true` |  |
+| config.jetstream.fileStore.pvc.merge | object | `{}` |  |
+| config.jetstream.fileStore.pvc.name | string | `nil` |  |
+| config.jetstream.fileStore.pvc.patch | list | `[]` |  |
+| config.jetstream.fileStore.pvc.size | string | `"10Gi"` |  |
+| config.jetstream.fileStore.pvc.storageClassName | string | `nil` |  |
+| config.jetstream.memoryStore.enabled | bool | `false` |  |
+| config.jetstream.memoryStore.maxSize | string | `"1Gi"` |  |
+| config.jetstream.merge | object | `{}` |  |
+| config.jetstream.patch | list | `[]` |  |
+| config.leafnodes.enabled | bool | `false` |  |
+| config.leafnodes.merge | object | `{}` |  |
+| config.leafnodes.patch | list | `[]` |  |
+| config.leafnodes.port | int | `7422` |  |
+| config.leafnodes.tls.cert | string | `"tls.crt"` |  |
+| config.leafnodes.tls.dir | string | `"/etc/nats-certs/leafnodes"` |  |
+| config.leafnodes.tls.enabled | bool | `false` |  |
+| config.leafnodes.tls.key | string | `"tls.key"` |  |
+| config.leafnodes.tls.merge | object | `{}` |  |
+| config.leafnodes.tls.patch | list | `[]` |  |
+| config.leafnodes.tls.secretName | string | `nil` |  |
+| config.merge | object | `{}` |  |
+| config.monitor.enabled | bool | `true` |  |
+| config.monitor.port | int | `8222` |  |
+| config.monitor.tls.enabled | bool | `false` |  |
+| config.mqtt.enabled | bool | `false` |  |
+| config.mqtt.merge | object | `{}` |  |
+| config.mqtt.patch | list | `[]` |  |
+| config.mqtt.port | int | `1883` |  |
+| config.mqtt.tls.cert | string | `"tls.crt"` |  |
+| config.mqtt.tls.dir | string | `"/etc/nats-certs/mqtt"` |  |
+| config.mqtt.tls.enabled | bool | `false` |  |
+| config.mqtt.tls.key | string | `"tls.key"` |  |
+| config.mqtt.tls.merge | object | `{}` |  |
+| config.mqtt.tls.patch | list | `[]` |  |
+| config.mqtt.tls.secretName | string | `nil` |  |
+| config.nats.port | int | `4222` |  |
+| config.nats.tls.cert | string | `"tls.crt"` |  |
+| config.nats.tls.dir | string | `"/etc/nats-certs/nats"` |  |
+| config.nats.tls.enabled | bool | `false` |  |
+| config.nats.tls.key | string | `"tls.key"` |  |
+| config.nats.tls.merge | object | `{}` |  |
+| config.nats.tls.patch | list | `[]` |  |
+| config.nats.tls.secretName | string | `nil` |  |
+| config.patch | list | `[]` |  |
+| config.profiling.enabled | bool | `false` |  |
+| config.profiling.port | int | `65432` |  |
+| config.resolver.dir | string | `"/data/resolver"` |  |
+| config.resolver.enabled | bool | `false` |  |
+| config.resolver.merge | object | `{}` |  |
+| config.resolver.patch | list | `[]` |  |
+| config.resolver.pvc.enabled | bool | `true` |  |
+| config.resolver.pvc.merge | object | `{}` |  |
+| config.resolver.pvc.name | string | `nil` |  |
+| config.resolver.pvc.patch | list | `[]` |  |
+| config.resolver.pvc.size | string | `"1Gi"` |  |
+| config.resolver.pvc.storageClassName | string | `nil` |  |
+| config.serverNamePrefix | string | `""` |  |
+| config.websocket.enabled | bool | `false` |  |
+| config.websocket.ingress.className | string | `nil` |  |
+| config.websocket.ingress.enabled | bool | `false` |  |
+| config.websocket.ingress.hosts | list | `[]` |  |
+| config.websocket.ingress.merge | object | `{}` |  |
+| config.websocket.ingress.name | string | `nil` |  |
+| config.websocket.ingress.patch | list | `[]` |  |
+| config.websocket.ingress.path | string | `"/"` |  |
+| config.websocket.ingress.pathType | string | `"Exact"` |  |
+| config.websocket.ingress.tlsSecretName | string | `nil` |  |
+| config.websocket.merge | object | `{}` |  |
+| config.websocket.patch | list | `[]` |  |
+| config.websocket.port | int | `8080` |  |
+| config.websocket.tls.cert | string | `"tls.crt"` |  |
+| config.websocket.tls.dir | string | `"/etc/nats-certs/websocket"` |  |
+| config.websocket.tls.enabled | bool | `false` |  |
+| config.websocket.tls.key | string | `"tls.key"` |  |
+| config.websocket.tls.merge | object | `{}` |  |
+| config.websocket.tls.patch | list | `[]` |  |
+| config.websocket.tls.secretName | string | `nil` |  |
+| configMap.merge | object | `{}` |  |
+| configMap.name | string | `nil` |  |
+| configMap.patch | list | `[]` |  |
+| container.env | object | `{}` |  |
+| container.image.pullPolicy | string | `nil` |  |
+| container.image.registry | string | `nil` |  |
+| container.image.repository | string | `"nats"` |  |
+| container.image.tag | string | `"2.10.22-alpine"` |  |
+| container.merge | object | `{}` |  |
+| container.patch | list | `[]` |  |
+| container.ports.cluster | object | `{}` |  |
+| container.ports.gateway | object | `{}` |  |
+| container.ports.leafnodes | object | `{}` |  |
+| container.ports.monitor | object | `{}` |  |
+| container.ports.mqtt | object | `{}` |  |
+| container.ports.nats | object | `{}` |  |
+| container.ports.profiling | object | `{}` |  |
+| container.ports.websocket | object | `{}` |  |
+| extraResources | list | `[]` |  |
+| fullnameOverride | string | `nil` |  |
+| global.image.pullPolicy | string | `nil` |  |
+| global.image.pullSecretNames | list | `[]` |  |
+| global.image.registry | string | `nil` |  |
+| global.imagePullSecrets | list | `[]` |  |
+| global.labels | object | `{}` |  |
+| headlessService.merge | object | `{}` |  |
+| headlessService.name | string | `nil` |  |
+| headlessService.patch | list | `[]` |  |
+| nameOverride | string | `nil` |  |
+| namespaceOverride | string | `nil` |  |
+| natsBox.container.env | object | `{}` |  |
+| natsBox.container.image.pullPolicy | string | `nil` |  |
+| natsBox.container.image.registry | string | `nil` |  |
+| natsBox.container.image.repository | string | `"natsio/nats-box"` |  |
+| natsBox.container.image.tag | string | `"0.15.0"` |  |
+| natsBox.container.merge | object | `{}` |  |
+| natsBox.container.patch | list | `[]` |  |
+| natsBox.contentsSecret.merge | object | `{}` |  |
+| natsBox.contentsSecret.name | string | `nil` |  |
+| natsBox.contentsSecret.patch | list | `[]` |  |
+| natsBox.contexts.default.creds.contents | string | `nil` |  |
+| natsBox.contexts.default.creds.dir | string | `nil` |  |
+| natsBox.contexts.default.creds.key | string | `"nats.creds"` |  |
+| natsBox.contexts.default.creds.secretName | string | `nil` |  |
+| natsBox.contexts.default.merge | object | `{}` |  |
+| natsBox.contexts.default.nkey.contents | string | `nil` |  |
+| natsBox.contexts.default.nkey.dir | string | `nil` |  |
+| natsBox.contexts.default.nkey.key | string | `"nats.nk"` |  |
+| natsBox.contexts.default.nkey.secretName | string | `nil` |  |
+| natsBox.contexts.default.patch | list | `[]` |  |
+| natsBox.contexts.default.tls.cert | string | `"tls.crt"` |  |
+| natsBox.contexts.default.tls.dir | string | `nil` |  |
+| natsBox.contexts.default.tls.key | string | `"tls.key"` |  |
+| natsBox.contexts.default.tls.secretName | string | `nil` |  |
+| natsBox.contextsSecret.merge | object | `{}` |  |
+| natsBox.contextsSecret.name | string | `nil` |  |
+| natsBox.contextsSecret.patch | list | `[]` |  |
+| natsBox.defaultContextName | string | `"default"` |  |
+| natsBox.deployment.merge | object | `{}` |  |
+| natsBox.deployment.name | string | `nil` |  |
+| natsBox.deployment.patch | list | `[]` |  |
+| natsBox.enabled | bool | `true` |  |
+| natsBox.podTemplate.merge | object | `{}` |  |
+| natsBox.podTemplate.patch | list | `[]` |  |
+| natsBox.serviceAccount.enabled | bool | `false` |  |
+| natsBox.serviceAccount.merge | object | `{}` |  |
+| natsBox.serviceAccount.name | string | `nil` |  |
+| natsBox.serviceAccount.patch | list | `[]` |  |
+| podDisruptionBudget.enabled | bool | `true` |  |
+| podDisruptionBudget.merge | object | `{}` |  |
+| podDisruptionBudget.name | string | `nil` |  |
+| podDisruptionBudget.patch | list | `[]` |  |
+| podTemplate.configChecksumAnnotation | bool | `true` |  |
+| podTemplate.merge | object | `{}` |  |
+| podTemplate.patch | list | `[]` |  |
+| podTemplate.topologySpreadConstraints | object | `{}` |  |
+| promExporter.enabled | bool | `false` |  |
+| promExporter.env | object | `{}` |  |
+| promExporter.image.pullPolicy | string | `nil` |  |
+| promExporter.image.registry | string | `nil` |  |
+| promExporter.image.repository | string | `"natsio/prometheus-nats-exporter"` |  |
+| promExporter.image.tag | string | `"0.15.0"` |  |
+| promExporter.merge | object | `{}` |  |
+| promExporter.patch | list | `[]` |  |
+| promExporter.podMonitor.enabled | bool | `false` |  |
+| promExporter.podMonitor.merge | object | `{}` |  |
+| promExporter.podMonitor.name | string | `nil` |  |
+| promExporter.podMonitor.patch | list | `[]` |  |
+| promExporter.port | int | `7777` |  |
+| reloader.enabled | bool | `true` |  |
+| reloader.env | object | `{}` |  |
+| reloader.image.pullPolicy | string | `nil` |  |
+| reloader.image.registry | string | `nil` |  |
+| reloader.image.repository | string | `"natsio/nats-server-config-reloader"` |  |
+| reloader.image.tag | string | `"0.16.0"` |  |
+| reloader.merge | object | `{}` |  |
+| reloader.natsVolumeMountPrefixes[0] | string | `"/etc/"` |  |
+| reloader.patch | list | `[]` |  |
+| service.enabled | bool | `true` |  |
+| service.merge | object | `{}` |  |
+| service.name | string | `nil` |  |
+| service.patch | list | `[]` |  |
+| service.ports.cluster.enabled | bool | `false` |  |
+| service.ports.gateway.enabled | bool | `false` |  |
+| service.ports.leafnodes.enabled | bool | `true` |  |
+| service.ports.monitor.enabled | bool | `false` |  |
+| service.ports.mqtt.enabled | bool | `true` |  |
+| service.ports.nats.enabled | bool | `true` |  |
+| service.ports.profiling.enabled | bool | `false` |  |
+| service.ports.websocket.enabled | bool | `true` |  |
+| serviceAccount.enabled | bool | `false` |  |
+| serviceAccount.merge | object | `{}` |  |
+| serviceAccount.name | string | `nil` |  |
+| serviceAccount.patch | list | `[]` |  |
+| statefulSet.merge | object | `{}` |  |
+| statefulSet.name | string | `nil` |  |
+| statefulSet.patch | list | `[]` |  |
+| tlsCA.configMapName | string | `nil` |  |
+| tlsCA.dir | string | `"/etc/nats-ca-cert"` |  |
+| tlsCA.enabled | bool | `false` |  |
+| tlsCA.key | string | `"ca.crt"` |  |
+| tlsCA.secretName | string | `nil` |  |
 
-Everything in the NATS Config or Kubernetes Resources can be overridden by `merge` and `patch`, which is supported for the following values:
-
-| key                              | type                                                                                                                        | enabled by default                      |
-|----------------------------------|-----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
-| `config`                         | [NATS Config](https://docs.nats.io/running-a-nats-service/configuration)                                                    | yes                                     |
-| `config.cluster`                 | [NATS Cluster](https://docs.nats.io/running-a-nats-service/configuration/clustering/cluster_config)                         | no                                      |
-| `config.cluster.tls`             | [NATS TLS](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/tls)                                     | no                                      |
-| `config.jetstream`               | [NATS JetStream](https://docs.nats.io/running-a-nats-service/configuration#jetstream)                                       | no                                      |
-| `config.jetstream.fileStore.pvc` | [k8s PVC](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#persistentvolumeclaim-v1-core)               | yes, when `config.jetstream` is enabled |
-| `config.nats.tls`                | [NATS TLS](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/tls)                                     | no                                      |
-| `config.leafnodes`               | [NATS LeafNodes](https://docs.nats.io/running-a-nats-service/configuration/leafnodes/leafnode_conf)                        | no                                      |
-| `config.leafnodes.tls`           | [NATS TLS](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/tls)                                     | no                                      |
-| `config.websocket`               | [NATS WebSocket](https://docs.nats.io/running-a-nats-service/configuration/websocket/websocket_conf)                        | no                                      |
-| `config.websocket.tls`           | [NATS TLS](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/tls)                                     | no                                      |
-| `config.websocket.ingress`       | [k8s Ingress](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#ingress-v1-networking-k8s-io)            | no                                      |
-| `config.mqtt`                    | [NATS MQTT](https://docs.nats.io/running-a-nats-service/configuration/mqtt/mqtt_config)                                     | no                                      |
-| `config.mqtt.tls`                | [NATS TLS](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/tls)                                     | no                                      |
-| `config.gateway`                 | [NATS Gateway](https://docs.nats.io/running-a-nats-service/configuration/gateways/gateway#gateway-configuration-block)      | no                                      |
-| `config.gateway.tls`             | [NATS TLS](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/tls)                                     | no                                      |
-| `config.resolver`                | [NATS Resolver](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/auth_intro/jwt/resolver)            | no                                      |
-| `config.resolver.pvc`            | [k8s PVC](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#persistentvolumeclaim-v1-core)               | yes, when `config.resolver` is enabled  |
-| `container`                      | nats [k8s Container](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core)                | yes                                     |
-| `reloader`                       | config reloader [k8s Container](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core)     | yes                                     |
-| `promExporter`                   | prometheus exporter [k8s Container](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core) | no                                      |
-| `promExporter.podMonitor`        | [prometheus PodMonitor](https://prometheus-operator.dev/docs/operator/api/#monitoring.coreos.com/v1.PodMonitor)             | no                                      |
-| `service`                        | [k8s Service](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#service-v1-core)                         | yes                                     |
-| `statefulSet`                    | [k8s StatefulSet](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#statefulset-v1-apps)                 | yes                                     |
-| `podTemplate`                    | [k8s PodTemplate](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#pod-v1-core)                         | yes                                     |
-| `headlessService`                | [k8s Service](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#service-v1-core)                         | yes                                     |
-| `configMap`                      | [k8s ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#configmap-v1-core)                     | yes                                     |
-| `natsBox.contexts.default`        | [NATS Context](https://docs.nats.io/using-nats/nats-tools/nats_cli#nats-contexts)                                           | yes                                     |
-| `natsBox.contexts.[name]`         | [NATS Context](https://docs.nats.io/using-nats/nats-tools/nats_cli#nats-contexts)                                           | no                                      |
-| `natsBox.container`              | nats-box [k8s Container](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core)            | yes                                     |
-| `natsBox.deployment`             | [k8s Deployment](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#deployment-v1-apps)                   | yes                                     |
-| `natsBox.podTemplate`            | [k8s PodTemplate](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#pod-v1-core)                         | yes                                     |
-| `natsBox.contextsSecret`         | [k8s Secret](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#secret-v1-core)                           | yes                                     |
-| `natsBox.contentsSecret`         | [k8s Secret](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#secret-v1-core)                           | yes                                     |
-
-### Merge
-
-Merging is performed using the Helm `merge` function.  Example - add NATS accounts and container resources:
-
-```yaml
-config:
-  merge:
-    accounts:
-      A:
-        users:
-        - {user: a, password: a}
-      B:
-        users:
-        - {user: b, password: b}
-natsBox:
-  contexts:
-    a:
-      merge: {user: a, password: a}
-    b:
-      merge: {user: b, password: b}
-  defaultContextName: a
-```
-
-## Patch
-
-Patching is performed using [JSON Patch](https://jsonpatch.com/).  Example - add additional route to end of route list:
-
-```yaml
-config:
-  cluster:
-    enabled: true
-    patch:
-    - op: add
-      path: /routes/-
-      value: nats://demo.nats.io:6222
-```
-
-## Common Configurations
-
-### JetStream Cluster on 3 separate hosts
-
-```yaml
-config:
-  cluster:
-    enabled: true
-    replicas: 3
-  jetstream:
-    enabled: true
-    fileStore:
-      pvc:
-        size: 10Gi
-
-podTemplate:
-  topologySpreadConstraints:
-    kubernetes.io/hostname:
-      maxSkew: 1
-      whenUnsatisfiable: DoNotSchedule
-```
-
-### NATS Container Resources
-
-```yaml
-container:
-  env:
-    # different from k8s units, suffix must be B, KiB, MiB, GiB, or TiB
-    # should be ~90% of memory limit
-    GOMEMLIMIT: 7GiB
-  merge:
-    # recommended limit is at least 2 CPU cores and 8Gi Memory for production JetStream clusters
-    resources:
-      requests:
-        cpu: "2"
-        memory: 8Gi
-      limits:
-        cpu: "2"
-        memory: 8Gi
-```
-
-### Specify Image Version
-
-```yaml
-container:
-  image:
-    tag: x.y.z-alpine
-```
-
-### Operator Mode with NATS Resolver
-
-Run `nsc generate config --nats-resolver` and replace the `OPERATOR_JWT`, `SYS_ACCOUNT_ID`, and `SYS_ACCOUNT_JWT` with your values.
-Make sure that you do not include the trailing `,` in the `SYS_ACCOUNT_JWT`.
-
-```
-config:
-  resolver:
-    enabled: true
-    merge:
-      type: full
-      interval: 2m
-      timeout: 1.9s
-  merge:
-    operator: OPERATOR_JWT
-    system_account: SYS_ACCOUNT_ID
-    resolver_preload:
-      SYS_ACCOUNT_ID: SYS_ACCOUNT_JWT
-```
-
-
-## Accessing NATS
-
-The chart contains 2 services by default, `service` and `headlessService`.
-
-### `service`
-
-The `service` is intended to be accessed by NATS Clients.  It is a `ClusterIP` service by default, however it can easily be changed to a different service type.
-
-The `nats`, `websocket`, `leafnodes`, and `mqtt` ports will be exposed through this service by default if they are enabled.
-
-Example: change this service type to a `LoadBalancer`:
-
-```yaml
-service:
-  merge:
-    spec:
-      type: LoadBalancer
-```
-
-### `headlessService`
-
-The `headlessService` is used for NATS Servers in the Stateful Set to discover one another.  It is primarily intended to be used for Cluster Route connections.
-
-### TLS Considerations
-
-The TLS Certificate used for Client Connections should have a SAN covering DNS Name that clients access the `service` at.
-
-The TLS Certificate used for Cluster Route Connections should have a SAN covering the DNS Name that routes access each other on the `headlessService` at.  This is `*.<headless-service-name>` by default.
-
-## Advanced Features
-
-### Templating Values
-
-Anything in `values.yaml` can be templated:
-
-- maps matching the following syntax will be templated and parsed as YAML:
-  ```yaml
-  $tplYaml: |
-    yaml template
-  ```
-- maps matching the follow syntax will be templated, parsed as YAML, and spread into the parent map/slice
-  ```yaml
-  $tplYamlSpread: |
-    yaml template
-  ```
-
-Example - change service name:
-
-```yaml
-service:
-  name:
-    $tplYaml: >-
-      {{ include "nats.fullname" . }}-svc
-```
-
-### NATS Config Units and Variables
-
-NATS configuration extends JSON, and can represent Units and Variables.  They must be wrapped in `<< >>` in order to template correctly.  Example:
-
-```yaml
-config:
-  merge:
-    authorization:
-      # variable
-      token: << $TOKEN >>
-    # units
-    max_payload: << 2MB >>
-```
-
-templates to the `nats.conf`:
-
-```
-{
-  "authorization": {
-    "token": $TOKEN
-  },
-  "max_payload": 2MB,
-  "port": 4222,
-  ...
-}
-```
-
-### NATS Config Includes
-
-Any NATS Config key ending in `$include` will be replaced with an include directive.  Included files should be in paths relative to `/etc/nats-config`.  Multiple `$include` keys are supported by using a prefix, and will be sorted alphabetically.  Example:
-
-```yaml
-config:
-  merge:
-    00$include: auth.conf
-    01$include: params.conf
-configMap:
-  merge:
-    data:
-      auth.conf: |
-        accounts: {
-          A: {
-            users: [
-              {user: a, password: a}
-            ]
-          },
-          B: {
-            users: [
-              {user: b, password: b}
-            ]
-          },
-        }
-      params.conf: |
-        max_payload: 2MB
-```
-
-templates to the `nats.conf`:
-
-```
-include auth.conf;
-"port": 4222,
-...
-include params.conf;
-```
-
-### Extra Resources
-
-Enables adding additional arbitrary resources.  Example - expose WebSocket via VirtualService in Istio:
-
-```yaml
-config:
-  websocket:
-    enabled: true
-extraResources:
-- apiVersion: networking.istio.io/v1beta1
-  kind: VirtualService
-  metadata:
-    namespace:
-      $tplYamlSpread: >
-        {{ include "nats.metadataNamespace" $ }}
-    name:
-      $tplYaml: >
-        {{ include "nats.fullname" $ | quote }}
-    labels:
-      $tplYaml: |
-        {{ include "nats.labels" $ }}
-  spec:
-    hosts:
-    - demo.nats.io
-    gateways:
-    - my-gateway
-    http:
-    - name: default
-      match:
-      - name: root
-        uri:
-          exact: /
-      route:
-      - destination:
-          host:
-            $tplYaml: >
-              {{ .Values.service.name | quote }}
-          port:
-            number:
-              $tplYaml: >
-                {{ .Values.config.websocket.port }}
-```
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

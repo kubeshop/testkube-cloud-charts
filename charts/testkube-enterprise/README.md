@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.205.0](https://img.shields.io/badge/Version-1.205.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -19,12 +19,12 @@ A Helm chart for Testkube Enterprise
 | file://../testkube-cloud-api | testkube-cloud-api | 1.99.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.69.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.43.0 |
-| file://./charts/dex | dex | 0.18.0 |
+| file://./charts/dex | dex | 0.19.1-2 |
+| file://./charts/nats | nats | 1.2.6-1 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 14.7.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 15.6.16 |
 | https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.75 |
-| https://nats-io.github.io/k8s/helm/charts/ | nats | 1.2.0 |
 
 ## Values
 
@@ -242,8 +242,8 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
 | testkube-cloud-api.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
-| testkube-cloud-api.init.mongo.image.repository | string | `"alpine/mongosh"` | MongoSH image repository |
-| testkube-cloud-api.init.mongo.image.tag | string | `"2.0.2"` | MongoSH image tag |
+| testkube-cloud-api.init.mongo.image.repository | string | `"kubeshop/bitnami-mongodb"` | MongoSH image repository |
+| testkube-cloud-api.init.mongo.image.tag | string | `"7.0.12"` | MongoSH image tag |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-api.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Api |
 | testkube-cloud-api.serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |
@@ -273,12 +273,12 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.tag | string | `"1.10.41"` |  |
-| testkube-worker-service.init | object | `{"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"alpine/mongosh","tag":"2.0.2"}}}` | Mongo Init Container values |
+| testkube-worker-service.init | object | `{"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"kubeshop/bitnami-mongodb","tag":"7.0.12"}}}` | Mongo Init Container values |
 | testkube-worker-service.init.mongo.image.digest | string | `""` | MongoSH image digest |
 | testkube-worker-service.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
 | testkube-worker-service.init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |
-| testkube-worker-service.init.mongo.image.repository | string | `"alpine/mongosh"` | MongoSH image repository |
-| testkube-worker-service.init.mongo.image.tag | string | `"2.0.2"` | MongoSH image tag |
+| testkube-worker-service.init.mongo.image.repository | string | `"kubeshop/bitnami-mongodb"` | MongoSH image repository |
+| testkube-worker-service.init.mongo.image.tag | string | `"7.0.12"` | MongoSH image tag |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"75m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Worker Service |
 
 ----------------------------------------------
