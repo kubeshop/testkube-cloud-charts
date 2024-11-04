@@ -8,17 +8,17 @@ dependencies:
     version: 2.13.3
     repository: https://charts.bitnami.com/bitnami
   - name: testkube-cloud-api
-    version: 1.96.0
+    version: 1.98.0
     repository: file://../testkube-cloud-api
   - name: testkube-cloud-ui
-    version: 1.66.0
+    version: 1.69.0
     repository: file://../testkube-cloud-ui
   - name: testkube-worker-service
     version: 1.43.0
     repository: file://../testkube-worker-service
   - name: testkube
     alias: testkube-agent
-    version: 2.1.64
+    version: 2.1.75
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex

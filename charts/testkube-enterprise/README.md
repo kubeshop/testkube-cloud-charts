@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 1.190.0](https://img.shields.io/badge/Version-1.190.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.204.0](https://img.shields.io/badge/Version-1.204.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,14 +16,14 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.96.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.66.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.98.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.69.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.43.0 |
 | file://./charts/dex | dex | 0.18.0 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 14.7.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 15.6.16 |
-| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.64 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.75 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 1.2.0 |
 
 ## Values
@@ -238,7 +238,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.10.70"` |  |
+| testkube-cloud-api.image.tag | string | `"1.10.73"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
 | testkube-cloud-api.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
@@ -254,7 +254,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"2.6.2"` |  |
+| testkube-cloud-ui.image.tag | string | `"2.7.0"` |  |
 | testkube-cloud-ui.ingress.className | string | `"nginx"` | Ingress classname |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
