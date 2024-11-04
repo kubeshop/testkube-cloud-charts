@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.1.1](https://img.shields.io/badge/Version-2.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -18,7 +18,7 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.99.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.69.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.43.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.43.1 |
 | file://./charts/dex | dex | 0.19.1-2 |
 | file://./charts/nats | nats | 1.2.6-1 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
@@ -272,7 +272,7 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
-| testkube-worker-service.image.tag | string | `"1.10.41"` |  |
+| testkube-worker-service.image.tag | string | `"1.10.74"` |  |
 | testkube-worker-service.init | object | `{"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"kubeshop/bitnami-mongodb","tag":"7.0.12"}}}` | Mongo Init Container values |
 | testkube-worker-service.init.mongo.image.digest | string | `""` | MongoSH image digest |
 | testkube-worker-service.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |

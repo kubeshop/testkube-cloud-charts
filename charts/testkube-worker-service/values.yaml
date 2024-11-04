@@ -60,7 +60,7 @@ image:
   registry: ""
   repository: kubeshop/testkube-worker-service
   pullPolicy: IfNotPresent
-  tag: "1.10.41"
+  tag: "1.10.74"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
