@@ -82,6 +82,9 @@ A Helm chart for Testkube Enterprise
 | global.storage.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
 | global.storage.endpoint | string | `"{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}"` | Endpoint to a S3 compatible storage service (without protocol) |
 | global.storage.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which Test Artifacts & Logs will be stored |
+| global.storage.public | object | `{"endpoint":"","secure":null}` | Optional public address of the storage, that can be accessed by user |
+| global.storage.public.endpoint | string | `""` | Public endpoint to the storage service, that can be accessed by user |
+| global.storage.public.secure | string | `nil` | Toggle whether to use HTTPS when connecting to the public S3 server |
 | global.storage.region | string | `""` | S3 region |
 | global.storage.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` | S3 Secret Access Key |
 | global.storage.secure | bool | `true` | Toggle whether to use HTTPS when connecting to the S3 server |
