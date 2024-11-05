@@ -80,7 +80,7 @@ The name of the image
 */}}
 {{- define "dex.image" }}
 {{- $image := printf "%s:%s" .Values.image.repository (default (printf "v%s" .Chart.AppVersion) .Values.image.tag) }}
-{{- if or .Values.image.registry .global.imageRegistry }}
+{{- if or .Values.image.registry .Values.global.imageRegistry }}
 {{- $image = printf "%s/%s" (default .Values.image.registry .Values.global.imageRegistry) $image }}
 {{- end -}}
 image: {{ $image }}
