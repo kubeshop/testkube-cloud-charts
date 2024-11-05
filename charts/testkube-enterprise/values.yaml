@@ -84,6 +84,12 @@ global:
     token: ""
     # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
     credsSecretRef: ""
+    # -- Optional public address of the storage, that can be accessed by user
+    public:
+      # -- Public endpoint to the storage service, that can be accessed by user
+      endpoint: ""
+      # -- Toggle whether to use HTTPS when connecting to the public S3 server
+      secure: null
   tls: {}
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: true
@@ -216,7 +222,7 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.74
+    tag: 1.10.75
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000

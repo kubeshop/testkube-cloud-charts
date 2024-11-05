@@ -43,6 +43,10 @@ spec:
           env:
             - name: REACT_APP_API_SERVER_ENDPOINT
               value: {{ if .Values.ui.apiServerEndpoint}}{{ .Values.ui.apiServerEndpoint }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
+            {{- if .Values.ui.wsServerEndpoint }}
+            - name: REACT_APP_WS_SERVER_ENDPOINT
+              value: {{ .Values.ui.wsServerEndpoint }}
+            {{- end }}
             - name: REACT_APP_API_ROOT_ROUTE
               value: {{ if .Values.ui.rootRoute}}{{ tpl .Values.ui.rootRoute $ }}{{ else }}https://{{ .Values.global.uiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             {{- if .Values.ui.authStrategy }}

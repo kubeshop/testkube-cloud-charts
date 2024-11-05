@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.4.0](https://img.shields.io/badge/Version-2.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.6.0](https://img.shields.io/badge/Version-2.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,8 +16,8 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.99.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.69.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.101.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.70.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.44.0 |
 | file://./charts/dex | dex | 0.19.1-3 |
 | file://./charts/nats | nats | 1.2.6-1 |
@@ -82,6 +82,9 @@ A Helm chart for Testkube Enterprise
 | global.storage.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
 | global.storage.endpoint | string | `"{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}"` | Endpoint to a S3 compatible storage service (without protocol) |
 | global.storage.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which Test Artifacts & Logs will be stored |
+| global.storage.public | object | `{"endpoint":"","secure":null}` | Optional public address of the storage, that can be accessed by user |
+| global.storage.public.endpoint | string | `""` | Public endpoint to the storage service, that can be accessed by user |
+| global.storage.public.secure | string | `nil` | Toggle whether to use HTTPS when connecting to the public S3 server |
 | global.storage.region | string | `""` | S3 region |
 | global.storage.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` | S3 Secret Access Key |
 | global.storage.secure | bool | `true` | Toggle whether to use HTTPS when connecting to the S3 server |
@@ -238,7 +241,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.10.74"` |  |
+| testkube-cloud-api.image.tag | string | `"1.10.75"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
 | testkube-cloud-api.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |

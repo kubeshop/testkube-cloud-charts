@@ -387,6 +387,10 @@ spec:
               value: "{{ .Values.api.minio.signing.hostname }}"
             - name: "AGENT_STORAGE_SSL"
               value: "{{ .Values.api.minio.signing.secure }}"
+            - name: "PUBLIC_STORAGE_HOSTNAME"
+              value: "{{ .Values.global.storage.public.endpoint }}"
+            - name: "PUBLIC_STORAGE_SSL"
+              value: "{{ .Values.global.storage.public.secure }}"
             {{- if .Values.api.minio.certSecret.enabled }}
             - name: "MINIO_CERT_FILE"
               value: "{{ .Values.api.minio.certSecret.baseMountPath }}/{{ .Values.api.minio.certSecret.certFile }}"

@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.99.0](https://img.shields.io/badge/Version-1.99.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.74](https://img.shields.io/badge/AppVersion-1.10.74-informational?style=flat-square)
+![Version: 1.101.0](https://img.shields.io/badge/Version-1.101.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.75](https://img.shields.io/badge/AppVersion-1.10.75-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -154,6 +154,9 @@ A Helm chart for Testkube Cloud API
 | global.storage.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
 | global.storage.endpoint | string | `""` | Endpoint to a S3 compatible storage service (without protocol) |
 | global.storage.outputsBucket | string | `""` | S3 bucket in which Test Artifacts & Logs will be stored |
+| global.storage.public | object | `{"endpoint":"","secure":null}` | Optional public address of the storage, that can be accessed by user |
+| global.storage.public.endpoint | string | `""` | Public endpoint to the storage service, that can be accessed by user |
+| global.storage.public.secure | string | `nil` | Toggle whether to use HTTPS when connecting to the public S3 server |
 | global.storage.region | string | `""` | S3 region |
 | global.storage.secretAccessKey | string | `""` | S3 Secret Access Key |
 | global.storage.secure | string | `nil` | Toggle whether to use HTTPS when connecting to the S3 server |
@@ -171,7 +174,7 @@ A Helm chart for Testkube Cloud API
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.10.74"` |  |
+| image.tag | string | `"1.10.75"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
