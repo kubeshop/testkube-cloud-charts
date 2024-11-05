@@ -216,7 +216,7 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.72
+    tag: 1.10.74
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -230,9 +230,9 @@ testkube-cloud-api:
     mongo:
       image:
         # -- MongoSH image repository
-        repository: alpine/mongosh
+        repository: kubeshop/bitnami-mongodb
         # -- MongoSH image tag
-        tag: 2.0.2
+        tag: 7.0.12
         # -- MongoSH image pull policy
         pullPolicy: IfNotPresent
       # -- Init container Security Context
@@ -406,7 +406,7 @@ testkube-cloud-ui:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-ui
-    tag: 2.6.3
+    tag: 2.7.0
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -440,7 +440,7 @@ testkube-worker-service:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.10.41
+    tag: 1.10.74
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -454,9 +454,9 @@ testkube-worker-service:
         # -- MongoSH image registry
         registry: "docker.io"
         # -- MongoSH image repository
-        repository: alpine/mongosh
+        repository: kubeshop/bitnami-mongodb
         # -- MongoSH image tag
-        tag: 2.0.2
+        tag: 7.0.12
         # -- MongoSH image pull policy
         pullPolicy: IfNotPresent
         # -- MongoSH image digest
@@ -502,7 +502,7 @@ nats:
       securityContext: {}
   # image:
   # repository: nats
-  # tag: 2.10.5-alpine
+  # tag: 2.10.21-alpine
   # pullPolicy: IfNotPresent
   # registry:
   config:
@@ -538,7 +538,7 @@ nats:
     # Uncomment if you want to provide a different image or pullPolicy
     # image:
     # repository: natsio/nats-server-config-reloader
-    # tag: 0.13.0
+    # tag: 0.16.0
     # pullPolicy:
     # registry:
 
@@ -576,14 +576,14 @@ nats:
     # container:
     # image:
     # repository: natsio/nats-box
-    # tag: 0.14.1
+    # tag: 0.14.5
     # pullPolicy:
     # registry:
     ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
     #    container:
     #      image:
     #        repository: natsio/nats-box #used to fix this: https://github.com/nats-io/nats-box/pull/66
-    #        tag: 0.14.3-nonroot
+    #        tag: 0.14.5-nonroot
     podTemplate:
       merge:
         spec:
@@ -597,7 +597,7 @@ nats:
     # Uncomment if you want to provide a different image or pullPolicy
     # image:
     # repository: natsio/prometheus-nats-exporter
-    # tag: 0.12.0
+    # tag: 0.15.0
     # pullPolicy:
     # registry:
 
@@ -666,10 +666,11 @@ dex:
   enabled: true
   fullnameOverride: testkube-enterprise-dex
   # Uncomment if you want to provide different image settings
-  # image:
-  # repository: ghcr.io/dexidp/dex
-  # tag: v2.36.0-alpine
-  # pullPolicy: IfNotPresent
+  #image:
+  #  registry: ghcr.io
+  #  repository: dexidp/dex
+  #  tag: ""
+  #  pullPolicy: IfNotPresent
 
   # -- Common labels which will be added to all Dex resources
   commonLabels: *common_labels
