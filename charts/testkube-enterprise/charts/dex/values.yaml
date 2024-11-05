@@ -8,7 +8,7 @@ global:
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
   imagePullSecrets: []
   # -- Global security Context
-  securityContext: {}
+  containerSecurityContext: {}
   # -- Global security Context
   podSecurityContext: {}
 

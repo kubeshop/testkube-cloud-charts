@@ -15,11 +15,9 @@ global:
     # can be overridden by individual image registry
     registry:
   # -- Security Context for all pods
-  podSecurityContext:
-    runasuser: 100
+  podSecurityContext: {}
   # -- Security Context for all containers
-  containerSecurityContext:
-    fsGroup: 2000
+  containerSecurityContext: {}
 
   # global labels will be applied to all resources deployed by the chart
   labels: {}
@@ -382,7 +380,7 @@ reloader:
 ############################################################
 # config.monitor must be enabled
 promExporter:
-  enabled: true
+  enabled: false
   image:
     repository: natsio/prometheus-nats-exporter
     tag: 0.15.0

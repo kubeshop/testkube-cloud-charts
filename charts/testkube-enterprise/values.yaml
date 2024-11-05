@@ -94,7 +94,7 @@ global:
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: true
   # -- Global security Context for all containers, except for MongoDB and MinIo. Container security context for them needs to be provided separately.
-  securityContext: {}
+  containerSecurityContext: {}
   # -- Global security Context for all pods, except for MongoDB and MinIo. Pod security Context for them needs to be provided separately.
   podSecurityContext: {}
 

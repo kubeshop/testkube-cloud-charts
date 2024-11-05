@@ -94,7 +94,7 @@ global:
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: false
   # -- Global security Context for all containers
-  securityContext: {}
+  containerSecurityContext: {}
   # -- Global security Context for all pods
   podSecurityContext: {}
 replicaCount: 1
@@ -135,7 +135,7 @@ init:
       # -- MongoSH image digest
       digest: ""
       # -- Init container Security Context
-    securityContext: {}
+    containerSecurityContext: {}
 analytics:
   segmentio:
     # -- Toggle whether to enable Segment.io analytics

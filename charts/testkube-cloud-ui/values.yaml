@@ -28,7 +28,7 @@ global:
   # -- Common labels which will be added to all resources
   labels: {}
   # -- Global security Context for all containers
-  securityContext: {}
+  containerSecurityContext: {}
   # -- Global security Context for all pods
   podSecurityContext: {}
 replicaCount: 1

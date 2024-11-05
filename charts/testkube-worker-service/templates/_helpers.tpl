@@ -178,8 +178,8 @@ Define podSecurityContext
 Define containerSecurityContext
 */}}
 {{- define "testkube-worker-service.containerSecurityContext" -}}
-{{- if .Values.global.securityContext }}
-{{- toYaml .Values.global.securityContext}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext}}
 {{- else }}
 {{- toYaml .Values.securityContext }}
 {{- end }}
@@ -189,9 +189,9 @@ Define containerSecurityContext
 Define containerSecurityContext for Init Container
 */}}
 {{- define "init-wait-for-mongo.containerSecurityContext" -}}
-{{- if .Values.global.securityContext }}
-{{- toYaml .Values.global.securityContext}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext}}
 {{- else }}
-{{- toYaml .Values.init.mongo.securityContext }}
+{{- toYaml .Values.init.mongo.containerSecurityContext }}
 {{- end }}
 {{- end }}
