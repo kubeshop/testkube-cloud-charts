@@ -94,9 +94,11 @@ global:
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: true
   # -- Global security Context for all containers, except for MongoDB and MinIo. Container security context for them needs to be provided separately.
-  containerSecurityContext: {}
+  containerSecurityContext:
+    readOnlyRootFilesystem: true
   # -- Global security Context for all pods, except for MongoDB and MinIo. Pod security Context for them needs to be provided separately.
-  podSecurityContext: {}
+  podSecurityContext:
+    fsGroup: 2000
 
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
