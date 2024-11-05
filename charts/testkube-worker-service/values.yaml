@@ -145,7 +145,8 @@ podAnnotations: {}
 podSecurityContext: {}
 # fsGroup: 2000
 # -- Security Context for app container
-securityContext: {}
+securityContext:
+  readOnlyRootFilesystem: true
 resources:
   requests:
     cpu: 100m

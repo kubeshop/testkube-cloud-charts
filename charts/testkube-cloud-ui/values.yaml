@@ -85,7 +85,8 @@ podAnnotations: {}
 podSecurityContext: {}
 # fsGroup: 2000
 # -- Container Security Context
-securityContext: {}
+securityContext:
+  readOnlyRootFilesystem: true
 service:
   type: ClusterIP
   port: 8080
