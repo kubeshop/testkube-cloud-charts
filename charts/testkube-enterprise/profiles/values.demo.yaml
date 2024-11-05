@@ -5,6 +5,10 @@ global:
     issuer: http://localhost:5556
   storage:
     endpoint: "testkube-enterprise-minio:9000"
+    region: eu-west-1
+    public:
+      endpoint: localhost:9000
+      secure: false
     credsSecretRef: testkube-minio-credentials
     secure: false
 
@@ -53,6 +57,7 @@ testkube-cloud-ui:
   ui:
     authStrategy: ""
     apiServerEndpoint: "http://localhost:8090"
+    wsServerEndpoint: "ws://localhost:8090"
     rootRoute: "http://testkube-enterprise-ui:8080"
   additionalEnv:
     REACT_APP_ENABLE_SIGNUP: "true"
