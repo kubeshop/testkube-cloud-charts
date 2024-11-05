@@ -115,7 +115,7 @@ demoOrganizationId: ""
 ## Init block defines settings for the dependency check containers
 init:
   # -- Toggle whether to enable the dependency check containers
-  enabled: true
+  enabled: false
   mongo:
     image:
       # -- MongoSH image registry
@@ -178,7 +178,7 @@ api:
     enableGrpcServerLogs: false
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
-    enabled: true
+    enabled: false
     # -- Toggle whether to enable pre-install & pre-upgrade hooks
     useHelmHooks: true
     # -- TTL for the migration job, defaults to 4 days
