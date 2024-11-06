@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.102.0](https://img.shields.io/badge/Version-1.102.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.75](https://img.shields.io/badge/AppVersion-1.10.75-informational?style=flat-square)
+![Version: 1.103.0](https://img.shields.io/badge/Version-1.103.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.75](https://img.shields.io/badge/AppVersion-1.10.75-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -128,6 +128,7 @@ A Helm chart for Testkube Cloud API
 | fullnameOverride | string | `""` |  |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
+| global.containerSecurityContext | object | `{}` | Global security Context for all containers |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
 | global.dex.issuer | string | `""` | Global Dex issuer url |
@@ -149,6 +150,7 @@ A Helm chart for Testkube Cloud API
 | global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | global.mongo.readPreference | string | `""` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | global.nats.uri | string | `""` | NATS URI |
+| global.podSecurityContext | object | `{}` | Global security Context for all pods |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.storage.accessKeyId | string | `""` | S3 Access Key ID |
 | global.storage.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
@@ -178,6 +180,7 @@ A Helm chart for Testkube Cloud API
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
+| init.mongo.containerSecurityContext | object | `{}` |  |
 | init.mongo.image.digest | string | `""` | MongoSH image digest |
 | init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
 | init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |
@@ -205,7 +208,7 @@ A Helm chart for Testkube Cloud API
 | restIngress.enabled | bool | `true` | Toggle whether to enable the REST API Ingress |
 | restIngress.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
 | restIngress.labels | object | `{}` | Additional labels to add to the REST Ingress resource |
-| securityContext | object | `{"readOnlyRootFilesystem":true}` | Security Context for app container |
+| securityContext | object | `{"readOnlyRootFilesystem":true}` | Container Security Context |
 | service.annotations | object | `{}` | Additional annotations to add to the Service resource |
 | service.grpcPort | int | `8089` | gRPC/Agent API port |
 | service.labels | object | `{}` | Additional labels to add to the Service resource |
