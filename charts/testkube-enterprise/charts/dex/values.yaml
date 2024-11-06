@@ -7,6 +7,10 @@ global:
   imageRegistry: ""
   # -- Image pull secrets to use for testkube-cloud-api and testkube-cloud-ui
   imagePullSecrets: []
+  # -- Global security Context for Dex Container
+  containerSecurityContext: {}
+  # -- Global security Context for Dex Pod
+  podSecurityContext: {}
 
 # -- Number of replicas (pods) to launch.
 replicaCount: 1

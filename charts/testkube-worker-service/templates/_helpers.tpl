@@ -162,3 +162,36 @@ Define Mongo init image
 
 {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
+
+{{/*
+Define podSecurityContext
+*/}}
+{{- define "testkube-worker-service.podSecurityContext" -}}
+{{- if .Values.global.podSecurityContext }}
+{{ toYaml .Values.global.podSecurityContext }}
+{{- else }}
+{{ toYaml .Values.podSecurityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext
+*/}}
+{{- define "testkube-worker-service.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext}}
+{{- else }}
+{{- toYaml .Values.securityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext for Init Container
+*/}}
+{{- define "init-wait-for-mongo.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext}}
+{{- else }}
+{{- toYaml .Values.init.mongo.containerSecurityContext }}
+{{- end }}
+{{- end }}

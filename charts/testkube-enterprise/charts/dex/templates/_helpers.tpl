@@ -85,3 +85,25 @@ The name of the image
 {{- end -}}
 image: {{ $image }}
 {{- end }}
+
+{{/*
+Define podSecurityContext
+*/}}
+{{- define "dex.podSecurityContext" -}}
+{{- if .Values.global.podSecurityContext }}
+{{ toYaml .Values.global.podSecurityContext }}
+{{- else }}
+{{ toYaml .Values.podSecurityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext
+*/}}
+{{- define "dex.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext}}
+{{- else }}
+{{- toYaml .Values.securityContext }}
+{{- end }}
+{{- end }}

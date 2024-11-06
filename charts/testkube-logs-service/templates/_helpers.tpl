@@ -114,3 +114,25 @@ Define image
     {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Define podSecurityContext
+*/}}
+{{- define "testkube-logs-service.podSecurityContext" -}}
+{{- if .Values.global.podSecurityContext }}
+{{ toYaml .Values.global.podSecurityContext }}
+{{- else }}
+{{ toYaml .Values.podSecurityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext
+*/}}
+{{- define "testkube-logs-service.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext}}
+{{- else }}
+{{- toYaml .Values.securityContext }}
+{{- end }}
+{{- end }}

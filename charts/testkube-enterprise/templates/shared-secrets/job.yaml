@@ -10,7 +10,8 @@ metadata:
 spec:
   template:
     spec:
-      securityContext: {{- toYaml .Values.sharedSecretGenerator.securityContext | nindent 8 }}
+      securityContext:
+        {{ include "sharedSecretGenerator.podSecurityContext" . | trim }}
       serviceAccountName: testkube-secret-generator
       restartPolicy: Never
       containers:
@@ -20,7 +21,8 @@ spec:
           volumeMounts:
             - name: scripts
               mountPath: /scripts
-          securityContext: {{- toYaml .Values.sharedSecretGenerator.containerSecurityContext | nindent 12 }}
+          securityContext:
+            {{ include "sharedSecretGenerator.containerSecurityContext" . | trim }}
           resources:
             {{- toYaml .Values.sharedSecretGenerator.resources | nindent 12 }}
       volumes:
