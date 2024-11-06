@@ -27,6 +27,10 @@ global:
     enabled: true
   # -- Common labels which will be added to all resources
   labels: {}
+  # -- Global security Context for all containers
+  containerSecurityContext: {}
+  # -- Global security Context for all pods
+  podSecurityContext: {}
 replicaCount: 1
 sentry:
   # -- Toggle whether to enable Sentry.io error reporting
@@ -48,6 +52,8 @@ fullnameOverride: ""
 ui:
   # -- API Server endpoint URL
   apiServerEndpoint: ""
+  # -- WebSocket Server endpoint URL
+  wsServerEndpoint: ""
   # -- The URL on which UI is served
   rootRoute: ""
   # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies
@@ -78,7 +84,6 @@ podAnnotations: {}
 # -- Pod Security Context
 podSecurityContext: {}
 # fsGroup: 2000
-
 # -- Container Security Context
 securityContext:
   readOnlyRootFilesystem: true

@@ -84,16 +84,26 @@ global:
     token: ""
     # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
     credsSecretRef: ""
+    # -- Optional public address of the storage, that can be accessed by user
+    public:
+      # -- Public endpoint to the storage service, that can be accessed by user
+      endpoint: ""
+      # -- Toggle whether to use HTTPS when connecting to the public S3 server
+      secure: null
   tls: {}
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: false
+  # -- Global security Context for all containers
+  containerSecurityContext: {}
+  # -- Global security Context for all pods
+  podSecurityContext: {}
 replicaCount: 1
 image:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
   registry: ""
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.10.74"
+  tag: "1.10.75"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -124,6 +134,8 @@ init:
       pullPolicy: IfNotPresent
       # -- MongoSH image digest
       digest: ""
+      # -- Init container Security Context
+    containerSecurityContext: {}
 analytics:
   segmentio:
     # -- Toggle whether to enable Segment.io analytics
@@ -354,8 +366,7 @@ podAnnotations: {}
 # -- Pod Security Context
 podSecurityContext: {}
 # fsGroup: 2000
-
-# -- Security Context for app container
+# -- Container Security Context
 securityContext:
   readOnlyRootFilesystem: true
 service:

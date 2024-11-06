@@ -1,6 +1,6 @@
 # testkube-logs-service
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.6.0](https://img.shields.io/badge/Version-1.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Testkube log Service
 
@@ -56,11 +56,13 @@ A Helm chart for Testkube log Service
 | fullnameOverride | string | `"logs-service"` |  |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
+| global.containerSecurityContext | object | `{}` | Global security Context for all containers |
 | global.domain | string | `""` | Domain under which to create Ingress rules |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.logsSubdomain | string | `"logs"` | logs gRPC subdomain which get prepended to the default domain when host is not set |
+| global.podSecurityContext | object | `{}` | Global security Context for all pods |
 | grpcIngress.annotations | object | `{}` | Additional annotations to add to the gRPC Ingress resource |
 | grpcIngress.enabled | bool | `false` | Toggle whether to enable the gRPC API Ingress |
 | grpcIngress.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |

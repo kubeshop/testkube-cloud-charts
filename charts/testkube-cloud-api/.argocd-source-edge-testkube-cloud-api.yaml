@@ -1,11 +1,8 @@
 helm:
   parameters:
-  - name: api.tls.serveHTTPS
-    value: "false"
-    forcestring: false
   - name: image.name
     value: docker.io/kubeshop/testkube-cloud-api
     forcestring: true
   - name: image.tag
-    value: 1.10.75-dev-1f883f57
+    value: 1.10.76-dev-d6c71555
     forcestring: true

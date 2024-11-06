@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.4.0](https://img.shields.io/badge/Version-2.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.9.0](https://img.shields.io/badge/Version-2.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,11 +16,19 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
+<<<<<<< HEAD
 | file://../testkube-cloud-api | testkube-cloud-api | 1.99.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.69.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.44.0 |
 | file://./charts/dex | dex | 0.19.1-3 |
 | file://./charts/nats | nats | 1.2.6-1 |
+=======
+| file://../testkube-cloud-api | testkube-cloud-api | 1.103.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.71.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.45.0 |
+| file://./charts/dex | dex | 0.19.1-4 |
+| file://./charts/nats | nats | 1.2.6-2 |
+>>>>>>> main
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 14.7.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 15.6.16 |
@@ -56,6 +64,7 @@ A Helm chart for Testkube Enterprise
 | dex.storage | object | `{}` | Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage) |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
+| global.containerSecurityContext | object | `{}` | Global security Context for all containers, except for MongoDB and MinIo. Container security context for them needs to be provided separately. |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
 | global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
@@ -76,12 +85,16 @@ A Helm chart for Testkube Enterprise
 | global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | global.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | global.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
+| global.podSecurityContext | object | `{}` | Global security Context for all pods, except for MongoDB and MinIo. Pod security Context for them needs to be provided separately. |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.storage.accessKeyId | string | `"testkube-enterprise"` | S3 Access Key ID |
 | global.storage.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
 | global.storage.endpoint | string | `"{{ .Values.global.storageApiSubdomain }}.{{ .Values.global.domain }}"` | Endpoint to a S3 compatible storage service (without protocol) |
 | global.storage.outputsBucket | string | `"testkube-cloud-outputs"` | S3 bucket in which Test Artifacts & Logs will be stored |
+| global.storage.public | object | `{"endpoint":"","secure":null}` | Optional public address of the storage, that can be accessed by user |
+| global.storage.public.endpoint | string | `""` | Public endpoint to the storage service, that can be accessed by user |
+| global.storage.public.secure | string | `nil` | Toggle whether to use HTTPS when connecting to the public S3 server |
 | global.storage.region | string | `""` | S3 region |
 | global.storage.secretAccessKey | string | `"t3stkub3-3nt3rpr1s3"` | S3 Secret Access Key |
 | global.storage.secure | bool | `true` | Toggle whether to use HTTPS when connecting to the S3 server |
@@ -148,20 +161,21 @@ A Helm chart for Testkube Enterprise
 | nats.config.merge.max_payload | string | `"<< 8MB >>"` | NATS message maximum payload size |
 | nats.config.patch | list | `[]` | Patch additional fields to nats config |
 | nats.container.merge.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for NATS container |
+| nats.container.merge.securityContext | object | `{}` | Set Security Context for NATS container |
 | nats.enabled | bool | `true` | Toggle whether to install NATS |
 | nats.fullnameOverride | string | `"testkube-enterprise-nats"` |  |
-| nats.natsBox.container.merge | object | `{"resources":{"limits":{"cpu":"100m","memory":"128Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}}` | Merge additional fields to the container |
+| nats.natsBox.container.merge | object | `{"resources":{"limits":{"cpu":"100m","memory":"128Mi"},"requests":{"cpu":"50m","memory":"64Mi"}},"securityContext":{}}` | Merge additional fields to the container |
+| nats.natsBox.container.merge.securityContext | object | `{}` | Set a security Context for NatsBox container |
 | nats.natsBox.enabled | bool | `false` |  |
-| nats.natsBox.env | object | `{}` | Map of additional env vars |
-| nats.natsBox.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
-| nats.natsBox.patch | list | `[]` | Patch additional fields to the container |
-| nats.promExporter.enabled | bool | `true` | Toggle whether to install NATS exporter |
+| nats.natsBox.podTemplate.merge.spec.securityContext | object | `{}` | Set a security Context for NatsBox pod |
+| nats.promExporter.enabled | bool | `false` | Toggle whether to install NATS exporter |
 | nats.promExporter.env | object | `{}` | Map of additional env vars |
-| nats.promExporter.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.promExporter.merge | object | `{"securityContext":{}}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.promExporter.patch | list | `[]` | Patch additional fields to the container |
 | nats.reloader.enabled | bool | `true` | Toggle whether to install Reloader |
 | nats.reloader.env | object | `{}` | Map of additional env vars |
-| nats.reloader.merge | object | `{"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.reloader.merge | object | `{"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}},"securityContext":{}}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
+| nats.reloader.merge.securityContext | object | `{}` | Set Security Context for reloader container |
 | nats.reloader.patch | list | `[]` |  |
 | sharedSecretGenerator.containerSecurityContext | object | `{}` | Container Security Context for the Shared Secret Generator Job |
 | sharedSecretGenerator.enabled | bool | `false` | Toggle whether to enable the Shared Secret Generator Job |
@@ -238,14 +252,17 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.10.74"` |  |
+| testkube-cloud-api.image.tag | string | `"1.10.75"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
 | testkube-cloud-api.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
 | testkube-cloud-api.init.mongo.image.repository | string | `"kubeshop/bitnami-mongodb"` | MongoSH image repository |
 | testkube-cloud-api.init.mongo.image.tag | string | `"7.0.12"` | MongoSH image tag |
+| testkube-cloud-api.init.mongo.securityContext | object | `{}` | Init container Security Context |
+| testkube-cloud-api.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-api.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Api |
+| testkube-cloud-api.securityContext | object | `{"readOnlyRootFilesystem":true}` | Container Security Context |
 | testkube-cloud-api.serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |
 | testkube-cloud-api.serviceAccount.create | bool | `false` | Toggle whether to create a ServiceAccount resource |
 | testkube-cloud-api.serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
@@ -258,7 +275,9 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.ingress.className | string | `"nginx"` | Ingress classname |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
+| testkube-cloud-ui.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-cloud-ui.resources | object | `{"limits":{"cpu":"150m","memory":"128Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube UI |
+| testkube-cloud-ui.securityContext | object | `{"readOnlyRootFilesystem":true}` | Container Security Context |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
 | testkube-worker-service.additionalEnv.USE_MINIO | bool | `true` |  |
 | testkube-worker-service.api.minio.credsFilePath | string | `""` | Path to where a Minio credential file should be mounted |
@@ -273,13 +292,16 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.tag | string | `"1.10.74"` |  |
-| testkube-worker-service.init | object | `{"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"kubeshop/bitnami-mongodb","tag":"7.0.12"}}}` | Mongo Init Container values |
+| testkube-worker-service.init | object | `{"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"kubeshop/bitnami-mongodb","tag":"7.0.12"},"securityContext":{}}}` | Mongo Init Container values |
 | testkube-worker-service.init.mongo.image.digest | string | `""` | MongoSH image digest |
 | testkube-worker-service.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
 | testkube-worker-service.init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |
 | testkube-worker-service.init.mongo.image.repository | string | `"kubeshop/bitnami-mongodb"` | MongoSH image repository |
 | testkube-worker-service.init.mongo.image.tag | string | `"7.0.12"` | MongoSH image tag |
+| testkube-worker-service.init.mongo.securityContext | object | `{}` | Security context for Init Container |
+| testkube-worker-service.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"75m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Worker Service |
+| testkube-worker-service.securityContext | object | `{"readOnlyRootFilesystem":true}` | Container Security Context |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

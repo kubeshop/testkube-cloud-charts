@@ -84,9 +84,19 @@ global:
     token: ""
     # -- Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`)
     credsSecretRef: ""
+    # -- Optional public address of the storage, that can be accessed by user
+    public:
+      # -- Public endpoint to the storage service, that can be accessed by user
+      endpoint: ""
+      # -- Toggle whether to use HTTPS when connecting to the public S3 server
+      secure: null
   tls: {}
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: true
+  # -- Global security Context for all containers, except for MongoDB and MinIo. Container security context for them needs to be provided separately.
+  containerSecurityContext: {}
+  # -- Global security Context for all pods, except for MongoDB and MinIo. Pod security Context for them needs to be provided separately.
+  podSecurityContext: {}
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -211,7 +221,13 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.74
+    tag: 1.10.75
+  # -- Pod Security Context
+  podSecurityContext: {}
+  # fsGroup: 2000
+  # -- Container Security Context
+  securityContext:
+    readOnlyRootFilesystem: true
   ## Init block defines settings for the dependency check containers
   init:
     # -- Toggle whether to enable the dependency check containers
@@ -224,6 +240,8 @@ testkube-cloud-api:
         tag: 7.0.12
         # -- MongoSH image pull policy
         pullPolicy: IfNotPresent
+      # -- Init container Security Context
+      securityContext: {}
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
   customCaDirPath: ""
   # -- Specifies the path where the license key should be mounted.
@@ -394,6 +412,12 @@ testkube-cloud-ui:
     registry: ""
     repository: kubeshop/testkube-enterprise-ui
     tag: 2.7.0
+  # -- Pod Security Context
+  podSecurityContext: {}
+  # fsGroup: 2000
+  # -- Container Security Context
+  securityContext:
+    readOnlyRootFilesystem: true
   # -- Set resources requests and limits for Testkube UI
   resources:
     requests:
@@ -422,6 +446,12 @@ testkube-worker-service:
     registry: ""
     repository: kubeshop/testkube-enterprise-worker-service
     tag: 1.10.74
+  # -- Pod Security Context
+  podSecurityContext: {}
+  # fsGroup: 2000
+  # -- Container Security Context
+  securityContext:
+    readOnlyRootFilesystem: true
   # -- Mongo Init Container values
   init:
     mongo:
@@ -436,6 +466,8 @@ testkube-worker-service:
         pullPolicy: IfNotPresent
         # -- MongoSH image digest
         digest: ""
+      # -- Security context for Init Container
+      securityContext: {}
   # -- Set resources requests and limits for Testkube Worker Service
   resources:
     requests:
@@ -471,6 +503,8 @@ nats:
         limits:
           cpu: 500m
           memory: 512Mi
+      # -- Set Security Context for NATS container
+      securityContext: {}
   # image:
   # repository: nats
   # tag: 2.10.21-alpine
@@ -525,6 +559,8 @@ nats:
         limits:
           cpu: 100m
           memory: 256Mi
+      # -- Set Security Context for reloader container
+      securityContext: {}
     patch: []
   # NATS Box container settings
   natsBox:
@@ -539,6 +575,8 @@ nats:
           limits:
             cpu: 100m
             memory: 128Mi
+        # -- Set a security Context for NatsBox container
+        securityContext: {}
     # Uncomment if you want to provide a different image or pullPolicy
     # container:
     # image:
@@ -551,18 +589,15 @@ nats:
     #      image:
     #        repository: natsio/nats-box #used to fix this: https://github.com/nats-io/nats-box/pull/66
     #        tag: 0.14.5-nonroot
-
-    # -- Map of additional env vars
-    env: {}
-    # -- Merge additional fields to the container
-    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
-    merge: {}
-    # -- Patch additional fields to the container
-    patch: []
+    podTemplate:
+      merge:
+        spec:
+          # -- Set a security Context for NatsBox pod
+          securityContext: {}
   # Exporter container settings
   promExporter:
     # -- Toggle whether to install NATS exporter
-    enabled: true
+    enabled: false
     # Uncomment if you want to provide a different image or pullPolicy
     # image:
     # repository: natsio/prometheus-nats-exporter
@@ -574,7 +609,8 @@ nats:
     env: {}
     # -- Merge additional fields to the container
     # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
-    merge: {}
+    merge:
+      securityContext: {}
     # -- Patch additional fields to the container
     patch: []
 ## MongoDB chart parameters

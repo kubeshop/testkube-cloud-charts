@@ -47,7 +47,7 @@ spec:
       priorityClassName: {{ . | quote }}
       {{- end }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{ include "dex.podSecurityContext" . | trim }}
       {{- with .Values.hostAliases }}
       hostAliases:
         {{- toYaml . | nindent 8 }}
@@ -55,7 +55,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{ include "dex.containerSecurityContext" . | trim }}
           {{- include "dex.image" . | nindent 10 }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
