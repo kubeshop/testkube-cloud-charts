@@ -599,7 +599,7 @@ nats:
   # Exporter container settings
   promExporter:
     # -- Toggle whether to install NATS exporter
-    enabled: true
+    enabled: false
     # Uncomment if you want to provide a different image or pullPolicy
     # image:
     # repository: natsio/prometheus-nats-exporter
