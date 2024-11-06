@@ -16,19 +16,11 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-<<<<<<< HEAD
-| file://../testkube-cloud-api | testkube-cloud-api | 1.99.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.69.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.44.0 |
-| file://./charts/dex | dex | 0.19.1-3 |
-| file://./charts/nats | nats | 1.2.6-1 |
-=======
 | file://../testkube-cloud-api | testkube-cloud-api | 1.103.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.71.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.45.0 |
 | file://./charts/dex | dex | 0.19.1-4 |
 | file://./charts/nats | nats | 1.2.6-2 |
->>>>>>> main
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://charts.bitnami.com/bitnami | minio | 14.7.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 15.6.16 |
