@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.7.0](https://img.shields.io/badge/Version-2.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.8.0](https://img.shields.io/badge/Version-2.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -158,7 +158,7 @@ A Helm chart for Testkube Enterprise
 | nats.natsBox.env | object | `{}` | Map of additional env vars |
 | nats.natsBox.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.natsBox.patch | list | `[]` | Patch additional fields to the container |
-| nats.promExporter.enabled | bool | `true` | Toggle whether to install NATS exporter |
+| nats.promExporter.enabled | bool | `false` | Toggle whether to install NATS exporter |
 | nats.promExporter.env | object | `{}` | Map of additional env vars |
 | nats.promExporter.merge | object | `{}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.promExporter.patch | list | `[]` | Patch additional fields to the container |
