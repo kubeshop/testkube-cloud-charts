@@ -26,8 +26,8 @@ dependencies:
     repository: file://./charts/dex
     condition: dex.enabled
   - name: mongodb
-    version: 15.6.16
-    repository: https://charts.bitnami.com/bitnami
+    version: 16.2.1-1
+    repository: file://./charts/mongodb
     condition: mongodb.enabled
   - name: nats
     condition: testkube-api.nats.enabled
