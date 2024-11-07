@@ -1,6 +1,6 @@
 # testkube-worker-service
 
-![Version: 1.44.0](https://img.shields.io/badge/Version-1.44.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.74](https://img.shields.io/badge/AppVersion-1.10.74-informational?style=flat-square)
+![Version: 1.45.0](https://img.shields.io/badge/Version-1.45.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.74](https://img.shields.io/badge/AppVersion-1.10.74-informational?style=flat-square)
 
 A Helm chart for Testkube Worker Service
 
@@ -49,6 +49,7 @@ A Helm chart for Testkube Worker Service
 | externalSecrets.keys | object | `{}` |  |
 | externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
+| global.containerSecurityContext | object | `{}` | Global security Context for all containers |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
 | global.imagePullPolicy | string | `""` | Image pull policy |
@@ -61,6 +62,7 @@ A Helm chart for Testkube Worker Service
 | global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | global.mongo.readPreference | string | `""` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | global.nats.uri | string | `""` | NATS URI |
+| global.podSecurityContext | object | `{}` | Global security Context for all pods |
 | global.storage.accessKeyId | string | `""` | S3 Access Key ID |
 | global.storage.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
 | global.storage.endpoint | string | `""` | Endpoint to a S3 compatible storage service (without protocol) |
@@ -76,7 +78,8 @@ A Helm chart for Testkube Worker Service
 | image.repository | string | `"kubeshop/testkube-worker-service"` |  |
 | image.tag | string | `"1.10.74"` |  |
 | imagePullSecrets | list | `[]` |  |
-| init | object | `{"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"alpine/mongosh","tag":"2.0.2"}}}` | Mongo Init Container values |
+| init | object | `{"mongo":{"containerSecurityContext":{},"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"alpine/mongosh","tag":"2.0.2"}}}` | Mongo Init Container values |
+| init.mongo.containerSecurityContext | object | `{}` | Security context for Init Container |
 | init.mongo.image.digest | string | `""` | MongoSH image digest |
 | init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
 | init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |

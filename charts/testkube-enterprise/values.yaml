@@ -97,7 +97,6 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods, except for MongoDB and MinIo. Pod security Context for them needs to be provided separately.
   podSecurityContext: {}
-
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -222,7 +221,7 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.75
+    tag: 1.10.78
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -412,7 +411,7 @@ testkube-cloud-ui:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-ui
-    tag: 2.7.0
+    tag: 2.7.1
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -595,7 +594,6 @@ nats:
         spec:
           # -- Set a security Context for NatsBox pod
           securityContext: {}
-
   # Exporter container settings
   promExporter:
     # -- Toggle whether to install NATS exporter
