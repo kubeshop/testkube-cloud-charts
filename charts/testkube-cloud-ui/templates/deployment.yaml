@@ -52,6 +52,12 @@ spec:
               value: {{ .Values.ui.authStrategy }}
             {{- end }}
             {{- if .Values.global.ai.enabled }}
+            - name: TK_AI_URI
+              value: {{ .Values.global.ai.uri }}
+            - name: TK_AI_KIND
+              value: {{ .Values.global.ai.kind }}
+            - name: TK_AI_MODEL
+              value: {{ .Values.global.ai.model }}
             - name: TK_AI_KEY
               {{- if .Values.global.ai.secretRef }}
               valueFrom:
