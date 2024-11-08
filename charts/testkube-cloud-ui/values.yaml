@@ -35,6 +35,12 @@ global:
   ai:
     # -- Enable Testkube AI keys for frontend
     enabled: false
+    # -- API URI
+    uri: "https://ai.testkube.dev"
+    # -- LLM kind (openaai | ollama)
+    kind: "openai"
+    # -- LLM model - LLM need to support it
+    model: "gpt-4o-mini"
     # -- Secret name
     secretRef: testkube-ai
 replicaCount: 1
