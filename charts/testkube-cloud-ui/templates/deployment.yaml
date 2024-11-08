@@ -60,8 +60,6 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.global.ai.secretRef }}
                   key: "TK_AI_KEY"
-              {{- else }}
-              value: "{{ .Values.sentry.url }}"
               {{- end }}
             {{- end }}
             {{- if .Values.sentry.enabled }}
