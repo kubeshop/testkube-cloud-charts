@@ -37,7 +37,6 @@ global:
     enabled: false
     # -- Secret name
     secretRef: testkube-ai
-
 replicaCount: 1
 sentry:
   # -- Toggle whether to enable Sentry.io error reporting

@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.73.0](https://img.shields.io/badge/Version-1.73.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.2](https://img.shields.io/badge/AppVersion-2.7.2-informational?style=flat-square)
+![Version: 1.74.0](https://img.shields.io/badge/Version-1.74.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.2](https://img.shields.io/badge/AppVersion-2.7.2-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -32,6 +32,9 @@ A Helm chart for Testkube Cloud UI
 | externalSecrets.keys | object | `{}` |  |
 | externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
+| global.ai | object | `{"enabled":false,"secretRef":"testkube-ai"}` | Testkube AI service settings (ALPHA - for Kubecon purpose only for now) |
+| global.ai.enabled | bool | `false` | Enable Testkube AI keys for frontend |
+| global.ai.secretRef | string | `"testkube-ai"` | Secret name |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers |
