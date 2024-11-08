@@ -102,7 +102,7 @@ Define containerSecurityContext
 */}}
 {{- define "dex.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
-{{- toYaml .Values.global.containerSecurityContext}}
+{{- toYaml .Values.global.containerSecurityContext }}
 {{- else }}
 {{- toYaml .Values.securityContext }}
 {{- end }}
