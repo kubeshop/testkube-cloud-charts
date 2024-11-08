@@ -28,12 +28,10 @@ spec:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "testkube-log-service.serviceAccountName" . }}
-      securityContext:
-        {{ include "testkube-logs-service.podSecurityContext" . | trim }}
+      securityContext: {{ include "testkube-logs-service.podSecurityContext" . | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            {{ include "testkube-logs-service.containerSecurityContext" . | trim }}
+          securityContext: {{ include "testkube-logs-service.containerSecurityContext" . | nindent 12 }}
           image: {{ include "testkube-logs.image" . }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           env:
