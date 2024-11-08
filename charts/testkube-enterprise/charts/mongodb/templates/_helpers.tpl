@@ -292,8 +292,8 @@ Init container definition to recover log dir.
     - -ec
     - |
       ln -sf /dev/stdout "/opt/bitnami/mongodb/logs/mongodb.log"
-  {{- if .Values.containerSecurityContext.enabled }}
-  securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.containerSecurityContext "context" $) | nindent 12 }}
+  {{- if or .Values.containerSecurityContext.enabled .Values.global.containerSecurityContext.enabled }}
+  securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" (or .Values.global.containerSecurityContext .Values.containerSecurityContext) "context" $)  | nindent 4 -}}
   {{- end }}
   {{- if .Values.resources }}
   resources: {{- include "common.tplvalues.render" (dict "value" .Values.resources "context" $) | nindent 12 }}

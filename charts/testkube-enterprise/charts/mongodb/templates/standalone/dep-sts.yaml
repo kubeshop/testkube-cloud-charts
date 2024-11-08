@@ -76,7 +76,7 @@ spec:
       {{- if .Values.runtimeClassName }}
       runtimeClassName: {{ .Values.runtimeClassName }}
       {{- end }}
-      {{- if or .Values.podSecurityContext.enabled .Values.global.podSecurityContext.enabled }}
+      {{- if or .Values.podSecurityContext.enabled .Values.global.podSecurityContext }}
       securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" (or .Values.global.podSecurityContext .Values.podSecurityContext) "context" $)  | nindent 8 -}}
       {{- end }}
       {{ if .Values.terminationGracePeriodSeconds }}
@@ -134,7 +134,7 @@ spec:
           {{- else if ne .Values.tls.resourcesPreset "none" }}
           resources: {{- include "common.resources.preset" (dict "type" .Values.tls.resourcesPreset) | nindent 12 }}
           {{- end }}
-          {{- if or .Values.tls.securityContext .Values.global.containerSecurityContext.enabled }}
+          {{- if or .Values.tls.securityContext .Values.global.containerSecurityContext }}
           securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" (or .Values.global.containerSecurityContext .Values.tls.securityContext) "context" $)  | nindent 12 -}}
           {{- end }}
         {{- end }}
@@ -142,7 +142,7 @@ spec:
         - name: mongodb
           image: {{ include "mongodb.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-          {{- if or .Values.containerSecurityContext.enabled .Values.global.containerSecurityContext.enabled }}
+          {{- if or .Values.containerSecurityContext.enabled .Values.global.containerSecurityContext }}
           securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" (or .Values.global.containerSecurityContext .Values.containerSecurityContext) "context" $)  | nindent 12 -}}
           {{- end }}
           {{- if .Values.diagnosticMode.enabled }}
@@ -322,7 +322,7 @@ spec:
         - name: metrics
           image: {{ template "mongodb.metrics.image" . }}
           imagePullPolicy: {{ .Values.metrics.image.pullPolicy | quote }}
-          {{- if or .Values.containerSecurityContext.enabled .Values.global.containerSecurityContext.enabled }}
+          {{- if or .Values.containerSecurityContext.enabled .Values.global.containerSecurityContext }}
           securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" (or .Values.global.containerSecurityContext .Values.containerSecurityContext) "context" $)  | nindent 12 -}}
           {{- end }}
           {{- if .Values.diagnosticMode.enabled }}
