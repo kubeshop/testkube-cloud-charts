@@ -53,6 +53,15 @@ spec:
             - name: REACT_APP_AUTH_STRATEGY
               value: {{ .Values.ui.authStrategy }}
             {{- end }}
+            {{- if .Values.global.ai.enabled }}
+            - name: TK_AI_KEY
+              {{- if .Values.global.ai.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ai.secretRef }}
+                  key: "TK_AI_KEY"
+              {{- end }}
+            {{- end }}
             {{- if .Values.sentry.enabled }}
             - name: REACT_APP_SENTRY_KEY
               {{- if .Values.sentry.secretRef }}
