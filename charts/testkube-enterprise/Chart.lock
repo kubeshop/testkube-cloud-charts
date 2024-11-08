@@ -16,15 +16,15 @@ dependencies:
   version: 2.1.81
 - name: dex
   repository: file://./charts/dex
-  version: 0.19.1-4
+  version: 0.19.1-5
 - name: mongodb
   repository: https://charts.bitnami.com/bitnami
   version: 15.6.16
 - name: nats
   repository: file://./charts/nats
-  version: 1.2.6-2
+  version: 1.2.6-3
 - name: minio
   repository: https://charts.bitnami.com/bitnami
   version: 14.7.0
-digest: sha256:109fd21e300fe1229d671133c4eace52fd1e160ac348f31bdd972695b9065977
-generated: "2024-11-08T11:11:07.951031276Z"
+digest: sha256:f38ae51ff7f516c1145e7bd09cdf3514abd9714d9cd06a1ae990d88265974bd2
+generated: "2024-11-08T13:45:33.58537+02:00"
