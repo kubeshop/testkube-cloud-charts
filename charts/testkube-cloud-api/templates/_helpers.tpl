@@ -173,7 +173,7 @@ Define containerSecurityContext
 */}}
 {{- define "testkube-cloud-api.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
-{{- toYaml .Values.global.containerSecurityContext}}
+{{- toYaml .Values.global.containerSecurityContext }}
 {{- else }}
 {{- toYaml .Values.securityContext }}
 {{- end }}
@@ -184,7 +184,7 @@ Define containerSecurityContext for Init Container
 */}}
 {{- define "init-wait-for-mongo.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
-{{- toYaml .Values.global.containerSecurityContext}}
+{{- toYaml .Values.global.containerSecurityContext }}
 {{- else }}
 {{- toYaml .Values.init.mongo.containerSecurityContext }}
 {{- end }}

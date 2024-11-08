@@ -32,14 +32,12 @@ spec:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "testkube-cloud-api.serviceAccountName" . }}
-      securityContext:
-        {{ include "testkube-cloud-api.podSecurityContext" . | trim }}
+      securityContext: {{ include "testkube-cloud-api.podSecurityContext" . | nindent 8 }}
       {{- if .Values.init.enabled }}
       initContainers:
         - name: wait-for-mongo
           image: {{ include "testkube-cloud-api.init-mongo-image" . }}
-          securityContext:
-            {{ include "init-wait-for-mongo.containerSecurityContext" . | trim}}
+          securityContext: {{ include "init-wait-for-mongo.containerSecurityContext" . | nindent 12 }}
           command: ["/bin/sh", "-c"]
           args:
             - |
@@ -62,8 +60,7 @@ spec:
       containers:
         - name: migrations
           image: {{ include "testkube-api.image" . }}
-          securityContext:
-            {{ include "testkube-cloud-api.containerSecurityContext" . | trim  }}
+          securityContext: {{ include "testkube-cloud-api.containerSecurityContext" . | nindent 12 }}
           args: ["migrate"]
           env:
             - name: ENTERPRISE_MODE
