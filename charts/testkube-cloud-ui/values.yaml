@@ -31,6 +31,18 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods
   podSecurityContext: {}
+  # -- Testkube AI service settings (ALPHA - for Kubecon purpose only for now)
+  ai:
+    # -- Enable Testkube AI keys for frontend
+    enabled: false
+    # -- API URI
+    uri: "https://ai.testkube.dev"
+    # -- LLM kind (openaai | ollama)
+    kind: "openai"
+    # -- LLM model - LLM need to support it
+    model: "gpt-4o-mini"
+    # -- Secret name
+    secretRef: testkube-ai
 replicaCount: 1
 sentry:
   # -- Toggle whether to enable Sentry.io error reporting
@@ -45,7 +57,7 @@ image:
   repository: kubeshop/testkube-cloud-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2.7.1"
+  tag: "2.7.2"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

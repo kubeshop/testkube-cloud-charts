@@ -28,4 +28,4 @@ volumeMounts:
 
 
 securityContext:
-  {{- include "nats.containerSecurityContext" $ | nindent 6 }}
+  {{- include "nats.containerSecurityContext" $ | nindent 4 }}

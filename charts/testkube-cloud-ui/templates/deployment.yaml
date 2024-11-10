@@ -28,12 +28,10 @@ spec:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "testkube-cloud-ui.serviceAccountName" . }}
-      securityContext:
-        {{ include "testkube-cloud-ui.podSecurityContext" . | trim }}
+      securityContext: {{ include "testkube-cloud-ui.podSecurityContext" . | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            {{ include "testkube-cloud-ui.containerSecurityContext" . | trim }}
+          securityContext: {{ include "testkube-cloud-ui.containerSecurityContext" . | nindent 12 }}
           image: {{ include "testkube-dashboard.image" . }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           ports:
@@ -52,6 +50,21 @@ spec:
             {{- if .Values.ui.authStrategy }}
             - name: REACT_APP_AUTH_STRATEGY
               value: {{ .Values.ui.authStrategy }}
+            {{- end }}
+            {{- if .Values.global.ai.enabled }}
+            - name: TK_AI_URI
+              value: {{ .Values.global.ai.uri }}
+            - name: TK_AI_KIND
+              value: {{ .Values.global.ai.kind }}
+            - name: TK_AI_MODEL
+              value: {{ .Values.global.ai.model }}
+            - name: TK_AI_KEY
+              {{- if .Values.global.ai.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ai.secretRef }}
+                  key: "TK_AI_KEY"
+              {{- end }}
             {{- end }}
             {{- if .Values.sentry.enabled }}
             - name: REACT_APP_SENTRY_KEY

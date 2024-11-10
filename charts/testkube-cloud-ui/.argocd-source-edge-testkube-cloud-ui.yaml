@@ -1,8 +1,11 @@
 helm:
   parameters:
+  - name: global.ai.enabled
+    value: "true"
+    forcestring: false
   - name: image.name
     value: docker.io/kubeshop/testkube-cloud-ui
     forcestring: true
   - name: image.tag
-    value: 2.7.2-rc.1
+    value: 2.7.3-rc.6
     forcestring: true
