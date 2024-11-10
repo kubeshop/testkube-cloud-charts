@@ -18,13 +18,13 @@ dependencies:
   repository: file://./charts/dex
   version: 0.19.1-4
 - name: mongodb
-  repository: https://charts.bitnami.com/bitnami
-  version: 15.6.16
+  repository: file://./charts/mongodb
+  version: 16.2.1-1
 - name: nats
   repository: file://./charts/nats
   version: 1.2.6-2
 - name: minio
-  repository: https://charts.bitnami.com/bitnami
-  version: 14.7.0
-digest: sha256:e63467220cc92bc33b55948ecf2dbe7d451f63253b263e3095517785140c5ece
-generated: "2024-11-06T16:17:19.671762277Z"
+  repository: file://./charts/minio
+  version: 14.8.3-1
+digest: sha256:27e4064be6cde3d6136f956f46d02d48291f7a967a479caaac6b63839fc2baa7
+generated: "2024-11-10T16:01:10.335485+02:00"
