@@ -12,6 +12,8 @@
 ## @param global.defaultStorageClass Global default StorageClass for Persistent Volume(s)
 ## @param global.storageClass DEPRECATED: use global.defaultStorageClass instead
 ## @param global.namespaceOverride Override the namespace for resource deployed by the chart, but can itself be overridden by the local namespaceOverride
+## @param global.containerSecurityContext Global Security Container Context
+## @param global.podSecurityContext Global Pod Container Context
 ##
 global:
   imageRegistry: ""

@@ -34,7 +34,7 @@ dependencies:
     version: 1.2.6-2
     repository: "file://./charts/nats"
   - name: minio
-    version: 14.7.0
+    version: 14.8.3-1
     repository: https://charts.bitnami.com/bitnami
     condition: minio.enabled
 maintainers:
