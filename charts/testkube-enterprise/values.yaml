@@ -187,6 +187,10 @@ minio:
       drop: ["ALL"]
     seccompProfile:
       type: "RuntimeDefault"
+  volumePermissions:
+  ## @param volumePermissions.enabled Enable init container that changes the owner and group of the persistent volume(s) mountpoint to `runAsUser:fsGroup`
+  ##
+    enabled: true
   ## - OpenShift Configuration. Uncomment this section to deploy on Openshift cluster
   #  podSecurityContext:
   #    fsGroup: 1001010000
