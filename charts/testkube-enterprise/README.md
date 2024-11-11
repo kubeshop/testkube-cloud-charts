@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.17.0](https://img.shields.io/badge/Version-2.17.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.18.0](https://img.shields.io/badge/Version-2.18.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -20,10 +20,10 @@ A Helm chart for Testkube Enterprise
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.76.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.46.0 |
 | file://./charts/dex | dex | 0.19.1-5 |
+| file://./charts/minio | minio | 14.8.3-1 |
+| file://./charts/mongodb | mongodb | 16.2.1-1 |
 | file://./charts/nats | nats | 1.2.6-3 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
-| https://charts.bitnami.com/bitnami | minio | 14.7.0 |
-| https://charts.bitnami.com/bitnami | mongodb | 15.6.16 |
 | https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.81 |
 
 ## Values
@@ -56,7 +56,7 @@ A Helm chart for Testkube Enterprise
 | dex.storage | object | `{}` | Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage) |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
-| global.containerSecurityContext | object | `{}` | Global security Context for all containers, except for MongoDB and MinIo. Container security context for them needs to be provided separately. |
+| global.containerSecurityContext | object | `{}` | Global security Context for all containers. |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
 | global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
@@ -77,7 +77,7 @@ A Helm chart for Testkube Enterprise
 | global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | global.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | global.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
-| global.podSecurityContext | object | `{}` | Global security Context for all pods, except for MongoDB and MinIo. Pod security Context for them needs to be provided separately. |
+| global.podSecurityContext | object | `{}` | Global security Context for all pods. |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.storage.accessKeyId | string | `"testkube-enterprise"` | S3 Access Key ID |
