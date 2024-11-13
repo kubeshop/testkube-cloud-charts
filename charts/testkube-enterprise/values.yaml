@@ -120,10 +120,10 @@ minio:
   # -- Common labels which will be added to all MinIO resources
   commonLabels: *common_labels
   # Uncomment if you want to provide different image settings
-  # image:
-  # registry: docker.io
-  # repository: bitnami/minio
-  # tag: 2023.11.20-debian-11-r0
+  image:
+    registry: docker.io
+    repository: bitnami/minio
+    tag: 2024.11.7-debian-12-r1
   # digest: ""
   # pullPolicy: IfNotPresent
   # Uncomment if you want to provide different client image settings
