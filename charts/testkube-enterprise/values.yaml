@@ -221,7 +221,7 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.79
+    tag: 1.10.80
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
