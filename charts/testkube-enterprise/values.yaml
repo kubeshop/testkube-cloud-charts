@@ -96,14 +96,16 @@ global:
   # -- Global security Context for all containers.
   containerSecurityContext: {}
   # -- Global security Context for all pods.
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
   # -- Toggle whether to enable the Shared Secret Generator Job
   enabled: false
   # -- Pod Security Context for the Shared Secret Generator Job
-  securityContext: {}
+  securityContext:
+    runAsNonRoot: true
   # -- Container Security Context for the Shared Secret Generator Job
   containerSecurityContext: {}
   # -- Resources for the Shared Secret Generator Job
@@ -171,6 +173,7 @@ minio:
   affinity: {}
   # MinIO Pod Security Context
   podSecurityContext:
+    runAsNonRoot: true
     # -- Toggle whether to render the pod security context
     enabled: true
     fsGroup: 1001
@@ -223,8 +226,8 @@ testkube-cloud-api:
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.81
   # -- Pod Security Context
-  podSecurityContext: {}
-  # fsGroup: 2000
+  podSecurityContext:
+     runAsNonRoot: true
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
@@ -413,8 +416,8 @@ testkube-cloud-ui:
     repository: kubeshop/testkube-enterprise-ui
     tag: 2.7.3
   # -- Pod Security Context
-  podSecurityContext: {}
-  # fsGroup: 2000
+  podSecurityContext:
+     runAsNonRoot: true
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
@@ -447,8 +450,8 @@ testkube-worker-service:
     repository: kubeshop/testkube-enterprise-worker-service
     tag: 1.10.74
   # -- Pod Security Context
-  podSecurityContext: {}
-  # fsGroup: 2000
+  podSecurityContext:
+    runAsNonRoot: true
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
@@ -646,7 +649,8 @@ mongodb:
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
   containerSecurityContext: {}
@@ -736,7 +740,8 @@ dex:
   securityContext: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- Dex Pod Security Context
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
   # -- Set resources requests and limits for Dex Service
   resources:
     requests:
