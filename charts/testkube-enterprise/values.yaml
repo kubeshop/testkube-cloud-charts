@@ -254,7 +254,10 @@ testkube-cloud-api:
     tag: 1.11.6
   # -- Pod Security Context
   podSecurityContext:
-     runAsNonRoot: true
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
