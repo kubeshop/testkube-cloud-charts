@@ -32,7 +32,7 @@ spec:
     {{- with (default .Values.global.image.pullSecretNames .Values.global.imagePullSecrets) }}
   imagePullSecrets:
     {{- range . }}
-    {{- if typeIs "string" . }}
+    {{- if typeIs "slice" . }}
   - name: {{ . | quote  }}
     {{- else if typeIsLike "map[string]interface {}" . }}
   - name: {{ .name | quote }}
