@@ -96,8 +96,7 @@ global:
   # -- Global security Context for all containers.
   containerSecurityContext: {}
   # -- Global security Context for all pods.
-  podSecurityContext:
-    runAsNonRoot: true
+  podSecurityContext: {}
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -495,6 +494,12 @@ nats:
   # -- Toggle whether to install NATS
   enabled: true
   fullnameOverride: testkube-enterprise-nats
+  # -- NATS Pod Security Context
+  podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
   # Uncomment if you want to provide a different image or pullPolicy
   container:
     merge:
