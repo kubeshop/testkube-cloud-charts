@@ -35,11 +35,9 @@ spec:
     {{- if typeIs "string" . }}
   - name: {{ . | quote  }}
     {{- else if typeIsLike "map[string]interface {}" . }}
-      {{- if hasKey . "name" }}
   - name: {{ .name | quote }}
     {{- else }}
   - {{ . | toYaml }}
-    {{- end }}
     {{- end }}
     {{- end }}
     {{- end }}

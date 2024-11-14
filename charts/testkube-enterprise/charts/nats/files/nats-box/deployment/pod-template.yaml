@@ -16,11 +16,9 @@ spec:
     {{- if typeIs "string" . }}
   - name: {{ . | quote }}
     {{- else if typeIsLike "map[string]interface {}" . }}
-      {{- if hasKey . "name" }}
   - name: {{ .name | quote }}
     {{- else }}
   - {{ . | toYaml | nindent 2 }}
-    {{- end }}
     {{- end }}
     {{- end }}
     {{- end }}
