@@ -28,13 +28,21 @@ spec:
 
   # service discovery uses DNS; don't need service env vars
   enableServiceLinks: false
-  
-  {{- with (default .Values.global.image.pullSecretNames .Values.global.imagePullSecrets) }}
+
+    {{- with (default .Values.global.image.pullSecretNames .Values.global.imagePullSecrets) }}
   imagePullSecrets:
-  {{- range . }}
-  - name: {{ . | quote }}
-  {{- end }}
-  {{- end }}
+    {{- range . }}
+    {{- if typeIs "string" . }}
+  - name: {{ . | quote  }}
+    {{- else if typeIsLike "map[string]interface {}" . }}
+      {{- if hasKey . "name" }}
+  - name: {{ .name | quote }}
+    {{- else }}
+  - {{ . | toYaml }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
 
   {{- with .Values.serviceAccount }}
   {{- if .enabled }}

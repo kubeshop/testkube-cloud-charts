@@ -9,13 +9,21 @@ spec:
 
   # service discovery uses DNS; don't need service env vars
   enableServiceLinks: false
-  
+
   {{- with (default .Values.global.image.pullSecretNames .Values.global.imagePullSecrets) }}
   imagePullSecrets:
-  {{- range . }}
+    {{- range . }}
+    {{- if typeIs "string" . }}
   - name: {{ . | quote }}
-  {{- end }}
-  {{- end }}
+    {{- else if typeIsLike "map[string]interface {}" . }}
+      {{- if hasKey . "name" }}
+  - name: {{ .name | quote }}
+    {{- else }}
+  - {{ . | toYaml | nindent 2 }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
 
   {{- with .Values.natsBox.serviceAccount }}
   {{- if .enabled }}
