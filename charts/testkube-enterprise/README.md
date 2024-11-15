@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.26.0](https://img.shields.io/badge/Version-2.26.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.27.0](https://img.shields.io/badge/Version-2.27.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -20,9 +20,9 @@ A Helm chart for Testkube Enterprise
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.77.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.46.0 |
 | file://./charts/dex | dex | 0.19.1-5 |
-| file://./charts/minio | minio | 14.8.3-1 |
+| file://./charts/minio | minio | 14.8.3-2 |
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
-| file://./charts/nats | nats | 1.2.6-3 |
+| file://./charts/nats | nats | 1.2.6-4 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
 | https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.86 |
 
@@ -120,6 +120,9 @@ A Helm chart for Testkube Enterprise
 | minio.enabled | bool | `true` | Toggle whether to install MinIO |
 | minio.extraEnvVars | list | `[]` |  |
 | minio.fullnameOverride | string | `"testkube-enterprise-minio"` |  |
+| minio.image.registry | string | `"docker.io"` |  |
+| minio.image.repository | string | `"bitnami/minio"` |  |
+| minio.image.tag | string | `"2024.11.7-debian-12-r1"` |  |
 | minio.metrics.serviceMonitor.enabled | bool | `false` | Toggle whether to create ServiceMonitor resource for scraping metrics using Prometheus Operator |
 | minio.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | minio.podSecurityContext.enabled | bool | `true` | Toggle whether to render the pod security context |

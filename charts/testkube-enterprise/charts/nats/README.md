@@ -1,6 +1,6 @@
 # nats
 
-![Version: 1.2.6-3](https://img.shields.io/badge/Version-1.2.6--3-informational?style=flat-square) ![AppVersion: 2.10.22](https://img.shields.io/badge/AppVersion-2.10.22-informational?style=flat-square)
+![Version: 1.2.6-4](https://img.shields.io/badge/Version-1.2.6--4-informational?style=flat-square) ![AppVersion: 2.10.22](https://img.shields.io/badge/AppVersion-2.10.22-informational?style=flat-square)
 
 A Helm chart for the NATS.io High Speed Cloud Native Distributed Communications Technology.
 

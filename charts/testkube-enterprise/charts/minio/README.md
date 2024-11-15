@@ -1,6 +1,6 @@
 # minio
 
-![Version: 14.8.3-1](https://img.shields.io/badge/Version-14.8.3--1-informational?style=flat-square) ![AppVersion: 2024.10.29](https://img.shields.io/badge/AppVersion-2024.10.29-informational?style=flat-square)
+![Version: 14.8.3-2](https://img.shields.io/badge/Version-14.8.3--2-informational?style=flat-square) ![AppVersion: 2024.10.29](https://img.shields.io/badge/AppVersion-2024.10.29-informational?style=flat-square)
 
 MinIO(R) is an object storage server, compatible with Amazon S3 cloud storage service, mainly used for storing unstructured data (such as photos, videos, log files, etc.).
 
@@ -100,7 +100,7 @@ MinIO(R) is an object storage server, compatible with Amazon S3 cloud storage se
 | image.pullSecrets | list | `[]` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"bitnami/minio"` |  |
-| image.tag | string | `"2024.10.29-debian-12-r0"` |  |
+| image.tag | string | `"2024.11.7-debian-12-r1"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.apiVersion | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
