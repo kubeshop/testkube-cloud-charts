@@ -22,9 +22,9 @@ dependencies:
   version: 16.2.1-1
 - name: nats
   repository: file://./charts/nats
-  version: 1.2.6-3
+  version: 1.2.6-4
 - name: minio
   repository: file://./charts/minio
-  version: 14.8.3-1
-digest: sha256:04225e5777be2af4064ff97bf1a4ccbf841972e69b50f5ea4fecb1321c9fd2e5
-generated: "2024-11-15T09:25:35.671988785Z"
+  version: 14.8.3-2
+digest: sha256:01dc0ea7fa108d42722e7f6f85de6203e04cba64b0c75476c9c7068139374f9b
+generated: "2024-11-15T12:02:33.410861+02:00"
