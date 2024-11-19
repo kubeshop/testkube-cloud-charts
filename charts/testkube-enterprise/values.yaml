@@ -702,6 +702,9 @@ mongodb:
   # -- MongoDB Pod Security Context
   podSecurityContext:
     runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
   containerSecurityContext: {}
