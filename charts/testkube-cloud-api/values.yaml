@@ -90,6 +90,19 @@ global:
       endpoint: ""
       # -- Toggle whether to use HTTPS when connecting to the public S3 server
       secure: null
+  ## -- Configuration for the encrypted Credentials storage
+  credentials:
+    ## -- Master password to use for deriving encryption key
+    masterPassword:
+      # -- Reference to the master password stored in the Secret
+      secretKeyRef:
+        # -- Secret name
+        name: ""
+        # -- Secret key
+        key: "password"
+      # -- Plain-text master password
+      value: ""
+
   tls: {}
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: false

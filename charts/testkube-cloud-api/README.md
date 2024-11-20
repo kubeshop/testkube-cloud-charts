@@ -129,6 +129,10 @@ A Helm chart for Testkube Cloud API
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers |
+| global.credentials.masterPassword.secretKeyRef | object | `{"key":"password","name":""}` | Reference to the master password stored in the Secret |
+| global.credentials.masterPassword.secretKeyRef.key | string | `"password"` | Secret key |
+| global.credentials.masterPassword.secretKeyRef.name | string | `""` | Secret name |
+| global.credentials.masterPassword.value | string | `""` | Plain-text master password |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
 | global.dex.issuer | string | `""` | Global Dex issuer url |
