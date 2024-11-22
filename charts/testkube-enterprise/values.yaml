@@ -90,6 +90,18 @@ global:
       endpoint: ""
       # -- Toggle whether to use HTTPS when connecting to the public S3 server
       secure: null
+  ## -- Configuration for the encrypted Credentials storage
+  credentials:
+    ## -- Master password to use for deriving encryption key
+    masterPassword:
+      # -- Reference to the master password stored in the Secret
+      secretKeyRef:
+        # -- Secret name
+        name: ""
+        # -- Secret key
+        key: "password"
+      # -- Plain-text master password
+      value: ""
   tls: {}
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: true
@@ -221,7 +233,7 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.10.81
+    tag: 1.10.84
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -411,7 +423,7 @@ testkube-cloud-ui:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-ui
-    tag: 2.7.3
+    tag: 2.7.5
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000

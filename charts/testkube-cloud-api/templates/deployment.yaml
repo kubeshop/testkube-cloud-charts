@@ -319,6 +319,15 @@ spec:
             - name: OUTPUTS_BUCKET
               value: "{{ $outputsBucket }}"
             {{- $minioEndpoint := .Values.global.storage.endpoint | default .Values.api.minio.endpoint }}
+            - name: CREDENTIALS_MASTER_PASSWORD
+              {{- if .Values.global.credentials.masterPassword.secretKeyRef.name }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ .Values.global.credentials.masterPassword.secretKeyRef.key | default "password" }}
+                  name: {{ .Values.global.credentials.masterPassword.secretKeyRef.name }}
+              {{- else }}
+              value: "{{ .Values.global.credentials.masterPassword.value }}"
+              {{- end }}
             - name: MINIO_ENDPOINT
               value: "{{ tpl $minioEndpoint . }}"
             {{- $minioRegion := .Values.global.storage.region | default .Values.api.minio.region }}

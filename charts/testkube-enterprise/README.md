@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.27.0](https://img.shields.io/badge/Version-2.27.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.44.0](https://img.shields.io/badge/Version-2.44.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,15 +16,15 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.108.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.77.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.112.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.79.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.46.0 |
 | file://./charts/dex | dex | 0.19.1-5 |
 | file://./charts/minio | minio | 14.8.3-2 |
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
 | file://./charts/nats | nats | 1.2.6-4 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
-| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.86 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.96 |
 
 ## Values
 
@@ -57,6 +57,10 @@ A Helm chart for Testkube Enterprise
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers. |
+| global.credentials.masterPassword.secretKeyRef | object | `{"key":"password","name":""}` | Reference to the master password stored in the Secret |
+| global.credentials.masterPassword.secretKeyRef.key | string | `"password"` | Secret key |
+| global.credentials.masterPassword.secretKeyRef.name | string | `""` | Secret name |
+| global.credentials.masterPassword.value | string | `""` | Plain-text master password |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
 | global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
@@ -247,7 +251,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.10.81"` |  |
+| testkube-cloud-api.image.tag | string | `"1.10.84"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
 | testkube-cloud-api.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
@@ -266,7 +270,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"2.7.3"` |  |
+| testkube-cloud-ui.image.tag | string | `"2.7.5"` |  |
 | testkube-cloud-ui.ingress.className | string | `"nginx"` | Ingress classname |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
