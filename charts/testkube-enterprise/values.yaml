@@ -457,16 +457,16 @@ testkube-agent:
   # Uncomment the configuration below if testkube-agent is enabled.
   #testkube-dashboard:
   #  enabled: false
-  #  mongodb:
-  #    enabled: false
-  #  testkube-api:
-  #    cloud:
-  #      url: testkube-enterprise-api:8089
-  #      tls:
-  #        enabled: false
-  #      existingSecret:
-  #        name: testkube-default-agent-token
-  #        key: agent-token
+  # mongodb:
+  #   enabled: false
+  # testkube-api:
+  #   cloud:
+  #     url: testkube-enterprise-api:8089
+  #     tls:
+  #       enabled: false
+  #     existingSecret:
+  #       name: testkube-default-agent-token
+  #       key: agent-token
 ## Testkube Worker Service chart parameters
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
