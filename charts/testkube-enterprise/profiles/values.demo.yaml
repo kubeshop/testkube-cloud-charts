@@ -11,6 +11,10 @@ global:
       secure: false
     credsSecretRef: testkube-minio-credentials
     secure: false
+  credentials:
+    masterPassword:
+      secretKeyRef:
+        name: testkube-credentials-master
 
 sharedSecretGenerator:
   enabled: true

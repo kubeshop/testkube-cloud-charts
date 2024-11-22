@@ -50,4 +50,5 @@ data:
     # TestKube Default Agent Token
     generate_secret_if_needed "testkube-default-agent-token" --from-literal=agent-token=tkcagnt_$(gen_random 'a-f0-9' 16)
     generate_secret_if_needed "testkube-minio-credentials" --from-literal=root-user=testkube-enterprise --from-literal=root-password=$(gen_random 'a-zA-Z0-9' 16) --from-literal=token=""
+    generate_secret_if_needed "testkube-credentials-master" --from-literal=password=$(gen_random 'a-zA-Z0-9' 32)
 {{- end}}
