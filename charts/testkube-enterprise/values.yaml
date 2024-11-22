@@ -454,6 +454,19 @@ testkube-agent:
   # This relies on the `testkube-default-agent-token` shared secret.
   # See https://docs.testkube.io/articles/install/install-with-helm#shared-secrets
   enabled: false
+  # Uncomment the configuration below if testkube-agent is enabled.
+  #testkube-dashboard:
+  #  enabled: false
+  #  mongodb:
+  #    enabled: false
+  #  testkube-api:
+  #    cloud:
+  #      url: testkube-enterprise-api:8089
+  #      tls:
+  #        enabled: false
+  #      existingSecret:
+  #        name: testkube-default-agent-token
+  #        key: agent-token
 ## Testkube Worker Service chart parameters
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
