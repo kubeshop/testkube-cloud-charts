@@ -102,7 +102,6 @@ global:
         key: "password"
       # -- Plain-text master password
       value: ""
-
   tls: {}
   # -- Toggle whether to globally skip certificate verification
   #skipVerify: false
