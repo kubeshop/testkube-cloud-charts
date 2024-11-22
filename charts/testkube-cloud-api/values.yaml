@@ -240,6 +240,12 @@ api:
     keyPath: /tmp/serving-cert/key.pem
   # -- S3 bucket in which outputs are stored
   outputsBucket: testkube-cloud-outputs
+  storage:
+    cleanup:
+      # -- Specify the retention period in days for test artifacts. Values lower than 1 disable cleanup.
+      retentionDays: -1
+      # -- Specify the max storage size in gigabytes after which oldest test artifacts will be rotated until current size <= max storage size. Values lower than 1 disable cleanup.
+      maxStorageSizeGb: -1
   # -- API address (used in invitation emails) (example `https://api.testkube.xyz`)
   apiAddress: ""
   # -- Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`)

@@ -276,6 +276,12 @@ testkube-cloud-api:
       # -- Audit log retention period in days
       retentionPeriod: 30
   api:
+    storage:
+      cleanup:
+        # -- Specify the retention period in days for test artifacts. Values lower than 1 disable cleanup.
+        retentionDays: -1
+        # -- Specify the max storage size in gigabytes after which oldest test artifacts will be rotated until current size <= max storage size. Values lower than 1 disable cleanup.
+        maxStorageSizeGb: -1
     features:
       # -- Toggle whether to disable personal organizations when a user signs up for the first time
       disablePersonalOrgs: false
