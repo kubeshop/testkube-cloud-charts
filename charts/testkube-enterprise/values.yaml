@@ -446,9 +446,9 @@ testkube-cloud-ui:
   # -- Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL
   ingressRedirect:
     enabled: false
-## Testkube chart parameters
+## Testkube Agent chart parameters
 testkube-agent:
-  # -- Toggle whether to install & connect Testkube Agent in the same cluster
+  # -- Toggle whether to install & connect Testkube Agent in the namespace cluster. This is recommended for demo installations that uses a shared secret for authorization, thus does not require Ingress configuration.
   enabled: false
 ## Testkube Worker Service chart parameters
 testkube-worker-service:
