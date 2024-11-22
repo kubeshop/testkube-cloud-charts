@@ -448,7 +448,11 @@ testkube-cloud-ui:
     enabled: false
 ## Testkube Agent chart parameters
 testkube-agent:
-  # -- Toggle whether to install & connect Testkube Agent in the namespace cluster. This is recommended for demo installations that uses a shared secret for authorization, thus does not require Ingress configuration.
+  # -- Toggle whether to install & connect Testkube Agent in the same namespace.
+  # Keep it disabled to have more control over where your agents run.
+  # See https://docs.testkube.io/articles/install/overview for more info.
+  # This relies on the `testkube-default-agent-token` shared secret.
+  # See https://docs.testkube.io/articles/install/install-with-helm#shared-secrets
   enabled: false
 ## Testkube Worker Service chart parameters
 testkube-worker-service:
