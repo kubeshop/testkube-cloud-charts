@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.44.0](https://img.shields.io/badge/Version-2.44.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.46.0](https://img.shields.io/badge/Version-2.46.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -24,7 +24,7 @@ A Helm chart for Testkube Enterprise
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
 | file://./charts/nats | nats | 1.2.6-4 |
 | https://charts.bitnami.com/bitnami | common | 2.13.3 |
-| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.96 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.97 |
 
 ## Values
 
@@ -183,7 +183,7 @@ A Helm chart for Testkube Enterprise
 | sharedSecretGenerator.image.tag | string | `"1.28.2"` |  |
 | sharedSecretGenerator.resources | object | `{}` | Resources for the Shared Secret Generator Job |
 | sharedSecretGenerator.securityContext | object | `{}` | Pod Security Context for the Shared Secret Generator Job |
-| testkube-agent.enabled | bool | `false` | Toggle whether to install & connect Testkube Agent in the same cluster |
+| testkube-agent.enabled | bool | `false` | Toggle whether to install & connect Testkube Agent in the same namespace. Keep it disabled to have more control over where your agents run. See https://docs.testkube.io/articles/install/overview for more info. This relies on the `testkube-default-agent-token` shared secret. See https://docs.testkube.io/articles/install/install-with-helm#shared-secrets |
 | testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |
