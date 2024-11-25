@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.113.0](https://img.shields.io/badge/Version-1.113.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.85](https://img.shields.io/badge/AppVersion-1.10.85-informational?style=flat-square)
+![Version: 1.113.1](https://img.shields.io/badge/Version-1.113.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.86](https://img.shields.io/badge/AppVersion-1.10.86-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -180,7 +180,7 @@ A Helm chart for Testkube Cloud API
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.10.85"` |  |
+| image.tag | string | `"1.10.86"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
