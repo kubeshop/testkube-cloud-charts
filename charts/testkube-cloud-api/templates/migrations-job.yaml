@@ -33,80 +33,14 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "testkube-cloud-api.serviceAccountName" . }}
       securityContext: {{ include "testkube-cloud-api.podSecurityContext" . | nindent 8 }}
-      {{- if .Values.init.enabled }}
-      initContainers:
-        - name: wait-for-mongo
-          image: {{ include "testkube-cloud-api.init-mongo-image" . }}
-          securityContext: {{ include "init-wait-for-mongo.containerSecurityContext" . | nindent 12 }}
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              until mongosh "$API_MONGO_DSN" --eval "print('MongoDB is ready')" > /dev/null 2>&1; do
-                echo "Waiting for MongoDB ($API_MONGO_DSN) to become ready..."
-                sleep 5
-              done
-              echo "MongoDB is ready"
-          env:
-            - name: API_MONGO_DSN
-              {{- if (or .Values.global.mongo.dsnSecretRef .Values.api.mongo.dsnSecretRef) }}
-              valueFrom:
-                secretKeyRef:
-                  key: MONGO_DSN
-                  name: {{ .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
-              {{- else }}
-              value: {{ .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
-              {{- end }}
-      {{- end }}
       containers:
         - name: migrations
-          image: {{ include "testkube-api.image" . }}
+          image: {{ include "testkube-migration.image" . }}
           securityContext: {{ include "testkube-cloud-api.containerSecurityContext" . | nindent 12 }}
-          args: ["migrate"]
           env:
             - name: ENTERPRISE_MODE
               value: "{{ .Values.global.enterpriseMode }}"
-            {{- if .Values.global.enterpriseMode }}
-            - name: ENTERPRISE_OFFLINE_ACTIVATION
-              value: "{{ .Values.global.enterpriseOfflineAccess }}"
-            - name: ENTERPRISE_LICENSE_KEY_PATH
-              value: "{{ .Values.enterpriseLicenseKeyPath }}"
-            - name: ENTERPRISE_LICENSE_FILE_PATH
-              value: "{{ .Values.enterpriseLicenseFilePath }}"
-            {{ if or .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseLicenseKey }}
-            - name: ENTERPRISE_LICENSE_KEY
-              {{- if .Values.global.enterpriseLicenseSecretRef }}
-              valueFrom:
-                secretKeyRef:
-                  key: LICENSE_KEY
-                  name: {{ .Values.global.enterpriseLicenseSecretRef }}
-              {{- else }}
-              value: "{{ .Values.global.enterpriseLicenseKey }}"
-              {{- end }}
-            {{- end }}
-            {{- end }}
-            {{- if .Values.global.enterpriseLicenseFile }}
-            - name: ENTERPRISE_LICENSE_FILE
-              value: "{{ .Values.global.enterpriseLicenseFile }}"
-            {{- end }}
             {{- if .Values.payments.enabled }}
-            - name: PAYMENTS_PORTAL_CONFIGURATION_ID
-              {{- if .Values.payments.secretRef }}
-              valueFrom:
-                secretKeyRef:
-                  key: PAYMENTS_PORTAL_CONFIGURATION_ID
-                  name: {{ .Values.payments.secretRef }}
-              {{- else }}
-              value: {{ .Values.payments.portalConfigurationId }}
-              {{- end }}
-            - name: PAYMENTS_ENDPOINT_SECRET
-              {{- if .Values.payments.secretRef }}
-              valueFrom:
-                secretKeyRef:
-                  key: PAYMENTS_ENDPOINT_SECRET
-                  name: {{ .Values.payments.secretRef }}
-              {{- else }}
-              value: {{ .Values.payments.endpointSecret }}
-              {{- end }}
             - name: PAYMENTS_API_KEY
               {{- if .Values.payments.secretRef }}
               valueFrom:
@@ -128,19 +62,8 @@ spec:
               {{- end }}
             - name: API_MONGO_DB
               value: {{ .Values.api.mongo.database }}
-          {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
-          volumeMounts:
-            - mountPath: {{ .Values.enterpriseLicenseFilePath }}
-              readOnly: true
-              name: license-file
-              subPath: license.lic
-          {{- end }}
-      {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
-      volumes:
-        - name: license-file
-          secret:
-            secretName: {{ .Values.global.enterpriseLicenseSecretRef }}
-      {{- end }}
+            - name: MIGRATION_IGNORE_NO_DB_ERROR
+              value: {{ .Values.api.migration.ignoreNoDbError }}
       restartPolicy: Never
   backoffLimit: 3
 {{- end }}

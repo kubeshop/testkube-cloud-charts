@@ -138,6 +138,29 @@ Define API image
 {{- end -}}
 
 {{/*
+Define Migration image
+*/}}
+{{- define "testkube-migration.image" -}}
+{{- $registryName := default "docker.io" .Values.migrationImage.registry -}}
+{{- $repositoryName := .Values.migrationImage.repository -}}
+{{- $tag := default .Chart.AppVersion .Values.migrationImage.tag | toString -}}
+{{- $separator := ":" -}}
+{{- if .Values.migrationImage.digest }}
+    {{- $separator = "@" -}}
+    {{- $tag = .Values.migrationImage.digest | toString -}}
+{{- end -}}
+{{- if .Values.global }}
+    {{- if .Values.global.imageRegistry }}
+        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
+    {{- else -}}
+        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- end -}}
+{{- else -}}
+    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Define Mongo init image
 TODO: Implement this using dict and reuse the same for each image
 */}}

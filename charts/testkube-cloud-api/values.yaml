@@ -116,6 +116,12 @@ image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
   tag: "1.10.87"
+migrationImage:
+  # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+  registry: ""
+  repository: kubeshop/testkube-migration
+  pullPolicy: IfNotPresent
+  tag: "0.0.6"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -201,6 +207,8 @@ api:
     useHelmHooks: true
     # -- TTL for the migration job, defaults to 4 days
     ttlSecondsAfterFinished: 345600
+    # -- Ignoring no db error - exit 0 - used when helm hooks are enabled on pre-install
+    ignoreNoDbError: true
   features:
     # -- Toggle whether to disable personal organizations when a user signs up for the first time
     disablePersonalOrgs: false
