@@ -63,7 +63,7 @@ spec:
             - name: API_MONGO_DB
               value: {{ .Values.api.mongo.database }}
             - name: MIGRATION_IGNORE_NO_DB_ERROR
-              value: {{ .Values.api.migrations.ignoreNoDbError }}
+              value: "{{ .Values.api.migrations.ignoreNoDbError }}"
             - name: MIGRATION_INIT_INDEXES
               value: "false"
             - name: MIGRATION_MIGRATE_DATABASE
