@@ -202,7 +202,7 @@ api:
     enableGrpcServerLogs: false
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
-    enabled: false
+    enabled: true
     # -- Toggle whether to enable pre-install & pre-upgrade hooks
     useHelmHooks: true
     # -- TTL for the migration job, defaults to 4 days
