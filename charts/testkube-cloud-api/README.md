@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.117.0](https://img.shields.io/badge/Version-1.117.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.87](https://img.shields.io/badge/AppVersion-1.10.87-informational?style=flat-square)
+![Version: 1.118.0](https://img.shields.io/badge/Version-1.118.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.87](https://img.shields.io/badge/AppVersion-1.10.87-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -57,7 +57,7 @@ A Helm chart for Testkube Cloud API
 | api.logServer.port | string | `"443"` | Log server port for external communication |
 | api.logServer.secure | string | `"false"` | Log server TLS configuration secure connection |
 | api.logServer.skipVerify | string | `"true"` | Log server TLS configuration skip Verify |
-| api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
+| api.migrations.enabled | bool | `true` | Toggle whether to apply migrations for MongoDB |
 | api.migrations.ignoreNoDbError | bool | `true` | Ignoring no db error - exit 0 - used when helm hooks are enabled on pre-install |
 | api.migrations.ttlSecondsAfterFinished | int | `345600` | TTL for the migration job, defaults to 4 days |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
