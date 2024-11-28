@@ -58,6 +58,7 @@ A Helm chart for Testkube Cloud API
 | api.logServer.secure | string | `"false"` | Log server TLS configuration secure connection |
 | api.logServer.skipVerify | string | `"true"` | Log server TLS configuration skip Verify |
 | api.migrations.enabled | bool | `false` | Toggle whether to apply migrations for MongoDB |
+| api.migrations.ignoreNoDbError | bool | `true` | Ignoring no db error - exit 0 - used when helm hooks are enabled on pre-install |
 | api.migrations.ttlSecondsAfterFinished | int | `345600` | TTL for the migration job, defaults to 4 days |
 | api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
 | api.minio.accessKeyId | string | `""` | MinIO access key id |
@@ -192,6 +193,10 @@ A Helm chart for Testkube Cloud API
 | init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |
 | init.mongo.image.repository | string | `"alpine/mongosh"` | MongoSH image repository |
 | init.mongo.image.tag | string | `"2.0.2"` | MongoSH image tag |
+| migrationImage.pullPolicy | string | `"IfNotPresent"` |  |
+| migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
+| migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
+| migrationImage.tag | string | `"0.0.7"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | payments.apiKey | string | `""` | Payments API key (currently only Stripe is supported) |

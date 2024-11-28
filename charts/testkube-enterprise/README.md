@@ -208,7 +208,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.migrations.enabled | bool | `true` | Toggle whether to run database migrations |
 | testkube-cloud-api.api.migrations.image.repository | string | `"kubeshop/testkube-enterprise-api-migrations"` | Migrations image repository |
 | testkube-cloud-api.api.migrations.ttlSecondsAfterFinished | int | `345600` | TTL for the migration job, defaults to 4 days |
-| testkube-cloud-api.api.migrations.useHelmHooks | bool | `false` | Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart) |
+| testkube-cloud-api.api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart) |
 | testkube-cloud-api.api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
 | testkube-cloud-api.api.minio.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
 | testkube-cloud-api.api.minio.certSecret.certFile | string | `"cert.crt"` | Path to client certificate file |
@@ -260,6 +260,9 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.init.mongo.image.repository | string | `"kubeshop/bitnami-mongodb"` | MongoSH image repository |
 | testkube-cloud-api.init.mongo.image.tag | string | `"7.0.12"` | MongoSH image tag |
 | testkube-cloud-api.init.mongo.securityContext | object | `{}` | Init container Security Context |
+| testkube-cloud-api.migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
+| testkube-cloud-api.migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
+| testkube-cloud-api.migrationImage.tag | string | `"0.0.7"` |  |
 | testkube-cloud-api.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-api.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Api |
