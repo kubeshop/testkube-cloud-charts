@@ -6,10 +6,10 @@ metadata:
     {{- include "testkube-cloud-api.labels" . | nindent 4 }}
   annotations:
     {{- if .Values.api.migrations.useHelmHooks }}
-    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "-1"
     {{- end }}
-  name: {{ include "testkube-cloud-api.fullname" . }}-migrations
+  name: {{ include "testkube-cloud-api.fullname" . }}-indexes
 spec:
   {{- if .Values.api.migrations.ttlSecondsAfterFinished  }}
   ttlSecondsAfterFinished: {{ .Values.api.migrations.ttlSecondsAfterFinished }}
@@ -41,6 +41,15 @@ spec:
             - name: ENTERPRISE_MODE
               value: "{{ .Values.global.enterpriseMode }}"
             {{- if .Values.payments.enabled }}
+            - name: CREDENTIALS_MASTER_PASSWORD
+              {{- if .Values.global.credentials.masterPassword.secretKeyRef.name }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ .Values.global.credentials.masterPassword.secretKeyRef.key | default "password" }}
+                  name: {{ .Values.global.credentials.masterPassword.secretKeyRef.name }}
+              {{- else }}
+              value: "{{ .Values.global.credentials.masterPassword.value }}"
+              {{- end }}
             - name: PAYMENTS_API_KEY
               {{- if .Values.payments.secretRef }}
               valueFrom:
@@ -65,9 +74,10 @@ spec:
             - name: MIGRATION_IGNORE_NO_DB_ERROR
               value: "{{ .Values.api.migrations.ignoreNoDbError }}"
             - name: MIGRATION_INIT_INDEXES
-              value: "false"
-            - name: MIGRATION_MIGRATE_DATABASE
               value: "true"
+            - name: MIGRATION_MIGRATE_DATABASE
+              value: "false"
+
       restartPolicy: Never
   backoffLimit: 3
 {{- end }}

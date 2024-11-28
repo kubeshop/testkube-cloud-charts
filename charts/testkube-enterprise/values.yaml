@@ -234,6 +234,11 @@ testkube-cloud-api:
     registry: ""
     repository: kubeshop/testkube-enterprise-api
     tag: 1.10.87
+  migrationImage:
+    # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+    registry: ""
+    repository: kubeshop/testkube-migration
+    tag: 0.0.7
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -352,7 +357,7 @@ testkube-cloud-api:
       # -- Toggle whether to run database migrations
       enabled: true
       # -- Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart)
-      useHelmHooks: false
+      useHelmHooks: true
       image:
         # -- Migrations image repository
         repository: kubeshop/testkube-enterprise-api-migrations
