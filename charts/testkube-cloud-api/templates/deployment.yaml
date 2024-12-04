@@ -477,6 +477,9 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
           volumeMounts:
+            - mountPath: /tmp
+              readOnly: false
+              name: tmp
             {{- if .Values.api.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
               readOnly: true
@@ -519,6 +522,8 @@ spec:
       {{- end }}
       {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
       volumes:
+        - name: tmp
+          emptyDir: {}
         {{- if .Values.api.tls.serveHTTPS }}
         - name: serving-cert
           secret:
