@@ -110,6 +110,8 @@ global:
   # -- Global security Context for all pods
   podSecurityContext: {}
 replicaCount: 1
+# -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
+topologySpreadConstraints: []
 image:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
   registry: ""
