@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.81.0](https://img.shields.io/badge/Version-1.81.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.7](https://img.shields.io/badge/AppVersion-2.7.7-informational?style=flat-square)
+![Version: 1.82.0](https://img.shields.io/badge/Version-1.82.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.7](https://img.shields.io/badge/AppVersion-2.7.7-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -85,6 +85,7 @@ A Helm chart for Testkube Cloud UI
 | serviceAccount.name | string | `""` | The name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template |
 | testConnection.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
+| topologySpreadConstraints | list | `[]` | Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster. |
 | ui.apiServerEndpoint | string | `""` | API Server endpoint URL |
 | ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies |
 | ui.disableTelemetry | bool | `false` | Force disabling telemetry on the UI |

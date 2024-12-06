@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.118.0](https://img.shields.io/badge/Version-1.118.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.87](https://img.shields.io/badge/AppVersion-1.10.87-informational?style=flat-square)
+![Version: 1.119.0](https://img.shields.io/badge/Version-1.119.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.87](https://img.shields.io/badge/AppVersion-1.10.87-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -232,6 +232,7 @@ A Helm chart for Testkube Cloud API
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | testConnection.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
+| topologySpreadConstraints | list | `[]` | Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster. |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | websocketsIngress.enabled | bool | `true` | Toggle whether to enable the Websocket API Ingress |
 | websocketsIngress.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |

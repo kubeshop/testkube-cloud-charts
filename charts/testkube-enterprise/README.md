@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.57.0](https://img.shields.io/badge/Version-2.57.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.58.0](https://img.shields.io/badge/Version-2.58.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,8 +16,8 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.118.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.81.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.119.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.82.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.46.0 |
 | file://./charts/dex | dex | 0.19.1-5 |
 | file://./charts/minio | minio | 14.8.3-2 |
@@ -265,6 +265,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.migrationImage.tag | string | `"0.0.7"` |  |
 | testkube-cloud-api.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
+| testkube-cloud-api.replicaCount | int | `1` |  |
 | testkube-cloud-api.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Api |
 | testkube-cloud-api.securityContext | object | `{"readOnlyRootFilesystem":true}` | Container Security Context |
 | testkube-cloud-api.serviceAccount.annotations | object | `{}` | Additional annotations to add to the ServiceAccount resource |
@@ -272,6 +273,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.serviceAccount.labels | object | `{}` | Additional labels to add to the ServiceAccount resource |
 | testkube-cloud-api.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | testkube-cloud-api.testConnection.enabled | bool | `false` |  |
+| testkube-cloud-api.topologySpreadConstraints | list | `[]` | Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster. |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
@@ -280,8 +282,10 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.podSecurityContext | object | `{}` | Pod Security Context |
+| testkube-cloud-ui.replicaCount | int | `1` |  |
 | testkube-cloud-ui.resources | object | `{"limits":{"cpu":"150m","memory":"128Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube UI |
 | testkube-cloud-ui.securityContext | object | `{"readOnlyRootFilesystem":true}` | Container Security Context |
+| testkube-cloud-ui.topologySpreadConstraints | list | `[]` | Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster. |
 | testkube-cloud-ui.ui.authStrategy | string | `""` | Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector |
 | testkube-worker-service.additionalEnv.USE_MINIO | bool | `true` |  |
 | testkube-worker-service.api.minio.credsFilePath | string | `""` | Path to where a Minio credential file should be mounted |
