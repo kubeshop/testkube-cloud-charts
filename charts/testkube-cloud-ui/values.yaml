@@ -44,6 +44,8 @@ global:
     # -- Secret name
     secretRef: testkube-ai
 replicaCount: 1
+# -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
+topologySpreadConstraints: []
 sentry:
   # -- Toggle whether to enable Sentry.io error reporting
   enabled: false

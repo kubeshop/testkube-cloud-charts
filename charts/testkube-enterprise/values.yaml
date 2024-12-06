@@ -229,6 +229,9 @@ minio:
 ## Testkube Cloud API chart parameters
 testkube-cloud-api:
   fullnameOverride: testkube-enterprise-api
+  replicaCount: 1
+  # -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
+  topologySpreadConstraints: []
   image:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
@@ -427,6 +430,9 @@ testkube-cloud-api:
 ## Testkube Cloud UI chart parameters
 testkube-cloud-ui:
   fullnameOverride: testkube-enterprise-ui
+  replicaCount: 1
+  # -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
+  topologySpreadConstraints: []
   ui:
     # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector
     authStrategy: ""
