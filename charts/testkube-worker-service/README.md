@@ -1,6 +1,6 @@
 # testkube-worker-service
 
-![Version: 1.46.0](https://img.shields.io/badge/Version-1.46.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.74](https://img.shields.io/badge/AppVersion-1.10.74-informational?style=flat-square)
+![Version: 1.47.0](https://img.shields.io/badge/Version-1.47.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.74](https://img.shields.io/badge/AppVersion-1.10.74-informational?style=flat-square)
 
 A Helm chart for Testkube Worker Service
 
@@ -78,7 +78,8 @@ A Helm chart for Testkube Worker Service
 | image.repository | string | `"kubeshop/testkube-worker-service"` |  |
 | image.tag | string | `"1.10.74"` |  |
 | imagePullSecrets | list | `[]` |  |
-| init | object | `{"mongo":{"containerSecurityContext":{},"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"alpine/mongosh","tag":"2.0.2"}}}` | Mongo Init Container values |
+| init | object | `{"enabled":false,"mongo":{"containerSecurityContext":{},"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"alpine/mongosh","tag":"2.0.2"}}}` | Mongo Init Container values |
+| init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
 | init.mongo.containerSecurityContext | object | `{}` | Security context for Init Container |
 | init.mongo.image.digest | string | `""` | MongoSH image digest |
 | init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |

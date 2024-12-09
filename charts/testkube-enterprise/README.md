@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.59.0](https://img.shields.io/badge/Version-2.59.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.60.0](https://img.shields.io/badge/Version-2.60.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -18,7 +18,7 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-cloud-api | testkube-cloud-api | 1.119.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.82.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.46.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.47.0 |
 | file://./charts/dex | dex | 0.19.1-5 |
 | file://./charts/minio | minio | 14.8.3-2 |
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
@@ -300,7 +300,8 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.tag | string | `"1.10.74"` |  |
-| testkube-worker-service.init | object | `{"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"kubeshop/bitnami-mongodb","tag":"7.0.12"},"securityContext":{}}}` | Mongo Init Container values |
+| testkube-worker-service.init | object | `{"enabled":false,"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"kubeshop/bitnami-mongodb","tag":"7.0.12"},"securityContext":{}}}` | Mongo Init Container values |
+| testkube-worker-service.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
 | testkube-worker-service.init.mongo.image.digest | string | `""` | MongoSH image digest |
 | testkube-worker-service.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
 | testkube-worker-service.init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |
