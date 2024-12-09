@@ -31,6 +31,9 @@ spec:
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName | quote }}
+      {{- end }}
       serviceAccountName: {{ include "testkube-cloud-ui.serviceAccountName" . }}
       securityContext: {{ include "testkube-cloud-ui.podSecurityContext" . | nindent 8 }}
       containers:
