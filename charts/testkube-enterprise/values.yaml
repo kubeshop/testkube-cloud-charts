@@ -500,6 +500,8 @@ testkube-worker-service:
     readOnlyRootFilesystem: true
   # -- Mongo Init Container values
   init:
+    # -- Toggle whether to enable the dependency check containers
+    enabled: false
     mongo:
       image:
         # -- MongoSH image registry
