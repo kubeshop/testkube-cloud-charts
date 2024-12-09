@@ -232,6 +232,8 @@ testkube-cloud-api:
   replicaCount: 1
   # -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
   topologySpreadConstraints: []
+  # -- Priority class name defines the priority of this pod relative to others in the cluster.
+  priorityClassName: ""
   image:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
@@ -433,6 +435,8 @@ testkube-cloud-ui:
   replicaCount: 1
   # -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
   topologySpreadConstraints: []
+  # -- Priority class name defines the priority of this pod relative to others in the cluster.
+  priorityClassName: ""
   ui:
     # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector
     authStrategy: ""
@@ -487,6 +491,8 @@ testkube-agent:
 ## Testkube Worker Service chart parameters
 testkube-worker-service:
   fullnameOverride: testkube-enterprise-worker-service
+  # -- Priority class name defines the priority of this pod relative to others in the cluster.
+  priorityClassName: ""
   image:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""

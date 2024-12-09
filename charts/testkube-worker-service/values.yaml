@@ -59,6 +59,8 @@ global:
   # -- Global security Context for all pods
   podSecurityContext: {}
 replicaCount: 1
+# -- Priority class name defines the priority of this pod relative to others in the cluster.
+priorityClassName: ""
 image:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
   registry: ""
