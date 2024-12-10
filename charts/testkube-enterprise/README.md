@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.62.0](https://img.shields.io/badge/Version-2.62.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.63.0](https://img.shields.io/badge/Version-2.63.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,9 +16,9 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.120.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.82.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.47.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.121.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.83.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.48.0 |
 | file://./charts/dex | dex | 0.19.1-5 |
 | file://./charts/minio | minio | 14.8.3-2 |
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
@@ -264,6 +264,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
 | testkube-cloud-api.migrationImage.tag | string | `"0.0.7"` |  |
 | testkube-cloud-api.podSecurityContext | object | `{}` | Pod Security Context |
+| testkube-cloud-api.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
 | testkube-cloud-api.replicaCount | int | `1` |  |
 | testkube-cloud-api.resources | object | `{"limits":{"cpu":1,"memory":"512Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Api |
@@ -282,6 +283,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
 | testkube-cloud-ui.podSecurityContext | object | `{}` | Pod Security Context |
+| testkube-cloud-ui.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-cloud-ui.replicaCount | int | `1` |  |
 | testkube-cloud-ui.resources | object | `{"limits":{"cpu":"150m","memory":"128Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Testkube UI |
 | testkube-cloud-ui.securityContext | object | `{"readOnlyRootFilesystem":true}` | Container Security Context |
@@ -309,6 +311,7 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.init.mongo.image.tag | string | `"7.0.12"` | MongoSH image tag |
 | testkube-worker-service.init.mongo.securityContext | object | `{}` | Security context for Init Container |
 | testkube-worker-service.podSecurityContext | object | `{}` | Pod Security Context |
+| testkube-worker-service.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"75m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Worker Service |
 | testkube-worker-service.securityContext | object | `{"readOnlyRootFilesystem":true}` | Container Security Context |
 

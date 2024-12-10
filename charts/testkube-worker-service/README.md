@@ -1,6 +1,6 @@
 # testkube-worker-service
 
-![Version: 1.47.0](https://img.shields.io/badge/Version-1.47.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.74](https://img.shields.io/badge/AppVersion-1.10.74-informational?style=flat-square)
+![Version: 1.48.0](https://img.shields.io/badge/Version-1.48.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.74](https://img.shields.io/badge/AppVersion-1.10.74-informational?style=flat-square)
 
 A Helm chart for Testkube Worker Service
 
@@ -90,6 +90,7 @@ A Helm chart for Testkube Worker Service
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` | Pod Security Context |
+| priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | prometheus.enabled | bool | `false` | Toggle whether to create ServiceMonitor resource for Prometheus Operator |
 | prometheus.labels | object | `{}` | ServiceMonitor labels |
 | prometheus.path | string | `"/metrics"` | Metrics path which will be scraped |

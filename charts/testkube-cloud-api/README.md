@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.120.0](https://img.shields.io/badge/Version-1.120.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.88](https://img.shields.io/badge/AppVersion-1.10.88-informational?style=flat-square)
+![Version: 1.121.0](https://img.shields.io/badge/Version-1.121.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.88](https://img.shields.io/badge/AppVersion-1.10.88-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -206,6 +206,7 @@ A Helm chart for Testkube Cloud API
 | payments.secretRef | string | `""` | Payments config secret ref (secret must contain keys: PAYMENTS_PORTAL_CONFIGURATION_ID, PAYMENTS_ENDPOINT_SECRET and PAYMENTS_API_KEY) (default is `testkube-cloud-payments-secret`) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` | Pod Security Context |
+| priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | prometheus.enabled | bool | `true` | Toggle whether to create ServiceMonitor resource for Prometheus Operator |
 | prometheus.labels | object | `{}` | ServiceMonitor labels |
 | prometheus.path | string | `"/metrics"` | Metrics path which will be scraped |

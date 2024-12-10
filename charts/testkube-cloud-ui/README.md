@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.82.0](https://img.shields.io/badge/Version-1.82.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.7](https://img.shields.io/badge/AppVersion-2.7.7-informational?style=flat-square)
+![Version: 1.83.0](https://img.shields.io/badge/Version-1.83.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.7](https://img.shields.io/badge/AppVersion-2.7.7-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -68,6 +68,7 @@ A Helm chart for Testkube Cloud UI
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` | Pod Security Context |
+| priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | replicaCount | int | `1` |  |
 | resources.limits.cpu | string | `"150m"` |  |
 | resources.limits.memory | string | `"128Mi"` |  |
