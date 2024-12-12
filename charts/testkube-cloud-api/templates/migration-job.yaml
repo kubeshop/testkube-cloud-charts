@@ -2,13 +2,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "testkube-migrations.jobname" . }}
+  name: {{ template "testkube-cloud-api.migration-jobname" . }}
   labels:
-    {{- include "testkube-migrations.labels" . | nindent 4 }}
+    {{- include "testkube-cloud-api.labels" . | nindent 4 }}
 spec:
-  activeDeadlineSeconds: {{ .Values.activeDeadlineSeconds }}
-  backoffLimit: {{ .Values.backoffLimit }}
-  ttlSecondsAfterFinished: {{ .Values.ttlSecondsAfterFinished }}
+  backoffLimit: 3
+  ttlSecondsAfterFinished: {{ .Values.api.migrations.ttlSecondsAfterFinished }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -26,14 +25,14 @@ spec:
       imagePullSecrets:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "testkube-migrations.serviceAccountName" . }}
-      securityContext: {{ include "testkube-migrations.podSecurityContext" . | nindent 8 }}
+      serviceAccountName: {{ include "testkube-cloud-api.serviceAccountName" . }}
+      securityContext: {{ include "testkube-cloud-api.podSecurityContext" . | nindent 8 }}
       containers:
         - name: migrations
-          image: {{ include "testkube-migrations.image" . }}
+          image: {{ include "testkube-cloud-api.init-mongo-image" . }}
           command: ["/testkube/toolbox"]
           args: ["database", "migrations", "up"]
-          securityContext: {{ include "testkube-migrations.containerSecurityContext" . | nindent 12 }}
+          securityContext: {{ include "testkube-cloud-api.containerSecurityContext" . | nindent 12 }}
           env:
             - name: ENTERPRISE_MODE
               value: "{{ .Values.global.enterpriseMode }}"
@@ -48,8 +47,8 @@ spec:
               value: {{ .Values.payments.apiKey }}
               {{- end }}
             {{- end }}
-            {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef }}
-            {{- $mongoDsn := .Values.global.mongo.dsn  }}
+            {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
+            {{- $mongoDsn := .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
             {{- if $mongoDsnSecretRef }}
             - name: API_MONGO_DSN
               valueFrom:
@@ -60,11 +59,11 @@ spec:
             - name: API_MONGO_DSN
               value: {{ $mongoDsn }}
             {{- end }}
-            {{- $mongoDatabase := .Values.global.mongo.database }}
+            {{- $mongoDatabase := .Values.global.mongo.database | default .Values.api.mongo.database }}
             - name: API_MONGO_DB
               value: {{ $mongoDatabase }}
             - name: MIGRATION_IGNORE_NO_DB_ERROR
-              value: "{{ .Values.migrations.ignoreNoDbError }}"
+              value: "{{ .Values.api.migrations.ignoreNoDbError }}"
             - name: MIGRATION_INIT_INDEXES
               value: "true"
             - name: MIGRATION_MIGRATE_DATABASE

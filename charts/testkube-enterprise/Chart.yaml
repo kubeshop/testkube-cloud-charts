@@ -23,11 +23,6 @@ dependencies:
     version: 2.1.102
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
-  - name: testkube-migrations
-    alias: migrations
-    version: 0.1.0
-    condition: migrations.enabled
-    repository: file://../testkube-migrations
   - name: dex
     version: 0.19.1-5
     repository: file://./charts/dex

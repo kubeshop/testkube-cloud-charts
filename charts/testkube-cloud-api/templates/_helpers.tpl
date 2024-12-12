@@ -157,6 +157,12 @@ TODO: Implement this using dict and reuse the same for each image
 {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 
+{{- define "testkube-cloud-api.migration-jobname" -}}
+{{- $fname := printf "%s-migration" (include "testkube-cloud-api.fullname" .) | trunc 55 | trimSuffix "-" -}}
+{{- $name := $fname | trunc 55 | trimSuffix "-" -}}
+{{- printf "%s-%s" $name ( include "testkube.jobNameSuffix" . ) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{/*
 Define podSecurityContext
 */}}

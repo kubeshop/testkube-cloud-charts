@@ -126,10 +126,6 @@ sharedSecretGenerator:
     repository: bitnami/kubectl
     tag: 1.28.2
 
-migrations:
-  # -- Toggle whether MongoDB migrations are enabled
-  enabled: true
-
 ## MinIO chart parameters
 minio:
   # -- Toggle whether to install MinIO
