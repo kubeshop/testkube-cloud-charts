@@ -42,14 +42,8 @@ spec:
           image: {{ include "testkube-cloud-api.init-mongo-image" . }}
           imagePullPolicy: {{ .Values.init.mongo.image.pullPolicy }}
           securityContext: {{ include "init-wait-for-mongo.containerSecurityContext" . | nindent 12 }}
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              until mongosh "$API_MONGO_DSN" --eval "print('MongoDB is ready')" > /dev/null 2>&1; do
-                echo "Waiting for MongoDB ($API_MONGO_DSN) to become ready..."
-                sleep 5
-              done
-              echo "MongoDB is ready"
+          command: ["/testkube/toolbox"]
+          args: ["database", "status", "--wait"]
           env:
             - name: API_MONGO_DSN
               {{- if (or .Values.global.mongo.dsnSecretRef .Values.api.mongo.dsnSecretRef) }}

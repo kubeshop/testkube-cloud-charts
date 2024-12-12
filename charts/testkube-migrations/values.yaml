@@ -1,0 +1,77 @@
+# CONTINUE HERE: Run with skaffold and start troubleshooting the migration. Consider disabling API first and make sure migrations run. Then properly await cloud-api.
+
+global:
+  mongo:
+    # -- Mongo DSN connection string
+    dsn: ""
+    # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
+    dsnSecretRef: ""
+    # -- Mongo database name
+    database: ""
+    # -- Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest)
+    readPreference: ""
+    # -- Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit.
+    allowDiskUse: false
+
+payments:
+  # -- Toggle whether to enable payments service
+  enabled: false
+  # -- Payments config secret ref (secret must contain keys: PAYMENTS_PORTAL_CONFIGURATION_ID, PAYMENTS_ENDPOINT_SECRET and PAYMENTS_API_KEY) (default is `testkube-cloud-payments-secret`)
+  secretRef: ""
+  # -- Payments API key (currently only Stripe is supported)
+  apiKey: ""
+  # -- Payments endpoint secret (currently only Stripe is supported)
+  endpointSecret: ""
+  # -- Payments portal configuration ID (currently only Stripe is supported)
+  portalConfigurationId: ""
+
+enabled: true
+
+migrations:
+  ignoreNoDbError: false
+
+image:
+  pullPolicy: IfNotPresent
+  registry: ""
+  repository: kubeshop/testkube-toolbox
+  tag: latest
+
+imagePullSecrets: []
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits: {}
+
+# defaults to 4 days
+ttlSecondsAfterFinished: 345600
+activeDeadlineSeconds: 3600
+backoffLimit: 3
+
+# Annotations for the job
+annotations: {}
+# Annotations for the pod
+podAnnotations: {}
+
+serviceAccount:
+  create: false
+  labels: {}
+  annotations: {}
+  # name: ""
+
+## Allow to overwrite under which User and Group the Pod will be running.
+podSecurityContext:
+  runAsUser: 1000
+  fsGroup: 1000
+  # fsGroupChangePolicy: OnRootMismatch
+  seccompProfile:
+    type: "RuntimeDefault"
+
+## Allow to overwrite the specific security context under which the container is running.
+containerSecurityContext:
+  runAsUser: 1000
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  capabilities:
+    drop: ["ALL"]

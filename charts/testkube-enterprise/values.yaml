@@ -49,8 +49,7 @@ global:
   # -- Common labels which will be added to all resources
   labels: &common_labels {}
   ## Global MongoDB configuration for Testkube Pro
-  mongo: &global_mongo_config
-    # -- Mongo DSN connection string
+  mongo: &global_mongo_config # -- Mongo DSN connection string
     dsn: "mongodb://testkube-enterprise-mongodb:27017"
     # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
     dsnSecretRef: ""
@@ -61,8 +60,7 @@ global:
     # -- Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit.
     allowDiskUse: false
   ## Global NATS configuration for Testkube Pro
-  nats: &global_nats_config
-    # -- NATS URI
+  nats: &global_nats_config # -- NATS URI
     uri: "nats://testkube-enterprise-nats:4222"
   ## Global S3 configuration for Testkube Pro
   storage:
@@ -109,6 +107,9 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods.
   podSecurityContext: {}
+  job:
+    nameSuffixOverride:
+
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -124,6 +125,11 @@ sharedSecretGenerator:
     registry: docker.io
     repository: bitnami/kubectl
     tag: 1.28.2
+
+migrations:
+  # -- Toggle whether MongoDB migrations are enabled
+  enabled: true
+
 ## MinIO chart parameters
 minio:
   # -- Toggle whether to install MinIO
