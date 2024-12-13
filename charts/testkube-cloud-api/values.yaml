@@ -119,7 +119,7 @@ image:
   registry: ""
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
-  tag: "1.10.88"
+  tag: "1.10.89"
 migrationImage:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
   registry: ""
