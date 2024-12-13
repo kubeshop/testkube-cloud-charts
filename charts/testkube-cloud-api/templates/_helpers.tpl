@@ -141,26 +141,35 @@ Define API image
 Define Mongo init image
 TODO: Implement this using dict and reuse the same for each image
 */}}
-{{- define "testkube-cloud-api.init-mongo-image" -}}
-{{- $registryName := default "docker.io" .Values.init.mongo.image.registry -}}
+{{- define "testkube-cloud-api.toolbox-image" -}}
+{{- $registryName := default "docker.io" .Values.toolboxImage.registry -}}
 {{- if .Values.global.imageRegistry -}}
     {{- $registryName = .Values.global.imageRegistry -}}
 {{- end -}}
-{{- $repositoryName := .Values.init.mongo.image.repository -}}
-{{- $tag := default .Chart.AppVersion .Values.init.mongo.image.tag | toString -}}
+{{- $repositoryName := .Values.toolboxImage.repository -}}
+{{- $tag := default .Chart.AppVersion .Values.toolboxImage.tag | toString -}}
 {{- $separator := ":" -}}
-{{- if .Values.init.mongo.image.digest -}}
+{{- if .Values.toolboxImage.digest -}}
   {{- $separator = "@" -}}
-  {{- $tag = .Values.init.mongo.image.digest | toString -}}
+  {{- $tag = .Values.toolboxImage.digest | toString -}}
 {{- end -}}
 
 {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 
+{{- define "testkube-cloud-api.jobNameSuffix" -}}
+{{-   if .Values.global.job.nameSuffixOverride -}}
+{{-     tpl .Values.global.job.nameSuffixOverride . -}}
+{{-   else -}}
+{{-     printf "%s-%s-%s" .Chart.Version .Chart.AppVersion ( .Values | toYaml | b64enc ) | sha256sum | trunc 7 -}}
+{{-   end -}}
+{{- end -}}
+
 {{- define "testkube-cloud-api.migration-jobname" -}}
 {{- $fname := printf "%s-migration" (include "testkube-cloud-api.fullname" .) | trunc 55 | trimSuffix "-" -}}
 {{- $name := $fname | trunc 55 | trimSuffix "-" -}}
-{{- printf "%s-%s" $name ( include "testkube.jobNameSuffix" . ) | trunc 63 | trimSuffix "-" -}}
+{{- $suffix := ( include "testkube-cloud-api.jobNameSuffix" . )}}
+{{- printf "%s-%s" $name $suffix  | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*

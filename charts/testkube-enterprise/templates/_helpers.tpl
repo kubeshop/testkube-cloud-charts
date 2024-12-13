@@ -71,11 +71,3 @@ Define containerSecurityContext
 {{- toYaml .Values.sharedSecretGenerator.securityContext }}
 {{- end }}
 {{- end }}
-
-{{- define "testkube.jobNameSuffix" -}}
-{{-   if .Values.global.job.nameSuffixOverride -}}
-{{-     tpl .Values.global.job.nameSuffixOverride . -}}
-{{-   else -}}
-{{-     printf "%s-%s-%s" .Chart.Version .Chart.AppVersion ( .Values | toYaml | b64enc ) | sha256sum | trunc 7 -}}
-{{-   end -}}
-{{- end -}}

@@ -1,4 +1,4 @@
-{{- if .Values.enabled }}
+{{- if .Values.api.migrations.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -29,7 +29,8 @@ spec:
       securityContext: {{ include "testkube-cloud-api.podSecurityContext" . | nindent 8 }}
       containers:
         - name: migrations
-          image: {{ include "testkube-cloud-api.init-mongo-image" . }}
+          image: {{ include "testkube-cloud-api.toolbox-image" . }}
+          imagePullPolicy: {{ .Values.toolboxImage.pullPolicy }}
           command: ["/testkube/toolbox"]
           args: ["database", "migrations", "up"]
           securityContext: {{ include "testkube-cloud-api.containerSecurityContext" . | nindent 12 }}

@@ -39,21 +39,31 @@ spec:
       {{- if .Values.init.enabled }}
       initContainers:
         - name: wait-for-mongo
-          image: {{ include "testkube-cloud-api.init-mongo-image" . }}
-          imagePullPolicy: {{ .Values.init.mongo.image.pullPolicy }}
+          image: {{ include "testkube-cloud-api.toolbox-image" . }}
+          imagePullPolicy: {{ .Values.toolboxImage.pullPolicy }}
           securityContext: {{ include "init-wait-for-mongo.containerSecurityContext" . | nindent 12 }}
           command: ["/testkube/toolbox"]
+          {{- if .Values.api.migrations.enabled }}
           args: ["database", "status", "--wait"]
+          {{- else }}
+          args: ["database", "status", "--wait", "--skip-migrations"]
+          {{- end}}
           env:
+            {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
+            {{- $mongoDsn := .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
+            {{- if $mongoDsnSecretRef }}
             - name: API_MONGO_DSN
-              {{- if (or .Values.global.mongo.dsnSecretRef .Values.api.mongo.dsnSecretRef) }}
               valueFrom:
                 secretKeyRef:
                   key: MONGO_DSN
-                  name: {{ .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
-              {{- else }}
-              value: {{ .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
-              {{- end }}
+                  name: {{ $mongoDsnSecretRef }}
+            {{- else if $mongoDsn }}
+            - name: API_MONGO_DSN
+              value: {{ $mongoDsn }}
+            {{- end }}
+            {{- $mongoDatabase := .Values.global.mongo.database | default .Values.api.mongo.database }}
+            - name: API_MONGO_DB
+              value: {{ $mongoDatabase }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}

@@ -120,12 +120,13 @@ image:
   repository: kubeshop/testkube-cloud-api
   pullPolicy: IfNotPresent
   tag: "1.10.89"
-migrationImage:
+toolboxImage:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
   registry: ""
-  repository: kubeshop/testkube-migration
+  repository: kubeshop/testkube-toolbox
   pullPolicy: IfNotPresent
-  tag: "0.0.7"
+  tag: "latest"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -207,8 +208,6 @@ api:
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
     enabled: true
-    # -- Toggle whether to enable pre-install & pre-upgrade hooks
-    useHelmHooks: true
     # -- TTL for the migration job, defaults to 4 days
     ttlSecondsAfterFinished: 345600
     # -- Ignoring no db error - exit 0 - used when helm hooks are enabled on pre-install
