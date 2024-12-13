@@ -69,5 +69,7 @@ spec:
               value: "true"
             - name: MIGRATION_MIGRATE_DATABASE
               value: "true"
+            - name: HELLO
+              value: "world"
       restartPolicy: Never
 {{- end }}
