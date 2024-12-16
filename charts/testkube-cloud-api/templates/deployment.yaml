@@ -434,7 +434,7 @@ spec:
             - name: ENTERPRISE_ARTIFACT_MAX_STORAGE_SIZE_GB
               value: "{{ .Values.api.storage.cleanup.maxStorageSizeGb }}"
             - name: MIGRATION_MIGRATE_DATABASE
-              value: "{{ .Values.api.migrations.enabled | quote }}"
+              value: "{{ .Values.api.migrations.enabled }}"
           ports:
             - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}
