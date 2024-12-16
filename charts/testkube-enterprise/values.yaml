@@ -107,8 +107,13 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods.
   podSecurityContext: {}
-  job:
-    # nameSuffixOverride:
+  # -- Suffix for jobs. You want jobs to be uniquely named across Helm Revisions as Kubernetes
+  # Jobs are immutable. Currently the suffix defaults to the Helm Chart's revision. This works
+  # well with `helm upgrade --install`. In case you use `helm template` you can change this to
+  # a timestamp. For GitOps operators such as Argo CD we recommend to use Resource Hooks or
+  # functionality that applies job changes through force Delete/Create instead Replace.
+  # job:
+  #   nameSuffixOverride: '{{ dateInZone "2006-01-02-15-04-05" (now) "UTC" }}'
 
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
