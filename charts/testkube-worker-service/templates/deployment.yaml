@@ -27,8 +27,12 @@ spec:
       imagePullSecrets:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName | quote }}
+      {{- end }}
       serviceAccountName: {{ include "testkube-worker-service.serviceAccountName" . }}
       securityContext: {{ include "testkube-worker-service.podSecurityContext" . | nindent 8 }}
+      {{- if .Values.init.enabled }}
       initContainers:
         - name: wait-for-mongo
           image: {{ include "testkube-worker.init-mongo-image" . }}
@@ -51,6 +55,7 @@ spec:
               {{- else }}
               value: {{ .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
               {{- end }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext: {{ include "testkube-worker-service.containerSecurityContext" . | nindent 12 }}

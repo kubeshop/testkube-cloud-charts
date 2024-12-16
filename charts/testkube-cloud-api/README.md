@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.118.0](https://img.shields.io/badge/Version-1.118.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.87](https://img.shields.io/badge/AppVersion-1.10.87-informational?style=flat-square)
+![Version: 1.122.0](https://img.shields.io/badge/Version-1.122.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.89](https://img.shields.io/badge/AppVersion-1.10.89-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -183,7 +183,7 @@ A Helm chart for Testkube Cloud API
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.10.87"` |  |
+| image.tag | string | `"1.10.89"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
@@ -206,6 +206,7 @@ A Helm chart for Testkube Cloud API
 | payments.secretRef | string | `""` | Payments config secret ref (secret must contain keys: PAYMENTS_PORTAL_CONFIGURATION_ID, PAYMENTS_ENDPOINT_SECRET and PAYMENTS_API_KEY) (default is `testkube-cloud-payments-secret`) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` | Pod Security Context |
+| priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | prometheus.enabled | bool | `true` | Toggle whether to create ServiceMonitor resource for Prometheus Operator |
 | prometheus.labels | object | `{}` | ServiceMonitor labels |
 | prometheus.path | string | `"/metrics"` | Metrics path which will be scraped |
@@ -232,6 +233,7 @@ A Helm chart for Testkube Cloud API
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | testConnection.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
+| topologySpreadConstraints | list | `[]` | Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster. |
 | websocketsIngress.annotations | object | `{}` | Additional annotations to add to the WebSocket Ingress resource |
 | websocketsIngress.enabled | bool | `true` | Toggle whether to enable the Websocket API Ingress |
 | websocketsIngress.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |

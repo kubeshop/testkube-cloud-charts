@@ -44,6 +44,10 @@ global:
     # -- Secret name
     secretRef: testkube-ai
 replicaCount: 1
+# -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
+topologySpreadConstraints: []
+# -- Priority class name defines the priority of this pod relative to others in the cluster.
+priorityClassName: ""
 sentry:
   # -- Toggle whether to enable Sentry.io error reporting
   enabled: false
@@ -57,7 +61,7 @@ image:
   repository: kubeshop/testkube-cloud-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2.7.7"
+  tag: "2.7.8"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
