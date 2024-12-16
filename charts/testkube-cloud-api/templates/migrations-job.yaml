@@ -2,14 +2,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+  name: {{ template "testkube-cloud-api.migration-jobname" . }}
   labels:
     {{- include "testkube-cloud-api.labels" . | nindent 4 }}
   annotations:
-    {{- if .Values.api.migrations.useHelmHooks }}
-    "helm.sh/hook": pre-upgrade
-    "helm.sh/hook-weight": "-1"
+    {{- if .Values.api.migrations.useArgoHook }}
+      "argocd.argoproj.io/hook": "sync"
+      "argocd.argoproj.io/hook-delete-policy": "BeforeHookCreation"
     {{- end }}
-  name: {{ include "testkube-cloud-api.fullname" . }}-migrations
 spec:
   {{- if .Values.api.migrations.ttlSecondsAfterFinished  }}
   ttlSecondsAfterFinished: {{ .Values.api.migrations.ttlSecondsAfterFinished }}
@@ -36,6 +36,7 @@ spec:
       containers:
         - name: migrations
           image: {{ include "testkube-migration.image" . }}
+          imagePullPolicy: {{ .Values.migrationImage.pullPolicy }}
           securityContext: {{ include "testkube-cloud-api.containerSecurityContext" . | nindent 12 }}
           env:
             - name: ENTERPRISE_MODE
@@ -51,22 +52,29 @@ spec:
               value: {{ .Values.payments.apiKey }}
               {{- end }}
             {{- end }}
+            {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
+            {{- $mongoDsn := .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
+            {{- if $mongoDsnSecretRef }}
             - name: API_MONGO_DSN
-              {{- if .Values.api.mongo.dsnSecretRef }}
               valueFrom:
                 secretKeyRef:
                   key: MONGO_DSN
-                  name: {{ .Values.api.mongo.dsnSecretRef }}
-              {{- else }}
-              value: {{ .Values.api.mongo.dsn }}
-              {{- end }}
+                  name: {{ $mongoDsnSecretRef }}
+            {{- else if $mongoDsn }}
+            - name: API_MONGO_DSN
+              value: {{ $mongoDsn }}
+            {{- end }}
+            {{- $mongoDatabase := .Values.global.mongo.database | default .Values.api.mongo.database }}
             - name: API_MONGO_DB
-              value: {{ .Values.api.mongo.database }}
+              value: {{ $mongoDatabase }}
+            {{- $mongoReadPreference := .Values.global.mongo.readPreference | default .Values.api.mongo.readPreference }}
+            - name: API_MONGO_READ_PREFERENCE
+              value: {{ $mongoReadPreference }}
             - name: MIGRATION_IGNORE_NO_DB_ERROR
               value: "{{ .Values.api.migrations.ignoreNoDbError }}"
-            - name: MIGRATION_INIT_INDEXES
-              value: "false"
             - name: MIGRATION_MIGRATE_DATABASE
+              value: "true"
+            - name: MIGRATION_INIT_INDEXES
               value: "true"
       restartPolicy: Never
   backoffLimit: 3

@@ -36,31 +36,6 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "testkube-cloud-api.serviceAccountName" . }}
       securityContext: {{ include "testkube-cloud-api.podSecurityContext" . | nindent 8 }}
-      {{- if .Values.init.enabled }}
-      initContainers:
-        - name: wait-for-mongo
-          image: {{ include "testkube-cloud-api.init-mongo-image" . }}
-          imagePullPolicy: {{ .Values.init.mongo.image.pullPolicy }}
-          securityContext: {{ include "init-wait-for-mongo.containerSecurityContext" . | nindent 12 }}
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              until mongosh "$API_MONGO_DSN" --eval "print('MongoDB is ready')" > /dev/null 2>&1; do
-                echo "Waiting for MongoDB ($API_MONGO_DSN) to become ready..."
-                sleep 5
-              done
-              echo "MongoDB is ready"
-          env:
-            - name: API_MONGO_DSN
-              {{- if (or .Values.global.mongo.dsnSecretRef .Values.api.mongo.dsnSecretRef) }}
-              valueFrom:
-                secretKeyRef:
-                  key: MONGO_DSN
-                  name: {{ .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
-              {{- else }}
-              value: {{ .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
-              {{- end }}
-      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext: {{ include "testkube-cloud-api.containerSecurityContext" . | nindent 12 }}
@@ -458,6 +433,8 @@ spec:
               value: "{{ .Values.api.storage.cleanup.retentionDays }}"
             - name: ENTERPRISE_ARTIFACT_MAX_STORAGE_SIZE_GB
               value: "{{ .Values.api.storage.cleanup.maxStorageSizeGb }}"
+            - name: MIGRATION_MIGRATE_DATABASE
+              value: "{{ .Values.api.migrations.enabled | quote }}"
           ports:
             - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}

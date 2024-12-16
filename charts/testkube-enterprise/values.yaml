@@ -49,8 +49,7 @@ global:
   # -- Common labels which will be added to all resources
   labels: &common_labels {}
   ## Global MongoDB configuration for Testkube Pro
-  mongo: &global_mongo_config
-    # -- Mongo DSN connection string
+  mongo: &global_mongo_config # -- Mongo DSN connection string
     dsn: "mongodb://testkube-enterprise-mongodb:27017"
     # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
     dsnSecretRef: ""
@@ -61,8 +60,7 @@ global:
     # -- Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit.
     allowDiskUse: false
   ## Global NATS configuration for Testkube Pro
-  nats: &global_nats_config
-    # -- NATS URI
+  nats: &global_nats_config # -- NATS URI
     uri: "nats://testkube-enterprise-nats:4222"
   ## Global S3 configuration for Testkube Pro
   storage:
@@ -109,6 +107,9 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods.
   podSecurityContext: {}
+  job:
+    # nameSuffixOverride:
+
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -250,20 +251,6 @@ testkube-cloud-api:
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
-  ## Init block defines settings for the dependency check containers
-  init:
-    # -- Toggle whether to enable the dependency check containers
-    enabled: false
-    mongo:
-      image:
-        # -- MongoSH image repository
-        repository: kubeshop/bitnami-mongodb
-        # -- MongoSH image tag
-        tag: 7.0.12
-        # -- MongoSH image pull policy
-        pullPolicy: IfNotPresent
-      # -- Init container Security Context
-      securityContext: {}
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
   customCaDirPath: ""
   # -- Specifies the path where the license key should be mounted.
@@ -361,8 +348,8 @@ testkube-cloud-api:
     migrations:
       # -- Toggle whether to run database migrations
       enabled: true
-      # -- Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart)
-      useHelmHooks: true
+      # -- Toggle whether to set Argo resource hook annotations
+      useArgoHooks: true
       image:
         # -- Migrations image repository
         repository: kubeshop/testkube-enterprise-api-migrations
@@ -504,24 +491,6 @@ testkube-worker-service:
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
-  # -- Mongo Init Container values
-  init:
-    # -- Toggle whether to enable the dependency check containers
-    enabled: false
-    mongo:
-      image:
-        # -- MongoSH image registry
-        registry: "docker.io"
-        # -- MongoSH image repository
-        repository: kubeshop/bitnami-mongodb
-        # -- MongoSH image tag
-        tag: 7.0.12
-        # -- MongoSH image pull policy
-        pullPolicy: IfNotPresent
-        # -- MongoSH image digest
-        digest: ""
-      # -- Security context for Init Container
-      securityContext: {}
   # -- Set resources requests and limits for Testkube Worker Service
   resources:
     requests:

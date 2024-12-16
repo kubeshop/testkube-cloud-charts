@@ -161,26 +161,6 @@ Define Migration image
 {{- end -}}
 
 {{/*
-Define Mongo init image
-TODO: Implement this using dict and reuse the same for each image
-*/}}
-{{- define "testkube-cloud-api.init-mongo-image" -}}
-{{- $registryName := default "docker.io" .Values.init.mongo.image.registry -}}
-{{- if .Values.global.imageRegistry -}}
-    {{- $registryName = .Values.global.imageRegistry -}}
-{{- end -}}
-{{- $repositoryName := .Values.init.mongo.image.repository -}}
-{{- $tag := default .Chart.AppVersion .Values.init.mongo.image.tag | toString -}}
-{{- $separator := ":" -}}
-{{- if .Values.init.mongo.image.digest -}}
-  {{- $separator = "@" -}}
-  {{- $tag = .Values.init.mongo.image.digest | toString -}}
-{{- end -}}
-
-{{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
-{{- end -}}
-
-{{/*
 Define podSecurityContext
 */}}
 {{- define "testkube-cloud-api.podSecurityContext" -}}
@@ -212,3 +192,18 @@ Define containerSecurityContext for Init Container
 {{- toYaml .Values.init.mongo.containerSecurityContext }}
 {{- end }}
 {{- end }}
+
+{{- define "testkube-cloud-api.jobNameSuffix" -}}
+{{-   if .Values.global.job.nameSuffixOverride -}}
+{{-     tpl .Values.global.job.nameSuffixOverride . -}}
+{{-   else -}}
+{{-     printf "%s" .Release.Revision -}}
+{{-   end -}}
+{{- end -}}
+
+{{- define "testkube-cloud-api.migration-jobname" -}}
+{{- $fname := printf "%s-migration" (include "testkube-cloud-api.fullname" .) | trunc 55 | trimSuffix "-" -}}
+{{- $name := $fname | trunc 55 | trimSuffix "-" -}}
+{{- $suffix := ( include "testkube-cloud-api.jobNameSuffix" . )}}
+{{- printf "%s-%s" $name $suffix  | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
