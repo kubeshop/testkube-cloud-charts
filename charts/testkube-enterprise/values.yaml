@@ -252,20 +252,6 @@ testkube-cloud-api:
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
-  ## Init block defines settings for the dependency check containers
-  init:
-    # -- Toggle whether to enable the dependency check containers
-    enabled: false
-    mongo:
-      image:
-        # -- MongoSH image repository
-        repository: kubeshop/bitnami-mongodb
-        # -- MongoSH image tag
-        tag: 7.0.12
-        # -- MongoSH image pull policy
-        pullPolicy: IfNotPresent
-      # -- Init container Security Context
-      securityContext: {}
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
   customCaDirPath: ""
   # -- Specifies the path where the license key should be mounted.

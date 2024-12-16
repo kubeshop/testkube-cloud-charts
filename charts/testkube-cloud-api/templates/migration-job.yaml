@@ -5,6 +5,11 @@ metadata:
   name: {{ template "testkube-cloud-api.migration-jobname" . }}
   labels:
     {{- include "testkube-cloud-api.labels" . | nindent 4 }}
+  annotations:
+  {{- if .Values.api.migrations.useArgoHook }}
+    "argocd.argoproj.io/hook": "sync"
+    "argocd.argoproj.io/hook-delete-policy": "BeforeHookCreation"
+  {{- end }}
 spec:
   backoffLimit: 3
   ttlSecondsAfterFinished: {{ .Values.api.migrations.ttlSecondsAfterFinished }}

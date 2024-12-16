@@ -36,35 +36,6 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "testkube-cloud-api.serviceAccountName" . }}
       securityContext: {{ include "testkube-cloud-api.podSecurityContext" . | nindent 8 }}
-      {{- if .Values.init.enabled }}
-      initContainers:
-        - name: wait-for-mongo
-          image: {{ include "testkube-cloud-api.toolbox-image" . }}
-          imagePullPolicy: {{ .Values.toolboxImage.pullPolicy }}
-          securityContext: {{ include "init-wait-for-mongo.containerSecurityContext" . | nindent 12 }}
-          command: ["/testkube/toolbox"]
-          {{- if .Values.api.migrations.enabled }}
-          args: ["database", "status", "--wait"]
-          {{- else }}
-          args: ["database", "status", "--wait", "--skip-migrations"]
-          {{- end}}
-          env:
-            {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
-            {{- $mongoDsn := .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
-            {{- if $mongoDsnSecretRef }}
-            - name: API_MONGO_DSN
-              valueFrom:
-                secretKeyRef:
-                  key: MONGO_DSN
-                  name: {{ $mongoDsnSecretRef }}
-            {{- else if $mongoDsn }}
-            - name: API_MONGO_DSN
-              value: {{ $mongoDsn }}
-            {{- end }}
-            {{- $mongoDatabase := .Values.global.mongo.database | default .Values.api.mongo.database }}
-            - name: API_MONGO_DB
-              value: {{ $mongoDatabase }}
-      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext: {{ include "testkube-cloud-api.containerSecurityContext" . | nindent 12 }}
@@ -462,6 +433,8 @@ spec:
               value: "{{ .Values.api.storage.cleanup.retentionDays }}"
             - name: ENTERPRISE_ARTIFACT_MAX_STORAGE_SIZE_GB
               value: "{{ .Values.api.storage.cleanup.maxStorageSizeGb }}"
+            - name: MIGRATION_MIGRATE_DATABASE
+              value: "{{ .Values.api.migrations.enabled | quote }}"
           ports:
             - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}
