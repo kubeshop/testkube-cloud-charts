@@ -486,7 +486,6 @@ spec:
             - mountPath: /tmp
               readOnly: false
               name: tmp
-          {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
             {{- if .Values.api.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
               readOnly: true
@@ -514,7 +513,6 @@ spec:
             - mountPath: /app/config
               name: testkube-config
             {{- end }}
-          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -530,7 +528,6 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
-      {{- if or .Values.api.tls.serveHTTPS .Values.global.enterpriseLicenseSecretRef .Values.global.customCaSecretRef .Values.api.features.bootstrapConfig.enabled .Values.api.features.bootstrapOrg }}
         {{- if .Values.api.tls.serveHTTPS }}
         - name: serving-cert
           secret:
@@ -553,4 +550,3 @@ spec:
             name: {{ include "testkube-cloud-api.fullname" . }}-config
           name: testkube-config
         {{- end }}
-      {{- end }}
