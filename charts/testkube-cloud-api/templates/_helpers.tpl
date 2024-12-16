@@ -197,7 +197,7 @@ Define containerSecurityContext for Init Container
 {{-   if .Values.global.job.nameSuffixOverride -}}
 {{-     tpl .Values.global.job.nameSuffixOverride . -}}
 {{-   else -}}
-{{-     printf "%s" .Release.Revision -}}
+{{-     printf "%d" .Release.Revision -}}
 {{-   end -}}
 {{- end -}}
 

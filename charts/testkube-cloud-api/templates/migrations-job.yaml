@@ -6,8 +6,8 @@ metadata:
   labels:
     {{- include "testkube-cloud-api.labels" . | nindent 4 }}
   annotations:
-    {{- if .Values.api.migrations.useArgoHook }}
-      "argocd.argoproj.io/hook": "sync"
+    {{- if .Values.api.migrations.useArgoHooks }}
+      "argocd.argoproj.io/hook": "Sync"
       "argocd.argoproj.io/hook-delete-policy": "BeforeHookCreation"
     {{- end }}
 spec:
