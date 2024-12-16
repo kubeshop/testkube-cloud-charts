@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.66.1](https://img.shields.io/badge/Version-2.66.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.67.0](https://img.shields.io/badge/Version-2.67.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
