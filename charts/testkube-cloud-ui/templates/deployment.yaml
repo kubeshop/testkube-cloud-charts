@@ -46,6 +46,8 @@ spec:
               containerPort: 8080
               protocol: TCP
           env:
+            - name: FEATURE_INSIGHTS_V2
+              value: "true"
             - name: REACT_APP_API_SERVER_ENDPOINT
               value: {{ if .Values.ui.apiServerEndpoint}}{{ .Values.ui.apiServerEndpoint }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             {{- if .Values.ui.wsServerEndpoint }}
