@@ -72,7 +72,6 @@ nameOverride: ""
 fullnameOverride: ""
 # -- Additional env vars to be added to the deployment
 additionalEnv: {}
-
 # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
 customCaDirPath: ""
 api:

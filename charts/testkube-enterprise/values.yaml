@@ -49,8 +49,8 @@ global:
   # -- Common labels which will be added to all resources
   labels: &common_labels {}
   ## Global MongoDB configuration for Testkube Pro
-  mongo: &global_mongo_config # -- Mongo DSN connection string
-    dsn: "mongodb://testkube-enterprise-mongodb:27017"
+  mongo: &global_mongo_config
+    dsn: "mongodb://testkube-enterprise-mongodb:27017" # -- Mongo DSN connection string
     # -- Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`)
     dsnSecretRef: ""
     # -- Mongo database name
@@ -60,8 +60,8 @@ global:
     # -- Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit.
     allowDiskUse: false
   ## Global NATS configuration for Testkube Pro
-  nats: &global_nats_config # -- NATS URI
-    uri: "nats://testkube-enterprise-nats:4222"
+  nats: &global_nats_config
+    uri: "nats://testkube-enterprise-nats:4222" # -- NATS URI
   ## Global S3 configuration for Testkube Pro
   storage:
     # -- S3 bucket in which Test Artifacts & Logs will be stored
@@ -114,7 +114,6 @@ global:
   # functionality that applies job changes through force Delete/Create instead Replace.
   # job:
   #   nameSuffixOverride: '{{ dateInZone "2006-01-02-15-04-05" (now) "UTC" }}'
-
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:

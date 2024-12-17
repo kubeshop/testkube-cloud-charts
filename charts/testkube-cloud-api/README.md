@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.124.0](https://img.shields.io/badge/Version-1.124.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.90](https://img.shields.io/badge/AppVersion-1.10.90-informational?style=flat-square)
+![Version: 1.125.0](https://img.shields.io/badge/Version-1.125.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.10.90](https://img.shields.io/badge/AppVersion-1.10.90-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -60,7 +60,7 @@ A Helm chart for Testkube Cloud API
 | api.migrations.enabled | bool | `true` | Toggle whether to apply migrations for MongoDB |
 | api.migrations.ignoreNoDbError | bool | `true` | Ignoring no db error - exit 0 - used when helm hooks are enabled on pre-install |
 | api.migrations.ttlSecondsAfterFinished | int | `345600` | TTL for the migration job, defaults to 4 days |
-| api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks |
+| api.migrations.useArgoHooks | bool | `true` | Toggle whether to set Argo resource hook annotations |
 | api.minio.accessKeyId | string | `""` | MinIO access key id |
 | api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
 | api.minio.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
@@ -150,6 +150,7 @@ A Helm chart for Testkube Cloud API
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.imageRegistry | string | `""` | Global image registry to be prepended for to all images (usually defined in parent chart) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
+| global.job.nameSuffixOverride | string | `nil` |  |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | global.mongo.database | string | `""` | Mongo database name |
@@ -186,13 +187,6 @@ A Helm chart for Testkube Cloud API
 | image.tag | string | `"1.10.90"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
-| init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
-| init.mongo.containerSecurityContext | object | `{}` |  |
-| init.mongo.image.digest | string | `""` | MongoSH image digest |
-| init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
-| init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |
-| init.mongo.image.repository | string | `"alpine/mongosh"` | MongoSH image repository |
-| init.mongo.image.tag | string | `"2.0.2"` | MongoSH image tag |
 | migrationImage.pullPolicy | string | `"IfNotPresent"` |  |
 | migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |

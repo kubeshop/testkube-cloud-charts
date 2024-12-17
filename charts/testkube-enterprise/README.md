@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.71.0](https://img.shields.io/badge/Version-2.71.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.72.0](https://img.shields.io/badge/Version-2.72.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,9 +16,9 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.124.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.125.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.84.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.48.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.49.0 |
 | file://./charts/dex | dex | 0.19.1-5 |
 | file://./charts/minio | minio | 14.8.3-2 |
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
@@ -77,10 +77,10 @@ A Helm chart for Testkube Enterprise
 | global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | global.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
-| global.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
+| global.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` |  |
 | global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | global.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
-| global.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
+| global.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | global.podSecurityContext | object | `{}` | Global security Context for all pods. |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
@@ -208,7 +208,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.migrations.enabled | bool | `true` | Toggle whether to run database migrations |
 | testkube-cloud-api.api.migrations.image.repository | string | `"kubeshop/testkube-enterprise-api-migrations"` | Migrations image repository |
 | testkube-cloud-api.api.migrations.ttlSecondsAfterFinished | int | `345600` | TTL for the migration job, defaults to 4 days |
-| testkube-cloud-api.api.migrations.useHelmHooks | bool | `true` | Toggle whether to enable pre-install & pre-upgrade hooks (should be disabled if mongo is installed using this chart) |
+| testkube-cloud-api.api.migrations.useArgoHooks | bool | `true` | Toggle whether to set Argo resource hook annotations |
 | testkube-cloud-api.api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
 | testkube-cloud-api.api.minio.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
 | testkube-cloud-api.api.minio.certSecret.certFile | string | `"cert.crt"` | Path to client certificate file |
@@ -222,10 +222,10 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.minio.signing.secure | bool | `false` | Toggle should the presigned URL use HTTPS |
 | testkube-cloud-api.api.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | testkube-cloud-api.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
-| testkube-cloud-api.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
+| testkube-cloud-api.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` |  |
 | testkube-cloud-api.api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | testkube-cloud-api.api.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
-| testkube-cloud-api.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
+| testkube-cloud-api.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-cloud-api.api.oauth.clientId | string | `"testkube-enterprise"` | OAuth Client ID for the configured static client in Dex |
 | testkube-cloud-api.api.oauth.clientSecret | string | `"QWkVzs3nct6HZM5hxsPzwaZtq"` | OAuth Client ID for the configured static client in Dex |
 | testkube-cloud-api.api.oauth.issuerUrl | string | `""` | if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL |
@@ -255,11 +255,6 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.tag | string | `"1.10.90"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
-| testkube-cloud-api.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
-| testkube-cloud-api.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
-| testkube-cloud-api.init.mongo.image.repository | string | `"kubeshop/bitnami-mongodb"` | MongoSH image repository |
-| testkube-cloud-api.init.mongo.image.tag | string | `"7.0.12"` | MongoSH image tag |
-| testkube-cloud-api.init.mongo.securityContext | object | `{}` | Init container Security Context |
 | testkube-cloud-api.migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
 | testkube-cloud-api.migrationImage.tag | string | `"0.0.7"` |  |
@@ -293,23 +288,15 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.api.minio.credsFilePath | string | `""` | Path to where a Minio credential file should be mounted |
 | testkube-worker-service.api.mongo.allowDiskUse | bool | `false` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | testkube-worker-service.api.mongo.database | string | `"testkubeEnterpriseDB"` | Mongo database name |
-| testkube-worker-service.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` | Mongo DSN connection string |
+| testkube-worker-service.api.mongo.dsn | string | `"mongodb://testkube-enterprise-mongodb:27017"` |  |
 | testkube-worker-service.api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | testkube-worker-service.api.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
-| testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` | NATS URI |
+| testkube-worker-service.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
 | testkube-worker-service.customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.tag | string | `"1.10.74"` |  |
-| testkube-worker-service.init | object | `{"enabled":false,"mongo":{"image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"kubeshop/bitnami-mongodb","tag":"7.0.12"},"securityContext":{}}}` | Mongo Init Container values |
-| testkube-worker-service.init.enabled | bool | `false` | Toggle whether to enable the dependency check containers |
-| testkube-worker-service.init.mongo.image.digest | string | `""` | MongoSH image digest |
-| testkube-worker-service.init.mongo.image.pullPolicy | string | `"IfNotPresent"` | MongoSH image pull policy |
-| testkube-worker-service.init.mongo.image.registry | string | `"docker.io"` | MongoSH image registry |
-| testkube-worker-service.init.mongo.image.repository | string | `"kubeshop/bitnami-mongodb"` | MongoSH image repository |
-| testkube-worker-service.init.mongo.image.tag | string | `"7.0.12"` | MongoSH image tag |
-| testkube-worker-service.init.mongo.securityContext | object | `{}` | Security context for Init Container |
 | testkube-worker-service.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-worker-service.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"75m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Worker Service |

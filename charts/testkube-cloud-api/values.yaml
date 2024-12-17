@@ -111,7 +111,6 @@ global:
   podSecurityContext: {}
   job:
     nameSuffixOverride:
-
 replicaCount: 1
 # -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
 topologySpreadConstraints: []
