@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.73.0](https://img.shields.io/badge/Version-2.73.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.74.0](https://img.shields.io/badge/Version-2.74.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-cloud-api | testkube-cloud-api | 1.125.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.126.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.84.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.49.0 |
 | file://./charts/dex | dex | 0.19.1-5 |
@@ -257,7 +257,6 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
-| testkube-cloud-api.migrationImage.tag | string | `"0.1.0"` |  |
 | testkube-cloud-api.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-cloud-api.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
