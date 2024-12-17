@@ -123,9 +123,9 @@ image:
 migrationImage:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
   registry: ""
-  repository: kubeshop/testkube-migration
+  repository: kubeshop/testkube-sandbox
   pullPolicy: IfNotPresent
-  tag: "0.0.7"
+  tag: "migration-test-discovery-12339867"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
