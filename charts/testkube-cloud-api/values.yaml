@@ -127,7 +127,7 @@ migrationImage:
   registry: ""
   repository: kubeshop/testkube-migration
   pullPolicy: IfNotPresent
-  tag: "0.0.7"
+  tag: "0.1.0"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
