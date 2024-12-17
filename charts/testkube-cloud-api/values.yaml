@@ -109,6 +109,9 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods
   podSecurityContext: {}
+  job:
+    nameSuffixOverride:
+
 replicaCount: 1
 # -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
 topologySpreadConstraints: []
@@ -140,24 +143,6 @@ enterpriseLicenseKeyPath: /testkube/license.key
 enterpriseLicenseFilePath: /testkube/license.lic
 # -- Api can allow to set demo organization id where user who don't have Kubernetes cluster can play around
 demoOrganizationId: ""
-## Init block defines settings for the dependency check containers
-init:
-  # -- Toggle whether to enable the dependency check containers
-  enabled: false
-  mongo:
-    image:
-      # -- MongoSH image registry
-      registry: "docker.io"
-      # -- MongoSH image repository
-      repository: alpine/mongosh
-      # -- MongoSH image tag
-      tag: 2.0.2
-      # -- MongoSH image pull policy
-      pullPolicy: IfNotPresent
-      # -- MongoSH image digest
-      digest: ""
-      # -- Init container Security Context
-    containerSecurityContext: {}
 analytics:
   segmentio:
     # -- Toggle whether to enable Segment.io analytics
@@ -207,8 +192,8 @@ api:
   migrations:
     # -- Toggle whether to apply migrations for MongoDB
     enabled: true
-    # -- Toggle whether to enable pre-install & pre-upgrade hooks
-    useHelmHooks: true
+    # -- Toggle whether to set Argo resource hook annotations
+    useArgoHooks: true
     # -- TTL for the migration job, defaults to 4 days
     ttlSecondsAfterFinished: 345600
     # -- Ignoring no db error - exit 0 - used when helm hooks are enabled on pre-install

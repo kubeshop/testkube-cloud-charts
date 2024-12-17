@@ -10,9 +10,11 @@ dependencies:
   - name: testkube-cloud-api
     version: 1.124.0
     repository: file://../testkube-cloud-api
+    condition: testkube-cloud-api.enabled
   - name: testkube-cloud-ui
     version: 1.84.0
     repository: file://../testkube-cloud-ui
+    condition: testkube-cloud-ui.enabled
   - name: testkube-worker-service
     version: 1.48.0
     repository: file://../testkube-worker-service
