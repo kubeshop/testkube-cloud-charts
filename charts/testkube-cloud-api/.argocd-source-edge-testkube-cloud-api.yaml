@@ -6,3 +6,9 @@ helm:
   - name: image.tag
     value: 1.10.92-dev-1356f4de
     forcestring: true
+  - name: migrationImage.name
+    value: docker.io/kubeshop/testkube-migration
+    forcestring: true
+  - name: migrationImage.tag
+    value: 1.10.92-dev-45daa874
+    forcestring: true
