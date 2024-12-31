@@ -49,6 +49,7 @@ testkube-cloud-api:
       clientSecret: "QWkVzs3nct6HZM5hxsPzwaZtq"
       redirectUri: "http://localhost:8090/auth/callback"
       issuerUrl: ""
+      allowedExternalRedirectURIs: "http://localhost:*"
     dashboardAddress: "http://localhost:8080"
     apiAddress: "http://localhost:8090"
     outputsBucket: testkube-cloud-outputs
