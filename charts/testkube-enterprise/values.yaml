@@ -120,7 +120,8 @@ sharedSecretGenerator:
   # -- Toggle whether to enable the Shared Secret Generator Job
   enabled: false
   # -- Pod Security Context for the Shared Secret Generator Job
-  securityContext: {}
+  securityContext:
+    runAsNonRoot: true
   # -- Container Security Context for the Shared Secret Generator Job
   containerSecurityContext: {}
   # -- Resources for the Shared Secret Generator Job
@@ -188,6 +189,7 @@ minio:
   affinity: {}
   # MinIO Pod Security Context
   podSecurityContext:
+    runAsNonRoot: true
     # -- Toggle whether to render the pod security context
     enabled: true
     fsGroup: 1001
@@ -249,8 +251,11 @@ testkube-cloud-api:
     registry: ""
     repository: kubeshop/testkube-migration
   # -- Pod Security Context
-  podSecurityContext: {}
-  # fsGroup: 2000
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
@@ -436,8 +441,11 @@ testkube-cloud-ui:
     repository: kubeshop/testkube-enterprise-ui
     tag: 2.8.1
   # -- Pod Security Context
-  podSecurityContext: {}
-  # fsGroup: 2000
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
@@ -489,8 +497,11 @@ testkube-worker-service:
     repository: kubeshop/testkube-enterprise-worker-service
     tag: 1.10.74
   # -- Pod Security Context
-  podSecurityContext: {}
-  # fsGroup: 2000
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
   # -- Container Security Context
   securityContext:
     readOnlyRootFilesystem: true
@@ -518,6 +529,12 @@ nats:
   # -- Toggle whether to install NATS
   enabled: true
   fullnameOverride: testkube-enterprise-nats
+  # -- NATS Pod Security Context
+  podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
   # Uncomment if you want to provide a different image or pullPolicy
   container:
     merge:
@@ -672,7 +689,11 @@ mongodb:
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
   containerSecurityContext: {}
@@ -762,7 +783,11 @@ dex:
   securityContext: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- Dex Pod Security Context
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
   # -- Set resources requests and limits for Dex Service
   resources:
     requests:
