@@ -93,6 +93,17 @@ Get REST Ingress host
 {{- end }}
 
 {{/*
+Get SCIM Ingress host
+*/}}
+{{- define "testkube-cloud-api.ingress.scimHost" -}}
+{{- if .Values.global.domain }}
+{{- printf "%s.%s" .Values.global.scimApiSubdomain .Values.global.domain }}
+{{- else }}
+{{- .Values.scimIngress.host }}
+{{- end }}
+{{- end }}
+
+{{/*
 Get gRPC Ingress host
 */}}
 {{- define "testkube-cloud-api.ingress.grpcHost" -}}

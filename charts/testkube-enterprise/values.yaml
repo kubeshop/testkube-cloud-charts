@@ -288,6 +288,18 @@ testkube-cloud-api:
       cronInterval: "0 3 * * *"
       # -- Audit log retention period in days
       retentionPeriod: 30
+  scim:
+    # -- Toggle whether to enable the SCIM server
+    enabled: false
+    # -- Default organization in which users will be provisioned (must be configured if SCIM server is enabled)
+    defaultOrganization: ""
+    # -- Port on which the SCIM server will listen
+    port: 8091
+    auth:
+      # -- Token which will be used to authenticate SCIM requests (not recommended for production usage)
+      token: ""
+      # -- Secret ref for SCIM server authentication (secret must contain key SCIM_AUTH_TOKEN)
+      secretRef: ""
   api:
     storage:
       cleanup:

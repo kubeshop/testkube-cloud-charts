@@ -19,6 +19,8 @@ global:
   uiSubdomain: "cloud"
   # -- REST API subdomain which get prepended to the domain
   restApiSubdomain: "api"
+  # -- SCIM API subdomain which get prepended to the domain
+  scimApiSubdomain: "api"
   # -- gRPC API subdomain which get prepended to the domain
   grpcApiSubdomain: "agent"
   # -- gRPC Logs subdomain which get prepended to the domain
@@ -182,6 +184,18 @@ audit:
     cronInterval: "0 3 * * *"
     # -- Audit log retention period in days
     retentionPeriod: 30
+scim:
+  # -- Toggle whether to enable the SCIM server
+  enabled: false
+  # -- Default organization in which users will be provisioned (must be configured if SCIM server is enabled)
+  defaultOrganization: ""
+  # -- Port on which the SCIM server will listen
+  port: 8091
+  auth:
+    # -- Token which will be used to authenticate SCIM requests (not recommended for production usage)
+    token: ""
+    # -- Secret ref for SCIM server authentication (secret must contain key SCIM_AUTH_TOKEN)
+    secretRef: ""
 api:
   debug:
     # -- Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2
@@ -406,6 +420,16 @@ restIngress:
   labels: {}
   # -- Additional annotations to add to the REST Ingress resource
   annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
+  host: ""
+scimIngress:
+  # -- Toggle whether to enable the SCIM Ingress
+  enabled: true
+  # -- Additional labels to add to the SCIM Ingress resource
+  labels: { }
+  # -- Additional annotations to add to the SCIM Ingress resource
+  annotations: { }
   # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
