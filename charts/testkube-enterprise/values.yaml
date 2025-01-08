@@ -106,8 +106,7 @@ global:
   # -- Global security Context for all containers.
   containerSecurityContext: {}
   # -- Global security Context for all pods.
-  podSecurityContext:
-    runAsNonRoot: true
+  podSecurityContext: {}
   # -- Suffix for jobs. You want jobs to be uniquely named across Helm Revisions as Kubernetes
   # Jobs are immutable. Currently the suffix defaults to the Helm Chart's revision. This works
   # well with `helm upgrade --install`. In case you use `helm template` you can change this to
