@@ -435,6 +435,23 @@ spec:
               value: "{{ .Values.api.storage.cleanup.maxStorageSizeGb }}"
             - name: MIGRATION_MIGRATE_DATABASE
               value: "{{ .Values.api.migrations.enabled }}"
+            {{- if .Values.scim.enabled }}
+            - name: SCIM_SERVER_ENABLED
+              value: "true"
+            - name: SCIM_SERVER_PORT
+              value: "{{ .Values.scim.port }}"
+            - name: SCIM_SERVER_DEFAULT_ORGANIZATION
+              value: "{{ .Values.scim.defaultOrganization }}"
+            - name: SCIM_SERVER_AUTH_TOKEN
+              {{- if .Values.scim.auth.secretRef }}
+              valueFrom:
+                secretKeyRef:
+                  key: SCIM_AUTH_TOKEN
+                  name: {{ .Values.scim.auth.secretRef }}
+              {{- else }}
+              value: "{{ .Values.scim.auth.token }}"
+              {{- end }}
+            {{- end }}
           ports:
             - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}
@@ -445,6 +462,11 @@ spec:
             {{- if .Values.prometheus.enabled }}
             - name: metrics
               containerPort: 9100
+              protocol: TCP
+            {{- end }}
+            {{- if .Values.scim.enabled }}
+            - name: scim
+              containerPort: {{ .Values.scim.port }}
               protocol: TCP
             {{- end }}
           livenessProbe:

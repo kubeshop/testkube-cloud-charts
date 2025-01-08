@@ -1,0 +1,71 @@
+{{- if and .Values.global.ingress.enabled .Values.scimIngress.enabled -}}
+{{- if .Values.scim.enabled }}
+{{- $fullName := include "testkube-cloud-api.fullname" . -}}
+{{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.scimIngress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.scimIngress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+  {{- end }}
+{{- end }}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-scim
+  labels:
+    {{- include "testkube-cloud-api.labels" . | nindent 4 }}
+    {{- with .Values.scimIngress.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if eq .Values.ingress.className "nginx"}}
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    # Enable use of a regular expression in the path definition
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    # Rewrite /scim/v2/<anything> to /<anything>
+    nginx.ingress.kubernetes.io/rewrite-target: "/$1"
+    {{- if and (not .Values.api.tls.serveHTTPS) (eq .Values.global.certificateProvider "cert-manager") }}
+    cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
+    {{- end }}
+    {{- end }}
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with .Values.scimIngress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  tls:
+    - hosts:
+        - {{ include "testkube-cloud-api.ingress.scimHost" . | quote }}
+      secretName: {{ .Values.api.tls.tlsSecret }}
+  rules:
+    {{- $tlsConfig := .Values.api.tls }}
+    - host: {{ include "testkube-cloud-api.ingress.scimHost" . | quote }}
+      http:
+        paths:
+          - path: /scim/v2/(.*)
+            {{- if semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion }}
+            pathType: Prefix
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: scim
+              {{- else }}
+              serviceName: {{ $fullName }}
+              servicePort: scim
+              {{- end }}
+{{- end }}
+{{- end }}

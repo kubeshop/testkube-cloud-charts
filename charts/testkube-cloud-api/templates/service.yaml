@@ -28,5 +28,11 @@ spec:
       protocol: TCP
       name: metrics
     {{- end }}
+    {{- if .Values.scim.enabled }}
+    - port: {{ .Values.scim.port }}
+      targetPort: scim
+      protocol: TCP
+      name: scim
+    {{- end }}
   selector:
     {{- include "testkube-cloud-api.selectorLabels" . | nindent 4 }}
