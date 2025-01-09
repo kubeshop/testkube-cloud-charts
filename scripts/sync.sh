@@ -23,6 +23,8 @@ enterprise_worker_service_app_version=$("$update_script" -c testkube-worker-serv
 # Update the values.yaml in the enterprise chart
 echo "Updating testkube-cloud-api version in testkube-enterprise Helm chart to $enterprise_api_app_version"
 yq eval -i '.testkube-cloud-api.image.tag = env(enterprise_api_app_version)' "charts/testkube-enterprise/values.yaml"
+echo "Updating testkube-migrations version in testkube-enterprise Helm chart to $enterprise_api_app_version"
+yq eval -i '.testkube-cloud-api.migrationImage.tag = env(enterprise_api_app_version)' "charts/testkube-enterprise/values.yaml"
 echo "Updating testkube-cloud-api version in testkube-enterprise Helm chart for local-install values file to $enterprise_api_app_version"
 yq eval -i '.testkube-cloud-api.image.tag = env(enterprise_api_app_version)' "charts/testkube-enterprise/local-values.yaml"
 echo "Updating testkube-cloud-ui version in testkube-enterprise Helm chart to $enterprise_ui_app_version"
@@ -35,6 +37,8 @@ echo "Updating testkube-worker-service version in testkube-enterprise Helm chart
 yq eval -i '.testkube-worker-service.image.tag = env(enterprise_worker_service_app_version)' "charts/testkube-enterprise/local-values.yaml"
 echo "Updating testkube-cloud-api version in testkube-cloud-api values.yaml to $enterprise_api_app_version"
 yq eval -i '.image.tag = env(enterprise_api_app_version)' "charts/testkube-cloud-api/values.yaml"
+echo "Updating testkube-migrations version in testkube-cloud-api values.yaml to $enterprise_api_app_version"
+yq eval -i '.migrationImage.tag = env(enterprise_api_app_version)' "charts/testkube-cloud-api/values.yaml"
 echo "Updating testkube-cloud-ui version in testkube-cloud-ui values.yaml to $enterprise_ui_app_version"
 yq eval -i '.image.tag = env(enterprise_ui_app_version)' "charts/testkube-cloud-ui/values.yaml"
 echo "Updating testkube-worker-service version in testkube-worker-service values.yaml to $enterprise_worker_service_app_version"

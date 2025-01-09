@@ -4,10 +4,8 @@ on:
   repository_dispatch:
     types:
       [
-        trigger-workflow-testkube-cloud-api-main,
+        trigger-workflow-testkube-cloud-services,
         trigger-workflow-testkube-cloud-ui-main,
-        trigger-workflow-testkube-worker-service-main,
-        trigger-workflow-testkube-logs-service-main,
         trigger-workflow-testkube-agent-main
       ]
 
@@ -32,22 +30,19 @@ jobs:
           version: v3.10.0
 
       - name: Update Helm chart with changes files
-        if: github.event.action != 'trigger-workflow-testkube-agent-main'
+        if: github.event.action != 'trigger-workflow-testkube-agent-main' && github.event.action != 'trigger-workflow-testkube-cloud-ui-main'
         run: |
           # update application version
-           ./scripts/update.sh                              \
-           -c ${{ github.event.client_payload.app }}        \
-           -a ${{ github.event.client_payload.appVersion }} \
-           --verbose
+          charts=("testkube-cloud-api" "testkube-worker-service" "testkube-logs-service" )
+          for chart in "${charts[@]}"; do
+            ./scripts/update.sh -c "$chart" -a ${{ github.event.client_payload.appVersion }} --verbose
+          done
 
-           echo -e "### ${{ github.event.client_payload.app }} Helm chart diff" >> $GITHUB_STEP_SUMMARY
-           echo -e '```' >> $GITHUB_STEP_SUMMARY
-           git --no-pager diff >> $GITHUB_STEP_SUMMARY
-           echo -e '```' >> $GITHUB_STEP_SUMMARY
-
-          # update helm chart version
-           new_chart_version=$(./scripts/update.sh -c ${{ github.event.client_payload.app }} --print-chart-version)
-           echo "CHART_VERSION=$new_chart_version" >> $GITHUB_ENV
+      - name: Update Helm chart with changes for testkube-cloud-ui service
+        if: github.event.action != 'trigger-workflow-testkube-agent-main' && github.event.action != 'trigger-workflow-testkube-cloud-services'
+        run: |
+          # update application version
+          ./scripts/update.sh -c "testkube-cloud-ui" -a ${{ github.event.client_payload.appVersion }} --verbose
 
       - name: Update Agent version
         if: github.event.action == 'trigger-workflow-testkube-agent-main'
@@ -66,14 +61,6 @@ jobs:
 
           echo "Bumping testkube-enterprise Helm-chart version"
           ./scripts/update.sh -c testkube-enterprise --strategy patch
-
-          enterprise_chart_version=$(./scripts/update.sh -c testkube-enterprise --print-chart-version)
-          echo "ENTERPRISE_CHART_VERSION=$enterprise_chart_version" >> $GITHUB_ENV
-
-          echo -e "### Testkube Enterprise Helm chart diff" >> $GITHUB_STEP_SUMMARY
-          echo -e '```' >> $GITHUB_STEP_SUMMARY
-          git --no-pager diff charts/testkube-enterprise >> $GITHUB_STEP_SUMMARY
-          echo -e '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Check for changes in generated Helm docs models (helm-docs)
         run: |
