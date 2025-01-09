@@ -4,11 +4,11 @@ helm:
     value: docker.io/kubeshop/testkube-cloud-api
     forcestring: true
   - name: image.tag
-    value: 0.1.1-dev-67d57241
+    value: 1.16.16-rc-cf06642b
     forcestring: true
   - name: migrationImage.name
     value: docker.io/kubeshop/testkube-migration
     forcestring: true
   - name: migrationImage.tag
-    value: 0.1.1-dev-67d57241
+    value: 1.11.0
     forcestring: true
