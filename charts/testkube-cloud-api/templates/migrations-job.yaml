@@ -76,6 +76,26 @@ spec:
               value: "true"
             - name: MIGRATION_INIT_INDEXES
               value: "true"
+            {{- if or .Values.global.customCaSecretRef .Values.customCaDirPath }}
+            {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
+            - name: SSL_CERT_DIR
+              value: "{{ $certsDir }}"
+            {{- end }}
+          {{- if .Values.global.customCaSecretRef }}
+          volumeMounts:
+            {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
+            - mountPath: {{ $certsDir }}/testkube-custom-ca.pem
+              name: {{ .Values.global.customCaSecretRef }}
+              readOnly: true
+              subPath: {{ .Values.global.customCaSecretKey }}
+          {{- end }}
+      {{- if .Values.global.customCaSecretRef }}
+      volumes:
+        - name: {{ .Values.global.customCaSecretRef }}
+          secret:
+            secretName: {{ .Values.global.customCaSecretRef }}
+            defaultMode: 420
+      {{- end }}
       restartPolicy: Never
   backoffLimit: 3
 {{- end }}
