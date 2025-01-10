@@ -427,9 +427,9 @@ scimIngress:
   # -- Toggle whether to enable the SCIM Ingress
   enabled: true
   # -- Additional labels to add to the SCIM Ingress resource
-  labels: { }
+  labels: {}
   # -- Additional annotations to add to the SCIM Ingress resource
-  annotations: { }
+  annotations: {}
   # kubernetes.io/ingress.class: nginx
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
