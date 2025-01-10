@@ -2,8 +2,8 @@ apiVersion: v2
 name: testkube-logs-service
 description: A Helm chart for Testkube log Service
 type: application
-version: 1.7.3
-appVersion: 1.11.3
+version: 1.7.4
+appVersion: 1.11.4
 maintainers:
   - name: testkube
     url: https://testkube.io
