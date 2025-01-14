@@ -2,7 +2,7 @@ apiVersion: v2
 name: testkube-enterprise
 description: A Helm chart for Testkube Enterprise
 type: application
-version: 2.106.0
+version: 2.106.1
 dependencies:
   - name: common
     version: 2.13.3
@@ -20,7 +20,7 @@ dependencies:
     repository: file://../testkube-worker-service
   - name: testkube
     alias: testkube-agent
-    version: 2.1.120
+    version: 2.1.121
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex
