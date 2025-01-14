@@ -132,7 +132,7 @@ A Helm chart for the NATS.io High Speed Cloud Native Distributed Communications 
 | container.image.pullPolicy | string | `nil` |  |
 | container.image.registry | string | `nil` |  |
 | container.image.repository | string | `"nats"` |  |
-| container.image.tag | string | `"2.10.22-alpine"` |  |
+| container.image.tag | string | `"2.10.24-alpine"` |  |
 | container.merge | object | `{}` |  |
 | container.patch | list | `[]` |  |
 | container.ports.cluster | object | `{}` |  |
