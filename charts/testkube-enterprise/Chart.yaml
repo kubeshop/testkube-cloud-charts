@@ -6,7 +6,7 @@ version: 2.108.0
 dependencies:
   - name: common
     version: 2.13.3
-    repository: https://charts.bitnami.com/bitnami
+    repository: oci://registry-1.docker.io/bitnamicharts
   - name: testkube-cloud-api
     version: 1.137.0
     repository: file://../testkube-cloud-api
