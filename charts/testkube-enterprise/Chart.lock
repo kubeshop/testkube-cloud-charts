@@ -1,6 +1,6 @@
 dependencies:
 - name: common
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://registry-1.docker.io/bitnamicharts
   version: 2.13.3
 - name: testkube-cloud-api
   repository: file://../testkube-cloud-api
@@ -13,7 +13,7 @@ dependencies:
   version: 1.52.0
 - name: testkube
   repository: https://kubeshop.github.io/helm-charts
-  version: 2.1.121
+  version: 2.1.122
 - name: dex
   repository: file://./charts/dex
   version: 0.19.1-5
@@ -26,5 +26,5 @@ dependencies:
 - name: minio
   repository: file://./charts/minio
   version: 14.8.3-2
-digest: sha256:7f1540f4e397637c0d06f53390b33ae52222de391f50e66551935f4ccd114c3c
-generated: "2025-01-14T20:43:11.5436333Z"
+digest: sha256:7cc2ad0564d9c0cbc33f6a5695ea82a2e746d5feb737f8a655a9c625a69ba5a8
+generated: "2025-01-14T23:23:17.781228184+02:00"
