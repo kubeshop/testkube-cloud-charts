@@ -20,7 +20,7 @@ dependencies:
     repository: file://../testkube-worker-service
   - name: testkube
     alias: testkube-agent
-    version: 2.1.121
+    version: 2.1.122
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex
