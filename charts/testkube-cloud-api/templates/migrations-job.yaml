@@ -28,12 +28,12 @@ spec:
       imagePullSecrets:
         {{- range . }}
         {{- if typeIsLike "map[string]interface {}" . }}
-        - name: {{ .name | quote }}
-          {{- else }}
-        - name: {{ . | quote  }}
-          {{- end }}
-          {{- end }}
-          {{- end }}
+      - name: {{ .name | quote }}
+        {{- else }}
+      - name: {{ . | quote  }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
       serviceAccountName: {{ include "testkube-cloud-api.serviceAccountName" . }}
       securityContext: {{ include "testkube-cloud-api.podSecurityContext" . | nindent 8 }}
       containers:

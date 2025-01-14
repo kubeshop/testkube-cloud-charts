@@ -23,13 +23,13 @@ spec:
       {{- with (default .Values.imagePullSecrets .Values.global.imagePullSecrets) }}
       imagePullSecrets:
         {{- range . }}
-          {{- if typeIsLike "map[string]interface {}" . }}
-        - name: {{ .name | quote }}
-          {{- else }}
-        - name: {{ . | quote  }}
-          {{- end }}
-          {{- end }}
-          {{- end }}
+        {{- if typeIsLike "map[string]interface {}" . }}
+      - name: {{ .name | quote }}
+        {{- else }}
+      - name: {{ . | quote  }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
       {{- with .Values.topologySpreadConstraints }}
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
