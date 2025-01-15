@@ -20,13 +20,16 @@ spec:
       labels:
         {{- include "testkube-cloud-api.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.global.imagePullSecrets }}
+      {{- with (default .Values.imagePullSecrets .Values.global.imagePullSecrets) }}
       imagePullSecrets:
-        {{- toYaml .Values.global.imagePullSecrets | nindent 8 }}
-      {{- else if .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
-      {{- end }}
+        {{- range . }}
+        {{- if typeIsLike "map[string]interface {}" . }}
+      - name: {{ .name | quote }}
+        {{- else }}
+      - name: {{ . | quote  }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
       {{- with .Values.topologySpreadConstraints }}
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}

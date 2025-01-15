@@ -40,8 +40,14 @@ spec:
     spec:
       {{- with (default .Values.imagePullSecrets .Values.global.imagePullSecrets) }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- range . }}
+        {{- if typeIsLike "map[string]interface {}" . }}
+      - name: {{ .name | quote }}
+        {{- else }}
+      - name: {{ . | quote  }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
       serviceAccountName: {{ include "dex.serviceAccountName" . }}
       {{- with .Values.priorityClassName }}
       priorityClassName: {{ . | quote }}

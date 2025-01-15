@@ -16,7 +16,7 @@ dependencies:
   version: 2.1.122
 - name: dex
   repository: file://./charts/dex
-  version: 0.19.1-5
+  version: 0.19.1-6
 - name: mongodb
   repository: file://./charts/mongodb
   version: 16.2.1-1
@@ -26,5 +26,5 @@ dependencies:
 - name: minio
   repository: file://./charts/minio
   version: 14.8.3-2
-digest: sha256:7cc2ad0564d9c0cbc33f6a5695ea82a2e746d5feb737f8a655a9c625a69ba5a8
-generated: "2025-01-14T23:23:17.781228184+02:00"
+digest: sha256:91be435ce892be5b37c027d6c1f8684bf06ac02bed5129fee98a9dd790b8ad83
+generated: "2025-01-15T11:32:53.508422+02:00"
