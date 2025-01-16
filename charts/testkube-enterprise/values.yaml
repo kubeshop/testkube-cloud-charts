@@ -3,6 +3,11 @@
 # Declare variables to be passed into your templates.
 
 global:
+  license:
+      limits:
+        maxUsers: 1
+        maxEnvironments: 1
+        maxOrganizations: 1
   # -- Run Testkube in enterprise mode (enables enterprise features)
   enterpriseMode: true
   # -- Toggle whether to enable offline license activation in Enterprise mode
