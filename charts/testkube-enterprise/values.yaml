@@ -527,6 +527,8 @@ testkube-worker-service:
   customCaDirPath: ""
 ## Testkube AI Service chart parameters
 testkube-ai-service:
+  # -- Toggle whether to install the Testkube AI service
+  enabled: false
   replicaCount: 1
   env: "production"
   logLevel: "info"

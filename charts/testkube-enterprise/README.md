@@ -190,6 +190,7 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.autoscaling.maxReplicas | int | `100` |  |
 | testkube-ai-service.autoscaling.minReplicas | int | `1` |  |
 | testkube-ai-service.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| testkube-ai-service.enabled | bool | `false` | Toggle whether to install the Testkube AI service |
 | testkube-ai-service.env | string | `"production"` |  |
 | testkube-ai-service.fullnameOverride | string | `"api"` |  |
 | testkube-ai-service.image.pullPolicy | string | `"IfNotPresent"` |  |
