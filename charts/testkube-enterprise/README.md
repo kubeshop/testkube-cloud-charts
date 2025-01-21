@@ -16,6 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
+| file://../testkube-ai-service | testkube-ai-service | 1.0.0 |
 | file://../testkube-cloud-api | testkube-cloud-api | 1.139.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.94.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.54.0 |
@@ -23,7 +24,7 @@ A Helm chart for Testkube Enterprise
 | file://./charts/minio | minio | 14.8.3-2 |
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
 | file://./charts/nats | nats | 1.2.6-4 |
-| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.125 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.128 |
 | oci://registry-1.docker.io/bitnamicharts | common | 2.13.3 |
 
 ## Values
@@ -184,6 +185,62 @@ A Helm chart for Testkube Enterprise
 | sharedSecretGenerator.resources | object | `{}` | Resources for the Shared Secret Generator Job |
 | sharedSecretGenerator.securityContext | object | `{}` | Pod Security Context for the Shared Secret Generator Job |
 | testkube-agent.enabled | bool | `false` | Toggle whether to install & connect Testkube Agent in the same namespace. Keep it disabled to have more control over where your agents run. See https://docs.testkube.io/articles/install/overview for more info. This relies on the `testkube-default-agent-token` shared secret. See https://docs.testkube.io/articles/install/install-with-helm#shared-secrets |
+| testkube-ai-service.affinity | object | `{}` |  |
+| testkube-ai-service.autoscaling.enabled | bool | `false` |  |
+| testkube-ai-service.autoscaling.maxReplicas | int | `100` |  |
+| testkube-ai-service.autoscaling.minReplicas | int | `1` |  |
+| testkube-ai-service.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| testkube-ai-service.env | string | `"production"` |  |
+| testkube-ai-service.fullnameOverride | string | `"api"` |  |
+| testkube-ai-service.image.pullPolicy | string | `"IfNotPresent"` |  |
+| testkube-ai-service.image.repository | string | `"kubeshop/testkube-ai"` |  |
+| testkube-ai-service.image.tag | string | `""` |  |
+| testkube-ai-service.imagePullSecrets | list | `[]` |  |
+| testkube-ai-service.ingress.annotations | object | `{}` |  |
+| testkube-ai-service.ingress.className | string | `"nginx"` |  |
+| testkube-ai-service.ingress.dnsName | string | `"ai.testkube.dev"` |  |
+| testkube-ai-service.ingress.enabled | bool | `true` |  |
+| testkube-ai-service.langchain.apiKey | string | `""` | LangChain API Key - can be provided directly or referenced from a secret |
+| testkube-ai-service.langchain.endpoint | string | `"https://api.smith.langchain.com/"` | Endpoint for LangChain API |
+| testkube-ai-service.langchain.project | string | `"testkube-dev"` | Project identifier for LangChain |
+| testkube-ai-service.langchain.secretRef | string | `"testkube-ai"` | Reference to the secret containing the LangChain API Key (`LANGCHAIN_API_KEY`) |
+| testkube-ai-service.langchain.tracing | bool | `true` | Enable LangChain tracing |
+| testkube-ai-service.livenessProbe.httpGet.path | string | `"/"` |  |
+| testkube-ai-service.livenessProbe.httpGet.port | string | `"http"` |  |
+| testkube-ai-service.logLevel | string | `"info"` |  |
+| testkube-ai-service.nameOverride | string | `""` |  |
+| testkube-ai-service.nodeSelector | object | `{}` |  |
+| testkube-ai-service.oauthAudience | string | `"testkube-cloud"` |  |
+| testkube-ai-service.oauthIssuer | string | `""` |  |
+| testkube-ai-service.oauthJwksUri | string | `""` |  |
+| testkube-ai-service.oidcConfigurationUrl | string | `"http://dex.auth:5556/idp/.well-known/openid-configuration"` |  |
+| testkube-ai-service.origins | string | `"*"` |  |
+| testkube-ai-service.originsRegex | string | `"https://.*\\.testkube\\..*"` |  |
+| testkube-ai-service.podAnnotations | object | `{}` |  |
+| testkube-ai-service.podLabels | object | `{}` |  |
+| testkube-ai-service.podSecurityContext | object | `{}` |  |
+| testkube-ai-service.readinessProbe.httpGet.path | string | `"/"` |  |
+| testkube-ai-service.readinessProbe.httpGet.port | string | `"http"` |  |
+| testkube-ai-service.replicaCount | int | `1` |  |
+| testkube-ai-service.resources | object | `{}` |  |
+| testkube-ai-service.securityContext | object | `{}` |  |
+| testkube-ai-service.service.port | int | `9090` |  |
+| testkube-ai-service.service.type | string | `"ClusterIP"` |  |
+| testkube-ai-service.serviceAccount.annotations | object | `{}` |  |
+| testkube-ai-service.serviceAccount.automount | bool | `true` |  |
+| testkube-ai-service.serviceAccount.create | bool | `true` |  |
+| testkube-ai-service.serviceAccount.name | string | `""` |  |
+| testkube-ai-service.tls.certManager.issuerGroup | string | `"cert-manager.io"` |  |
+| testkube-ai-service.tls.certManager.issuerKind | string | `"ClusterIssuer"` |  |
+| testkube-ai-service.tls.certManager.issuerRef | string | `"letsencrypt-edge"` |  |
+| testkube-ai-service.tls.certificateProvider | string | `"cert-manager"` |  |
+| testkube-ai-service.tls.host | string | `"ai.testkube.dev"` |  |
+| testkube-ai-service.tls.path | string | `"/"` |  |
+| testkube-ai-service.tls.secret | string | `"testkube-ai-tls"` |  |
+| testkube-ai-service.tls.serveHTTPS | bool | `true` |  |
+| testkube-ai-service.tolerations | list | `[]` |  |
+| testkube-ai-service.volumeMounts | list | `[]` |  |
+| testkube-ai-service.volumes | list | `[]` |  |
 | testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |

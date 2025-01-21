@@ -525,6 +525,83 @@ testkube-worker-service:
     USE_MINIO: true
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
   customCaDirPath: ""
+## Testkube AI Service chart parameters
+testkube-ai-service:
+  replicaCount: 1
+  env: "production"
+  logLevel: "info"
+  oidcConfigurationUrl: "http://dex.auth:5556/idp/.well-known/openid-configuration"
+  oauthIssuer: ""
+  oauthJwksUri: ""
+  oauthAudience: "testkube-cloud"
+  origins: "*"
+  originsRegex: "https://.*\\.testkube\\..*"
+  image:
+    repository: kubeshop/testkube-ai
+    pullPolicy: IfNotPresent
+    tag: ""
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: "api"
+  # Configuration for LangChain tracing
+  langchain:
+    # -- Enable LangChain tracing
+    tracing: true
+    # -- Endpoint for LangChain API
+    endpoint: "https://api.smith.langchain.com/"
+    # -- LangChain API Key - can be provided directly or referenced from a secret
+    apiKey: ""
+    # -- Reference to the secret containing the LangChain API Key (`LANGCHAIN_API_KEY`)
+    secretRef: "testkube-ai"
+    # -- Project identifier for LangChain
+    project: "testkube-dev"
+  serviceAccount:
+    create: true
+    automount: true
+    annotations: {}
+    name: ""
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext: {}
+  securityContext: {}
+  service:
+    type: ClusterIP
+    port: 9090
+  tls:
+    serveHTTPS: true
+    secret: testkube-ai-tls
+    host: ai.testkube.dev
+    path: "/"
+    certificateProvider: "cert-manager"
+    certManager:
+      issuerRef: "letsencrypt-edge"
+      issuerKind: ClusterIssuer
+      issuerGroup: cert-manager.io
+  ingress:
+    dnsName: ai.testkube.dev
+    enabled: true
+    className: "nginx"
+    annotations: {}
+  resources: {}
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+  volumes: []
+  volumeMounts: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
