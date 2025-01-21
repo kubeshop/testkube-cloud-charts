@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "testkube-ai.fullname" . }}
+  labels:
+    {{- include "testkube-ai.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "testkube-ai.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "testkube-ai.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "testkube-ai.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env: 
+            - name: ENV
+              value: "{{ .Values.env | default "production" }}"
+            - name: LOG_LEVEL
+              value: "{{ .Values.logLevel | default "info" }}"
+            - name: OIDC_CONFIGURATION_URL
+              value: "{{ .Values.oidcConfigurationUrl | default "http://dex.auth:5556/idp/.well-known/openid-configuration" }}"
+            - name: OAUTH_ISSUER
+              value: "{{ .Values.oauthIssuer }}"
+            - name: OAUTH_JWKS_URI
+              value: "{{ .Values.oauthJwksUri }}"
+            - name: OAUTH_AUDIENCE
+              value: "{{ .Values.oauthAudience | default "testkube-cloud" }}"
+            - name: ORIGINS
+              value: "{{ .Values.origins | default "*" }}"
+            - name: ORIGINS_REGEX
+              value: {{ .Values.originsRegex | default "https://.*\\.testkube\\..*" | quote }}
+            - name: OPENAI_API_KEY 
+              valueFrom:
+                secretKeyRef:
+                  name: testkube-ai
+                  key: OPENAI_API_KEY                             
+            - name: LANGCHAIN_TRACING_V2
+              value: "{{ .Values.langchain.tracing }}"
+            - name: LANGCHAIN_ENDPOINT
+              value: "{{ .Values.langchain.endpoint }}"
+            - name: LANGCHAIN_API_KEY
+              {{- if .Values.langchain.apiKey }}
+              value: "{{ .Values.langchain.apiKey }}"
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.langchain.secretRef }}
+                  key: LANGCHAIN_API_KEY                
+              {{- end }}
+            - name: LANGCHAIN_PROJECT
+              value: "{{ .Values.langchain.project }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- if .Values.tls.serveHTTPS }}
+            - mountPath: /tmp/serving-cert/crt.pem
+              readOnly: true
+              name: serving-cert
+              subPath: tls.crt
+            - mountPath: /tmp/serving-cert/key.pem
+              readOnly: true
+              name: serving-cert
+              subPath: tls.key
+            {{- end }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

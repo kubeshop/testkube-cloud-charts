@@ -5,8 +5,12 @@
 # Chart dependencies
 charts/testkube-cloud-api/charts/*.tgz
 charts/testkube-cloud-ui/charts/*.tgz
-charts/testkube-enterprise/charts/*.tgz
 
+charts/testkube-enterprise/charts/*
+!charts/testkube-enterprise/charts/dex/*
+!charts/testkube-enterprise/charts/minio/*
+!charts/testkube-enterprise/charts/mongodb/*
+!charts/testkube-enterprise/charts/nats/*
 
 # OSX
 .DS_Store
