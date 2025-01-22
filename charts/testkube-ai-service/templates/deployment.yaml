@@ -36,7 +36,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env: 
+          env:
             - name: ENV
               value: "{{ .Values.env | default "production" }}"
             - name: LOG_LEVEL
@@ -53,11 +53,11 @@ spec:
               value: "{{ .Values.origins | default "*" }}"
             - name: ORIGINS_REGEX
               value: {{ .Values.originsRegex | default "https://.*\\.testkube\\..*" | quote }}
-            - name: OPENAI_API_KEY 
+            - name: OPENAI_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: testkube-ai
-                  key: OPENAI_API_KEY                             
+                  key: OPENAI_API_KEY
             - name: LANGCHAIN_TRACING_V2
               value: "{{ .Values.langchain.tracing }}"
             - name: LANGCHAIN_ENDPOINT
@@ -69,7 +69,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.langchain.secretRef }}
-                  key: LANGCHAIN_API_KEY                
+                  key: LANGCHAIN_API_KEY
               {{- end }}
             - name: LANGCHAIN_PROJECT
               value: "{{ .Values.langchain.project }}"

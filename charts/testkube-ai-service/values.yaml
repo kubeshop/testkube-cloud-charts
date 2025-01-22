@@ -65,6 +65,7 @@ service:
   port: 9090
   serveHTTPS: true
   secret: testkube-ai-tls
+  # TODO(emil): remove these hardcodings
   host: ai.testkube.dev
   path: "/"
   certificateProvider: "cert-manager"
@@ -73,6 +74,7 @@ service:
     issuerKind: ClusterIssuer
     issuerGroup: cert-manager.io
 ingress:
+  # TODO(emil): remove these hardcodings
   dnsName: ai.testkube.dev
   enabled: true
   className: "nginx"
