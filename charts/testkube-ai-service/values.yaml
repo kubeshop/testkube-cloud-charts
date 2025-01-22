@@ -14,7 +14,6 @@ global:
   ingress:
     # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
     enabled: true
-  # TODO(emil): add the common labels
   # -- Common labels which will be added to all resources
   labels: {}
   # -- Global security Context for all containers
