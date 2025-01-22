@@ -82,8 +82,11 @@ host: ""
 env: "production"
 # -- Log level
 logLevel: "info"
+# -- Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider
 oidcConfigurationUrl: "http://dex.auth:5556/idp/.well-known/openid-configuration"
+# -- Specify issuer to skip OIDC Discovery
 oauthIssuer: ""
+# -- Specify the URL to fetch the JWK set document and skip OIDC Discovery
 oauthJwksUri: ""
 # -- OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration.
 oauthAudience: "" # TODO(emil): put as "testkube-enterprise" or reference to static client id value in the enterprise chart
