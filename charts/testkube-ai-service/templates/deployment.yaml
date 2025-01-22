@@ -59,10 +59,6 @@ spec:
               value: "{{ .Values.oauthJwksUri }}"
             - name: OAUTH_AUDIENCE
               value: "{{ .Values.oauthAudience | default "testkube-cloud" }}"
-            - name: ORIGINS
-              value: "{{ .Values.origins | default "*" }}"
-            - name: ORIGINS_REGEX
-              value: {{ .Values.originsRegex | default "https://.*\\.testkube\\..*" | quote }}
             - name: OPENAI_API_KEY
               valueFrom:
                 secretKeyRef:
