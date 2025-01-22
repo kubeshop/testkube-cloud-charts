@@ -78,7 +78,9 @@ affinity: {}
 # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
 host: ""
 
+# -- Environment of deployment
 env: "production"
+# -- Log level
 logLevel: "info"
 oidcConfigurationUrl: "http://dex.auth:5556/idp/.well-known/openid-configuration"
 oauthIssuer: ""

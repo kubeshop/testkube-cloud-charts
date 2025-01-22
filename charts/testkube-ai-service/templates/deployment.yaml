@@ -45,10 +45,10 @@ spec:
           image: {{ include "testkube-ai.image" . }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           env:
-            - name: ENV
-              value: "{{ .Values.env | default "production" }}"
+            - name: NODE_ENV
+              value: "{{ .Values.env }}"
             - name: LOG_LEVEL
-              value: "{{ .Values.logLevel | default "info" }}"
+              value: "{{ .Values.logLevel }}"
             - name: OIDC_CONFIGURATION_URL
               value: "{{ .Values.oidcConfigurationUrl | default "http://dex.auth:5556/idp/.well-known/openid-configuration" }}"
             - name: OAUTH_ISSUER
