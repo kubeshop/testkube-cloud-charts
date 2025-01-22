@@ -92,7 +92,7 @@ oauthIssuer: ""
 # -- Specify the URL to fetch the JWK set document and skip OIDC Discovery
 oauthJwksUri: ""
 # -- OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration.
-oauthAudience: "" # TODO(emil): put as "testkube-enterprise" or reference to static client id value in the enterprise chart
+oauthAudience: ""
 # Configuration for LangChain tracing
 langchain:
   # -- Enable LangChain tracing

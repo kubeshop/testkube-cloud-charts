@@ -532,33 +532,19 @@ testkube-ai-service:
   # -- Toggle whether to install the Testkube AI service
   enabled: false
   replicaCount: 1
-  env: "production"
-  logLevel: "info"
-  oidcConfigurationUrl: "http://dex.auth:5556/idp/.well-known/openid-configuration"
-  oauthIssuer: ""
-  oauthJwksUri: ""
-  oauthAudience: "testkube-cloud"
-  origins: "*"
-  originsRegex: "https://.*\\.testkube\\..*"
+  # -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
+  topologySpreadConstraints: []
+  # -- Priority class name defines the priority of this pod relative to others in the cluster.
+  priorityClassName: ""
   image:
-    repository: kubeshop/testkube-ai
+    # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+    registry: ""
+    repository: kubeshop/testkube-ai-copilot
     pullPolicy: IfNotPresent
     tag: ""
   imagePullSecrets: []
   nameOverride: ""
-  fullnameOverride: "api"
-  # Configuration for LangChain tracing
-  langchain:
-    # -- Enable LangChain tracing
-    tracing: true
-    # -- Endpoint for LangChain API
-    endpoint: "https://api.smith.langchain.com/"
-    # -- LangChain API Key - can be provided directly or referenced from a secret
-    apiKey: ""
-    # -- Reference to the secret containing the LangChain API Key (`LANGCHAIN_API_KEY`)
-    secretRef: "testkube-ai"
-    # -- Project identifier for LangChain
-    project: "testkube-dev"
+  fullnameOverride: ""
   serviceAccount:
     create: true
     automount: true
@@ -569,43 +555,70 @@ testkube-ai-service:
   podSecurityContext: {}
   securityContext: {}
   service:
+    # -- Service type
     type: ClusterIP
+    # -- Additional annotations to add to the Service resource
+    annotations: {}
+    # -- Additional labels to add to the Service resource
+    labels: {}
+    # -- AI API port
     port: 9090
   tls:
+    # -- Toggle should the Application terminate TLS instead of the Ingress
     serveHTTPS: true
-    secret: testkube-ai-tls
-    host: ai.testkube.dev
-    path: "/"
-    certificateProvider: "cert-manager"
+    # -- TLS secret name which contains the certificate files
+    tlsSecret: testkube-ai-tls
     certManager:
-      issuerRef: "letsencrypt-edge"
+      # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
       issuerKind: ClusterIssuer
+      # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
       issuerGroup: cert-manager.io
   ingress:
-    dnsName: ai.testkube.dev
     enabled: true
     className: "nginx"
     annotations: {}
   resources: {}
-  livenessProbe:
-    httpGet:
-      path: /
-      port: http
-  readinessProbe:
-    httpGet:
-      path: /
-      port: http
   autoscaling:
     enabled: false
     minReplicas: 1
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
-  volumes: []
-  volumeMounts: []
+    targetMemoryUtilizationPercentage: 80
   nodeSelector: {}
   tolerations: []
   affinity: {}
-
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
+  host: ""
+  # -- Environment of deployment
+  env: "production"
+  # -- Log level
+  logLevel: "info"
+  # -- Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
+  oidcDiscoveryUri: ""
+  # -- Specify issuer to skip OIDC Discovery
+  oauthIssuer: ""
+  # -- Specify the URL to fetch the JWK set document and skip OIDC Discovery
+  oauthJwksUri: ""
+  # -- OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration.
+  oauthAudience: "testkube-enterprise"
+  # Configuration for LangChain tracing
+  langchain:
+    # -- Enable LangChain tracing
+    tracing: true
+    # -- Endpoint for LangChain API
+    endpoint: "https://api.smith.langchain.com/"
+    # -- LangChain API Key - can be provided directly or referenced from a secret
+    apiKey: ""
+    # -- Reference to the secret containing the LangChain API Key. Place value into `LANGCHAIN_API_KEY` key.
+    secretRef: ""
+    # -- Project identifier for LangChain
+    project: ""
+  # Configuration for OpenAI API
+  openAi:
+    # -- OpenAI API Key - can be provided directly or referenced from a secret
+    apiKey: ""
+    # -- Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key.
+    secretRef: ""
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
