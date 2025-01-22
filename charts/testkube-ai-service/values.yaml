@@ -15,7 +15,7 @@ origins: "*"
 originsRegex: "https://.*\\.testkube\\..*"
 
 image:
-  repository: kubeshop/testkube-ai
+  repository: kubeshop/testkube-ai-copilot
   pullPolicy: IfNotPresent
   tag: ""
 
