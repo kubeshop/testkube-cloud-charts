@@ -49,6 +49,8 @@ spec:
               value: "{{ .Values.env }}"
             - name: LOG_LEVEL
               value: "{{ .Values.logLevel }}"
+            - name: PORT
+              value: "{{ .Values.service.port }}"
             - name: OIDC_CONFIGURATION_URL
               value: "{{ .Values.oidcConfigurationUrl | default "http://dex.auth:5556/idp/.well-known/openid-configuration" }}"
             - name: OAUTH_ISSUER
