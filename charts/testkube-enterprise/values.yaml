@@ -27,6 +27,8 @@ global:
   websocketApiSubdomain: "websockets"
   # -- Storage API subdomain which get prepended to the domain
   storageApiSubdomain: "storage"
+  # -- AI API subdomain which get prepended to the domain
+  aiApiSubdomain: "ai"
   # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
   certificateProvider: "cert-manager"
   certManager:

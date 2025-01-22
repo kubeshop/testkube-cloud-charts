@@ -60,3 +60,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Get AI Ingress host
+*/}}
+{{- define "testkube-ai.ingress.host" -}}
+{{- if .Values.global.domain }}
+{{- printf "%s.%s" .Values.global.aiApiSubdomain .Values.global.domain }}
+{{- else }}
+{{- .Values.host }}
+{{- end }}
+{{- end }}
