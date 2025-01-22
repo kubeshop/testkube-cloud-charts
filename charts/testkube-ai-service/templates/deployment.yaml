@@ -88,7 +88,7 @@ spec:
             {{- if .Values.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
               readOnly: true
-              name: serving-cert
+              name: serving-cert # TODO(emil): where is this volume being placed?
               subPath: tls.crt
             - mountPath: /tmp/serving-cert/key.pem
               readOnly: true
