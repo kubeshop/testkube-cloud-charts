@@ -51,12 +51,15 @@ spec:
               value: "{{ .Values.logLevel }}"
             - name: PORT
               value: "{{ .Values.service.port }}"
-            - name: OIDC_CONFIGURATION_URL
-              value: "{{ .Values.oidcConfigurationUrl | default "http://dex.auth:5556/idp/.well-known/openid-configuration" }}"
+            {{ if and .Values.oauthIssuer .Values.oauthJwksUri }}
             - name: OAUTH_ISSUER
               value: "{{ .Values.oauthIssuer }}"
             - name: OAUTH_JWKS_URI
               value: "{{ .Values.oauthJwksUri }}"
+            {{ else }}
+            - name: OIDC_CONFIGURATION_URL
+              value: "{{ .Values.oidcConfigurationUrl | default "http://dex.auth:5556/idp/.well-known/openid-configuration" }}"
+            {{ end }}
             - name: AUDIENCE
               value: "{{ .Values.oauthAudience }}"
             - name: OPENAI_API_KEY

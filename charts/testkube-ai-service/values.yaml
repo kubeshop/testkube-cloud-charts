@@ -85,9 +85,8 @@ logLevel: "info"
 oidcConfigurationUrl: "http://dex.auth:5556/idp/.well-known/openid-configuration"
 oauthIssuer: ""
 oauthJwksUri: ""
-oauthAudience: "testkube-cloud"
-origins: "*"
-originsRegex: "https://.*\\.testkube\\..*"
+# -- OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration.
+oauthAudience: "" # TODO(emil): put as "testkube-enterprise" or reference to static client id value in the enterprise chart
 # Configuration for LangChain tracing
 langchain:
   # -- Enable LangChain tracing
