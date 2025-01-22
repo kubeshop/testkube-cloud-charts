@@ -14,6 +14,9 @@ global:
   ingress:
     # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
     enabled: true
+  dex:
+    # -- Global Dex issuer url
+    issuer: ""
   # -- Common labels which will be added to all resources
   labels: {}
   # -- Global security Context for all containers
@@ -82,8 +85,8 @@ host: ""
 env: "production"
 # -- Log level
 logLevel: "info"
-# -- Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider
-oidcConfigurationUrl: "http://dex.auth:5556/idp/.well-known/openid-configuration"
+# -- Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
+oidcDiscoveryUri: ""
 # -- Specify issuer to skip OIDC Discovery
 oauthIssuer: ""
 # -- Specify the URL to fetch the JWK set document and skip OIDC Discovery
