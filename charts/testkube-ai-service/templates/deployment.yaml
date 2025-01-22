@@ -18,24 +18,32 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "testkube-ai.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- include "testkube-ai.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with (default .Values.imagePullSecrets .Values.global.imagePullSecrets) }}
       imagePullSecrets:
+        {{- range . }}
+        {{- if typeIsLike "map[string]interface {}" . }}
+      - name: {{ .name | quote }}
+        {{- else }}
+      - name: {{ . | quote  }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+      {{- with .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName | quote }}
+      {{- end }}
       serviceAccountName: {{ include "testkube-ai.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      securityContext: {{ include "testkube-ai.podSecurityContext" . | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext: {{ include "testkube-ai.containerSecurityContext" . | nindent 12 }}
+          image: {{ include "testkube-ai.image" . }}
+          imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           env:
             - name: ENV
               value: "{{ .Values.env | default "production" }}"
@@ -74,33 +82,42 @@ spec:
             - name: LANGCHAIN_PROJECT
               value: "{{ .Values.langchain.project }}"
           ports:
-            - name: http
+            - name: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
+            httpGet:
+              path: /
+              scheme: {{ if .Values.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
+              port: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            httpGet:
+              path: /
+              scheme: {{ if .Values.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
+              port: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+            - mountPath: /tmp
+              readOnly: false
+              name: tmp
             {{- if .Values.tls.serveHTTPS }}
             - mountPath: /tmp/serving-cert/crt.pem
               readOnly: true
-              name: serving-cert # TODO(emil): where is this volume being placed?
+              name: serving-cert
               subPath: tls.crt
             - mountPath: /tmp/serving-cert/key.pem
               readOnly: true
               name: serving-cert
               subPath: tls.key
             {{- end }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            {{- if .Values.global.customCaSecretRef }}
+            {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
+            - mountPath: {{ $certsDir }}/testkube-custom-ca.pem
+              name: {{ .Values.global.customCaSecretRef }}
+              readOnly: true
+              subPath: {{ .Values.global.customCaSecretKey }}
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -113,3 +130,17 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        {{- if .Values.tls.serveHTTPS }}
+        - name: serving-cert
+          secret:
+            secretName: {{ .Values.tls.tlsSecret }}
+        {{- end }}
+        {{- if .Values.global.customCaSecretRef }}
+        - name: {{ .Values.global.customCaSecretRef }}
+          secret:
+            secretName: {{ .Values.global.customCaSecretRef }}
+            defaultMode: 420
+        {{- end }}

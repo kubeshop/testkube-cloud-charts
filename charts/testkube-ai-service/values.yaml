@@ -3,54 +3,38 @@
 # Declare variables to be passed into your templates.
 
 global:
-  # TODO(emil): add the custom CA mounting
   # -- Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey.
   customCaSecretRef: ""
   # -- Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef.
   customCaSecretKey: "ca.crt"
-  # TODO(emil): add image pull secrets
   # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
   imagePullSecrets: []
-  # TODO(emil): add image registry
   # -- Global image registry to be prepended for to all images (usually defined in parent chart)
   imageRegistry: ""
+  ingress:
+    # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
+    enabled: true
   # TODO(emil): add the common labels
   # -- Common labels which will be added to all resources
   labels: {}
-  # TODO(emil): add the container security contexts
   # -- Global security Context for all containers
   containerSecurityContext: {}
-  # TODO(emil): add the pod security contexts
   # -- Global security Context for all pods
   podSecurityContext: {}
 replicaCount: 1
-env: "production"
-logLevel: "info"
-oidcConfigurationUrl: "http://dex.auth:5556/idp/.well-known/openid-configuration"
-oauthIssuer: ""
-oauthJwksUri: ""
-oauthAudience: "testkube-cloud"
-origins: "*"
-originsRegex: "https://.*\\.testkube\\..*"
+# -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
+topologySpreadConstraints: []
+# -- Priority class name defines the priority of this pod relative to others in the cluster.
+priorityClassName: ""
 image:
+  # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+  registry: ""
   repository: kubeshop/testkube-ai-copilot
   pullPolicy: IfNotPresent
   tag: ""
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "api"
-# Configuration for LangChain tracing
-langchain:
-  # -- Enable LangChain tracing
-  tracing: true
-  # -- Endpoint for LangChain API
-  endpoint: "https://api.smith.langchain.com/"
-  # -- LangChain API Key - can be provided directly or referenced from a secret
-  apiKey: ""
-  # -- Reference to the secret containing the LangChain API Key (`LANGCHAIN_API_KEY`)
-  secretRef: "testkube-ai"
-  # -- Project identifier for LangChain
-  project: "testkube-dev"
+fullnameOverride: ""
 serviceAccount:
   create: true
   automount: true
@@ -84,25 +68,34 @@ ingress:
   className: "nginx"
   annotations: {}
 resources: {}
-livenessProbe:
-  httpGet:
-    path: /
-    # TODO(emil): does this work with tls at the pod?
-    port: http
-readinessProbe:
-  httpGet:
-    path: /
-    # TODO(emil): does this work with tls at the pod?
-    port: http
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-volumes: []
-volumeMounts: []
 nodeSelector: {}
 tolerations: []
 affinity: {}
 # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
 host: ""
+
+env: "production"
+logLevel: "info"
+oidcConfigurationUrl: "http://dex.auth:5556/idp/.well-known/openid-configuration"
+oauthIssuer: ""
+oauthJwksUri: ""
+oauthAudience: "testkube-cloud"
+origins: "*"
+originsRegex: "https://.*\\.testkube\\..*"
+# Configuration for LangChain tracing
+langchain:
+  # -- Enable LangChain tracing
+  tracing: true
+  # -- Endpoint for LangChain API
+  endpoint: "https://api.smith.langchain.com/"
+  # -- LangChain API Key - can be provided directly or referenced from a secret
+  apiKey: ""
+  # -- Reference to the secret containing the LangChain API Key (`LANGCHAIN_API_KEY`)
+  secretRef: "testkube-ai"
+  # -- Project identifier for LangChain
+  project: "testkube-dev"
