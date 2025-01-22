@@ -83,10 +83,12 @@ resources: {}
 livenessProbe:
   httpGet:
     path: /
+    # TODO(emil): does this work with tls at the pod?
     port: http
 readinessProbe:
   httpGet:
     path: /
+    # TODO(emil): does this work with tls at the pod?
     port: http
 autoscaling:
   enabled: false
