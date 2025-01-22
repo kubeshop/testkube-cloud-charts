@@ -1,6 +1,5 @@
-{{- if .Values.ingress.enabled -}}
+{{- if and .Values.global.ingress.enabled .Values.ingress.enabled -}}
 {{- $fullName := include "testkube-ai.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
@@ -22,9 +21,16 @@ metadata:
     {{- if eq .Values.ingress.className "nginx"}}
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: {{ if .Values.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
     nginx.ingress.kubernetes.io/proxy-body-size: 10m
     nginx.ingress.kubernetes.io/client-header-timeout: "10800"
     nginx.ingress.kubernetes.io/client-body-timeout: "10800"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "10800"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "10800"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "10800"
+    {{- if and (not .Values.tls.serveHTTPS) (eq .Values.global.certificateProvider "cert-manager") }}
+    cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
+    {{- end }}
     {{- end }}
     {{- with .Values.ingress.annotations }}
     {{- toYaml . }}
@@ -33,32 +39,26 @@ spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
-  {{- if .Values.tls.host }}
   tls:
-    - secretName: {{ .Values.tls.secret }}
-      hosts:
-      - {{ .Values.tls.host }}
-  {{- end }}
+    - hosts:
+        - {{ include "testkube-ai.ingress.host" . | quote }}
+      secretName: {{ .Values.tls.tlsSecret }}
   rules:
-    {{- if  .Values.tls.host }}
-    - host: {{ .Values.tls.host | quote }}
+    - host: {{ include "testkube-ai.ingress.host" . | quote }}
       http:
         paths:
           - path: "/"
             {{- if (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
-            pathType: ImplementationSpecific
+            pathType: Prefix
             {{- end }}
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ $svcPort }}
+                  name: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
               {{- else }}
               serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
+              servicePort: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
               {{- end }}
-    {{- else }}
 {{- end }}
-{{- end }}
-

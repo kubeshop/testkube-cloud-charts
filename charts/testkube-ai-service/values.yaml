@@ -85,8 +85,6 @@ tls:
     # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
     issuerGroup: cert-manager.io
 ingress:
-  # TODO(emil): remove these hardcodings
-  dnsName: ai.testkube.dev
   enabled: true
   className: "nginx"
   annotations: {}
