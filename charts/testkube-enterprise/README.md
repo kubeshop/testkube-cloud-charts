@@ -55,6 +55,7 @@ A Helm chart for Testkube Enterprise
 | dex.resources | object | `{"limits":{"cpu":"250m","memory":"392Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Dex Service |
 | dex.securityContext | object | `{}` | Security Context for Dex container |
 | dex.storage | object | `{}` | Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage) |
+| global.aiApiSubdomain | string | `"ai"` | AI API subdomain which get prepended to the domain |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers. |
@@ -190,58 +191,54 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.autoscaling.maxReplicas | int | `100` |  |
 | testkube-ai-service.autoscaling.minReplicas | int | `1` |  |
 | testkube-ai-service.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| testkube-ai-service.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | testkube-ai-service.enabled | bool | `false` | Toggle whether to install the Testkube AI service |
-| testkube-ai-service.env | string | `"production"` |  |
-| testkube-ai-service.fullnameOverride | string | `"api"` |  |
+| testkube-ai-service.env | string | `"production"` | Environment of deployment |
+| testkube-ai-service.fullnameOverride | string | `""` |  |
+| testkube-ai-service.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
 | testkube-ai-service.image.pullPolicy | string | `"IfNotPresent"` |  |
-| testkube-ai-service.image.repository | string | `"kubeshop/testkube-ai"` |  |
+| testkube-ai-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
+| testkube-ai-service.image.repository | string | `"kubeshop/testkube-ai-copilot"` |  |
 | testkube-ai-service.image.tag | string | `""` |  |
 | testkube-ai-service.imagePullSecrets | list | `[]` |  |
 | testkube-ai-service.ingress.annotations | object | `{}` |  |
 | testkube-ai-service.ingress.className | string | `"nginx"` |  |
-| testkube-ai-service.ingress.dnsName | string | `"ai.testkube.dev"` |  |
 | testkube-ai-service.ingress.enabled | bool | `true` |  |
 | testkube-ai-service.langchain.apiKey | string | `""` | LangChain API Key - can be provided directly or referenced from a secret |
 | testkube-ai-service.langchain.endpoint | string | `"https://api.smith.langchain.com/"` | Endpoint for LangChain API |
-| testkube-ai-service.langchain.project | string | `"testkube-dev"` | Project identifier for LangChain |
-| testkube-ai-service.langchain.secretRef | string | `"testkube-ai"` | Reference to the secret containing the LangChain API Key (`LANGCHAIN_API_KEY`) |
+| testkube-ai-service.langchain.project | string | `""` | Project identifier for LangChain |
+| testkube-ai-service.langchain.secretRef | string | `""` | Reference to the secret containing the LangChain API Key. Place value into `LANGCHAIN_API_KEY` key. |
 | testkube-ai-service.langchain.tracing | bool | `true` | Enable LangChain tracing |
-| testkube-ai-service.livenessProbe.httpGet.path | string | `"/"` |  |
-| testkube-ai-service.livenessProbe.httpGet.port | string | `"http"` |  |
-| testkube-ai-service.logLevel | string | `"info"` |  |
+| testkube-ai-service.logLevel | string | `"info"` | Log level |
 | testkube-ai-service.nameOverride | string | `""` |  |
 | testkube-ai-service.nodeSelector | object | `{}` |  |
-| testkube-ai-service.oauthAudience | string | `"testkube-cloud"` |  |
-| testkube-ai-service.oauthIssuer | string | `""` |  |
-| testkube-ai-service.oauthJwksUri | string | `""` |  |
-| testkube-ai-service.oidcConfigurationUrl | string | `"http://dex.auth:5556/idp/.well-known/openid-configuration"` |  |
-| testkube-ai-service.origins | string | `"*"` |  |
-| testkube-ai-service.originsRegex | string | `"https://.*\\.testkube\\..*"` |  |
+| testkube-ai-service.oauthAudience | string | `"testkube-enterprise"` | OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration. |
+| testkube-ai-service.oauthIssuer | string | `""` | Specify issuer to skip OIDC Discovery |
+| testkube-ai-service.oauthJwksUri | string | `""` | Specify the URL to fetch the JWK set document and skip OIDC Discovery |
+| testkube-ai-service.oidcDiscoveryUri | string | `""` | Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`. |
+| testkube-ai-service.openAi.apiKey | string | `""` | OpenAI API Key - can be provided directly or referenced from a secret |
+| testkube-ai-service.openAi.secretRef | string | `""` | Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key. |
 | testkube-ai-service.podAnnotations | object | `{}` |  |
 | testkube-ai-service.podLabels | object | `{}` |  |
 | testkube-ai-service.podSecurityContext | object | `{}` |  |
-| testkube-ai-service.readinessProbe.httpGet.path | string | `"/"` |  |
-| testkube-ai-service.readinessProbe.httpGet.port | string | `"http"` |  |
+| testkube-ai-service.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-ai-service.replicaCount | int | `1` |  |
 | testkube-ai-service.resources | object | `{}` |  |
 | testkube-ai-service.securityContext | object | `{}` |  |
-| testkube-ai-service.service.port | int | `9090` |  |
-| testkube-ai-service.service.type | string | `"ClusterIP"` |  |
+| testkube-ai-service.service.annotations | object | `{}` | Additional annotations to add to the Service resource |
+| testkube-ai-service.service.labels | object | `{}` | Additional labels to add to the Service resource |
+| testkube-ai-service.service.port | int | `9090` | AI API port |
+| testkube-ai-service.service.type | string | `"ClusterIP"` | Service type |
 | testkube-ai-service.serviceAccount.annotations | object | `{}` |  |
 | testkube-ai-service.serviceAccount.automount | bool | `true` |  |
 | testkube-ai-service.serviceAccount.create | bool | `true` |  |
 | testkube-ai-service.serviceAccount.name | string | `""` |  |
-| testkube-ai-service.tls.certManager.issuerGroup | string | `"cert-manager.io"` |  |
-| testkube-ai-service.tls.certManager.issuerKind | string | `"ClusterIssuer"` |  |
-| testkube-ai-service.tls.certManager.issuerRef | string | `"letsencrypt-edge"` |  |
-| testkube-ai-service.tls.certificateProvider | string | `"cert-manager"` |  |
-| testkube-ai-service.tls.host | string | `"ai.testkube.dev"` |  |
-| testkube-ai-service.tls.path | string | `"/"` |  |
-| testkube-ai-service.tls.secret | string | `"testkube-ai-tls"` |  |
-| testkube-ai-service.tls.serveHTTPS | bool | `true` |  |
+| testkube-ai-service.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
+| testkube-ai-service.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
+| testkube-ai-service.tls.serveHTTPS | bool | `true` | Toggle should the Application terminate TLS instead of the Ingress |
+| testkube-ai-service.tls.tlsSecret | string | `"testkube-ai-tls"` | TLS secret name which contains the certificate files |
 | testkube-ai-service.tolerations | list | `[]` |  |
-| testkube-ai-service.volumeMounts | list | `[]` |  |
-| testkube-ai-service.volumes | list | `[]` |  |
+| testkube-ai-service.topologySpreadConstraints | list | `[]` | Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster. |
 | testkube-cloud-api.ai.secretRef | string | `""` |  |
 | testkube-cloud-api.api.agent.healthcheck.lock | string | `"kv"` | Agent healthcheck distributed mode (one of mongo|kv) - used for pods sync to run healthchecks on single pod at once |
 | testkube-cloud-api.api.agent.hide | bool | `false` |  |

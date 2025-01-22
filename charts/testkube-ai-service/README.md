@@ -25,57 +25,62 @@ A Helm chart for Testkube AI service
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env | string | `"production"` |  |
-| fullnameOverride | string | `"api"` |  |
+| autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| env | string | `"production"` | Environment of deployment |
+| fullnameOverride | string | `""` |  |
+| global.containerSecurityContext | object | `{}` | Global security Context for all containers |
+| global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
+| global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
+| global.dex.issuer | string | `""` | Global Dex issuer url |
+| global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
+| global.imageRegistry | string | `""` | Global image registry to be prepended for to all images (usually defined in parent chart) |
+| global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
+| global.labels | object | `{}` | Common labels which will be added to all resources |
+| global.podSecurityContext | object | `{}` | Global security Context for all pods |
+| host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"kubeshop/testkube-ai"` |  |
+| image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
+| image.repository | string | `"kubeshop/testkube-ai-copilot"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `"nginx"` |  |
-| ingress.dnsName | string | `"ai.testkube.dev"` |  |
 | ingress.enabled | bool | `true` |  |
 | langchain.apiKey | string | `""` | LangChain API Key - can be provided directly or referenced from a secret |
 | langchain.endpoint | string | `"https://api.smith.langchain.com/"` | Endpoint for LangChain API |
-| langchain.project | string | `"testkube-dev"` | Project identifier for LangChain |
-| langchain.secretRef | string | `"testkube-ai"` | Reference to the secret containing the LangChain API Key (`LANGCHAIN_API_KEY`) |
+| langchain.project | string | `""` | Project identifier for LangChain |
+| langchain.secretRef | string | `""` | Reference to the secret containing the LangChain API Key. Place value into `LANGCHAIN_API_KEY` key. |
 | langchain.tracing | bool | `true` | Enable LangChain tracing |
-| livenessProbe.httpGet.path | string | `"/"` |  |
-| livenessProbe.httpGet.port | string | `"http"` |  |
-| logLevel | string | `"info"` |  |
+| logLevel | string | `"info"` | Log level |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
-| oauthAudience | string | `"testkube-cloud"` |  |
-| oauthIssuer | string | `""` |  |
-| oauthJwksUri | string | `""` |  |
-| oidcConfigurationUrl | string | `"http://dex.auth:5556/idp/.well-known/openid-configuration"` |  |
-| origins | string | `"*"` |  |
-| originsRegex | string | `"https://.*\\.testkube\\..*"` |  |
+| oauthAudience | string | `""` | OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration. |
+| oauthIssuer | string | `""` | Specify issuer to skip OIDC Discovery |
+| oauthJwksUri | string | `""` | Specify the URL to fetch the JWK set document and skip OIDC Discovery |
+| oidcDiscoveryUri | string | `""` | Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`. |
+| openAi.apiKey | string | `""` | OpenAI API Key - can be provided directly or referenced from a secret |
+| openAi.secretRef | string | `""` | Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key. |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| readinessProbe.httpGet.path | string | `"/"` |  |
-| readinessProbe.httpGet.port | string | `"http"` |  |
+| priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `9090` |  |
-| service.type | string | `"ClusterIP"` |  |
+| service.annotations | object | `{}` | Additional annotations to add to the Service resource |
+| service.labels | object | `{}` | Additional labels to add to the Service resource |
+| service.port | int | `9090` | AI API port |
+| service.type | string | `"ClusterIP"` | Service type |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| tls.certManager.issuerGroup | string | `"cert-manager.io"` |  |
-| tls.certManager.issuerKind | string | `"ClusterIssuer"` |  |
-| tls.certManager.issuerRef | string | `"letsencrypt-edge"` |  |
-| tls.certificateProvider | string | `"cert-manager"` |  |
-| tls.host | string | `"ai.testkube.dev"` |  |
-| tls.path | string | `"/"` |  |
-| tls.secret | string | `"testkube-ai-tls"` |  |
-| tls.serveHTTPS | bool | `true` |  |
+| tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
+| tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
+| tls.serveHTTPS | bool | `true` | Toggle should the Application terminate TLS instead of the Ingress |
+| tls.tlsSecret | string | `"testkube-ai-tls"` | TLS secret name which contains the certificate files |
 | tolerations | list | `[]` |  |
-| volumeMounts | list | `[]` |  |
-| volumes | list | `[]` |  |
+| topologySpreadConstraints | list | `[]` | Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster. |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
