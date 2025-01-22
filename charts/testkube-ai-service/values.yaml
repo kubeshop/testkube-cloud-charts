@@ -61,19 +61,14 @@ podLabels: {}
 podSecurityContext: {}
 securityContext: {}
 service:
+  # -- Service type
   type: ClusterIP
+  # -- Additional annotations to add to the Service resource
+  annotations: {}
+  # -- Additional labels to add to the Service resource
+  labels: {}
+  # -- AI API port
   port: 9090
-  serveHTTPS: true
-  # TODO(emil): still needed?
-  secret: testkube-ai-tls
-  # TODO(emil): remove these hardcodings
-  host: ai.testkube.dev
-  path: "/"
-  certificateProvider: "cert-manager"
-  certManager:
-    issuerRef: "letsencrypt-edge"
-    issuerKind: ClusterIssuer
-    issuerGroup: cert-manager.io
 tls:
   # -- Toggle should the Application terminate TLS instead of the Ingress
   serveHTTPS: true

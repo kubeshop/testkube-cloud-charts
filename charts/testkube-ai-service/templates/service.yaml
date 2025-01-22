@@ -4,15 +4,19 @@ metadata:
   name: {{ include "testkube-ai.fullname" . }}
   labels:
     {{- include "testkube-ai.labels" . | nindent 4 }}
+    {{- with .Values.service.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
       protocol: TCP
-      name: http
+      name: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
   selector:
     {{- include "testkube-ai.selectorLabels" . | nindent 4 }}
-
---- 
-
