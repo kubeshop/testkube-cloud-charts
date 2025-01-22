@@ -101,7 +101,13 @@ langchain:
   endpoint: "https://api.smith.langchain.com/"
   # -- LangChain API Key - can be provided directly or referenced from a secret
   apiKey: ""
-  # -- Reference to the secret containing the LangChain API Key (`LANGCHAIN_API_KEY`)
-  secretRef: "testkube-ai"
+  # -- Reference to the secret containing the LangChain API Key. Place value into `LANGCHAIN_API_KEY` key.
+  secretRef: ""
   # -- Project identifier for LangChain
-  project: "testkube-dev"
+  project: ""
+# Configuration for OpenAI API
+openAi:
+  # -- OpenAI API Key - can be provided directly or referenced from a secret
+  apiKey: ""
+  # -- Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key.
+  secretRef: ""
