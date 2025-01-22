@@ -2,27 +2,43 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  # TODO(emil): add the custom CA mounting
+  # -- Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey.
+  customCaSecretRef: ""
+  # -- Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef.
+  customCaSecretKey: "ca.crt"
+  # TODO(emil): add image pull secrets
+  # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
+  imagePullSecrets: []
+  # TODO(emil): add image registry
+  # -- Global image registry to be prepended for to all images (usually defined in parent chart)
+  imageRegistry: ""
+  # TODO(emil): add the common labels
+  # -- Common labels which will be added to all resources
+  labels: {}
+  # TODO(emil): add the container security contexts
+  # -- Global security Context for all containers
+  containerSecurityContext: {}
+  # TODO(emil): add the pod security contexts
+  # -- Global security Context for all pods
+  podSecurityContext: {}
 replicaCount: 1
-
 env: "production"
 logLevel: "info"
-
 oidcConfigurationUrl: "http://dex.auth:5556/idp/.well-known/openid-configuration"
 oauthIssuer: ""
 oauthJwksUri: ""
 oauthAudience: "testkube-cloud"
 origins: "*"
 originsRegex: "https://.*\\.testkube\\..*"
-
 image:
   repository: kubeshop/testkube-ai-copilot
   pullPolicy: IfNotPresent
   tag: ""
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: "api"
-
 # Configuration for LangChain tracing
 langchain:
   # -- Enable LangChain tracing
@@ -35,24 +51,18 @@ langchain:
   secretRef: "testkube-ai"
   # -- Project identifier for LangChain
   project: "testkube-dev"
-
 serviceAccount:
   create: true
   automount: true
   annotations: {}
   name: ""
-
 podAnnotations: {}
 podLabels: {}
-
 podSecurityContext: {}
 securityContext: {}
-
 service:
   type: ClusterIP
   port: 9090
-
-tls:
   serveHTTPS: true
   secret: testkube-ai-tls
   host: ai.testkube.dev
@@ -62,15 +72,12 @@ tls:
     issuerRef: "letsencrypt-edge"
     issuerKind: ClusterIssuer
     issuerGroup: cert-manager.io
-
 ingress:
   dnsName: ai.testkube.dev
   enabled: true
   className: "nginx"
   annotations: {}
-
 resources: {}
-
 livenessProbe:
   httpGet:
     path: /
@@ -79,13 +86,11 @@ readinessProbe:
   httpGet:
     path: /
     port: http
-
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-
 volumes: []
 volumeMounts: []
 nodeSelector: {}
