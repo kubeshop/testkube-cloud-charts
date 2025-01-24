@@ -8,7 +8,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
 spec:
-  secretName: {{ .Values.tls.secret }}
+  secretName: {{ .Values.tls.tlsSecret }}
   dnsNames:
     - {{ include "testkube-ai.ingress.host" . | quote }}
   issuerRef:
