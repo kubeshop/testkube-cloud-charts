@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.140.0](https://img.shields.io/badge/Version-1.140.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.7](https://img.shields.io/badge/AppVersion-1.11.7-informational?style=flat-square)
+![Version: 1.140.1](https://img.shields.io/badge/Version-1.140.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.8](https://img.shields.io/badge/AppVersion-1.11.8-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -185,13 +185,13 @@ A Helm chart for Testkube Cloud API
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.11.7"` |  |
+| image.tag | string | `"1.11.8"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | migrationImage.pullPolicy | string | `"IfNotPresent"` |  |
 | migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
-| migrationImage.tag | string | `"1.11.7"` |  |
+| migrationImage.tag | string | `"1.11.8"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | payments.apiKey | string | `""` | Payments API key (currently only Stripe is supported) |
