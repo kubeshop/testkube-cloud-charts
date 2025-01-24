@@ -479,6 +479,8 @@ prometheus:
   port: metrics
   # -- Metrics path which will be scraped
   path: /metrics
+  # -- SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
+  #sampleLimit: 1000
 nodeSelector: {}
 tolerations: []
 affinity: {}
