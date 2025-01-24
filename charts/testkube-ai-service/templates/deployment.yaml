@@ -86,6 +86,11 @@ spec:
               value: "{{ .Values.langchain.endpoint }}"
             - name: LANGCHAIN_PROJECT
               value: "{{ .Values.langchain.project }}"
+            {{- if or .Values.global.customCaSecretRef .Values.customCaDirPath }}
+            {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
+            - name: SSL_CERT_DIR
+              value: "{{ $certsDir }}"
+            {{- end }}
           ports:
             - name: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ .Values.service.port }}
