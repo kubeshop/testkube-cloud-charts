@@ -63,12 +63,12 @@ spec:
             - name: AUDIENCE
               value: "{{ .Values.oauthAudience }}"
             - name: OPENAI_API_KEY
-              {{- if .Values.openai.apiKey }}
-              value: "{{ .Values.openai.apiKey }}"
+              {{- with .Values.openAi.apiKey }}
+              value: "{{ . }}"
               {{- else }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.openai.secretRef }}
+                  name: {{ .Values.openAi.secretRef }}
                   key: OPENAI_API_KEY
               {{- end }}
             - name: LANGCHAIN_API_KEY
