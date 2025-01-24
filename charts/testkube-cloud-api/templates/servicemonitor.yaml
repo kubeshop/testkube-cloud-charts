@@ -10,6 +10,9 @@ metadata:
     {{- toYaml . | nindent 4 -}}
     {{- end }}
 spec:
+  {{- if .Values.prometheus.sampleLimit }}
+  sampleLimit: {{ .Values.prometheus.sampleLimit }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "testkube-cloud-api.selectorLabels" . | nindent 6 }}
