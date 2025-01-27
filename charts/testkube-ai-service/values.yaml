@@ -81,6 +81,8 @@ tolerations: []
 affinity: {}
 # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
 host: ""
+# -- Endpoint to Testkube's control plane api (e.g. https://api.testkube.io)
+controlPlaneEndpoint: ""
 # -- Environment of deployment
 env: "production"
 # -- Log level

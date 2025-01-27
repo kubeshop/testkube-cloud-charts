@@ -45,6 +45,8 @@ spec:
           image: {{ include "testkube-ai.image" . }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           env:
+            - name: CONTROL_PLANE_ENDPOINT
+              value: "{{ .Values.controlPlaneEndpoint }}"
             - name: NODE_ENV
               value: "{{ .Values.env }}"
             - name: LOG_LEVEL
