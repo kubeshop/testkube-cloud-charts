@@ -89,7 +89,7 @@ spec:
             - name: LANGCHAIN_PROJECT
               value: "{{ .Values.langchain.project }}"
             {{- if or .Values.global.customCaSecretRef .Values.customCaDirPath }}
-            {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
+            {{- $certsDir := .Values.customCaDirPath | default "/tmp/serving-cert" }}
             - name: SSL_CERT_DIR
               value: "{{ $certsDir }}"
             {{- end }}
