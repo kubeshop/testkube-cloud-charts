@@ -65,6 +65,10 @@ tls:
     issuerKind: ClusterIssuer
     # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
     issuerGroup: cert-manager.io
+  # -- certificate path
+  certPath: /tmp/serving-cert/crt.pem
+  # -- certificate key path
+  keyPath: /tmp/serving-cert/key.pem
 ingress:
   enabled: true
   className: "nginx"
