@@ -45,6 +45,8 @@ spec:
           image: {{ include "testkube-ai.image" . }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           env:
+            - name: CONTROL_PLANE_ENDPOINT
+              value: "{{ .Values.controlPlaneEndpoint }}"
             - name: NODE_ENV
               value: "{{ .Values.env }}"
             - name: LOG_LEVEL
@@ -86,6 +88,12 @@ spec:
               value: "{{ .Values.langchain.endpoint }}"
             - name: LANGCHAIN_PROJECT
               value: "{{ .Values.langchain.project }}"
+            - name: USE_TLS
+              value: "{{ .Values.api.tls.serveHTTPS }}"
+            - name: TLS_CERT
+              value: "{{ .Values.api.tls.certPath }}"
+            - name: TLS_KEY
+              value: "{{ .Values.api.tls.keyPath }}"
             {{- if or .Values.global.customCaSecretRef .Values.customCaDirPath }}
             {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
             - name: SSL_CERT_DIR

@@ -65,6 +65,10 @@ tls:
     issuerKind: ClusterIssuer
     # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
     issuerGroup: cert-manager.io
+  # -- certificate path
+  certPath: /tmp/serving-cert/crt.pem
+  # -- certificate key path
+  keyPath: /tmp/serving-cert/key.pem
 ingress:
   enabled: true
   className: "nginx"
@@ -81,6 +85,8 @@ tolerations: []
 affinity: {}
 # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
 host: ""
+# -- Endpoint to Testkube's control plane api (e.g. https://api.testkube.io)
+controlPlaneEndpoint: ""
 # -- Environment of deployment
 env: "production"
 # -- Log level
