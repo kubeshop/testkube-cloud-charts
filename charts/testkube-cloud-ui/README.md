@@ -32,12 +32,12 @@ A Helm chart for Testkube Cloud UI
 | externalSecrets.keys | object | `{}` |  |
 | externalSecrets.refreshInterval | string | `"5m"` |  |
 | fullnameOverride | string | `""` |  |
-| global.ai | object | `{"enabled":false,"kind":"openai","model":"gpt-4o-mini","secretRef":"testkube-ai","uri":"https://ai.testkube.dev"}` | Testkube AI service settings (ALPHA - for Kubecon purpose only for now) |
+| global.ai | object | `{"enabled":false,"kind":"openai","model":"gpt-4o-mini","secretRef":"testkube-ai","uri":""}` | Testkube AI service settings (ALPHA - for Kubecon purpose only for now) |
 | global.ai.enabled | bool | `false` | Enable Testkube AI keys for frontend |
-| global.ai.kind | string | `"openai"` | LLM kind (openaai | ollama) |
+| global.ai.kind | string | `"openai"` | LLM kind (openai | ollama) |
 | global.ai.model | string | `"gpt-4o-mini"` | LLM model - LLM need to support it |
-| global.ai.secretRef | string | `"testkube-ai"` | Secret name |
-| global.ai.uri | string | `"https://ai.testkube.dev"` | API URI |
+| global.ai.secretRef | string | `"testkube-ai"` | Secret name TODO(emil) describe what this secret needs to contain |
+| global.ai.uri | string | `""` | Testkube AI API URI |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `""` | TLS provider (possible values: "", "cert-manager") |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers |

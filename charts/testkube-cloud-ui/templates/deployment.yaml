@@ -67,7 +67,7 @@ spec:
             {{- end }}
             {{- if .Values.global.ai.enabled }}
             - name: TK_AI_URI
-              value: {{ .Values.global.ai.uri }}
+              value: {{ if .Values.global.ai.uri }}{{ .Values.global.ai.uri }}{{ else }}https://{{ .Values.global.aiApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: TK_AI_KIND
               value: {{ .Values.global.ai.kind }}
             - name: TK_AI_MODEL

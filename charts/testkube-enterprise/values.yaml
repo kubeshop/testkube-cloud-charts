@@ -116,6 +116,18 @@ global:
   # functionality that applies job changes through force Delete/Create instead Replace.
   # job:
   #   nameSuffixOverride: '{{ dateInZone "2006-01-02-15-04-05" (now) "UTC" }}'
+  # -- Testkube AI service settings (ALPHA - for Kubecon purpose only for now)
+  ai:
+    # -- Enable Testkube AI keys for frontend
+    enabled: false
+    # -- Testkube AI API URI
+    uri: ""
+    # -- LLM kind (openai | ollama)
+    kind: "openai"
+    # -- LLM model - LLM need to support it
+    model: "gpt-4o-mini"
+    # -- Secret name TODO(emil) describe what this secret needs to contain
+    secretRef: testkube-ai
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -280,6 +292,7 @@ testkube-cloud-api:
     annotations: {}
     # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
+  # TODO(emil): what is this for? can it be removed?
   ai:
     secretRef: ""
   audit:

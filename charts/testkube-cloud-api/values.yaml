@@ -159,6 +159,7 @@ analytics:
     apiKey: ""
     # -- HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`)
     secretRef: ""
+# TODO(emil): what is this for? can it be removed?
 ai:
   # -- AI config secret ref
   secretRef: "openai-api-key"

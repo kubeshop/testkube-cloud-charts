@@ -55,6 +55,12 @@ A Helm chart for Testkube Enterprise
 | dex.resources | object | `{"limits":{"cpu":"250m","memory":"392Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}` | Set resources requests and limits for Dex Service |
 | dex.securityContext | object | `{}` | Security Context for Dex container |
 | dex.storage | object | `{}` | Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage) |
+| global.ai | object | `{"enabled":false,"kind":"openai","model":"gpt-4o-mini","secretRef":"testkube-ai","uri":""}` | Testkube AI service settings (ALPHA - for Kubecon purpose only for now) |
+| global.ai.enabled | bool | `false` | Enable Testkube AI keys for frontend |
+| global.ai.kind | string | `"openai"` | LLM kind (openai | ollama) |
+| global.ai.model | string | `"gpt-4o-mini"` | LLM model - LLM need to support it |
+| global.ai.secretRef | string | `"testkube-ai"` | Secret name TODO(emil) describe what this secret needs to contain |
+| global.ai.uri | string | `""` | Testkube AI API URI |
 | global.aiApiSubdomain | string | `"ai"` | AI API subdomain which get prepended to the domain |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
 | global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
