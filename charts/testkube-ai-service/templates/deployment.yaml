@@ -89,11 +89,11 @@ spec:
             - name: LANGCHAIN_PROJECT
               value: "{{ .Values.langchain.project }}"
             - name: USE_TLS
-              value: "{{ .Values.api.tls.serveHTTPS }}"
+              value: "{{ .Values.tls.serveHTTPS }}"
             - name: TLS_CERT
-              value: "{{ .Values.api.tls.certPath }}"
+              value: "{{ .Values.tls.certPath }}"
             - name: TLS_KEY
-              value: "{{ .Values.api.tls.keyPath }}"
+              value: "{{ .Values.tls.keyPath }}"
             {{- if or .Values.global.customCaSecretRef .Values.customCaDirPath }}
             {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
             - name: SSL_CERT_DIR
