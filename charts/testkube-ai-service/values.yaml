@@ -21,9 +21,6 @@ global:
   ingress:
     # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
     enabled: true
-  dex:
-    # -- Global Dex issuer url
-    issuer: ""
   # -- Common labels which will be added to all resources
   labels: {}
   # -- Global security Context for all containers
