@@ -120,11 +120,11 @@ spec:
               readOnly: false
               name: tmp
             {{- if .Values.tls.serveHTTPS }}
-            - mountPath: /tmp/serving-cert/crt.pem
+            - mountPath: "{{ .Values.tls.certPath }}"
               readOnly: true
               name: serving-cert
               subPath: tls.crt
-            - mountPath: /tmp/serving-cert/key.pem
+            - mountPath: "{{ .Values.tls.keyPath }}"
               readOnly: true
               name: serving-cert
               subPath: tls.key
