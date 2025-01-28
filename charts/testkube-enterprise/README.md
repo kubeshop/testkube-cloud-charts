@@ -192,6 +192,7 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.autoscaling.minReplicas | int | `1` |  |
 | testkube-ai-service.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | testkube-ai-service.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| testkube-ai-service.controlPlaneEndpoint | string | `""` | Endpoint to Testkube's control plane REST API (e.g. https://api.testkube.io) |
 | testkube-ai-service.enabled | bool | `false` | Toggle whether to install the Testkube AI service |
 | testkube-ai-service.env | string | `"production"` | Environment of deployment |
 | testkube-ai-service.fullnameOverride | string | `""` |  |
@@ -235,6 +236,8 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.serviceAccount.name | string | `""` |  |
 | testkube-ai-service.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
 | testkube-ai-service.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
+| testkube-ai-service.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | Mount path for the certificate |
+| testkube-ai-service.tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | Mount path for the certificate private key |
 | testkube-ai-service.tls.serveHTTPS | bool | `true` | Toggle should the Application terminate TLS instead of the Ingress |
 | testkube-ai-service.tls.tlsSecret | string | `"testkube-ai-tls"` | TLS secret name which contains the certificate files |
 | testkube-ai-service.tolerations | list | `[]` |  |

@@ -46,7 +46,7 @@ spec:
           imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           env:
             - name: CONTROL_PLANE_ENDPOINT
-              value: "{{ .Values.controlPlaneEndpoint }}"
+              value: {{ if .Values.controlPlaneEndpoint }}{{ .Values.controlPlaneEndpoint }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             - name: NODE_ENV
               value: "{{ .Values.env }}"
             - name: LOG_LEVEL

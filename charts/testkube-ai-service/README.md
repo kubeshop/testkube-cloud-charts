@@ -26,17 +26,21 @@ A Helm chart for Testkube AI service
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| controlPlaneEndpoint | string | `""` | Endpoint to Testkube's control plane REST API (e.g. https://api.testkube.io) |
 | env | string | `"production"` | Environment of deployment |
 | fullnameOverride | string | `""` |  |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
 | global.dex.issuer | string | `""` | Global Dex issuer url |
+| global.dex.issuer | string | `""` | Global Dex issuer url which is configured both in Dex and API |
+| global.domain | string | `""` | Domain under which endpoints are exposed |
 | global.imagePullSecrets | list | `[]` | Global image pull secrets (provided usually by a parent chart like testkube-enterprise) |
 | global.imageRegistry | string | `""` | Global image registry to be prepended for to all images (usually defined in parent chart) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.podSecurityContext | object | `{}` | Global security Context for all pods |
+| global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
@@ -77,6 +81,8 @@ A Helm chart for Testkube AI service
 | serviceAccount.name | string | `""` |  |
 | tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
 | tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
+| tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | Mount path for the certificate |
+| tls.keyPath | string | `"/tmp/serving-cert/key.pem"` | Mount path for the certificate private key |
 | tls.serveHTTPS | bool | `true` | Toggle should the Application terminate TLS instead of the Ingress |
 | tls.tlsSecret | string | `"testkube-ai-tls"` | TLS secret name which contains the certificate files |
 | tolerations | list | `[]` |  |
