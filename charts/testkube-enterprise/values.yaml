@@ -116,18 +116,6 @@ global:
   # functionality that applies job changes through force Delete/Create instead Replace.
   # job:
   #   nameSuffixOverride: '{{ dateInZone "2006-01-02-15-04-05" (now) "UTC" }}'
-  # -- Testkube AI service settings (ALPHA - for Kubecon purpose only for now)
-  ai:
-    # -- Enable Testkube AI keys for frontend
-    enabled: false
-    # -- Testkube AI API URI
-    uri: ""
-    # -- LLM kind (openai | ollama)
-    kind: "openai"
-    # -- LLM model - LLM need to support it
-    model: "gpt-4o-mini"
-    # -- Secret name TODO(emil) describe what this secret needs to contain
-    secretRef: testkube-ai
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -292,9 +280,6 @@ testkube-cloud-api:
     annotations: {}
     # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
-  # TODO(emil): what is this for? can it be removed?
-  ai:
-    secretRef: ""
   audit:
     cleanup:
       # -- Toggle whether to enable audit log cleanup
@@ -458,6 +443,11 @@ testkube-cloud-ui:
   ui:
     # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector
     authStrategy: ""
+  ai:
+    # -- Enable Testkube AI features
+    enabled: false
+    # -- Testkube AI service API URI
+    aiServiceApiUri: ""
   image:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
@@ -542,6 +532,7 @@ testkube-worker-service:
   customCaDirPath: ""
 ## Testkube AI Service chart parameters
 testkube-ai-service:
+  fullnameOverride: testkube-enterprise-ai-service
   # -- Toggle whether to install the Testkube AI service
   enabled: false
   replicaCount: 1
@@ -557,7 +548,6 @@ testkube-ai-service:
     tag: ""
   imagePullSecrets: []
   nameOverride: ""
-  fullnameOverride: ""
   serviceAccount:
     create: true
     automount: true
@@ -606,13 +596,13 @@ testkube-ai-service:
   affinity: {}
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
-  # -- Endpoint to Testkube's control plane REST API (e.g. https://api.testkube.io)
-  controlPlaneEndpoint: ""
+  # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
+  controlPlaneRestApiUri: ""
   # -- Environment of deployment
   env: "production"
   # -- Log level
   logLevel: "info"
-  # -- Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
+  # -- Use OpenID Connect (OIDC) Discovery URI to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
   oidcDiscoveryUri: ""
   # -- Specify issuer to skip OIDC Discovery
   oauthIssuer: ""

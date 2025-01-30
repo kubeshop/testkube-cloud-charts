@@ -22,9 +22,6 @@ A Helm chart for Testkube Cloud API
 |-----|------|---------|-------------|
 | additionalEnv | object | `{}` | Additional env vars to be added to the deployment |
 | affinity | object | `{}` |  |
-| ai.apiKey | string | `""` | or use api key instead two above |
-| ai.secretKey | string | `"key"` |  |
-| ai.secretRef | string | `"openai-api-key"` | AI config secret ref |
 | analytics.hubspot.apiKey | string | `""` | HubSpot write key |
 | analytics.hubspot.enabled | bool | `false` | Toggle whether to enable HubSpot sync |
 | analytics.hubspot.secretRef | string | `""` | HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`) |

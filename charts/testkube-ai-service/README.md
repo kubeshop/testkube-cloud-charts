@@ -26,7 +26,7 @@ A Helm chart for Testkube AI service
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
-| controlPlaneEndpoint | string | `""` | Endpoint to Testkube's control plane REST API (e.g. https://api.testkube.io) |
+| controlPlaneRestApiUri | string | `""` | URI to Testkube's control plane REST API (e.g. https://api.testkube.io) |
 | env | string | `"production"` | Environment of deployment |
 | fullnameOverride | string | `""` |  |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers |
