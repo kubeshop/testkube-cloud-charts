@@ -18,9 +18,13 @@ dependencies:
   - name: testkube-worker-service
     version: 1.55.0
     repository: file://../testkube-worker-service
+  - name: testkube-ai-service
+    version: 1.0.0
+    repository: file://../testkube-ai-service
+    condition: testkube-ai-service.enabled
   - name: testkube
     alias: testkube-agent
-    version: 2.1.132
+    version: 2.1.133
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex

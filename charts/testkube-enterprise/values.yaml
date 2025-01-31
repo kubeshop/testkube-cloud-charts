@@ -27,6 +27,8 @@ global:
   websocketApiSubdomain: "websockets"
   # -- Storage API subdomain which get prepended to the domain
   storageApiSubdomain: "storage"
+  # -- AI API subdomain which get prepended to the domain
+  aiApiSubdomain: "ai"
   # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
   certificateProvider: "cert-manager"
   certManager:
@@ -278,8 +280,6 @@ testkube-cloud-api:
     annotations: {}
     # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
-  ai:
-    secretRef: ""
   audit:
     cleanup:
       # -- Toggle whether to enable audit log cleanup
@@ -443,6 +443,11 @@ testkube-cloud-ui:
   ui:
     # -- Auth strategy to use (possible values: "" (default), "gitlab", "github"), setting to "" enables all auth strategies, if you use a custom Dex connector, set this to the id of the connector
     authStrategy: ""
+  ai:
+    # -- Enable Testkube AI features
+    enabled: false
+    # -- Testkube AI service API URI
+    aiServiceApiUri: ""
   image:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
@@ -525,6 +530,104 @@ testkube-worker-service:
     USE_MINIO: true
   # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
   customCaDirPath: ""
+## Testkube AI Service chart parameters
+testkube-ai-service:
+  fullnameOverride: testkube-enterprise-ai-service
+  # -- Toggle whether to install the Testkube AI service
+  enabled: false
+  replicaCount: 1
+  # -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
+  topologySpreadConstraints: []
+  # -- Priority class name defines the priority of this pod relative to others in the cluster.
+  priorityClassName: ""
+  image:
+    # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+    registry: ""
+    repository: kubeshop/testkube-ai-copilot
+    pullPolicy: IfNotPresent
+    tag: ""
+  imagePullSecrets: []
+  nameOverride: ""
+  serviceAccount:
+    create: true
+    automount: true
+    annotations: {}
+    name: ""
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext: {}
+  securityContext: {}
+  service:
+    # -- Service type
+    type: ClusterIP
+    # -- Additional annotations to add to the Service resource
+    annotations: {}
+    # -- Additional labels to add to the Service resource
+    labels: {}
+    # -- AI API port
+    port: 9090
+  tls:
+    # -- Toggle should the Application terminate TLS instead of the Ingress
+    serveHTTPS: true
+    # -- TLS secret name which contains the certificate files
+    tlsSecret: testkube-ai-tls
+    certManager:
+      # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
+      issuerKind: ClusterIssuer
+      # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
+      issuerGroup: cert-manager.io
+    # -- Mount path for the certificate
+    certPath: /tmp/serving-cert/crt.pem
+    # -- Mount path for the certificate private key
+    keyPath: /tmp/serving-cert/key.pem
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations: {}
+  resources: {}
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
+  host: ""
+  # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
+  controlPlaneRestApiUri: ""
+  # -- Environment of deployment
+  env: "production"
+  # -- Log level
+  logLevel: "info"
+  # -- Use OpenID Connect (OIDC) Discovery URI to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
+  oidcDiscoveryUri: ""
+  # -- Specify issuer to skip OIDC Discovery
+  oauthIssuer: ""
+  # -- Specify the URL to fetch the JWK set document and skip OIDC Discovery
+  oauthJwksUri: ""
+  # -- OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration.
+  oauthAudience: "testkube-enterprise"
+  # Configuration for LangChain tracing
+  langchain:
+    # -- Enable LangChain tracing
+    tracing: true
+    # -- Endpoint for LangChain API
+    endpoint: "https://api.smith.langchain.com/"
+    # -- LangChain API Key - can be provided directly or referenced from a secret
+    apiKey: ""
+    # -- Reference to the secret containing the LangChain API Key. Place value into `LANGCHAIN_API_KEY` key.
+    secretRef: ""
+    # -- Project identifier for LangChain
+    project: ""
+  # Configuration for OpenAI API
+  openAi:
+    # -- OpenAI API Key - can be provided directly or referenced from a secret
+    apiKey: ""
+    # -- Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key.
+    secretRef: ""
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:

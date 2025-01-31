@@ -6,6 +6,7 @@ on:
       [
         trigger-workflow-testkube-cloud-services,
         trigger-workflow-testkube-cloud-ui-main,
+        trigger-workflow-testkube-ai-service,
         trigger-workflow-testkube-agent-main
       ]
 
@@ -43,6 +44,12 @@ jobs:
         run: |
           # update application version
           ./scripts/update.sh -c "testkube-cloud-ui" -a ${{ github.event.client_payload.appVersion }} --verbose
+
+      - name: Update Helm chart with changes for testkube-ai service
+        if: github.event.action != 'trigger-workflow-testkube-agent-main' && github.event.action != 'trigger-workflow-testkube-ai-service'
+        run: |
+          # update application version
+          ./scripts/update.sh -c "testkube-ai-service" -a ${{ github.event.client_payload.appVersion }} --verbose
 
       - name: Update Agent version
         if: github.event.action == 'trigger-workflow-testkube-agent-main'

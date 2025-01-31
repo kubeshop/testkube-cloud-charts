@@ -1,0 +1,123 @@
+# Default values for testkube-ai-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  # -- Domain under which endpoints are exposed
+  domain: ""
+  # -- REST API subdomain which get prepended to the domain
+  restApiSubdomain: "api"
+  dex:
+    # -- Global Dex issuer url which is configured both in Dex and API
+    issuer: ""
+  # -- Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey.
+  customCaSecretRef: ""
+  # -- Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef.
+  customCaSecretKey: "ca.crt"
+  # -- Global image pull secrets (provided usually by a parent chart like testkube-enterprise)
+  imagePullSecrets: []
+  # -- Global image registry to be prepended for to all images (usually defined in parent chart)
+  imageRegistry: ""
+  ingress:
+    # -- Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden)
+    enabled: true
+  # -- Common labels which will be added to all resources
+  labels: {}
+  # -- Global security Context for all containers
+  containerSecurityContext: {}
+  # -- Global security Context for all pods
+  podSecurityContext: {}
+replicaCount: 1
+# -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
+topologySpreadConstraints: []
+# -- Priority class name defines the priority of this pod relative to others in the cluster.
+priorityClassName: ""
+image:
+  # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
+  registry: ""
+  repository: kubeshop/testkube-ai-copilot
+  pullPolicy: IfNotPresent
+  tag: ""
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+securityContext: {}
+service:
+  # -- Service type
+  type: ClusterIP
+  # -- Additional annotations to add to the Service resource
+  annotations: {}
+  # -- Additional labels to add to the Service resource
+  labels: {}
+  # -- AI API port
+  port: 9090
+tls:
+  # -- Toggle should the Application terminate TLS instead of the Ingress
+  serveHTTPS: true
+  # -- TLS secret name which contains the certificate files
+  tlsSecret: testkube-ai-tls
+  certManager:
+    # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
+    issuerKind: ClusterIssuer
+    # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
+    issuerGroup: cert-manager.io
+  # -- Mount path for the certificate
+  certPath: /tmp/serving-cert/crt.pem
+  # -- Mount path for the certificate private key
+  keyPath: /tmp/serving-cert/key.pem
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+resources: {}
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+nodeSelector: {}
+tolerations: []
+affinity: {}
+# -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
+host: ""
+# -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
+controlPlaneRestApiUri: ""
+# -- Environment of deployment
+env: "production"
+# -- Log level
+logLevel: "info"
+# -- Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
+oidcDiscoveryUri: ""
+# -- Specify issuer to skip OIDC Discovery
+oauthIssuer: ""
+# -- Specify the URL to fetch the JWK set document and skip OIDC Discovery
+oauthJwksUri: ""
+# -- OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration.
+oauthAudience: ""
+# Configuration for LangChain tracing
+langchain:
+  # -- Enable LangChain tracing
+  tracing: true
+  # -- Endpoint for LangChain API
+  endpoint: "https://api.smith.langchain.com/"
+  # -- LangChain API Key - can be provided directly or referenced from a secret
+  apiKey: ""
+  # -- Reference to the secret containing the LangChain API Key. Place value into `LANGCHAIN_API_KEY` key.
+  secretRef: ""
+  # -- Project identifier for LangChain
+  project: ""
+# Configuration for OpenAI API
+openAi:
+  # -- OpenAI API Key - can be provided directly or referenced from a secret
+  apiKey: ""
+  # -- Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key.
+  secretRef: ""

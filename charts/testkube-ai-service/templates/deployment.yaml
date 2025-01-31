@@ -1,0 +1,164 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "testkube-ai.fullname" . }}
+  labels:
+    {{- include "testkube-ai.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "testkube-ai.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "testkube-ai.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with (default .Values.imagePullSecrets .Values.global.imagePullSecrets) }}
+      imagePullSecrets:
+        {{- range . }}
+        {{- if typeIsLike "map[string]interface {}" . }}
+      - name: {{ .name | quote }}
+        {{- else }}
+      - name: {{ . | quote  }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+      {{- with .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName | quote }}
+      {{- end }}
+      serviceAccountName: {{ include "testkube-ai.serviceAccountName" . }}
+      securityContext: {{ include "testkube-ai.podSecurityContext" . | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext: {{ include "testkube-ai.containerSecurityContext" . | nindent 12 }}
+          image: {{ include "testkube-ai.image" . }}
+          imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
+          env:
+            - name: CONTROL_PLANE_ENDPOINT
+              value: {{ if .Values.controlPlaneRestApiUri }}{{ .Values.controlPlaneRestApiUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
+            - name: NODE_ENV
+              value: "{{ .Values.env }}"
+            - name: LOG_LEVEL
+              value: "{{ .Values.logLevel }}"
+            - name: PORT
+              value: "{{ .Values.service.port }}"
+            {{ if and .Values.oauthIssuer .Values.oauthJwksUri }}
+            - name: OAUTH_ISSUER
+              value: "{{ .Values.oauthIssuer }}"
+            - name: OAUTH_JWKS_URI
+              value: "{{ .Values.oauthJwksUri }}"
+            {{ else }}
+            - name: OIDC_CONFIGURATION_URL
+              value: {{ if .Values.global.dex.issuer}}{{ .Values.global.dex.issuer }}/.well-known/openid-configuration{{ else if .Values.oidcDiscoveryUri }}{{ .Values.oidcDiscoveryUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp/.well-known/openid-configuration{{ end }}
+            {{ end }}
+            - name: AUDIENCE
+              value: "{{ .Values.oauthAudience }}"
+            - name: OPENAI_API_KEY
+              {{- with .Values.openAi.apiKey }}
+              value: "{{ . }}"
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.openAi.secretRef }}
+                  key: OPENAI_API_KEY
+              {{- end }}
+            - name: LANGCHAIN_API_KEY
+              {{- if .Values.langchain.apiKey }}
+              value: "{{ .Values.langchain.apiKey }}"
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.langchain.secretRef }}
+                  key: LANGCHAIN_API_KEY
+              {{- end }}
+            - name: LANGCHAIN_TRACING_V2
+              value: "{{ .Values.langchain.tracing }}"
+            - name: LANGCHAIN_ENDPOINT
+              value: "{{ .Values.langchain.endpoint }}"
+            - name: LANGCHAIN_PROJECT
+              value: "{{ .Values.langchain.project }}"
+            - name: USE_TLS
+              value: "{{ .Values.tls.serveHTTPS }}"
+            - name: TLS_CERT
+              value: "{{ .Values.tls.certPath }}"
+            - name: TLS_KEY
+              value: "{{ .Values.tls.keyPath }}"
+            {{- if or .Values.global.customCaSecretRef .Values.customCaDirPath }}
+            {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
+            - name: SSL_CERT_DIR
+              value: "{{ $certsDir }}"
+            {{- end }}
+          ports:
+            - name: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              scheme: {{ if .Values.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
+              port: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
+          readinessProbe:
+            httpGet:
+              path: /
+              scheme: {{ if .Values.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
+              port: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /tmp
+              readOnly: false
+              name: tmp
+            {{- if .Values.tls.serveHTTPS }}
+            - mountPath: "{{ .Values.tls.certPath }}"
+              readOnly: true
+              name: serving-cert
+              subPath: tls.crt
+            - mountPath: "{{ .Values.tls.keyPath }}"
+              readOnly: true
+              name: serving-cert
+              subPath: tls.key
+            {{- end }}
+            {{- if .Values.global.customCaSecretRef }}
+            {{- $certsDir := .Values.customCaDirPath | default "/etc/testkube/certs" }}
+            - mountPath: {{ $certsDir }}/testkube-custom-ca.pem
+              name: {{ .Values.global.customCaSecretRef }}
+              readOnly: true
+              subPath: {{ .Values.global.customCaSecretKey }}
+            {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        {{- if .Values.tls.serveHTTPS }}
+        - name: serving-cert
+          secret:
+            secretName: {{ .Values.tls.tlsSecret }}
+        {{- end }}
+        {{- if .Values.global.customCaSecretRef }}
+        - name: {{ .Values.global.customCaSecretRef }}
+          secret:
+            secretName: {{ .Values.global.customCaSecretRef }}
+            defaultMode: 420
+        {{- end }}

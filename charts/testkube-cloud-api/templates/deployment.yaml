@@ -84,16 +84,6 @@ spec:
             - name: ENABLE_GRPC_KEEP_ALIVE
               value: "true"
             {{- end }}
-            {{- if .Values.ai.secretRef }}
-            - name: OPENAI_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  key: {{ .Values.ai.secretKey }}
-                  name: {{ .Values.ai.secretRef }}
-            {{- else if .Values.ai.apiKey }}
-            - name: OPENAI_API_KEY
-              value: "{{ .Values.ai.apiKey }}"
-            {{- end }}
             - name: HEALTHCHECK_DISTRIBUTED_LOCK
               value: "{{ .Values.api.agent.healthcheck.lock }}"
             - name: INVITE_MODE

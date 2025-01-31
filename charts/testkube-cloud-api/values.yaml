@@ -159,12 +159,6 @@ analytics:
     apiKey: ""
     # -- HubSpot secret ref (secret must contain key HUBSPOT_API_KEY) (default is `testkube-cloud-analytics-secret`)
     secretRef: ""
-ai:
-  # -- AI config secret ref
-  secretRef: "openai-api-key"
-  secretKey: "key"
-  # -- or use api key instead two above
-  apiKey: ""
 payments:
   # -- Toggle whether to enable payments service
   enabled: false
