@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.134.0](https://img.shields.io/badge/Version-2.134.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.135.0](https://img.shields.io/badge/Version-2.135.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -182,7 +182,7 @@ A Helm chart for Testkube Enterprise
 | sharedSecretGenerator.enabled | bool | `false` | Toggle whether to enable the Shared Secret Generator Job |
 | sharedSecretGenerator.image.registry | string | `"docker.io"` |  |
 | sharedSecretGenerator.image.repository | string | `"bitnami/kubectl"` |  |
-| sharedSecretGenerator.image.tag | string | `"1.28.2"` |  |
+| sharedSecretGenerator.image.tag | string | `"1.32.1"` |  |
 | sharedSecretGenerator.resources | object | `{}` | Resources for the Shared Secret Generator Job |
 | sharedSecretGenerator.securityContext | object | `{}` | Pod Security Context for the Shared Secret Generator Job |
 | testkube-agent.enabled | bool | `false` | Toggle whether to install & connect Testkube Agent in the same namespace. Keep it disabled to have more control over where your agents run. See https://docs.testkube.io/articles/install/overview for more info. This relies on the `testkube-default-agent-token` shared secret. See https://docs.testkube.io/articles/install/install-with-helm#shared-secrets |
