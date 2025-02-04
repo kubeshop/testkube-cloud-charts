@@ -130,7 +130,7 @@ sharedSecretGenerator:
   image:
     registry: docker.io
     repository: bitnami/kubectl
-    tag: 1.28.2
+    tag: 1.32.1
 ## MinIO chart parameters
 minio:
   # -- Toggle whether to install MinIO
