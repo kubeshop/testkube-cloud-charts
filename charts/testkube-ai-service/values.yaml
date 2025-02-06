@@ -61,7 +61,7 @@ service:
   port: 9090
 tls:
   # -- Toggle should the Application terminate TLS instead of the Ingress
-  serveHTTPS: true
+  serveHTTPS: false
   # -- TLS secret name which contains the certificate files
   tlsSecret: testkube-ai-tls
   certManager:

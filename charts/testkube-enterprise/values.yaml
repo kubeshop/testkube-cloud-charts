@@ -361,6 +361,8 @@ testkube-cloud-api:
         # -- Certificate Issuer kind (only used if `provider` is set to `cert-manager`)
         issuerKind: ClusterIssuer
       tlsSecret: testkube-enterprise-api-tls
+      # -- Toggle should the Application terminate TLS instead of the Ingress
+      serveHTTPS: true
     migrations:
       # -- Toggle whether to run database migrations
       enabled: true
