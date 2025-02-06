@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.142.0](https://img.shields.io/badge/Version-1.142.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.8](https://img.shields.io/badge/AppVersion-1.11.8-informational?style=flat-square)
+![Version: 1.143.0](https://img.shields.io/badge/Version-1.143.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.8](https://img.shields.io/badge/AppVersion-1.11.8-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -20,7 +20,8 @@ A Helm chart for Testkube Cloud API
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| additionalEnv | object | `{}` | Additional env vars to be added to the deployment |
+| additionalEnv | object | `{}` | Additional env vars to be added to the deployment, expects a map of envvar name to value. |
+| additionalEnvVars | list | `[]` | Additional env vars to be added to the deployment, expects an array of EnvVar objects (supports name, value, valueFrom, etc.) |
 | affinity | object | `{}` |  |
 | analytics.hubspot.apiKey | string | `""` | HubSpot write key |
 | analytics.hubspot.enabled | bool | `false` | Toggle whether to enable HubSpot sync |
