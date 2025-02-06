@@ -445,6 +445,9 @@ spec:
               value: "{{ .Values.scim.auth.token }}"
               {{- end }}
             {{- end }}
+            {{- with .Values.additionalEnvVars }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           ports:
             - name: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ if .Values.api.tls.serveHTTPS }}{{ .Values.api.tls.apiPort }}{{ else }}8090{{ end }}
