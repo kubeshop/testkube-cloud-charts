@@ -43,7 +43,7 @@ spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
-  {{- if .Values.tls.serveHTTPS  }}
+  {{- if eq .Values.tls.serveHTTPS false }}
   tls:
     - hosts:
         - {{ include "testkube-ai.ingress.host" . | quote }}
