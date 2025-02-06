@@ -133,9 +133,16 @@ migrationImage:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-# -- Additional env vars to be added to the deployment
+# -- Additional env vars to be added to the deployment, expects a map of envvar name to value.
 additionalEnv: {}
 # FOO: bar
+# -- Additional env vars to be added to the deployment, expects an array of EnvVar objects (supports name, value, valueFrom, etc.)
+additionalEnvVars: []
+# - name: FOO
+#   valueFrom:
+#     secretKeyRef:
+#       name: my-secret
+
 # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
 customCaDirPath: ""
 # -- Specifies the path where the license key should be mounted.
