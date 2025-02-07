@@ -292,7 +292,7 @@ testkube-cloud-api:
     # -- Toggle whether to enable the SCIM server
     enabled: true
     # -- Default organization in which users will be provisioned (must be configured if SCIM server is enabled)
-    defaultOrganization: ""
+    defaultOrganization: "test_organization"
     # -- Port on which the SCIM server will listen
     port: 8091
     auth:
