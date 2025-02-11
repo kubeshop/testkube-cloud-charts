@@ -73,6 +73,7 @@ spec:
                   name: {{ .Values.openAi.secretRef }}
                   key: OPENAI_API_KEY
               {{- end }}
+            {{ if .Values.llmTracing.enabled }}
             - name: LLM_TRACING_API_KEY
               {{- if .Values.llmTracing.apiKey }}
               value: "{{ .Values.llmTracing.apiKey }}"
@@ -82,6 +83,7 @@ spec:
                   name: {{ .Values.llmTracing.secretRef }}
                   key: LLM_TRACING_API_KEY
               {{- end }}
+            {{ end }}
             - name: USE_TLS
               value: "{{ .Values.tls.serveHTTPS }}"
             - name: TLS_CERT

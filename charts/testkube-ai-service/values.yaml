@@ -105,6 +105,8 @@ oauthJwksUri: ""
 oauthAudience: ""
 # -- Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments.
 llmTracing:
+  # -- Toggle whether to enable or disable LLM tracing
+  enabled: false
   # -- Can be provided directly or referenced from a secret.
   apiKey: ""
   # -- Reference to the secret containing the API Key.
