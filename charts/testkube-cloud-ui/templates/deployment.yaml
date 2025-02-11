@@ -53,6 +53,8 @@ spec:
               value: "true"
             - name: FEATURE_AUTH_WITH_CODE
               value: "true"
+            - name: FEATURE_INSIGHTS_DRILLDOWN
+              value: "true"
             - name: REACT_APP_API_SERVER_ENDPOINT
               value: {{ if .Values.ui.apiServerEndpoint}}{{ .Values.ui.apiServerEndpoint }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
             {{- if .Values.ui.wsServerEndpoint }}
