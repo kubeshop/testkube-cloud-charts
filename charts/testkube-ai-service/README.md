@@ -49,11 +49,10 @@ A Helm chart for Testkube AI service
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `true` |  |
-| langchain.apiKey | string | `""` | LangChain API Key - can be provided directly or referenced from a secret |
-| langchain.endpoint | string | `"https://api.smith.langchain.com/"` | Endpoint for LangChain API |
-| langchain.project | string | `""` | Project identifier for LangChain |
-| langchain.secretRef | string | `""` | Reference to the secret containing the LangChain API Key. Place value into `LANGCHAIN_API_KEY` key. |
-| langchain.tracing | bool | `true` | Enable LangChain tracing |
+| llmTracing | object | `{"apiKey":"","enabled":false,"secretRef":""}` | Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments. |
+| llmTracing.apiKey | string | `""` | Can be provided directly or referenced from a secret. |
+| llmTracing.enabled | bool | `false` | Toggle whether to enable or disable LLM tracing |
+| llmTracing.secretRef | string | `""` | Reference to the secret containing the API Key. |
 | logLevel | string | `"info"` | Log level |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |

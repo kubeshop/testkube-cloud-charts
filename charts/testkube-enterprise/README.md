@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.141.0](https://img.shields.io/badge/Version-2.141.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.142.0](https://img.shields.io/badge/Version-2.142.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -205,11 +205,9 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.ingress.annotations | object | `{}` |  |
 | testkube-ai-service.ingress.className | string | `"nginx"` |  |
 | testkube-ai-service.ingress.enabled | bool | `true` |  |
-| testkube-ai-service.langchain.apiKey | string | `""` | LangChain API Key - can be provided directly or referenced from a secret |
-| testkube-ai-service.langchain.endpoint | string | `"https://api.smith.langchain.com/"` | Endpoint for LangChain API |
-| testkube-ai-service.langchain.project | string | `""` | Project identifier for LangChain |
-| testkube-ai-service.langchain.secretRef | string | `""` | Reference to the secret containing the LangChain API Key. Place value into `LANGCHAIN_API_KEY` key. |
-| testkube-ai-service.langchain.tracing | bool | `true` | Enable LangChain tracing |
+| testkube-ai-service.llmTracing | object | `{"apiKey":"","secretRef":""}` | Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments. |
+| testkube-ai-service.llmTracing.apiKey | string | `""` | Can be provided directly or referenced from a secret. |
+| testkube-ai-service.llmTracing.secretRef | string | `""` | Reference to the secret containing the API Key. |
 | testkube-ai-service.logLevel | string | `"info"` | Log level |
 | testkube-ai-service.nameOverride | string | `""` |  |
 | testkube-ai-service.nodeSelector | object | `{}` |  |
