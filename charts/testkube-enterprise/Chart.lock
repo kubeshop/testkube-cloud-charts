@@ -7,13 +7,13 @@ dependencies:
   version: 1.144.0
 - name: testkube-cloud-ui
   repository: file://../testkube-cloud-ui
-  version: 1.99.0
+  version: 1.99.1
 - name: testkube-worker-service
   repository: file://../testkube-worker-service
   version: 1.56.0
 - name: testkube-ai-service
   repository: file://../testkube-ai-service
-  version: 1.0.2
+  version: 1.0.3
 - name: testkube
   repository: https://kubeshop.github.io/helm-charts
   version: 2.1.140
@@ -29,5 +29,5 @@ dependencies:
 - name: minio
   repository: file://./charts/minio
   version: 14.8.3-2
-digest: sha256:ff906a1ec2d8e78da0650da96f674e34323f523d68841e4f4f77c8211424c419
-generated: "2025-02-11T12:25:32.36839426Z"
+digest: sha256:0e6ff0078685466282dfc411e7b9321a4683a38c34d0720645d85057dbc65f98
+generated: "2025-02-11T13:04:19.72622523Z"
