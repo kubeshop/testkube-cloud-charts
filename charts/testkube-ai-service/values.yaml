@@ -103,18 +103,14 @@ oauthIssuer: ""
 oauthJwksUri: ""
 # -- OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration.
 oauthAudience: ""
-# Configuration for LangChain tracing
-langchain:
-  # -- Enable LangChain tracing
-  tracing: true
-  # -- Endpoint for LangChain API
-  endpoint: "https://api.smith.langchain.com/"
-  # -- LangChain API Key - can be provided directly or referenced from a secret
+# -- Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments.
+llmTracing:
+  # -- Toggle whether to enable or disable LLM tracing
+  enabled: false
+  # -- Can be provided directly or referenced from a secret.
   apiKey: ""
-  # -- Reference to the secret containing the LangChain API Key. Place value into `LANGCHAIN_API_KEY` key.
+  # -- Reference to the secret containing the API Key.
   secretRef: ""
-  # -- Project identifier for LangChain
-  project: ""
 # Configuration for OpenAI API
 openAi:
   # -- OpenAI API Key - can be provided directly or referenced from a secret

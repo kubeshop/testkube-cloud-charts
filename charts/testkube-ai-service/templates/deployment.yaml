@@ -73,21 +73,17 @@ spec:
                   name: {{ .Values.openAi.secretRef }}
                   key: OPENAI_API_KEY
               {{- end }}
-            - name: LANGCHAIN_API_KEY
-              {{- if .Values.langchain.apiKey }}
-              value: "{{ .Values.langchain.apiKey }}"
+            {{ if .Values.llmTracing.enabled }}
+            - name: LLM_TRACING_API_KEY
+              {{- if .Values.llmTracing.apiKey }}
+              value: "{{ .Values.llmTracing.apiKey }}"
               {{- else }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.langchain.secretRef }}
-                  key: LANGCHAIN_API_KEY
+                  name: {{ .Values.llmTracing.secretRef }}
+                  key: LLM_TRACING_API_KEY
               {{- end }}
-            - name: LANGCHAIN_TRACING_V2
-              value: "{{ .Values.langchain.tracing }}"
-            - name: LANGCHAIN_ENDPOINT
-              value: "{{ .Values.langchain.endpoint }}"
-            - name: LANGCHAIN_PROJECT
-              value: "{{ .Values.langchain.project }}"
+            {{ end }}
             - name: USE_TLS
               value: "{{ .Values.tls.serveHTTPS }}"
             - name: TLS_CERT
