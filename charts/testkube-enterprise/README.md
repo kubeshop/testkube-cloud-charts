@@ -128,7 +128,7 @@ A Helm chart for Testkube Enterprise
 | minio.fullnameOverride | string | `"testkube-enterprise-minio"` |  |
 | minio.image.registry | string | `"docker.io"` |  |
 | minio.image.repository | string | `"bitnami/minio"` |  |
-| minio.image.tag | string | `"2024.11.7-debian-12-r1"` |  |
+| minio.image.tag | string | `"2025.2.7-debian-12-r1"` |  |
 | minio.metrics.serviceMonitor.enabled | bool | `false` | Toggle whether to create ServiceMonitor resource for scraping metrics using Prometheus Operator |
 | minio.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | minio.podSecurityContext.enabled | bool | `true` | Toggle whether to render the pod security context |
