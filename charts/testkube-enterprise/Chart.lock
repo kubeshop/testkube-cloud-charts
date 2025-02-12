@@ -16,7 +16,7 @@ dependencies:
   version: 1.0.3
 - name: testkube
   repository: https://kubeshop.github.io/helm-charts
-  version: 2.1.141
+  version: 2.1.142
 - name: dex
   repository: file://./charts/dex
   version: 0.19.1-7
