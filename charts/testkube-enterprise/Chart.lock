@@ -31,7 +31,3 @@ dependencies:
   version: 14.8.3-2
 digest: sha256:51600e73db90aca66e2a9e2c81378eb30e52d1ce6b8cc5c3acd8c881ec43aed9
 generated: "2025-02-12T13:19:36.099373+02:00"
-<<<<<<< HEAD
-
-=======
->>>>>>> 8c072138 (update Dex version)
