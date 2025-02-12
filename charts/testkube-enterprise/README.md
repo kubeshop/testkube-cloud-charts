@@ -24,7 +24,11 @@ A Helm chart for Testkube Enterprise
 | file://./charts/minio | minio | 14.8.3-2 |
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
 | file://./charts/nats | nats | 1.2.6-4 |
+<<<<<<< HEAD
 | https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.142 |
+=======
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.141 |
+>>>>>>> 552cc5bb (fix conflicts)
 | oci://registry-1.docker.io/bitnamicharts | common | 2.13.3 |
 
 ## Values
