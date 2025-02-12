@@ -19,7 +19,7 @@ dependencies:
   version: 2.1.142
 - name: dex
   repository: file://./charts/dex
-  version: 0.19.1-7
+  version: 0.19.1-8
 - name: mongodb
   repository: file://./charts/mongodb
   version: 16.2.1-1
