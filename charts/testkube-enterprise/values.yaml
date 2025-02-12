@@ -807,8 +807,8 @@ dex:
   fullnameOverride: testkube-enterprise-dex
   # Uncomment if you want to provide different image settings
   #image:
-  #  registry: ghcr.io
-  #  repository: dexidp/dex
+  #  registry: docker.io
+  #  repository: kubeshop/dex
   #  tag: ""
   #  pullPolicy: IfNotPresent
 

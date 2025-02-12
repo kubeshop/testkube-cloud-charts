@@ -21,10 +21,10 @@ commonLabels: {}
 
 image:
   # -- Name of the image registry to pull the container image from.
-  registry: ghcr.io
+  registry: docker.io
 
   # -- Name of the image repository to pull the container image from.
-  repository: dexidp/dex
+  repository: kubeshop/dex
 
   # -- [Image pull policy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) for updating already existing images on a node.
   pullPolicy: IfNotPresent
