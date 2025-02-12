@@ -28,7 +28,7 @@ dependencies:
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex
-    version: 0.19.1-7
+    version: 0.19.1-8
     repository: file://./charts/dex
     condition: dex.enabled
   - name: mongodb
