@@ -29,5 +29,5 @@ dependencies:
 - name: minio
   repository: file://./charts/minio
   version: 14.8.3-2
-digest: sha256:f10d6dc8ca6d64c83a63aea8e8c79e071c1d48a0b3707da87977e114c3bd690e
-generated: "2025-02-12T13:36:30.525102+02:00"
+digest: sha256:79e34abc76e9f3bfdb50254de546f43d76ec8774442365da1b92ec3467b88ac9
+generated: "2025-02-12T13:59:27.655448+02:00"
