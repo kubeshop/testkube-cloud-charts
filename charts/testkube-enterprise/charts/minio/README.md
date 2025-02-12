@@ -56,7 +56,7 @@ MinIO(R) is an object storage server, compatible with Amazon S3 cloud storage se
 | clientImage.digest | string | `""` |  |
 | clientImage.registry | string | `"docker.io"` |  |
 | clientImage.repository | string | `"bitnami/minio-client"` |  |
-| clientImage.tag | string | `"2024.10.29-debian-12-r0"` |  |
+| clientImage.tag | string | `"2025.2.7-debian-12-r1"` |  |
 | clusterDomain | string | `"cluster.local"` |  |
 | command | list | `[]` |  |
 | commonAnnotations | object | `{}` |  |
@@ -100,7 +100,7 @@ MinIO(R) is an object storage server, compatible with Amazon S3 cloud storage se
 | image.pullSecrets | list | `[]` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"bitnami/minio"` |  |
-| image.tag | string | `"2024.11.7-debian-12-r1"` |  |
+| image.tag | string | `"2025.2.7-debian-12-r1"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.apiVersion | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
