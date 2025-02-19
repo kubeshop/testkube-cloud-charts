@@ -37,7 +37,7 @@ image:
   registry: ""
   repository: kubeshop/testkube-ai-copilot
   pullPolicy: IfNotPresent
-  tag: "1.11.11"
+  tag: "2.10.2"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
