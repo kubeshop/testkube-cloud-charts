@@ -445,6 +445,18 @@ spec:
               value: "{{ .Values.scim.auth.token }}"
               {{- end }}
             {{- end }}
+            {{- with .Values.api.github.appId }}
+            - name: GITHUB_APP_ID
+              value: {{ . | quote }}
+            {{- end }}
+            {{- with .Values.api.github.installationId }}
+            - name: GITHUB_INSTALLATION_ID
+              value: {{ . | quote }}
+            {{- end }}
+            {{- with .Values.api.github.privateKeyPath }}
+            - name: GITHUB_PRIVATE_KEY_FILE
+              value: {{ . | quote }}
+            {{- end }}
             {{- with .Values.additionalEnvVars }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -529,6 +541,12 @@ spec:
             secretName: {{ .Values.api.tls.tlsSecret }}
         {{- end }}
         {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
+        {{- if .Values.api.github.privateKeyRef }}
+        - name: integration-github-secrets
+          secret:
+            secretName: {{ .Values.api.github.privateKeyRef }}
+            defaultMode: 420
+        {{- end }}
         - name: license-file
           secret:
             secretName: {{ .Values.global.enterpriseLicenseSecretRef }}
