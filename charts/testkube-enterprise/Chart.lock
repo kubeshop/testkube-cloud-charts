@@ -7,7 +7,7 @@ dependencies:
   version: 1.145.0
 - name: testkube-cloud-ui
   repository: file://../testkube-cloud-ui
-  version: 1.100.1
+  version: 1.101.0
 - name: testkube-worker-service
   repository: file://../testkube-worker-service
   version: 1.57.0
@@ -29,5 +29,5 @@ dependencies:
 - name: minio
   repository: file://./charts/minio
   version: 14.8.3-2
-digest: sha256:764b30ef1cc01df16c9278a889f814c2c2b5877f91e4e36210cdc0079490c2a5
-generated: "2025-02-19T11:19:12.766769554Z"
+digest: sha256:75cc8f66d414072b50a2914c0c9ba7fe9161cc3b6df252c38b4f3c1e544669bc
+generated: "2025-02-19T11:19:34.919119702Z"
