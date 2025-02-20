@@ -284,6 +284,10 @@ api:
     database: "testkubecloud"
     # -- Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest)
     readPreference: secondaryPreferred
+  github:
+    appId: ""
+    installationId: ""
+    privateKeyRef: "testkube-github"
   nats:
     # -- NATS URI
     uri: "nats://nats.messaging.svc.cluster.local:4222"
