@@ -31,7 +31,7 @@ jobs:
           version: v3.10.0
 
       - name: Update Helm chart with changes files
-        if: github.event.action != 'trigger-workflow-testkube-agent-main' && github.event.action != 'trigger-workflow-testkube-cloud-ui-main'
+        if: github.event.action == 'trigger-workflow-testkube-cloud-services'
         run: |
           # update application version
           charts=("testkube-cloud-api" "testkube-worker-service" "testkube-logs-service" )
@@ -40,13 +40,13 @@ jobs:
           done
 
       - name: Update Helm chart with changes for testkube-cloud-ui service
-        if: github.event.action != 'trigger-workflow-testkube-agent-main' && github.event.action != 'trigger-workflow-testkube-cloud-services'
+        if: github.event.action == 'trigger-workflow-testkube-cloud-ui-main'
         run: |
           # update application version
           ./scripts/update.sh -c "testkube-cloud-ui" -a ${{ github.event.client_payload.appVersion }} --verbose
 
       - name: Update Helm chart with changes for testkube-ai service
-        if: github.event.action != 'trigger-workflow-testkube-agent-main' && github.event.action != 'trigger-workflow-testkube-ai-service'
+        if: github.event.action == 'trigger-workflow-testkube-ai-service'
         run: |
           # update application version
           ./scripts/update.sh -c "testkube-ai-service" -a ${{ github.event.client_payload.appVersion }} --verbose
@@ -61,7 +61,6 @@ jobs:
           helm dependency update charts/testkube-enterprise
 
       - name: Sync & Update Testkube Enterprise Helm chart
-        if: github.event.action != 'trigger-workflow-testkube-agent-main'
         run: |
           echo "Syncing subchart versions in testkube-enterprise Helm chart"
           ./scripts/sync.sh
