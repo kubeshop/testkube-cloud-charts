@@ -16,7 +16,7 @@ dependencies:
   version: 1.0.5
 - name: testkube
   repository: https://kubeshop.github.io/helm-charts
-  version: 2.1.146
+  version: 2.1.147
 - name: dex
   repository: file://./charts/dex
   version: 0.19.1-7
@@ -29,5 +29,5 @@ dependencies:
 - name: minio
   repository: file://./charts/minio
   version: 14.8.3-2
-digest: sha256:92d4cd6dfd6effc00417f0d8412129699a798a36c7039df4450d811b74cd65cf
-generated: "2025-02-20T10:10:49.726405847Z"
+digest: sha256:4af9f8ad5cda8beb85a97aa0eef4a22f40c8443d49d8ea189fd0bab1a840876c
+generated: "2025-02-20T10:12:39.700492429Z"
