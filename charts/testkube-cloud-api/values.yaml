@@ -198,6 +198,7 @@ scim:
     # -- Secret ref for SCIM server authentication (secret must contain key SCIM_AUTH_TOKEN)
     secretRef: ""
 api:
+  github: {}
   debug:
     # -- Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2
     enableHttp2Logs: false
