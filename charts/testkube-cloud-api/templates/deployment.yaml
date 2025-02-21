@@ -503,6 +503,12 @@ spec:
               name: serving-cert
               subPath: tls.key
             {{- end }}
+            {{- if .Values.api.github.privateKeyRef }}
+            - mountPath: /tmp/github/private-key.pem
+              readOnly: true
+              name: integration-github-secrets
+              subPath: key.pem
+            {{- end }}
             {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
             - mountPath: {{ .Values.enterpriseLicenseFilePath }}
               readOnly: true
