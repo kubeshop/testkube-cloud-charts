@@ -546,13 +546,13 @@ spec:
           secret:
             secretName: {{ .Values.api.tls.tlsSecret }}
         {{- end }}
-        {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
         {{- if .Values.api.github.privateKeyRef }}
         - name: integration-github-secrets
           secret:
             secretName: {{ .Values.api.github.privateKeyRef }}
             defaultMode: 420
         {{- end }}
+        {{- if and .Values.global.enterpriseLicenseSecretRef .Values.global.enterpriseOfflineAccess }}
         - name: license-file
           secret:
             secretName: {{ .Values.global.enterpriseLicenseSecretRef }}
