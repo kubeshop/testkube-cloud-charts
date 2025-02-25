@@ -91,8 +91,10 @@ affinity: {}
 host: ""
 # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
 controlPlaneRestApiUri: ""
-# -- Environment of deployment
+# -- Environment of deployment (DEPRECATED)
 env: "production"
+# -- Environment of deployment
+nodeEnv: "production"
 # -- Log level
 logLevel: "info"
 # -- Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
@@ -117,3 +119,5 @@ openAi:
   apiKey: ""
   # -- Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key.
   secretRef: ""
+# -- Google Cloud Project ID used for Firebase E-mail authentication on Testkube's Cloud Control Plane
+gcpProjectId: ""

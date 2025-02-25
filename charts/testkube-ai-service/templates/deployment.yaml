@@ -47,10 +47,12 @@ spec:
           env:
             - name: CONTROL_PLANE_ENDPOINT
               value: {{ if .Values.controlPlaneRestApiUri }}{{ .Values.controlPlaneRestApiUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
+            - name: ENV
+              value: "{{ .Values.nodeEnv | default .Values.env | default "production" }}"
             - name: NODE_ENV
-              value: "{{ .Values.env }}"
+              value: "{{ .Values.nodeEnv | default .Values.env | default "production" }}"
             - name: LOG_LEVEL
-              value: "{{ .Values.logLevel }}"
+              value: "{{ .Values.logLevel | default "info" }}"
             - name: PORT
               value: "{{ .Values.service.port }}"
             {{ if and .Values.oauthIssuer .Values.oauthJwksUri }}
@@ -95,6 +97,8 @@ spec:
             - name: SSL_CERT_DIR
               value: "{{ $certsDir }}"
             {{- end }}
+            - name: GCP_PROJECT_ID
+              value: "{{ .Values.gcpProjectId }}"
           ports:
             - name: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ .Values.service.port }}
