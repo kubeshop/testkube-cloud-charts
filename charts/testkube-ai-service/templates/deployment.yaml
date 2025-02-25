@@ -95,6 +95,10 @@ spec:
             - name: SSL_CERT_DIR
               value: "{{ $certsDir }}"
             {{- end }}
+            {{- range $k, $v := .Values.additionalEnv }}
+            - name: {{ $k }}
+              value: {{ tpl ($v | toString) $ | quote }}
+            {{- end}}
           ports:
             - name: {{ if .Values.tls.serveHTTPS }}https{{ else }}http{{ end }}
               containerPort: {{ .Values.service.port }}
