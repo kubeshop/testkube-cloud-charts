@@ -600,7 +600,7 @@ testkube-ai-service:
   # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
   controlPlaneRestApiUri: ""
   # -- Environment of deployment
-  env: "production"
+  nodeEnv: "production"
   # -- Log level
   logLevel: "info"
   # -- Use OpenID Connect (OIDC) Discovery URI to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
