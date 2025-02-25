@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.169.0](https://img.shields.io/badge/Version-2.169.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.170.0](https://img.shields.io/badge/Version-2.170.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -186,6 +186,7 @@ A Helm chart for Testkube Enterprise
 | sharedSecretGenerator.resources | object | `{}` | Resources for the Shared Secret Generator Job |
 | sharedSecretGenerator.securityContext | object | `{}` | Pod Security Context for the Shared Secret Generator Job |
 | testkube-agent.enabled | bool | `false` | Toggle whether to install & connect Testkube Agent in the same namespace. Keep it disabled to have more control over where your agents run. See https://docs.testkube.io/articles/install/overview for more info. This relies on the `testkube-default-agent-token` shared secret. See https://docs.testkube.io/articles/install/install-with-helm#shared-secrets |
+| testkube-ai-service.additionalEnvVars | list | `[]` | Additional env vars to be added to the deployment, expects an array of EnvVar objects (supports name, value, valueFrom, etc.) |
 | testkube-ai-service.affinity | object | `{}` |  |
 | testkube-ai-service.autoscaling.enabled | bool | `false` |  |
 | testkube-ai-service.autoscaling.maxReplicas | int | `100` |  |
@@ -194,7 +195,6 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | testkube-ai-service.controlPlaneRestApiUri | string | `""` | URI to Testkube's control plane REST API (e.g. https://api.testkube.io) |
 | testkube-ai-service.enabled | bool | `false` | Toggle whether to install the Testkube AI service |
-| testkube-ai-service.env | string | `"production"` | Environment of deployment |
 | testkube-ai-service.fullnameOverride | string | `"testkube-enterprise-ai-service"` |  |
 | testkube-ai-service.host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
 | testkube-ai-service.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -210,6 +210,7 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.llmTracing.secretRef | string | `""` | Reference to the secret containing the API Key. |
 | testkube-ai-service.logLevel | string | `"info"` | Log level |
 | testkube-ai-service.nameOverride | string | `""` |  |
+| testkube-ai-service.nodeEnv | string | `"production"` | Environment of deployment |
 | testkube-ai-service.nodeSelector | object | `{}` |  |
 | testkube-ai-service.oauthAudience | string | `"testkube-enterprise"` | OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration. |
 | testkube-ai-service.oauthIssuer | string | `""` | Specify issuer to skip OIDC Discovery |
