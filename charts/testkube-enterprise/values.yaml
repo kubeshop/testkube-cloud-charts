@@ -584,6 +584,7 @@ testkube-ai-service:
     enabled: true
     className: "nginx"
     annotations: {}
+  additionalEnvVars: []
   resources: {}
   autoscaling:
     enabled: false
