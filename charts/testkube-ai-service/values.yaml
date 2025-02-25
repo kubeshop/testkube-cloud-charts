@@ -77,11 +77,9 @@ ingress:
   enabled: true
   className: "nginx"
   annotations: {}
-
 # -- Additional env vars to be added to the deployment
 additionalEnv:
-#   HTTP_PROXY: "http://proxy.domain:8080"
-
+  HTTP_PROXY: "http://proxy.domain:8080"
 resources: {}
 autoscaling:
   enabled: false
