@@ -584,6 +584,7 @@ testkube-ai-service:
     enabled: true
     className: "nginx"
     annotations: {}
+  # -- Additional env vars to be added to the deployment, expects an array of EnvVar objects (supports name, value, valueFrom, etc.)
   additionalEnvVars: []
   resources: {}
   autoscaling:
