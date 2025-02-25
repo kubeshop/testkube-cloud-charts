@@ -77,6 +77,10 @@ ingress:
   enabled: true
   className: "nginx"
   annotations: {}
+# -- Additional env vars to be added to the deployment, expects an array of EnvVar objects (supports name, value, valueFrom, etc.)
+additionalEnvVars: []
+# - name: HTTP_PROXY
+#   value: "http://proxy.domain:8080"
 resources: {}
 autoscaling:
   enabled: false
@@ -91,8 +95,10 @@ affinity: {}
 host: ""
 # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
 controlPlaneRestApiUri: ""
-# -- Environment of deployment
+# -- Environment of deployment (DEPRECATED)
 env: "production"
+# -- Environment of deployment
+nodeEnv: "production"
 # -- Log level
 logLevel: "info"
 # -- Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.

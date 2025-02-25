@@ -584,6 +584,8 @@ testkube-ai-service:
     enabled: true
     className: "nginx"
     annotations: {}
+  # -- Additional env vars to be added to the deployment, expects an array of EnvVar objects (supports name, value, valueFrom, etc.)
+  additionalEnvVars: []
   resources: {}
   autoscaling:
     enabled: false
@@ -599,7 +601,7 @@ testkube-ai-service:
   # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
   controlPlaneRestApiUri: ""
   # -- Environment of deployment
-  env: "production"
+  nodeEnv: "production"
   # -- Log level
   logLevel: "info"
   # -- Use OpenID Connect (OIDC) Discovery URI to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
