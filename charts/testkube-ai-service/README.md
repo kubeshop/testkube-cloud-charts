@@ -27,9 +27,8 @@ A Helm chart for Testkube AI service
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | controlPlaneRestApiUri | string | `""` | URI to Testkube's control plane REST API (e.g. https://api.testkube.io) |
-| env | string | `"production"` | Environment of deployment (DEPRECATED) |
+| env | string | `"production"` | Environment of deployment |
 | fullnameOverride | string | `""` |  |
-| gcpProjectId | string | `""` | Google Cloud Project ID used for Firebase E-mail authentication on Testkube's Cloud Control Plane |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
 | global.customCaSecretRef | string | `""` | Custom CA to use as a trusted CA during TLS connections. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey. |
@@ -56,7 +55,6 @@ A Helm chart for Testkube AI service
 | llmTracing.secretRef | string | `""` | Reference to the secret containing the API Key. |
 | logLevel | string | `"info"` | Log level |
 | nameOverride | string | `""` |  |
-| nodeEnv | string | `"production"` | Environment of deployment |
 | nodeSelector | object | `{}` |  |
 | oauthAudience | string | `""` | OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration. |
 | oauthIssuer | string | `""` | Specify issuer to skip OIDC Discovery |
