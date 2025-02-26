@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.179.0](https://img.shields.io/badge/Version-2.179.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.179.1](https://img.shields.io/badge/Version-2.179.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -17,9 +17,9 @@ A Helm chart for Testkube Enterprise
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../testkube-ai-service | testkube-ai-service | 1.0.6 |
-| file://../testkube-cloud-api | testkube-cloud-api | 1.151.1 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.151.2 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.102.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.58.1 |
+| file://../testkube-worker-service | testkube-worker-service | 1.58.2 |
 | file://./charts/dex | dex | 0.19.1-8 |
 | file://./charts/minio | minio | 14.8.3-2 |
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
@@ -309,11 +309,11 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.11.13"` |  |
+| testkube-cloud-api.image.tag | string | `"1.11.14"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
-| testkube-cloud-api.migrationImage.tag | string | `"1.11.13"` |  |
+| testkube-cloud-api.migrationImage.tag | string | `"1.11.14"` |  |
 | testkube-cloud-api.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-cloud-api.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
@@ -359,7 +359,7 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
-| testkube-worker-service.image.tag | string | `"1.11.13"` |  |
+| testkube-worker-service.image.tag | string | `"1.11.14"` |  |
 | testkube-worker-service.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-worker-service.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"75m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Worker Service |
