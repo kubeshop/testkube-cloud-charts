@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.180.0](https://img.shields.io/badge/Version-2.180.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.181.0](https://img.shields.io/badge/Version-2.181.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -102,6 +102,7 @@ A Helm chart for Testkube Enterprise
 | global.tls | object | `{}` |  |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
+| image.tag | string | `"2.1.25"` |  |
 | minio.affinity | object | `{}` | Affinity for pod assignment. |
 | minio.auth.existingSecret | string | `""` | Use existing secret for credentials details (`auth.rootUser` and `auth.rootPassword` will be ignored and picked up from this secret). The secret has to contain the keys `root-user` and `root-password`) |
 | minio.auth.rootPassword | string | `"t3stkub3-3nt3rpr1s3"` | MinIO root password (secret key) |
@@ -200,7 +201,7 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.image.pullPolicy | string | `"IfNotPresent"` |  |
 | testkube-ai-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-ai-service.image.repository | string | `"kubeshop/testkube-ai-copilot"` |  |
-| testkube-ai-service.image.tag | string | `""` |  |
+| testkube-ai-service.image.tag | string | `"2.1.25"` |  |
 | testkube-ai-service.imagePullSecrets | list | `[]` |  |
 | testkube-ai-service.ingress.annotations | object | `{}` |  |
 | testkube-ai-service.ingress.className | string | `"nginx"` |  |

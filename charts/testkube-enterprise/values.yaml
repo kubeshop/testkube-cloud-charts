@@ -899,3 +899,5 @@ dex:
       - secretName: testkube-enterprise-api-tls
         hosts:
           - "{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}"
+image:
+  tag: 2.1.25
