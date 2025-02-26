@@ -66,6 +66,13 @@ jobs:
             echo "No changes detected in the specified directories."
           fi
 
+          if [[ "$changed_files" == *"testkube-ai-service/"* ]]; then
+            echo "Changes detected in files within the 'testkube-ai-service' directory. Updating the chart minor version."
+            ./scripts/update.sh -c testkube-ai-service --strategy minor
+          else
+            echo "No changes detected in the specified directories."
+          fi
+
           tk_api_chart_version=$(./scripts/update.sh -c testkube-cloud-api --print-chart-version)
           echo "New testkube-cloud-api chart version is $tk_api_chart_version" >> $GITHUB_STEP_SUMMARY
           echo "API_CHART_VERSION=$tk_api_chart_version" >> $GITHUB_ENV
