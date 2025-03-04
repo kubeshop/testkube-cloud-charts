@@ -245,12 +245,12 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.11.14
+    tag: 1.11.15
   migrationImage:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-migration
-    tag: 1.11.14
+    tag: 1.11.15
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -505,7 +505,7 @@ testkube-worker-service:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.11.14
+    tag: 1.11.15
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
