@@ -900,4 +900,4 @@ dex:
         hosts:
           - "{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}"
 image:
-  tag: 2.1.26
+  tag: 2.2.0
