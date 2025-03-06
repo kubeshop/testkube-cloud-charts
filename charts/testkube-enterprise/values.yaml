@@ -368,7 +368,7 @@ testkube-cloud-api:
       useArgoHooks: true
       image:
         # -- Migrations image repository
-        repository: kubeshop/testkube-enterprise-api-migrations
+        repository: kubeshop/testkube-migration
       # -- TTL for the migration job, defaults to 4 days
       ttlSecondsAfterFinished: 345600
     mongo: *global_mongo_config
