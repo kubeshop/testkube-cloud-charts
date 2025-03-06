@@ -22,6 +22,10 @@ global:
   # global labels will be applied to all resources deployed by the chart
   labels: {}
 
+  # global pdb
+  podDisruptionBudget:
+    enabled: false
+
 ################################################################################
 # Common options
 ################################################################################
