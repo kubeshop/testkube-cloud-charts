@@ -28,11 +28,11 @@ dependencies:
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex
-    version: 0.19.1-8
+    version: 0.19.1-9
     repository: file://./charts/dex
     condition: dex.enabled
   - name: mongodb
-    version: 16.2.1-1
+    version: 16.2.1-2
     repository: file://./charts/mongodb
     condition: mongodb.enabled
   - name: nats
@@ -40,7 +40,7 @@ dependencies:
     version: 1.2.6-4
     repository: "file://./charts/nats"
   - name: minio
-    version: 14.8.3-2
+    version: 14.8.3-3
     repository: file://./charts/minio
     condition: minio.enabled
 maintainers:

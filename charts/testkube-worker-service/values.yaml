@@ -58,6 +58,9 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods
   podSecurityContext: {}
+  # -- Global PodDisruptionBudget
+  podDisruptionBudget:
+    enabled: false
 replicaCount: 1
 # -- Priority class name defines the priority of this pod relative to others in the cluster.
 priorityClassName: ""
@@ -172,6 +175,6 @@ podDisruptionBudget:
   # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
   enabled: false
   # -- (int/percentage) Number or percentage of pods that must remain available.
-  minAvailable:
+  minAvailable: ""
   # -- (int/percentage) Number or percentage of pods that can be unavailable.
-  maxUnavailable:
+  maxUnavailable: ""

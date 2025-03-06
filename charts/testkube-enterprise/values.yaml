@@ -116,6 +116,9 @@ global:
   # functionality that applies job changes through force Delete/Create instead Replace.
   # job:
   #   nameSuffixOverride: '{{ dateInZone "2006-01-02-15-04-05" (now) "UTC" }}'
+  # -- Global PodDisruptionBudget
+  podDisruptionBudget:
+    enabled: true
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -282,9 +285,9 @@ testkube-cloud-api:
   podDisruptionBudget:
     enabled: false
     # -- (int/percentage) Number or percentage of pods that must remain available.
-    minAvailable:
+    minAvailable: ""
     # -- (int/percentage) Number or percentage of pods that can be unavailable.
-    maxUnavailable:
+    maxUnavailable: ""
   serviceAccount:
     # -- Toggle whether to create a ServiceAccount resource
     create: false
@@ -485,9 +488,9 @@ testkube-cloud-ui:
   podDisruptionBudget:
     enabled: false
     # -- (int/percentage) Number or percentage of pods that must remain available.
-    minAvailable:
+    minAvailable: ""
     # -- (int/percentage) Number or percentage of pods that can be unavailable.
-    maxUnavailable:
+    maxUnavailable: ""
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
@@ -545,9 +548,9 @@ testkube-worker-service:
   podDisruptionBudget:
     enabled: false
     # -- (int/percentage) Number or percentage of pods that must remain available.
-    minAvailable:
+    minAvailable: ""
     # -- (int/percentage) Number or percentage of pods that can be unavailable.
-    maxUnavailable:
+    maxUnavailable: ""
   api:
     nats: *global_nats_config
     mongo: *global_mongo_config
@@ -628,9 +631,9 @@ testkube-ai-service:
   podDisruptionBudget:
     enabled: false
     # -- (int/percentage) Number or percentage of pods that must remain available.
-    minAvailable:
+    minAvailable: ""
     # -- (int/percentage) Number or percentage of pods that can be unavailable.
-    maxUnavailable:
+    maxUnavailable: ""
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
   # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
@@ -938,9 +941,9 @@ dex:
   podDisruptionBudget:
     enabled: false
     # -- (int/percentage) Number or percentage of pods that must remain available.
-    minAvailable:
+    minAvailable: ""
     # -- (int/percentage) Number or percentage of pods that can be unavailable.
-    maxUnavailable:
+    maxUnavailable: ""
   ingress:
     # -- Toggle whether to enable ingress for Dex
     enabled: true
