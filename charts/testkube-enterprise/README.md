@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.196.0](https://img.shields.io/badge/Version-2.196.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.197.0](https://img.shields.io/badge/Version-2.197.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -17,9 +17,9 @@ A Helm chart for Testkube Enterprise
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../testkube-ai-service | testkube-ai-service | 1.2.0 |
-| file://../testkube-cloud-api | testkube-cloud-api | 1.154.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.103.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.61.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.155.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.104.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.62.0 |
 | file://./charts/dex | dex | 0.19.1-8 |
 | file://./charts/minio | minio | 14.8.3-2 |
 | file://./charts/mongodb | mongodb | 16.2.1-1 |
@@ -263,7 +263,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.logServer.secure | string | `"false"` | Log server TLS configuration secure connection |
 | testkube-cloud-api.api.logServer.skipVerify | string | `"true"` | Log server TLS configuration skip Verify |
 | testkube-cloud-api.api.migrations.enabled | bool | `true` | Toggle whether to run database migrations |
-| testkube-cloud-api.api.migrations.image.repository | string | `"kubeshop/testkube-enterprise-api-migrations"` | Migrations image repository |
+| testkube-cloud-api.api.migrations.image.repository | string | `"kubeshop/testkube-migration"` | Migrations image repository |
 | testkube-cloud-api.api.migrations.ttlSecondsAfterFinished | int | `345600` | TTL for the migration job, defaults to 4 days |
 | testkube-cloud-api.api.migrations.useArgoHooks | bool | `true` | Toggle whether to set Argo resource hook annotations |
 | testkube-cloud-api.api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |

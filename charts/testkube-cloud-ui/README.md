@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.103.0](https://img.shields.io/badge/Version-1.103.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
+![Version: 1.104.0](https://img.shields.io/badge/Version-1.104.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -50,7 +50,7 @@ A Helm chart for Testkube Cloud UI
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
-| image.repository | string | `"kubeshop/testkube-cloud-ui"` |  |
+| image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
 | image.tag | string | `"2.11.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` | Additional Ingress annotations |

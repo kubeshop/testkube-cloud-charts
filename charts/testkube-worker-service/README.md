@@ -1,6 +1,6 @@
 # testkube-worker-service
 
-![Version: 1.61.0](https://img.shields.io/badge/Version-1.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.16](https://img.shields.io/badge/AppVersion-1.11.16-informational?style=flat-square)
+![Version: 1.62.0](https://img.shields.io/badge/Version-1.62.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.16](https://img.shields.io/badge/AppVersion-1.11.16-informational?style=flat-square)
 
 A Helm chart for Testkube Worker Service
 
@@ -75,7 +75,7 @@ A Helm chart for Testkube Worker Service
 | global.tls | object | `{}` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
-| image.repository | string | `"kubeshop/testkube-worker-service"` |  |
+| image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
 | image.tag | string | `"1.11.16"` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
