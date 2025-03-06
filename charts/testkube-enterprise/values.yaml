@@ -159,6 +159,13 @@ minio:
     limits:
       cpu: 2
       memory: 2Gi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  pdb:
+    create: true
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
   auth:
     # -- MinIO root username (access key)
     rootUser: "testkube-enterprise"
@@ -779,6 +786,15 @@ nats:
       securityContext: {}
     # -- Patch additional fields to the container
     patch: []
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: true
+    # merge or patch the pod disruption budget
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#poddisruptionbudget-v1-policy
+    merge: { }
+    patch: [ ]
+    # defaults to "{{ include "nats.fullname" $ }}"
+    name:
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -809,6 +825,13 @@ mongodb:
     limits:
       cpu: 2
       memory: 2Gi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  pdb:
+    create: true
+    # -- Minimum number/percentage of pods that must still be available after the eviction
+    minAvailable: ""
+    # -- Maximum number/percentage of pods that may be made unavailable after the eviction
+    maxUnavailable: ""
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
