@@ -271,6 +271,13 @@ testkube-cloud-api:
     limits:
       cpu: 1
       memory: 512Mi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable:
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable:
   serviceAccount:
     # -- Toggle whether to create a ServiceAccount resource
     create: false
@@ -467,6 +474,13 @@ testkube-cloud-ui:
     limits:
       cpu: 150m
       memory: 128Mi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable:
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable:
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
@@ -520,6 +534,13 @@ testkube-worker-service:
     limits:
       cpu: 500m
       memory: 512Mi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable:
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable:
   api:
     nats: *global_nats_config
     mongo: *global_mongo_config
@@ -596,6 +617,13 @@ testkube-ai-service:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable:
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable:
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
   # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
