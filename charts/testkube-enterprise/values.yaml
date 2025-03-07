@@ -255,12 +255,12 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.11.15
+    tag: 1.11.17
   migrationImage:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-migration
-    tag: 1.11.15
+    tag: 1.11.17
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -385,7 +385,7 @@ testkube-cloud-api:
       useArgoHooks: true
       image:
         # -- Migrations image repository
-        repository: kubeshop/testkube-enterprise-api-migrations
+        repository: kubeshop/testkube-migration
       # -- TTL for the migration job, defaults to 4 days
       ttlSecondsAfterFinished: 345600
     mongo: *global_mongo_config
@@ -529,7 +529,7 @@ testkube-worker-service:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.11.15
+    tag: 1.11.17
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000

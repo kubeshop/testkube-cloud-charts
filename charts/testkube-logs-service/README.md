@@ -1,6 +1,6 @@
 # testkube-logs-service
 
-![Version: 1.19.0](https://img.shields.io/badge/Version-1.19.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.15](https://img.shields.io/badge/AppVersion-1.11.15-informational?style=flat-square)
+![Version: 1.21.0](https://img.shields.io/badge/Version-1.21.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.17](https://img.shields.io/badge/AppVersion-1.11.17-informational?style=flat-square)
 
 A Helm chart for Testkube log Service
 

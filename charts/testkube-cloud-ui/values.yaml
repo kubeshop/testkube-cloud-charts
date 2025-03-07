@@ -51,7 +51,7 @@ sentry:
 image:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
   registry: ""
-  repository: kubeshop/testkube-cloud-ui
+  repository: kubeshop/testkube-enterprise-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "2.11.0"
