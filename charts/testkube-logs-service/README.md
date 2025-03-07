@@ -1,6 +1,6 @@
 # testkube-logs-service
 
-![Version: 1.21.0](https://img.shields.io/badge/Version-1.21.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.17](https://img.shields.io/badge/AppVersion-1.11.17-informational?style=flat-square)
+![Version: 1.22.0](https://img.shields.io/badge/Version-1.22.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.17](https://img.shields.io/badge/AppVersion-1.11.17-informational?style=flat-square)
 
 A Helm chart for Testkube log Service
 
@@ -62,6 +62,7 @@ A Helm chart for Testkube log Service
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
 | global.logsSubdomain | string | `"logs"` | logs gRPC subdomain which get prepended to the default domain when host is not set |
+| global.podDisruptionBudget | object | `{"enabled":false}` | Global PodDisruptionBudget |
 | global.podSecurityContext | object | `{}` | Global security Context for all pods |
 | grpcIngress.annotations | object | `{}` | Additional annotations to add to the gRPC Ingress resource |
 | grpcIngress.enabled | bool | `false` | Toggle whether to enable the gRPC API Ingress |
@@ -78,6 +79,9 @@ A Helm chart for Testkube log Service
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
+| podDisruptionBudget.enabled | bool | `false` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | podSecurityContext | object | `{}` | Pod Security Context |
 | prometheus.enabled | bool | `false` | Toggle whether to create ServiceMonitor resource for Prometheus Operator |
 | prometheus.labels | object | `{}` | ServiceMonitor labels |

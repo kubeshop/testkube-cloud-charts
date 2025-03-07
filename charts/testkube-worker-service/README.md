@@ -1,6 +1,6 @@
 # testkube-worker-service
 
-![Version: 1.63.0](https://img.shields.io/badge/Version-1.63.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.17](https://img.shields.io/badge/AppVersion-1.11.17-informational?style=flat-square)
+![Version: 1.64.0](https://img.shields.io/badge/Version-1.64.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.17](https://img.shields.io/badge/AppVersion-1.11.17-informational?style=flat-square)
 
 A Helm chart for Testkube Worker Service
 
@@ -62,6 +62,7 @@ A Helm chart for Testkube Worker Service
 | global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | global.mongo.readPreference | string | `""` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | global.nats.uri | string | `""` | NATS URI |
+| global.podDisruptionBudget | object | `{"enabled":false}` | Global PodDisruptionBudget |
 | global.podSecurityContext | object | `{}` | Global security Context for all pods |
 | global.storage.accessKeyId | string | `""` | S3 Access Key ID |
 | global.storage.credsSecretRef | string | `""` | Credentials secret ref (secret should contain keys: root-user, root-password, token) (default is `testkube-cloud-minio-secret`) |
@@ -81,6 +82,9 @@ A Helm chart for Testkube Worker Service
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
+| podDisruptionBudget.enabled | bool | `false` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | podSecurityContext | object | `{}` | Pod Security Context |
 | priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | prometheus.enabled | bool | `false` | Toggle whether to create ServiceMonitor resource for Prometheus Operator |

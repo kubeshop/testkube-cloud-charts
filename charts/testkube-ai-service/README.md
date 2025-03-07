@@ -1,6 +1,6 @@
 # testkube-ai-service
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.0](https://img.shields.io/badge/AppVersion-2.2.0-informational?style=flat-square)
+![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.0](https://img.shields.io/badge/AppVersion-2.2.0-informational?style=flat-square)
 
 A Helm chart for Testkube AI service
 
@@ -39,6 +39,7 @@ A Helm chart for Testkube AI service
 | global.imageRegistry | string | `""` | Global image registry to be prepended for to all images (usually defined in parent chart) |
 | global.ingress.enabled | bool | `true` | Toggle whether to enable or disable all Ingress resources (if false, all Ingress resources will be disabled and cannot be overriden) |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
+| global.podDisruptionBudget | object | `{"enabled":false}` | Global PodDisruptionBudget |
 | global.podSecurityContext | object | `{}` | Global security Context for all pods |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | host | string | `""` | Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values) |
@@ -65,6 +66,9 @@ A Helm chart for Testkube AI service
 | openAi.apiKey | string | `""` | OpenAI API Key - can be provided directly or referenced from a secret |
 | openAi.secretRef | string | `""` | Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key. |
 | podAnnotations | object | `{}` |  |
+| podDisruptionBudget.enabled | bool | `false` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |

@@ -794,8 +794,8 @@ nats:
     enabled: true
     # merge or patch the pod disruption budget
     # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#poddisruptionbudget-v1-policy
-    merge: { }
-    patch: [ ]
+    merge: {}
+    patch: []
     # defaults to "{{ include "nats.fullname" $ }}"
     name:
 ## MongoDB chart parameters
