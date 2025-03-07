@@ -6,9 +6,9 @@ apiVersion: policy/v1beta1
 {{- end }}
 kind: PodDisruptionBudget
 metadata:
-  name: {{ template "dex.fullname" . }}
+  name: {{ include "testkube-worker-service.fullname" . }}
   labels:
-{{ include "dex.labels" . | indent 4 }}
+  {{- include "testkube-worker-service.labels" . | nindent 4 }}
 spec:
   {{- if .Values.podDisruptionBudget.minAvailable }}
   minAvailable: {{ .Values.podDisruptionBudget.minAvailable }}
@@ -18,5 +18,5 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "dex.selectorLabels" . | nindent 6 }}
+      {{- include "testkube-worker-service.selectorLabels" . | nindent 6 }}
 {{- end }}

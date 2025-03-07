@@ -116,6 +116,9 @@ global:
   # functionality that applies job changes through force Delete/Create instead Replace.
   # job:
   #   nameSuffixOverride: '{{ dateInZone "2006-01-02-15-04-05" (now) "UTC" }}'
+  # -- Global PodDisruptionBudget
+  podDisruptionBudget:
+    enabled: true
 # Testkube requires a variety of secrets to operate.
 # Any secret not provided manually will be automatically generated with a random value by the shared secret job.
 sharedSecretGenerator:
@@ -159,6 +162,13 @@ minio:
     limits:
       cpu: 2
       memory: 2Gi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  pdb:
+    create: true
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
   auth:
     # -- MinIO root username (access key)
     rootUser: "testkube-enterprise"
@@ -271,6 +281,13 @@ testkube-cloud-api:
     limits:
       cpu: 1
       memory: 512Mi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
   serviceAccount:
     # -- Toggle whether to create a ServiceAccount resource
     create: false
@@ -467,6 +484,13 @@ testkube-cloud-ui:
     limits:
       cpu: 150m
       memory: 128Mi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
   ingress:
     # -- Name of the TLS secret which contains the certificate files
     tlsSecretName: testkube-enterprise-ui-tls
@@ -520,6 +544,13 @@ testkube-worker-service:
     limits:
       cpu: 500m
       memory: 512Mi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
   api:
     nats: *global_nats_config
     mongo: *global_mongo_config
@@ -596,6 +627,13 @@ testkube-ai-service:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
   # -- Hostname for which to create rules and TLS certificates (if omitted, the host will be generated using the global subdomain and `domain` values)
   host: ""
   # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
@@ -751,6 +789,15 @@ nats:
       securityContext: {}
     # -- Patch additional fields to the container
     patch: []
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: true
+    # merge or patch the pod disruption budget
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#poddisruptionbudget-v1-policy
+    merge: { }
+    patch: [ ]
+    # defaults to "{{ include "nats.fullname" $ }}"
+    name:
 ## MongoDB chart parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -781,6 +828,13 @@ mongodb:
     limits:
       cpu: 2
       memory: 2Gi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  pdb:
+    create: true
+    # -- Minimum number/percentage of pods that must still be available after the eviction
+    minAvailable: ""
+    # -- Maximum number/percentage of pods that may be made unavailable after the eviction
+    maxUnavailable: ""
   tolerations: []
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
@@ -883,6 +937,13 @@ dex:
     limits:
       cpu: 250m
       memory: 392Mi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
   ingress:
     # -- Toggle whether to enable ingress for Dex
     enabled: true
