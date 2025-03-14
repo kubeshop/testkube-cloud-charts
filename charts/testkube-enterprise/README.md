@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.218.0](https://img.shields.io/badge/Version-2.218.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.219.0](https://img.shields.io/badge/Version-2.219.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -190,6 +190,7 @@ A Helm chart for Testkube Enterprise
 | nats.reloader.merge | object | `{"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}},"securityContext":{}}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.reloader.merge.securityContext | object | `{}` | Set Security Context for reloader container |
 | nats.reloader.patch | list | `[]` |  |
+| sharedSecretGenerator.annotations | object | `{}` | Pod Annotations for the Shared Secret Generator Job |
 | sharedSecretGenerator.containerSecurityContext | object | `{}` | Container Security Context for the Shared Secret Generator Job |
 | sharedSecretGenerator.enabled | bool | `false` | Toggle whether to enable the Shared Secret Generator Job |
 | sharedSecretGenerator.image.registry | string | `"docker.io"` |  |
