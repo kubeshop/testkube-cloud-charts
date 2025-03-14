@@ -963,6 +963,4 @@ dex:
         hosts:
           - "{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}"
 image:
-  tag: 2.2.0
-
-  
+  tag: 2.2.1

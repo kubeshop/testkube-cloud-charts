@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.215.0](https://img.shields.io/badge/Version-2.215.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.218.0](https://img.shields.io/badge/Version-2.218.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-ai-service | testkube-ai-service | 1.3.0 |
+| file://../testkube-ai-service | testkube-ai-service | 1.4.0 |
 | file://../testkube-cloud-api | testkube-cloud-api | 1.157.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.105.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.64.0 |
@@ -24,7 +24,7 @@ A Helm chart for Testkube Enterprise
 | file://./charts/minio | minio | 14.8.3-3 |
 | file://./charts/mongodb | mongodb | 16.2.1-2 |
 | file://./charts/nats | nats | 1.2.6-5 |
-| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.183 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.185 |
 | oci://registry-1.docker.io/bitnamicharts | common | 2.13.3 |
 
 ## Values
@@ -106,7 +106,7 @@ A Helm chart for Testkube Enterprise
 | global.tls | object | `{}` |  |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
-| image.tag | string | `"2.2.0"` |  |
+| image.tag | string | `"2.2.1"` |  |
 | minio.affinity | object | `{}` | Affinity for pod assignment. |
 | minio.auth.existingSecret | string | `""` | Use existing secret for credentials details (`auth.rootUser` and `auth.rootPassword` will be ignored and picked up from this secret). The secret has to contain the keys `root-user` and `root-password`) |
 | minio.auth.rootPassword | string | `"t3stkub3-3nt3rpr1s3"` | MinIO root password (secret key) |
