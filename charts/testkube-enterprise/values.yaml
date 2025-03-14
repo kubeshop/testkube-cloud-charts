@@ -128,6 +128,8 @@ sharedSecretGenerator:
   securityContext: {}
   # -- Container Security Context for the Shared Secret Generator Job
   containerSecurityContext: {}
+  # -- Pod Annotations for the Shared Secret Generator Job
+  annotations: {}
   # -- Resources for the Shared Secret Generator Job
   resources: {}
   image:
@@ -962,3 +964,5 @@ dex:
           - "{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}"
 image:
   tag: 2.2.0
+
+  
