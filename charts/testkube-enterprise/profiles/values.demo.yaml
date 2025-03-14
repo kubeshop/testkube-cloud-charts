@@ -110,6 +110,7 @@ dex:
       - id: testkube-enterprise
         redirectURIs:
           - http://localhost:8090/auth/callback
+          - http://localhost:38090/auth/callback          
         name: Testkube
         secret: QWkVzs3nct6HZM5hxsPzwaZtq
     additionalConfig: |
