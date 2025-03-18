@@ -922,6 +922,7 @@ dex:
     #    name: Testkube Cloud - localdev
     #    redirectURIs:
     #      - http://localhost:8090/auth/callback
+    #      - http://localhost:38090/auth/callback    
     #    secret: some-secret
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: ""
