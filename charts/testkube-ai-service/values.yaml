@@ -95,8 +95,6 @@ affinity: {}
 host: ""
 # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
 controlPlaneRestApiUri: ""
-# -- Environment of deployment (DEPRECATED)
-env: "production"
 # -- Environment of deployment
 nodeEnv: "production"
 # -- Log level

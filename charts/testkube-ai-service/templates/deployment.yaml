@@ -47,8 +47,6 @@ spec:
           env:
             - name: CONTROL_PLANE_ENDPOINT
               value: {{ if .Values.controlPlaneRestApiUri }}{{ .Values.controlPlaneRestApiUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
-            - name: ENV
-              value: "{{ .Values.nodeEnv | default .Values.env | default "production" }}"
             - name: NODE_ENV
               value: "{{ .Values.nodeEnv | default .Values.env | default "production" }}"
             - name: LOG_LEVEL
