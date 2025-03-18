@@ -98,8 +98,6 @@ affinity: {}
 host: ""
 # -- URI to Testkube's control plane REST API (e.g. https://api.testkube.io)
 controlPlaneRestApiUri: ""
-# -- Environment of deployment (DEPRECATED)
-env: "production"
 # -- Environment of deployment
 nodeEnv: "production"
 # -- Log level
@@ -120,11 +118,13 @@ llmTracing:
   apiKey: ""
   # -- Reference to the secret containing the API Key.
   secretRef: ""
-# Configuration for OpenAI API
-openAi:
-  # -- OpenAI API Key - can be provided directly or referenced from a secret
+# -- Configuration for LLM API that supports OpenAI API specification
+llmApi:
+  # -- Optional URL for custom LLM API services (defaults to OpenAI if not provided)
+  url: ""
+  # -- API key for accessing the LLM service - can be provided directly or referenced from a secret
   apiKey: ""
-  # -- Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key.
+  # -- Reference to the secret containing the LLM API token
   secretRef: ""
 podDisruptionBudget:
   # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
