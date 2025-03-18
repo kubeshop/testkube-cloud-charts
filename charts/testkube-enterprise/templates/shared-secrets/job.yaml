@@ -7,6 +7,9 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
+    {{- with .Values.sharedSecretGenerator.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   template:
     spec:

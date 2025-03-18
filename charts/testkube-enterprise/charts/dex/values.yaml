@@ -11,6 +11,9 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for Dex Pod
   podSecurityContext: {}
+  # -- Global PodDisruptionBudget for Dex Pod
+  podDisruptionBudget:
+    enabled: false
 
 # -- Number of replicas (pods) to launch.
 replicaCount: 1
@@ -142,10 +145,10 @@ podDisruptionBudget:
   enabled: false
 
   # -- (int/percentage) Number or percentage of pods that must remain available.
-  minAvailable:
+  minAvailable: ""
 
   # -- (int/percentage) Number or percentage of pods that can be unavailable.
-  maxUnavailable:
+  maxUnavailable: ""
 
 # -- Specify a priority class name to set [pod priority](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority).
 priorityClassName: ""

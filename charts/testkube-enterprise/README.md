@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.191.0](https://img.shields.io/badge/Version-2.191.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.220.0](https://img.shields.io/badge/Version-2.220.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,15 +16,15 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-ai-service | testkube-ai-service | 1.1.0 |
-| file://../testkube-cloud-api | testkube-cloud-api | 1.153.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.102.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.60.0 |
-| file://./charts/dex | dex | 0.19.1-8 |
-| file://./charts/minio | minio | 14.8.3-2 |
-| file://./charts/mongodb | mongodb | 16.2.1-1 |
-| file://./charts/nats | nats | 1.2.6-4 |
-| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.165 |
+| file://../testkube-ai-service | testkube-ai-service | 1.4.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.157.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.105.0 |
+| file://../testkube-worker-service | testkube-worker-service | 1.64.0 |
+| file://./charts/dex | dex | 0.19.1-9 |
+| file://./charts/minio | minio | 14.8.3-3 |
+| file://./charts/mongodb | mongodb | 16.2.1-2 |
+| file://./charts/nats | nats | 1.2.6-5 |
+| https://kubeshop.github.io/helm-charts | testkube-agent(testkube) | 2.1.186 |
 | oci://registry-1.docker.io/bitnamicharts | common | 2.13.3 |
 
 ## Values
@@ -49,6 +49,9 @@ A Helm chart for Testkube Enterprise
 | dex.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | dex.ingress.tls[0].hosts[0] | string | `"{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}"` |  |
 | dex.ingress.tls[0].secretName | string | `"testkube-enterprise-api-tls"` |  |
+| dex.podDisruptionBudget | object | `{"enabled":false,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| dex.podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| dex.podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | dex.podSecurityContext | object | `{}` | Dex Pod Security Context |
 | dex.rbac.create | bool | `true` | Specifies whether RBAC resources should be created. If disabled, the operator is responsible for creating the necessary resources based on the templates. |
 | dex.rbac.createClusterScoped | bool | `true` | Specifies which RBAC resources should be created. If disabled, the operator is responsible for creating the necessary resources (ClusterRole and RoleBinding or CRD's) |
@@ -83,6 +86,7 @@ A Helm chart for Testkube Enterprise
 | global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | global.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | global.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
+| global.podDisruptionBudget | object | `{"enabled":true}` | Global PodDisruptionBudget |
 | global.podSecurityContext | object | `{}` | Global security Context for all pods. |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
@@ -102,7 +106,7 @@ A Helm chart for Testkube Enterprise
 | global.tls | object | `{}` |  |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
-| image.tag | string | `"2.1.26"` |  |
+| image.tag | string | `"2.2.1"` |  |
 | minio.affinity | object | `{}` | Affinity for pod assignment. |
 | minio.auth.existingSecret | string | `""` | Use existing secret for credentials details (`auth.rootUser` and `auth.rootPassword` will be ignored and picked up from this secret). The secret has to contain the keys `root-user` and `root-password`) |
 | minio.auth.rootPassword | string | `"t3stkub3-3nt3rpr1s3"` | MinIO root password (secret key) |
@@ -132,6 +136,9 @@ A Helm chart for Testkube Enterprise
 | minio.image.tag | string | `"2025.2.7-debian-12-r1"` |  |
 | minio.metrics.serviceMonitor.enabled | bool | `false` | Toggle whether to create ServiceMonitor resource for scraping metrics using Prometheus Operator |
 | minio.nodeSelector | object | `{}` | Node labels for pod assignment. |
+| minio.pdb | object | `{"create":true,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| minio.pdb.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| minio.pdb.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | minio.podSecurityContext.enabled | bool | `true` | Toggle whether to render the pod security context |
 | minio.podSecurityContext.fsGroup | int | `1001` |  |
 | minio.resources | object | `{"limits":{"cpu":2,"memory":"2Gi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Set resources requests and limits for MinIO |
@@ -147,6 +154,9 @@ A Helm chart for Testkube Enterprise
 | mongodb.image.registry | string | `"docker.io"` |  |
 | mongodb.image.repository | string | `"kubeshop/bitnami-mongodb"` |  |
 | mongodb.image.tag | string | `"7.0.12"` |  |
+| mongodb.pdb | object | `{"create":true,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| mongodb.pdb.maxUnavailable | string | `""` | Maximum number/percentage of pods that may be made unavailable after the eviction |
+| mongodb.pdb.minAvailable | string | `""` | Minimum number/percentage of pods that must still be available after the eviction |
 | mongodb.podSecurityContext | object | `{}` | MongoDB Pod Security Context |
 | mongodb.resources | object | `{"limits":{"cpu":2,"memory":"2Gi"},"requests":{"cpu":"150m","memory":"256Mi"}}` | Set resources requests and limits for MongoDB |
 | mongodb.tolerations | list | `[]` |  |
@@ -170,6 +180,7 @@ A Helm chart for Testkube Enterprise
 | nats.natsBox.container.merge.securityContext | object | `{}` | Set a security Context for NatsBox container |
 | nats.natsBox.enabled | bool | `false` |  |
 | nats.natsBox.podTemplate.merge.spec.securityContext | object | `{}` | Set a security Context for NatsBox pod |
+| nats.podDisruptionBudget | object | `{"enabled":true,"merge":{},"name":null,"patch":[]}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
 | nats.promExporter.enabled | bool | `false` | Toggle whether to install NATS exporter |
 | nats.promExporter.env | object | `{}` | Map of additional env vars |
 | nats.promExporter.merge | object | `{"securityContext":{}}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
@@ -179,6 +190,7 @@ A Helm chart for Testkube Enterprise
 | nats.reloader.merge | object | `{"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}},"securityContext":{}}` | Merge additional fields to the container https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core |
 | nats.reloader.merge.securityContext | object | `{}` | Set Security Context for reloader container |
 | nats.reloader.patch | list | `[]` |  |
+| sharedSecretGenerator.annotations | object | `{}` | Pod Annotations for the Shared Secret Generator Job |
 | sharedSecretGenerator.containerSecurityContext | object | `{}` | Container Security Context for the Shared Secret Generator Job |
 | sharedSecretGenerator.enabled | bool | `false` | Toggle whether to enable the Shared Secret Generator Job |
 | sharedSecretGenerator.image.registry | string | `"docker.io"` |  |
@@ -220,6 +232,9 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.openAi.apiKey | string | `""` | OpenAI API Key - can be provided directly or referenced from a secret |
 | testkube-ai-service.openAi.secretRef | string | `""` | Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key. |
 | testkube-ai-service.podAnnotations | object | `{}` |  |
+| testkube-ai-service.podDisruptionBudget | object | `{"enabled":false,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| testkube-ai-service.podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| testkube-ai-service.podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | testkube-ai-service.podLabels | object | `{}` |  |
 | testkube-ai-service.podSecurityContext | object | `{}` |  |
 | testkube-ai-service.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
@@ -263,7 +278,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.logServer.secure | string | `"false"` | Log server TLS configuration secure connection |
 | testkube-cloud-api.api.logServer.skipVerify | string | `"true"` | Log server TLS configuration skip Verify |
 | testkube-cloud-api.api.migrations.enabled | bool | `true` | Toggle whether to run database migrations |
-| testkube-cloud-api.api.migrations.image.repository | string | `"kubeshop/testkube-enterprise-api-migrations"` | Migrations image repository |
+| testkube-cloud-api.api.migrations.image.repository | string | `"kubeshop/testkube-migration"` | Migrations image repository |
 | testkube-cloud-api.api.migrations.ttlSecondsAfterFinished | int | `345600` | TTL for the migration job, defaults to 4 days |
 | testkube-cloud-api.api.migrations.useArgoHooks | bool | `true` | Toggle whether to set Argo resource hook annotations |
 | testkube-cloud-api.api.minio.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
@@ -310,11 +325,14 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.11.15"` |  |
+| testkube-cloud-api.image.tag | string | `"1.11.17"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
-| testkube-cloud-api.migrationImage.tag | string | `"1.11.15"` |  |
+| testkube-cloud-api.migrationImage.tag | string | `"1.11.17"` |  |
+| testkube-cloud-api.podDisruptionBudget | object | `{"enabled":false,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| testkube-cloud-api.podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| testkube-cloud-api.podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | testkube-cloud-api.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-cloud-api.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-cloud-api.prometheus.enabled | bool | `false` |  |
@@ -337,10 +355,13 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"2.10.3"` |  |
+| testkube-cloud-ui.image.tag | string | `"2.11.0"` |  |
 | testkube-cloud-ui.ingress.className | string | `"nginx"` | Ingress classname |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
+| testkube-cloud-ui.podDisruptionBudget | object | `{"enabled":false,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| testkube-cloud-ui.podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| testkube-cloud-ui.podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | testkube-cloud-ui.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-cloud-ui.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-cloud-ui.replicaCount | int | `1` |  |
@@ -360,7 +381,10 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
-| testkube-worker-service.image.tag | string | `"1.11.15"` |  |
+| testkube-worker-service.image.tag | string | `"1.11.17"` |  |
+| testkube-worker-service.podDisruptionBudget | object | `{"enabled":false,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| testkube-worker-service.podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| testkube-worker-service.podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | testkube-worker-service.podSecurityContext | object | `{}` | Pod Security Context |
 | testkube-worker-service.priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | testkube-worker-service.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"75m","memory":"64Mi"}}` | Set resources requests and limits for Testkube Worker Service |

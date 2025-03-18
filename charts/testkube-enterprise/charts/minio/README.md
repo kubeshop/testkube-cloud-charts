@@ -1,6 +1,6 @@
 # minio
 
-![Version: 14.8.3-2](https://img.shields.io/badge/Version-14.8.3--2-informational?style=flat-square) ![AppVersion: 2024.10.29](https://img.shields.io/badge/AppVersion-2024.10.29-informational?style=flat-square)
+![Version: 14.8.3-3](https://img.shields.io/badge/Version-14.8.3--3-informational?style=flat-square) ![AppVersion: 2024.10.29](https://img.shields.io/badge/AppVersion-2024.10.29-informational?style=flat-square)
 
 MinIO(R) is an object storage server, compatible with Amazon S3 cloud storage service, mainly used for storing unstructured data (such as photos, videos, log files, etc.).
 
@@ -91,6 +91,7 @@ MinIO(R) is an object storage server, compatible with Amazon S3 cloud storage se
 | global.defaultStorageClass | string | `""` |  |
 | global.imagePullSecrets | list | `[]` |  |
 | global.imageRegistry | string | `""` |  |
+| global.podDisruptionBudget | object | `{"enabled":false}` | Global PodDisruptionBudget |
 | global.podSecurityContext | object | `{}` |  |
 | global.storageClass | string | `""` |  |
 | hostAliases | list | `[]` |  |

@@ -1,6 +1,6 @@
 # mongodb
 
-![Version: 16.2.1-1](https://img.shields.io/badge/Version-16.2.1--1-informational?style=flat-square) ![AppVersion: 8.0.3](https://img.shields.io/badge/AppVersion-8.0.3-informational?style=flat-square)
+![Version: 16.2.1-2](https://img.shields.io/badge/Version-16.2.1--2-informational?style=flat-square) ![AppVersion: 8.0.3](https://img.shields.io/badge/AppVersion-8.0.3-informational?style=flat-square)
 
 MongoDB(R) is a relational open source NoSQL database. Easy to use, it stores data in JSON-like documents. Automated scalability and high-performance. Ideal for developing cloud native applications.
 
@@ -252,6 +252,7 @@ MongoDB(R) is a relational open source NoSQL database. Easy to use, it stores da
 | global.imagePullSecrets | list | `[]` |  |
 | global.imageRegistry | string | `""` |  |
 | global.namespaceOverride | string | `""` |  |
+| global.podDisruptionBudget.enabled | bool | `true` |  |
 | global.podSecurityContext | object | `{}` |  |
 | global.storageClass | string | `""` |  |
 | hidden.affinity | object | `{}` |  |

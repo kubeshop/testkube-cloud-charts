@@ -1,6 +1,6 @@
 # nats
 
-![Version: 1.2.6-4](https://img.shields.io/badge/Version-1.2.6--4-informational?style=flat-square) ![AppVersion: 2.10.22](https://img.shields.io/badge/AppVersion-2.10.22-informational?style=flat-square)
+![Version: 1.2.6-5](https://img.shields.io/badge/Version-1.2.6--5-informational?style=flat-square) ![AppVersion: 2.10.22](https://img.shields.io/badge/AppVersion-2.10.22-informational?style=flat-square)
 
 A Helm chart for the NATS.io High Speed Cloud Native Distributed Communications Technology.
 
@@ -151,6 +151,7 @@ A Helm chart for the NATS.io High Speed Cloud Native Distributed Communications 
 | global.image.registry | string | `nil` |  |
 | global.imagePullSecrets | list | `[]` |  |
 | global.labels | object | `{}` |  |
+| global.podDisruptionBudget.enabled | bool | `false` |  |
 | global.podSecurityContext | object | `{}` | Security Context for all pods |
 | headlessService.merge | object | `{}` |  |
 | headlessService.name | string | `nil` |  |

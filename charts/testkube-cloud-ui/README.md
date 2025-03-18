@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.102.0](https://img.shields.io/badge/Version-1.102.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.10.3](https://img.shields.io/badge/AppVersion-2.10.3-informational?style=flat-square)
+![Version: 1.105.0](https://img.shields.io/badge/Version-1.105.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -44,14 +44,15 @@ A Helm chart for Testkube Cloud UI
 | global.imageRegistry | string | `""` | Global image registry to be prepended for to all images (usually defined in parent chart) |
 | global.ingress.enabled | bool | `true` | Global toggle whether to create Ingress resources |
 | global.labels | object | `{}` | Common labels which will be added to all resources |
+| global.podDisruptionBudget | object | `{"enabled":false}` | Global PodDisruptionBudget |
 | global.podSecurityContext | object | `{}` | Global security Context for all pods |
 | global.redirectSubdomain | string | `"app"` | Different UI subdomain which gets prepended to the domain. May be used for the redirect from your actual uiSubdomain endpoint. Works is ingressRedirect option is enabled. |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain |
 | global.uiSubdomain | string | `"cloud"` | UI subdomain which get prepended to the domain |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
-| image.repository | string | `"kubeshop/testkube-cloud-ui"` |  |
-| image.tag | string | `"2.10.3"` |  |
+| image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
+| image.tag | string | `"2.11.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` | Additional Ingress annotations |
 | ingress.className | string | `"nginx"` | Ingress class (NGINX Controller is the only officially supported Ingress controller) |
@@ -64,6 +65,9 @@ A Helm chart for Testkube Cloud UI
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
+| podDisruptionBudget.enabled | bool | `false` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | podSecurityContext | object | `{}` | Pod Security Context |
 | priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | replicaCount | int | `1` |  |

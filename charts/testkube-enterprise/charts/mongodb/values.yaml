@@ -36,6 +36,9 @@ global:
       adaptSecurityContext: auto
   containerSecurityContext: {}
   podSecurityContext: {}
+  ## global PodDisruptionBudget
+  podDisruptionBudget:
+    enabled: true
 
 ## @section Common parameters
 ##

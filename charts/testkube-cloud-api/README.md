@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.153.0](https://img.shields.io/badge/Version-1.153.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.15](https://img.shields.io/badge/AppVersion-1.11.15-informational?style=flat-square)
+![Version: 1.157.0](https://img.shields.io/badge/Version-1.157.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.17](https://img.shields.io/badge/AppVersion-1.11.17-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -157,6 +157,7 @@ A Helm chart for Testkube Cloud API
 | global.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | global.mongo.readPreference | string | `""` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | global.nats.uri | string | `""` | NATS URI |
+| global.podDisruptionBudget | object | `{"enabled":false}` | Global PodDisruptionBudget |
 | global.podSecurityContext | object | `{}` | Global security Context for all pods |
 | global.restApiSubdomain | string | `"api"` | REST API subdomain which get prepended to the domain |
 | global.scimApiSubdomain | string | `"api"` | SCIM API subdomain which get prepended to the domain |
@@ -183,14 +184,14 @@ A Helm chart for Testkube Cloud API
 | grpcIngress.maxPayloadSize | string | `"16m"` | Max payload size for proxied gRPC API |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
-| image.repository | string | `"kubeshop/testkube-cloud-api"` |  |
-| image.tag | string | `"1.11.15"` |  |
+| image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
+| image.tag | string | `"1.11.17"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
 | migrationImage.pullPolicy | string | `"IfNotPresent"` |  |
 | migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
-| migrationImage.tag | string | `"1.11.15"` |  |
+| migrationImage.tag | string | `"1.11.17"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | payments.apiKey | string | `""` | Payments API key (currently only Stripe is supported) |
@@ -199,6 +200,9 @@ A Helm chart for Testkube Cloud API
 | payments.portalConfigurationId | string | `""` | Payments portal configuration ID (currently only Stripe is supported) |
 | payments.secretRef | string | `""` | Payments config secret ref (secret must contain keys: PAYMENTS_PORTAL_CONFIGURATION_ID, PAYMENTS_ENDPOINT_SECRET and PAYMENTS_API_KEY) (default is `testkube-cloud-payments-secret`) |
 | podAnnotations | object | `{}` |  |
+| podDisruptionBudget.enabled | bool | `false` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
+| podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
+| podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
 | podSecurityContext | object | `{}` | Pod Security Context |
 | priorityClassName | string | `""` | Priority class name defines the priority of this pod relative to others in the cluster. |
 | prometheus.enabled | bool | `true` | Toggle whether to create ServiceMonitor resource for Prometheus Operator |

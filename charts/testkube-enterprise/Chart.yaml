@@ -2,45 +2,45 @@ apiVersion: v2
 name: testkube-enterprise
 description: A Helm chart for Testkube Enterprise
 type: application
-version: 2.191.0
+version: 2.220.0
 dependencies:
   - name: common
     version: 2.13.3
     repository: oci://registry-1.docker.io/bitnamicharts
   - name: testkube-cloud-api
-    version: 1.153.0
+    version: 1.157.0
     repository: file://../testkube-cloud-api
     condition: testkube-cloud-api.enabled
   - name: testkube-cloud-ui
-    version: 1.102.0
+    version: 1.105.0
     repository: file://../testkube-cloud-ui
     condition: testkube-cloud-ui.enabled
   - name: testkube-worker-service
-    version: 1.60.0
+    version: 1.64.0
     repository: file://../testkube-worker-service
   - name: testkube-ai-service
-    version: 1.1.0
+    version: 1.4.0
     repository: file://../testkube-ai-service
     condition: testkube-ai-service.enabled
   - name: testkube
     alias: testkube-agent
-    version: 2.1.165
+    version: 2.1.186
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex
-    version: 0.19.1-8
+    version: 0.19.1-9
     repository: file://./charts/dex
     condition: dex.enabled
   - name: mongodb
-    version: 16.2.1-1
+    version: 16.2.1-2
     repository: file://./charts/mongodb
     condition: mongodb.enabled
   - name: nats
     condition: testkube-api.nats.enabled
-    version: 1.2.6-4
+    version: 1.2.6-5
     repository: "file://./charts/nats"
   - name: minio
-    version: 14.8.3-2
+    version: 14.8.3-3
     repository: file://./charts/minio
     condition: minio.enabled
 maintainers:

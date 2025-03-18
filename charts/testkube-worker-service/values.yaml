@@ -58,15 +58,18 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods
   podSecurityContext: {}
+  # -- Global PodDisruptionBudget
+  podDisruptionBudget:
+    enabled: false
 replicaCount: 1
 # -- Priority class name defines the priority of this pod relative to others in the cluster.
 priorityClassName: ""
 image:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
   registry: ""
-  repository: kubeshop/testkube-worker-service
+  repository: kubeshop/testkube-enterprise-worker-service
   pullPolicy: IfNotPresent
-  tag: "1.11.15"
+  tag: "1.11.17"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -167,3 +170,10 @@ prometheus:
 nodeSelector: {}
 tolerations: []
 affinity: {}
+podDisruptionBudget:
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  enabled: false
+  # -- (int/percentage) Number or percentage of pods that must remain available.
+  minAvailable: ""
+  # -- (int/percentage) Number or percentage of pods that can be unavailable.
+  maxUnavailable: ""
