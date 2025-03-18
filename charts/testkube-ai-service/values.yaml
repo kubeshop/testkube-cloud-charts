@@ -117,17 +117,11 @@ llmTracing:
   apiKey: ""
   # -- Reference to the secret containing the API Key.
   secretRef: ""
-# -- Configuration for OpenAI API (use either this or llmApi configuration)
-openAi:
-  # -- OpenAI API Key - can be provided directly or referenced from a secret
-  apiKey: ""
-  # -- Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key.
-  secretRef: ""
-# -- Alternative configuration for custom LLM API endpoints that support OpenAI API specification
+# -- Configuration for LLM API that supports OpenAI API specification
 llmApi:
-  # -- URL for the custom LLM API service (OpenAI API compatible)
+  # -- Optional URL for custom LLM API services (defaults to OpenAI if not provided)
   url: ""
-  # -- API key for the LLM service - can be provided directly or referenced from a secret
+  # -- API key for accessing the LLM service - can be provided directly or referenced from a secret
   apiKey: ""
   # -- Reference to the secret containing the LLM API token
   secretRef: ""

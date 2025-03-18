@@ -66,17 +66,8 @@ spec:
             {{ end }}
             - name: AUDIENCE
               value: "{{ .Values.oauthAudience }}"
-            - name: OPENAI_API_KEY
-              {{- with .Values.openAi.apiKey }}
-              value: "{{ . }}"
-              {{- else }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.openAi.secretRef }}
-                  key: OPENAI_API_KEY
-              {{- end }}
-            - name: LLM_API_URL
               {{- with .Values.llmApi.url }}
+            - name: LLM_API_URL
               value: "{{ . }}"
               {{- end }}
             - name: LLM_API_KEY
