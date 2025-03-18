@@ -1,6 +1,6 @@
 # testkube-ai-service
 
-![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
 
 A Helm chart for Testkube AI service
 
@@ -28,7 +28,6 @@ A Helm chart for Testkube AI service
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | controlPlaneRestApiUri | string | `""` | URI to Testkube's control plane REST API (e.g. https://api.testkube.io) |
-| env | string | `"production"` | Environment of deployment (DEPRECATED) |
 | fullnameOverride | string | `""` |  |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
@@ -51,6 +50,10 @@ A Helm chart for Testkube AI service
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `true` |  |
+| llmApi | object | `{"apiKey":"","secretRef":"","url":""}` | Configuration for LLM API that supports OpenAI API specification |
+| llmApi.apiKey | string | `""` | API key for accessing the LLM service - can be provided directly or referenced from a secret |
+| llmApi.secretRef | string | `""` | Reference to the secret containing the LLM API token |
+| llmApi.url | string | `""` | Optional URL for custom LLM API services (defaults to OpenAI if not provided) |
 | llmTracing | object | `{"apiKey":"","enabled":false,"secretRef":""}` | Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments. |
 | llmTracing.apiKey | string | `""` | Can be provided directly or referenced from a secret. |
 | llmTracing.enabled | bool | `false` | Toggle whether to enable or disable LLM tracing |
@@ -63,8 +66,6 @@ A Helm chart for Testkube AI service
 | oauthIssuer | string | `""` | Specify issuer to skip OIDC Discovery |
 | oauthJwksUri | string | `""` | Specify the URL to fetch the JWK set document and skip OIDC Discovery |
 | oidcDiscoveryUri | string | `""` | Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`. |
-| openAi.apiKey | string | `""` | OpenAI API Key - can be provided directly or referenced from a secret |
-| openAi.secretRef | string | `""` | Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key. |
 | podAnnotations | object | `{}` |  |
 | podDisruptionBudget.enabled | bool | `false` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
 | podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
