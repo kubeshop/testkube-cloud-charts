@@ -47,12 +47,6 @@ spec:
           env:
             - name: CONTROL_PLANE_ENDPOINT
               value: {{ if .Values.controlPlaneRestApiUri }}{{ .Values.controlPlaneRestApiUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
-            - name: NODE_ENV
-              value: "{{ .Values.nodeEnv | default .Values.env | default "production" }}"
-            - name: LOG_LEVEL
-              value: "{{ .Values.logLevel | default "info" }}"
-            - name: PORT
-              value: "{{ .Values.service.port }}"
             {{ if and .Values.oauthIssuer .Values.oauthJwksUri }}
             - name: OAUTH_ISSUER
               value: "{{ .Values.oauthIssuer }}"
@@ -62,18 +56,24 @@ spec:
             - name: OIDC_CONFIGURATION_URL
               value: {{ if .Values.global.dex.issuer}}{{ .Values.global.dex.issuer }}/.well-known/openid-configuration{{ else if .Values.oidcDiscoveryUri }}{{ .Values.oidcDiscoveryUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp/.well-known/openid-configuration{{ end }}
             {{ end }}
-            - name: AUDIENCE
+            - name: NODE_ENV
+              value: "{{ .Values.nodeEnv | default .Values.env | default "production" }}"
+            - name: LOG_LEVEL
+              value: "{{ .Values.logLevel | default "info" }}"
+            - name: PORT
+              value: "{{ .Values.service.port }}"
+            - name: OAUTH_AUDIENCE
               value: "{{ .Values.oauthAudience }}"
-              {{- with .Values.llmApi.url }}
+            {{- with .Values.llmApi.url }}
             - name: LLM_API_URL
               value: "{{ . }}"
-              {{- end }}
+            {{- end }}
             - name: LLM_API_KEY
               {{- if .Values.llmApi.secretRef }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.llmApi.secretRef }}
-                  key: LLM_API_KEY
+                  key: {{ default "LLM_API_KEY" .Values.llmApi.secretRefKey }}
               {{- else }}
               value: "{{ .Values.llmApi.apiKey }}"
               {{- end }}
@@ -85,7 +85,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.llmTracing.secretRef }}
-                  key: LLM_TRACING_API_KEY
+                  key: {{ default "LLM_TRACING_API_KEY" .Values.llmTracing.secretRefKey }}
               {{- end }}
             {{ end }}
             - name: USE_TLS

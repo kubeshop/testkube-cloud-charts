@@ -84,6 +84,8 @@ ingress:
 additionalEnvVars: []
 # - name: HTTP_PROXY
 #   value: "http://proxy.domain:8080"
+# - name: DO_NOT_TRACK
+#   value: "true"
 resources: {}
 autoscaling:
   enabled: false
@@ -118,6 +120,8 @@ llmTracing:
   apiKey: ""
   # -- Reference to the secret containing the API Key.
   secretRef: ""
+  # -- Reference to the secret key containing the API Key.
+  secretRefKey: ""
 # -- Configuration for LLM API that supports OpenAI API specification
 llmApi:
   # -- Optional URL for custom LLM API services (defaults to OpenAI if not provided)
@@ -126,6 +130,8 @@ llmApi:
   apiKey: ""
   # -- Reference to the secret containing the LLM API token
   secretRef: ""
+  # -- Reference to the secret key containing the LLM API token.
+  secretRefKey: ""
 podDisruptionBudget:
   # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
   enabled: false

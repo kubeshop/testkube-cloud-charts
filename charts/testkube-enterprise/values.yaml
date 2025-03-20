@@ -658,12 +658,18 @@ testkube-ai-service:
     apiKey: ""
     # -- Reference to the secret containing the API Key.
     secretRef: ""
-  # Configuration for OpenAI API
-  openAi:
+    # -- Reference to the secret key containing the LLM API token.
+    secretRefKey: ""
+  # -- Configuration for LLM API that supports OpenAI API specification
+  llmApi:
+    # -- Optional URL for custom LLM API services (defaults to OpenAI if not provided)
+    url: ""
     # -- OpenAI API Key - can be provided directly or referenced from a secret
     apiKey: ""
     # -- Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key.
     secretRef: ""
+    # -- Reference to the secret key containing the LLM API token.
+    secretRefKey: ""
 ## NATS chart parameter
 ## For more configuration parameters of NATS chart please look here: https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
