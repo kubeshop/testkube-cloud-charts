@@ -47,7 +47,6 @@ spec:
           env:
             - name: CONTROL_PLANE_ENDPOINT
               value: {{ if .Values.controlPlaneRestApiUri }}{{ .Values.controlPlaneRestApiUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
-            # TODO: check if these 2 OAUTH envs are really needed. If not, remove them
             {{ if and .Values.oauthIssuer .Values.oauthJwksUri }}
             - name: OAUTH_ISSUER
               value: "{{ .Values.oauthIssuer }}"
