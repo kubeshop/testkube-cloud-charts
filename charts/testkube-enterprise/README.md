@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.228.0](https://img.shields.io/badge/Version-2.228.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.229.0](https://img.shields.io/badge/Version-2.229.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-ai-service | testkube-ai-service | 1.6.0 |
+| file://../testkube-ai-service | testkube-ai-service | 1.7.0 |
 | file://../testkube-cloud-api | testkube-cloud-api | 1.159.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.106.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.66.0 |
@@ -218,9 +218,15 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.ingress.annotations | object | `{}` |  |
 | testkube-ai-service.ingress.className | string | `"nginx"` |  |
 | testkube-ai-service.ingress.enabled | bool | `true` |  |
-| testkube-ai-service.llmTracing | object | `{"apiKey":"","secretRef":""}` | Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments. |
+| testkube-ai-service.llmApi | object | `{"apiKey":"","secretRef":"","secretRefKey":"","url":""}` | Configuration for LLM API that supports OpenAI API specification |
+| testkube-ai-service.llmApi.apiKey | string | `""` | OpenAI API Key - can be provided directly or referenced from a secret |
+| testkube-ai-service.llmApi.secretRef | string | `""` | Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key. |
+| testkube-ai-service.llmApi.secretRefKey | string | `""` | Reference to the secret key containing the LLM API token. |
+| testkube-ai-service.llmApi.url | string | `""` | Optional URL for custom LLM API services (defaults to OpenAI if not provided) |
+| testkube-ai-service.llmTracing | object | `{"apiKey":"","secretRef":"","secretRefKey":""}` | Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments. |
 | testkube-ai-service.llmTracing.apiKey | string | `""` | Can be provided directly or referenced from a secret. |
 | testkube-ai-service.llmTracing.secretRef | string | `""` | Reference to the secret containing the API Key. |
+| testkube-ai-service.llmTracing.secretRefKey | string | `""` | Reference to the secret key containing the LLM API token. |
 | testkube-ai-service.logLevel | string | `"info"` | Log level |
 | testkube-ai-service.nameOverride | string | `""` |  |
 | testkube-ai-service.nodeEnv | string | `"production"` | Environment of deployment |
@@ -229,8 +235,6 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.oauthIssuer | string | `""` | Specify issuer to skip OIDC Discovery |
 | testkube-ai-service.oauthJwksUri | string | `""` | Specify the URL to fetch the JWK set document and skip OIDC Discovery |
 | testkube-ai-service.oidcDiscoveryUri | string | `""` | Use OpenID Connect (OIDC) Discovery URI to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`. |
-| testkube-ai-service.openAi.apiKey | string | `""` | OpenAI API Key - can be provided directly or referenced from a secret |
-| testkube-ai-service.openAi.secretRef | string | `""` | Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key. |
 | testkube-ai-service.podAnnotations | object | `{}` |  |
 | testkube-ai-service.podDisruptionBudget | object | `{"enabled":false,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
 | testkube-ai-service.podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |

@@ -1,6 +1,6 @@
 # testkube-ai-service
 
-![Version: 1.6.0](https://img.shields.io/badge/Version-1.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
+![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
 
 A Helm chart for Testkube AI service
 
@@ -50,14 +50,16 @@ A Helm chart for Testkube AI service
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `true` |  |
-| llmApi | object | `{"apiKey":"","secretRef":"","url":""}` | Configuration for LLM API that supports OpenAI API specification |
+| llmApi | object | `{"apiKey":"","secretRef":"","secretRefKey":"","url":""}` | Configuration for LLM API that supports OpenAI API specification |
 | llmApi.apiKey | string | `""` | API key for accessing the LLM service - can be provided directly or referenced from a secret |
 | llmApi.secretRef | string | `""` | Reference to the secret containing the LLM API token |
+| llmApi.secretRefKey | string | `""` | Reference to the secret key containing the LLM API token. |
 | llmApi.url | string | `""` | Optional URL for custom LLM API services (defaults to OpenAI if not provided) |
-| llmTracing | object | `{"apiKey":"","enabled":false,"secretRef":""}` | Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments. |
+| llmTracing | object | `{"apiKey":"","enabled":false,"secretRef":"","secretRefKey":""}` | Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments. |
 | llmTracing.apiKey | string | `""` | Can be provided directly or referenced from a secret. |
 | llmTracing.enabled | bool | `false` | Toggle whether to enable or disable LLM tracing |
 | llmTracing.secretRef | string | `""` | Reference to the secret containing the API Key. |
+| llmTracing.secretRefKey | string | `""` | Reference to the secret key containing the API Key. |
 | logLevel | string | `"info"` | Log level |
 | nameOverride | string | `""` |  |
 | nodeEnv | string | `"production"` | Environment of deployment |
