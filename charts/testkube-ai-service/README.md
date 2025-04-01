@@ -1,6 +1,6 @@
 # testkube-ai-service
 
-![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
+![Version: 1.8.0](https://img.shields.io/badge/Version-1.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
 
 A Helm chart for Testkube AI service
 
@@ -28,6 +28,11 @@ A Helm chart for Testkube AI service
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | controlPlaneRestApiUri | string | `""` | URI to Testkube's control plane REST API (e.g. https://api.testkube.io) |
+| externalSecrets | object | `{"clusterSecretStoreName":"secret-store","enabled":false,"keys":{},"refreshInterval":"5m"}` | Retrieve secrets from external sources using [External Secrets Operator](https://external-secrets.io/) |
+| externalSecrets.clusterSecretStoreName | string | `"secret-store"` | Cluster Secret Store name |
+| externalSecrets.enabled | bool | `false` | Enable the use of external secrets |
+| externalSecrets.keys | object | `{}` | Key/value secrets to be retrieved from the external secret store |
+| externalSecrets.refreshInterval | string | `"5m"` | Refresh interval for external secrets |
 | fullnameOverride | string | `""` |  |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers |
 | global.customCaSecretKey | string | `"ca.crt"` | Custom CA to use as a trusted CA during TLS connections. Specify a key for the secret specified under customCaSecretRef. |
