@@ -99,6 +99,15 @@ spec:
             - name: SSL_CERT_DIR
               value: "{{ $certsDir }}"
             {{- end }}
+            {{- if .Values.externalSecrets.enabled -}}
+            {{- range $key, $value := .Values.externalSecrets.keys }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ $value }}
+                  name: ai-service-external-secrets
+            {{ end }}
+            {{- end}}
             {{- with .Values.additionalEnvVars }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

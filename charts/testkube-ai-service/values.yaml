@@ -139,3 +139,13 @@ podDisruptionBudget:
   minAvailable: ""
   # -- (int/percentage) Number or percentage of pods that can be unavailable.
   maxUnavailable: ""
+# -- Retrieve secrets from external sources using [External Secrets Operator](https://external-secrets.io/)
+externalSecrets:
+  # -- Enable the use of external secrets
+  enabled: false
+  # -- Refresh interval for external secrets
+  refreshInterval: 5m
+  # -- Cluster Secret Store name
+  clusterSecretStoreName: secret-store
+  # -- Key/value secrets to be retrieved from the external secret store
+  keys: {}
