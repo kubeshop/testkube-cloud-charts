@@ -106,12 +106,6 @@ nodeEnv: "production"
 logLevel: "info"
 # -- Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`.
 oidcDiscoveryUri: ""
-# -- Specify issuer to skip OIDC Discovery
-oauthIssuer: ""
-# -- Specify the URL to fetch the JWK set document and skip OIDC Discovery
-oauthJwksUri: ""
-# -- OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration.
-oauthAudience: ""
 # -- Configuration for tracing and monitoring LLM operations in Testkube Cloud. Not required for enterprise/on-premises deployments.
 llmTracing:
   # -- Toggle whether to enable or disable LLM tracing

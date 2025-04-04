@@ -47,23 +47,14 @@ spec:
           env:
             - name: CONTROL_PLANE_ENDPOINT
               value: {{ if .Values.controlPlaneRestApiUri }}{{ .Values.controlPlaneRestApiUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}{{ end }}
-            {{ if and .Values.oauthIssuer .Values.oauthJwksUri }}
-            - name: OAUTH_ISSUER
-              value: "{{ .Values.oauthIssuer }}"
-            - name: OAUTH_JWKS_URI
-              value: "{{ .Values.oauthJwksUri }}"
-            {{ else }}
             - name: OIDC_CONFIGURATION_URL
               value: {{ if .Values.global.dex.issuer}}{{ .Values.global.dex.issuer }}/.well-known/openid-configuration{{ else if .Values.oidcDiscoveryUri }}{{ .Values.oidcDiscoveryUri }}{{ else }}https://{{ .Values.global.restApiSubdomain }}.{{ .Values.global.domain }}/idp/.well-known/openid-configuration{{ end }}
-            {{ end }}
             - name: NODE_ENV
               value: "{{ .Values.nodeEnv | default .Values.env | default "production" }}"
             - name: LOG_LEVEL
               value: "{{ .Values.logLevel | default "info" }}"
             - name: PORT
               value: "{{ .Values.service.port }}"
-            - name: OAUTH_AUDIENCE
-              value: "{{ .Values.oauthAudience }}"
             {{- with .Values.llmApi.url }}
             - name: LLM_API_URL
               value: "{{ . }}"
