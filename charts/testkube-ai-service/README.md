@@ -1,6 +1,6 @@
 # testkube-ai-service
 
-![Version: 1.9.0](https://img.shields.io/badge/Version-1.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.0](https://img.shields.io/badge/AppVersion-2.3.0-informational?style=flat-square)
+![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.0](https://img.shields.io/badge/AppVersion-2.3.0-informational?style=flat-square)
 
 A Helm chart for Testkube AI service
 
@@ -69,9 +69,6 @@ A Helm chart for Testkube AI service
 | nameOverride | string | `""` |  |
 | nodeEnv | string | `"production"` | Environment of deployment |
 | nodeSelector | object | `{}` |  |
-| oauthAudience | string | `""` | OAuth audience represents the expected value of the `aud` claim in the JWT token. This is the static client ID in the Dex configuration. |
-| oauthIssuer | string | `""` | Specify issuer to skip OIDC Discovery |
-| oauthJwksUri | string | `""` | Specify the URL to fetch the JWK set document and skip OIDC Discovery |
 | oidcDiscoveryUri | string | `""` | Use OpenID Conect (OIDC) Discovery endpoint to fetch configurations from the identity provider. The path should end with `/.well-known/openid-configuration`. |
 | podAnnotations | object | `{}` |  |
 | podDisruptionBudget.enabled | bool | `false` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
