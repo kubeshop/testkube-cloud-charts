@@ -477,16 +477,34 @@ spec:
               containerPort: {{ .Values.scim.port }}
               protocol: TCP
             {{- end }}
+          {{- if .Values.customLivenessProbe }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customLivenessProbe "context" $) | nindent 12 }}
+          {{- else if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
               path: /health
               scheme: {{ if .Values.api.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
               port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customReadinessProbe "context" $) | nindent 12 }}
+          {{- else if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
               path: /health
               scheme: {{ if .Values.api.tls.serveHTTPS }}HTTPS{{ else }}HTTP{{ end }}
               port: {{ if .Values.api.tls.serveHTTPS }}https{{ else }}http{{ end }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

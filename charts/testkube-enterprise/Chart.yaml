@@ -24,7 +24,7 @@ dependencies:
     condition: testkube-ai-service.enabled
   - name: testkube
     alias: testkube-agent
-    version: 2.1.211
+    version: 2.1.212
     repository: https://kubeshop.github.io/helm-charts
     condition: testkube-agent.enabled
   - name: dex
