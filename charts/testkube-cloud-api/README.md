@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.165.0](https://img.shields.io/badge/Version-1.165.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.25](https://img.shields.io/badge/AppVersion-1.11.25-informational?style=flat-square)
+![Version: 1.166.0](https://img.shields.io/badge/Version-1.166.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.25](https://img.shields.io/badge/AppVersion-1.11.25-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -188,6 +188,12 @@ A Helm chart for Testkube Cloud API
 | image.tag | string | `"1.11.25"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `"nginx"` | Common Ingress class name (NGINX is the only officially supported ingress controller and should not be changed) |
+| livenessProbe.enabled | bool | `true` |  |
+| livenessProbe.failureThreshold | int | `3` |  |
+| livenessProbe.initialDelaySeconds | int | `0` |  |
+| livenessProbe.periodSeconds | int | `10` |  |
+| livenessProbe.successThreshold | int | `1` |  |
+| livenessProbe.timeoutSeconds | int | `1` |  |
 | migrationImage.pullPolicy | string | `"IfNotPresent"` |  |
 | migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
@@ -210,6 +216,12 @@ A Helm chart for Testkube Cloud API
 | prometheus.path | string | `"/metrics"` | Metrics path which will be scraped |
 | prometheus.port | string | `"metrics"` | Metrics port which will be scraper |
 | prometheus.scrapeInterval | string | `"15s"` | Scrape interval configuration in ServiceMonitor resource |
+| readinessProbe.enabled | bool | `true` |  |
+| readinessProbe.failureThreshold | int | `3` |  |
+| readinessProbe.initialDelaySeconds | int | `0` |  |
+| readinessProbe.periodSeconds | int | `10` |  |
+| readinessProbe.successThreshold | int | `1` |  |
+| readinessProbe.timeoutSeconds | int | `1` |  |
 | replicaCount | int | `1` |  |
 | resources.limits | object | `{}` | It is strongly recommended to set limits for both cpu and memory |
 | resources.requests.cpu | string | `"100m"` |  |
