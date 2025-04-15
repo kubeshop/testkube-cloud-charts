@@ -432,6 +432,8 @@ testkube-cloud-api:
     oauth:
       # -- OAuth secret ref for OAuth configuration (secret must contain keys: OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_ISSUER_URL, OAUTH_REDIRECT_URI) (default is `testkube-cloud-oauth-secret`)
       secretRef: ""
+      # -- OAuth Client ID for the configured CLI public static client in Dex
+      cliClientId: "testkube-cloud-cli"
       # -- OAuth Client ID for the configured static client in Dex
       clientId: "testkube-enterprise"
       # -- OAuth Client ID for the configured static client in Dex
