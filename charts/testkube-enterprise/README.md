@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.276.0](https://img.shields.io/badge/Version-2.276.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.277.0](https://img.shields.io/badge/Version-2.277.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -302,6 +302,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.mongo.dsnSecretRef | string | `""` | Mongo DSN connection string secret ref (secret must contain key MONGO_DSN) (default is `mongo-dsn`) |
 | testkube-cloud-api.api.mongo.readPreference | string | `"secondaryPreferred"` | Mongo read preference (primary|primaryPreferred|secondary|secondaryPreferred|nearest) |
 | testkube-cloud-api.api.nats.uri | string | `"nats://testkube-enterprise-nats:4222"` |  |
+| testkube-cloud-api.api.oauth.cliClientId | string | `"testkube-cloud-cli"` | OAuth Client ID for the configured CLI public static client in Dex |
 | testkube-cloud-api.api.oauth.clientId | string | `"testkube-enterprise"` | OAuth Client ID for the configured static client in Dex |
 | testkube-cloud-api.api.oauth.clientSecret | string | `"QWkVzs3nct6HZM5hxsPzwaZtq"` | OAuth Client ID for the configured static client in Dex |
 | testkube-cloud-api.api.oauth.issuerUrl | string | `""` | if oauth.secretRef is empty (""), then oauth.issuerUrl field will be used for the OAuth issuer URL |
