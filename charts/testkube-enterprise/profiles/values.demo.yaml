@@ -113,6 +113,12 @@ dex:
           - http://localhost:38090/auth/callback          
         name: Testkube
         secret: QWkVzs3nct6HZM5hxsPzwaZtq
+      - id: testkube-cloud-cli
+        name: 'Testkube Enterprise CLI'
+        public: true
+        redirectURIs:
+        - 'http://127.0.0.1:8090/callback'
+        - 'http://127.0.0.1:38090/callback'
     additionalConfig: |
       enablePasswordDB: true
       staticPasswords:
