@@ -39,8 +39,8 @@ testkube-cloud-api:
       bootstrapEnv: "my-first-environment"
       bootstrapAgentTokenSecretRef: "testkube-default-agent-token"
     agent:
-      host: "testkube-enterprise-api:grpcs"
-      port: 80
+      host: "testkube-enterprise-api"
+      port: 8089
     tls:
       serveHTTPS: false
     oauth:
