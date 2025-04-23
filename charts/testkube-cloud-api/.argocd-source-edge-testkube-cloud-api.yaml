@@ -10,5 +10,5 @@ helm:
     value: docker.io/kubeshop/testkube-migration
     forcestring: true
   - name: migrationImage.tag
-    value: 1.11.27-rc.12
+    value: 1.11.27-rc.13
     forcestring: true
