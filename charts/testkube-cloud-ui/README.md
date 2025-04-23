@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.107.0](https://img.shields.io/badge/Version-1.107.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.12.0](https://img.shields.io/badge/AppVersion-2.12.0-informational?style=flat-square)
+![Version: 1.108.0](https://img.shields.io/badge/Version-1.108.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.12.0](https://img.shields.io/badge/AppVersion-2.12.0-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -20,7 +20,7 @@ A Helm chart for Testkube Cloud UI
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| additionalEnv | object | `{}` |  |
+| additionalEnv.FEATURE_MULTI_AGENT | bool | `true` |  |
 | affinity | object | `{}` |  |
 | ai.aiServiceApiUri | string | `""` | Testkube AI service API URI |
 | ai.enabled | bool | `false` | Enable Testkube AI features |
