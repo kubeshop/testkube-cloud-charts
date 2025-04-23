@@ -80,7 +80,7 @@ ai:
   # -- Testkube AI service API URI
   aiServiceApiUri: ""
 additionalEnv:
-  FEATURE_MULTI_AGENT: "true"
+  FEATURE_MULTI_AGENT: true
 externalSecrets:
   enabled: false
   refreshInterval: 5m
