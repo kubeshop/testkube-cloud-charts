@@ -470,7 +470,7 @@ testkube-cloud-ui:
     # -- Testkube AI service API URI
     aiServiceApiUri: ""
   additionalEnv: 
-    FEATURE_MULTI_AGENT: "true"
+    FEATURE_MULTI_AGENT: true
   image:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
