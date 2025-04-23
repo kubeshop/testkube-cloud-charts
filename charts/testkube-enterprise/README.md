@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.290.0](https://img.shields.io/badge/Version-2.290.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.291.0](https://img.shields.io/badge/Version-2.291.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -355,6 +355,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | testkube-cloud-api.testConnection.enabled | bool | `false` |  |
 | testkube-cloud-api.topologySpreadConstraints | list | `[]` | Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster. |
+| testkube-cloud-ui.additionalEnv.FEATURE_MULTI_AGENT | bool | `true` |  |
 | testkube-cloud-ui.ai.aiServiceApiUri | string | `""` | Testkube AI service API URI |
 | testkube-cloud-ui.ai.enabled | bool | `false` | Enable Testkube AI features |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
