@@ -45,7 +45,7 @@ A Helm chart for Testkube Cloud API
 | api.features.disablePersonalOrgs | bool | `false` | Toggle whether to disable personal organizations when a user signs up for the first time |
 | api.features.legacyTests | bool | `false` | Toggle whether to enable support for legacy tests (Test, TestSuite) |
 | api.github | object | `{}` |  |
-| api.inviteMode | string | `"email"` | Configure which invitation mode to use (for now email is the supported option): email uses SMTP protocol to send email invites |
+| api.inviteMode | string | `"email"` | Configure which invitation mode to use (for now email is the only supported option): email uses SMTP protocol to send email invites |
 | api.logServer | object | `{"caFile":"","certFile":"","enabled":false,"grpcAddress":"testkube-logs-service:8089","host":"","keyFile":"","port":"443","secure":"false","skipVerify":"true"}` | External log server connection configuration |
 | api.logServer.caFile | string | `""` | TLS CA certificate file |
 | api.logServer.certFile | string | `""` | TLS certificate file |

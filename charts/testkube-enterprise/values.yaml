@@ -352,7 +352,7 @@ testkube-cloud-api:
       keyFile: ""
       # -- TLS CA certificate file
       caFile: ""
-    # -- Configure which invitation mode to use (for now email is the supported option): email uses SMTP protocol to send email invites
+    # -- Configure which invitation mode to use (for now email is the only supported option): email uses SMTP protocol to send email invites
     inviteMode: email
     email:
       # -- Email to use for sending outgoing emails
