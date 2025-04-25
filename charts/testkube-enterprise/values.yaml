@@ -475,7 +475,7 @@ testkube-cloud-ui:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-ui
-    tag: 2.12.1
+    tag: 2.12.2
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
