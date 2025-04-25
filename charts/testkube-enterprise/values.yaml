@@ -352,8 +352,8 @@ testkube-cloud-api:
       keyFile: ""
       # -- TLS CA certificate file
       caFile: ""
-    # -- Configure which invitation mode to use (email|auto-accept): email uses SMTP protocol to send email invites and auto-accept immediately adds them
-    inviteMode: auto-accept
+    # -- Configure the invitation mode — set to email to send invitations via SMTP, or use none if you don't have an SMTP server.
+    inviteMode: none
     email:
       # -- Email to use for sending outgoing emails
       fromEmail: ""
