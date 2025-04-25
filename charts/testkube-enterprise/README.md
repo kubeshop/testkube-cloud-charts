@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.297.0](https://img.shields.io/badge/Version-2.297.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.298.0](https://img.shields.io/badge/Version-2.298.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -17,7 +17,7 @@ A Helm chart for Testkube Enterprise
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../testkube-ai-service | testkube-ai-service | 1.14.0 |
-| file://../testkube-cloud-api | testkube-cloud-api | 1.169.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.170.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.111.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.75.0 |
 | file://./charts/dex | dex | 0.19.1-9 |
@@ -272,7 +272,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.email.fromName | string | `""` | Name to use for sending outgoing emails |
 | testkube-cloud-api.api.features.disablePersonalOrgs | bool | `false` | Toggle whether to disable personal organizations when a user signs up for the first time |
 | testkube-cloud-api.api.features.legacyTests | bool | `false` | Toggle whether to enable support for legacy tests (Test, TestSuite) |
-| testkube-cloud-api.api.inviteMode | string | `"none"` | Configure the invitation mode — set to email to send invitations via SMTP, or use none if you don't have an SMTP server |
+| testkube-cloud-api.api.inviteMode | string | `"none"` | Configure the invitation mode — set to email to send invitations via SMTP, or use none if you don't have an SMTP server. |
 | testkube-cloud-api.api.logServer | object | `{"caFile":"","certFile":"","enabled":false,"grpcAddress":"testkube-enterprise-logs-service:8089","keyFile":"","secure":"false","skipVerify":"true"}` | External log server connection configuration |
 | testkube-cloud-api.api.logServer.caFile | string | `""` | TLS CA certificate file |
 | testkube-cloud-api.api.logServer.certFile | string | `""` | TLS certificate file |
