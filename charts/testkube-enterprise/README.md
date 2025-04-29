@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.300.0](https://img.shields.io/badge/Version-2.300.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.300.1](https://img.shields.io/badge/Version-2.300.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,7 +16,7 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-ai-service | testkube-ai-service | 1.14.0 |
+| file://../testkube-ai-service | testkube-ai-service | 1.14.1 |
 | file://../testkube-cloud-api | testkube-cloud-api | 1.171.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.111.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.76.0 |
@@ -106,7 +106,7 @@ A Helm chart for Testkube Enterprise
 | global.tls | object | `{}` |  |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
-| image.tag | string | `"2.3.2"` |  |
+| image.tag | string | `"2.3.3"` |  |
 | minio.affinity | object | `{}` | Affinity for pod assignment. |
 | minio.auth.existingSecret | string | `""` | Use existing secret for credentials details (`auth.rootUser` and `auth.rootPassword` will be ignored and picked up from this secret). The secret has to contain the keys `root-user` and `root-password`) |
 | minio.auth.rootPassword | string | `"t3stkub3-3nt3rpr1s3"` | MinIO root password (secret key) |

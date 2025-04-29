@@ -2,8 +2,8 @@ apiVersion: v2
 name: testkube-ai-service
 description: A Helm chart for Testkube AI service
 type: application
-version: 1.14.0
-appVersion: 2.3.2
+version: 1.14.1
+appVersion: 2.3.3
 maintainers:
   - name: testkube
     url: https://testkube.io
