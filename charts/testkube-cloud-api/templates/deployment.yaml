@@ -457,6 +457,10 @@ spec:
             - name: GITHUB_PRIVATE_KEY_FILE
               value: {{ . | quote }}
             {{- end }}
+            {{- if .Values.api.dex.grpc.host }}
+            - name: DEX_GRPC_API_URL
+              value: "{{ .Values.api.dex.grpc.host }}:{{ .Values.api.dex.grpc.port }}"
+            {{- end }}
             {{- with .Values.additionalEnvVars }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
