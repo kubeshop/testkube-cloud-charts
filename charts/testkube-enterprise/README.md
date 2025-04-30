@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.302.0](https://img.shields.io/badge/Version-2.302.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.303.0](https://img.shields.io/badge/Version-2.303.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -213,7 +213,7 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.image.pullPolicy | string | `"IfNotPresent"` |  |
 | testkube-ai-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-ai-service.image.repository | string | `"kubeshop/testkube-ai-copilot"` |  |
-| testkube-ai-service.image.tag | string | `"2.1.25"` |  |
+| testkube-ai-service.image.tag | string | `"2.3.3"` |  |
 | testkube-ai-service.imagePullSecrets | list | `[]` |  |
 | testkube-ai-service.ingress.annotations | object | `{}` |  |
 | testkube-ai-service.ingress.className | string | `"nginx"` |  |

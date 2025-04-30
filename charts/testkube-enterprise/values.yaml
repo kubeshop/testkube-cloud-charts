@@ -582,7 +582,7 @@ testkube-ai-service:
     registry: ""
     repository: kubeshop/testkube-ai-copilot
     pullPolicy: IfNotPresent
-    tag: 2.1.25
+    tag: 2.3.3
   imagePullSecrets: []
   nameOverride: ""
   serviceAccount:
