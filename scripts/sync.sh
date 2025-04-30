@@ -50,7 +50,7 @@ yq eval -i '.image.tag = env(enterprise_worker_service_app_version)' "charts/tes
 echo "Updating testkube-ai-service version in testkube-ai-service values.yaml to $enterprise_ai_service_app_version"
 yq eval -i '.image.tag = env(enterprise_ai_service_app_version)' "charts/testkube-ai-service/values.yaml"
 echo "Updating testkube-ai-service version in testkube-enterprise Helm chart to $enterprise_ai_service_app_version"
-yq eval -i '.image.tag = env(enterprise_ai_service_app_version)' "charts/testkube-enterprise/values.yaml"
+yq eval -i '.testkube-ai-service.image.tag = env(enterprise_ai_service_app_version)' "charts/testkube-enterprise/values.yaml"
 
 
 # Update the dependencies field in Chart.yaml
