@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.171.0](https://img.shields.io/badge/Version-1.171.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.29](https://img.shields.io/badge/AppVersion-1.11.29-informational?style=flat-square)
+![Version: 1.172.0](https://img.shields.io/badge/Version-1.172.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.29](https://img.shields.io/badge/AppVersion-1.11.29-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -38,6 +38,8 @@ A Helm chart for Testkube Cloud API
 | api.dashboardAddress | string | `""` | Dashboard address (used in invitation emails) (example `https://cloud.testkube.xyz`) |
 | api.debug.enableGrpcServerLogs | bool | `false` | Toggle whether to enable gRPC server logs |
 | api.debug.enableHttp2Logs | bool | `false` | Toggle whether to enable debug logs by setting the GODEBUG=http2debug=2 |
+| api.dex.grpc.host | string | `""` | Dex GRPC API host |
+| api.dex.grpc.port | int | `5557` | Dex GRPC API port |
 | api.email.fromEmail | string | `""` | Email to use for sending outgoing emails |
 | api.email.fromName | string | `""` | Name to use for sending outgoing emails |
 | api.features.bootstrapConfig.config | object | `{}` |  |
