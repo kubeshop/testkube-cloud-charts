@@ -1,6 +1,6 @@
 # testkube-cloud-ui
 
-![Version: 1.111.0](https://img.shields.io/badge/Version-1.111.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.12.3](https://img.shields.io/badge/AppVersion-2.12.3-informational?style=flat-square)
+![Version: 1.111.1](https://img.shields.io/badge/Version-1.111.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.12.5](https://img.shields.io/badge/AppVersion-2.12.5-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud UI
 
@@ -52,7 +52,7 @@ A Helm chart for Testkube Cloud UI
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
-| image.tag | string | `"2.12.3"` |  |
+| image.tag | string | `"2.12.5"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` | Additional Ingress annotations |
 | ingress.className | string | `"nginx"` | Ingress class (NGINX Controller is the only officially supported Ingress controller) |
