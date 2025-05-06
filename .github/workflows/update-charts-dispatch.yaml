@@ -7,7 +7,7 @@ on:
         trigger-workflow-testkube-cloud-services,
         trigger-workflow-testkube-cloud-ui-main,
         trigger-workflow-testkube-ai-service,
-        trigger-workflow-testkube-agent-main
+        trigger-workflow-testkube-agent-main,
       ]
 
 jobs:
@@ -34,16 +34,10 @@ jobs:
         if: github.event.action == 'trigger-workflow-testkube-cloud-services'
         run: |
           # update application version
-          charts=("testkube-cloud-api" "testkube-worker-service" "testkube-logs-service" )
+          charts=("testkube-cloud-api" "testkube-worker-service" "testkube-logs-service" "testkube-cloud-ui" )
           for chart in "${charts[@]}"; do
             ./scripts/update.sh -c "$chart" -a ${{ github.event.client_payload.appVersion }} --verbose
           done
-
-      - name: Update Helm chart with changes for testkube-cloud-ui service
-        if: github.event.action == 'trigger-workflow-testkube-cloud-ui-main'
-        run: |
-          # update application version
-          ./scripts/update.sh -c "testkube-cloud-ui" -a ${{ github.event.client_payload.appVersion }} --verbose
 
       - name: Update Helm chart with changes for testkube-ai service
         if: github.event.action == 'trigger-workflow-testkube-ai-service'
@@ -79,4 +73,3 @@ jobs:
           git add **/*Chart.yaml **/*README.md charts/testkube-enterprise/Chart.lock charts/testkube-enterprise/profiles/values.demo.yaml **/*values.yaml
           git commit -m "updating testkube-enterprise chart version to ${{ env.ENTERPRISE_CHART_VERSION }}"
           git push --force
-
