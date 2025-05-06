@@ -54,7 +54,7 @@ image:
   repository: kubeshop/testkube-enterprise-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2.12.5"
+  tag: "2.12.6"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

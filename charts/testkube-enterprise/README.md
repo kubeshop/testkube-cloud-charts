@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.310.0](https://img.shields.io/badge/Version-2.310.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.310.1](https://img.shields.io/badge/Version-2.310.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -18,7 +18,7 @@ A Helm chart for Testkube Enterprise
 |------------|------|---------|
 | file://../testkube-ai-service | testkube-ai-service | 1.18.0 |
 | file://../testkube-cloud-api | testkube-cloud-api | 1.173.0 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.112.0 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.112.1 |
 | file://../testkube-worker-service | testkube-worker-service | 1.77.0 |
 | file://./charts/dex | dex | 0.19.1-9 |
 | file://./charts/minio | minio | 14.8.3-3 |
@@ -361,7 +361,7 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
 | testkube-cloud-ui.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"2.12.5"` |  |
+| testkube-cloud-ui.image.tag | string | `"2.12.6"` |  |
 | testkube-cloud-ui.ingress.className | string | `"nginx"` | Ingress classname |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
