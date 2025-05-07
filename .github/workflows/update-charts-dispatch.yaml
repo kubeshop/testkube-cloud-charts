@@ -5,8 +5,6 @@ on:
     types:
       [
         trigger-workflow-testkube-cloud-services,
-        trigger-workflow-testkube-cloud-ui-main,
-        trigger-workflow-testkube-ai-service,
         trigger-workflow-testkube-agent-main,
       ]
 
@@ -34,16 +32,10 @@ jobs:
         if: github.event.action == 'trigger-workflow-testkube-cloud-services'
         run: |
           # update application version
-          charts=("testkube-cloud-api" "testkube-worker-service" "testkube-logs-service" "testkube-cloud-ui" )
+          charts=("testkube-cloud-api" "testkube-worker-service" "testkube-logs-service" "testkube-cloud-ui" "testkube-ai-service" )
           for chart in "${charts[@]}"; do
             ./scripts/update.sh -c "$chart" -a ${{ github.event.client_payload.appVersion }} --verbose
           done
-
-      - name: Update Helm chart with changes for testkube-ai service
-        if: github.event.action == 'trigger-workflow-testkube-ai-service'
-        run: |
-          # update application version
-          ./scripts/update.sh -c "testkube-ai-service" -a ${{ github.event.client_payload.appVersion }} --verbose
 
       - name: Update Agent version
         if: github.event.action == 'trigger-workflow-testkube-agent-main'
