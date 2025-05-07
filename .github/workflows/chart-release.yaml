@@ -1,16 +1,7 @@
 name: Release Helm charts
 
 on:
-  workflow_run:
-    workflows: [ "Update application version on dispatch" ]
-    types:
-      - completed
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "**/.argocd-source-*"
-      - ".github/**"
+  workflow_dispatch:
 
 jobs:
   release-helm-charts:
