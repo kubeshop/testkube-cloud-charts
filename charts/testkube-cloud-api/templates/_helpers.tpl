@@ -132,19 +132,24 @@ Define API image
 {{- $registryName := default "docker.io" .Values.image.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
+{{- $tagSuffix := .Values.image.tagSuffix -}}
 {{- $separator := ":" -}}
 {{- if .Values.image.digest }}
     {{- $separator = "@" -}}
     {{- $tag = .Values.image.digest | toString -}}
 {{- end -}}
 {{- if .Values.global }}
+    {{- if .Values.global.testkubeVersion -}}
+        {{- $tag = .Values.global.testkubeVersion | toString -}}
+    {{- end -}}
+
     {{- if .Values.global.imageRegistry }}
-        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
+        {{- printf "%s/%s%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag $tagSuffix -}}
     {{- else -}}
-        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+        {{- printf "%s/%s%s%s%s" $registryName $repositoryName $separator $tag $tagSuffix -}}
     {{- end -}}
 {{- else -}}
-    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- printf "%s/%s%s%s%s" $registryName $repositoryName $separator $tag $tagSuffix -}}
 {{- end -}}
 {{- end -}}
 
@@ -155,19 +160,24 @@ Define Migration image
 {{- $registryName := default "docker.io" .Values.migrationImage.registry -}}
 {{- $repositoryName := .Values.migrationImage.repository -}}
 {{- $tag := default .Chart.AppVersion .Values.migrationImage.tag | toString -}}
+{{- $tagSuffix := .Values.image.tagSuffix -}}
 {{- $separator := ":" -}}
 {{- if .Values.migrationImage.digest }}
     {{- $separator = "@" -}}
     {{- $tag = .Values.migrationImage.digest | toString -}}
 {{- end -}}
 {{- if .Values.global }}
+    {{- if .Values.global.testkubeVersion -}}
+        {{- $tag = .Values.global.testkubeVersion | toString -}}
+    {{- end -}}
+
     {{- if .Values.global.imageRegistry }}
-        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
+        {{- printf "%s/%s%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag $tagSuffix -}}
     {{- else -}}
-        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+        {{- printf "%s/%s%s%s%s" $registryName $repositoryName $separator $tag $tagSuffix -}}
     {{- end -}}
 {{- else -}}
-    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- printf "%s/%s%s%s%s" $registryName $repositoryName $separator $tag $tagSuffix -}}
 {{- end -}}
 {{- end -}}
 
