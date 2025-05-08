@@ -258,12 +258,12 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.12.0
+    tag: 1.12.1
   migrationImage:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-migration
-    tag: 1.12.0
+    tag: 1.12.1
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -476,7 +476,7 @@ testkube-cloud-ui:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: registry.depot.dev
     repository: 8m4mpphf9g
-    tag: 2.12.6
+    tag: 1.12.1
     tagSuffix: -cloud-ui
   # -- Pod Security Context
   podSecurityContext: {}
@@ -537,7 +537,7 @@ testkube-worker-service:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.12.0
+    tag: 1.12.1
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -584,7 +584,7 @@ testkube-ai-service:
     registry: ""
     repository: kubeshop/testkube-ai-copilot
     pullPolicy: IfNotPresent
-    tag: 2.4.2
+    tag: 1.12.1
   imagePullSecrets: []
   nameOverride: ""
   serviceAccount:

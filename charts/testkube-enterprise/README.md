@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.312.1](https://img.shields.io/badge/Version-2.312.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.312.2](https://img.shields.io/badge/Version-2.312.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,10 +16,10 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-ai-service | testkube-ai-service | 1.18.0 |
-| file://../testkube-cloud-api | testkube-cloud-api | 1.173.1 |
-| file://../testkube-cloud-ui | testkube-cloud-ui | 1.113.0 |
-| file://../testkube-worker-service | testkube-worker-service | 1.77.1 |
+| file://../testkube-ai-service | testkube-ai-service | 1.18.1 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.173.2 |
+| file://../testkube-cloud-ui | testkube-cloud-ui | 1.113.1 |
+| file://../testkube-worker-service | testkube-worker-service | 1.77.2 |
 | file://./charts/dex | dex | 0.19.1-9 |
 | file://./charts/minio | minio | 14.8.3-3 |
 | file://./charts/mongodb | mongodb | 16.2.1-2 |
@@ -60,7 +60,7 @@ A Helm chart for Testkube Enterprise
 | dex.storage | object | `{}` | Configure backend for Dex internal config (more info here https://dexidp.io/docs/storage) |
 | global.aiApiSubdomain | string | `"ai"` | AI API subdomain which get prepended to the domain |
 | global.certManager.issuerRef | string | `""` | Certificate Issuer ref (only used if `provider` is set to `cert-manager`) |
-| global.certificateProvider | string | `"cert-manager"` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
+| global.certificateProvider | string | `""` | TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods |
 | global.containerSecurityContext | object | `{}` | Global security Context for all containers. |
 | global.credentials.masterPassword.secretKeyRef | object | `{"key":"password","name":""}` | Reference to the master password stored in the Secret |
 | global.credentials.masterPassword.secretKeyRef.key | string | `"password"` | Secret key |
@@ -103,6 +103,7 @@ A Helm chart for Testkube Enterprise
 | global.storage.skipVerify | bool | `false` | Toggle whether to skip verifying TLS certificates |
 | global.storage.token | string | `""` | S3 Token |
 | global.storageApiSubdomain | string | `"storage"` | Storage API subdomain which get prepended to the domain |
+| global.testkubeVersion | string | `"1.12.0"` |  |
 | global.tls | object | `{}` |  |
 | global.uiSubdomain | string | `"dashboard"` | UI subdomain which get prepended to the domain |
 | global.websocketApiSubdomain | string | `"websockets"` | Websocket API subdomain which get prepended to the domain |
@@ -213,7 +214,7 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.image.pullPolicy | string | `"IfNotPresent"` |  |
 | testkube-ai-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-ai-service.image.repository | string | `"kubeshop/testkube-ai-copilot"` |  |
-| testkube-ai-service.image.tag | string | `"2.4.2"` |  |
+| testkube-ai-service.image.tag | string | `"1.12.1"` |  |
 | testkube-ai-service.imagePullSecrets | list | `[]` |  |
 | testkube-ai-service.ingress.annotations | object | `{}` |  |
 | testkube-ai-service.ingress.className | string | `"nginx"` |  |
@@ -330,11 +331,11 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.fullnameOverride | string | `"testkube-enterprise-api"` |  |
 | testkube-cloud-api.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.image.repository | string | `"kubeshop/testkube-enterprise-api"` |  |
-| testkube-cloud-api.image.tag | string | `"1.12.0"` |  |
+| testkube-cloud-api.image.tag | string | `"1.12.1"` |  |
 | testkube-cloud-api.ingress.className | string | `"nginx"` |  |
 | testkube-cloud-api.migrationImage.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-cloud-api.migrationImage.repository | string | `"kubeshop/testkube-migration"` |  |
-| testkube-cloud-api.migrationImage.tag | string | `"1.12.0"` |  |
+| testkube-cloud-api.migrationImage.tag | string | `"1.12.1"` |  |
 | testkube-cloud-api.podDisruptionBudget | object | `{"enabled":false,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
 | testkube-cloud-api.podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
 | testkube-cloud-api.podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
@@ -359,9 +360,10 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-ui.ai.aiServiceApiUri | string | `""` | Testkube AI service API URI |
 | testkube-cloud-ui.ai.enabled | bool | `false` | Enable Testkube AI features |
 | testkube-cloud-ui.fullnameOverride | string | `"testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
-| testkube-cloud-ui.image.repository | string | `"kubeshop/testkube-enterprise-ui"` |  |
-| testkube-cloud-ui.image.tag | string | `"2.12.6"` |  |
+| testkube-cloud-ui.image.registry | string | `"registry.depot.dev"` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
+| testkube-cloud-ui.image.repository | string | `"8m4mpphf9g"` |  |
+| testkube-cloud-ui.image.tag | string | `"1.12.1"` |  |
+| testkube-cloud-ui.image.tagSuffix | string | `"-cloud-ui"` |  |
 | testkube-cloud-ui.ingress.className | string | `"nginx"` | Ingress classname |
 | testkube-cloud-ui.ingress.tlsSecretName | string | `"testkube-enterprise-ui-tls"` | Name of the TLS secret which contains the certificate files |
 | testkube-cloud-ui.ingressRedirect | object | `{"enabled":false}` | Toggle whether to enable redirect Ingress which allows having a different subdomain redirecting to the actual Dashboard UI Ingress URL |
@@ -387,7 +389,7 @@ A Helm chart for Testkube Enterprise
 | testkube-worker-service.fullnameOverride | string | `"testkube-enterprise-worker-service"` |  |
 | testkube-worker-service.image.registry | string | `""` | If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended |
 | testkube-worker-service.image.repository | string | `"kubeshop/testkube-enterprise-worker-service"` |  |
-| testkube-worker-service.image.tag | string | `"1.12.0"` |  |
+| testkube-worker-service.image.tag | string | `"1.12.1"` |  |
 | testkube-worker-service.podDisruptionBudget | object | `{"enabled":false,"maxUnavailable":"","minAvailable":""}` | Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/). |
 | testkube-worker-service.podDisruptionBudget.maxUnavailable | int/percentage | `""` | Number or percentage of pods that can be unavailable. |
 | testkube-worker-service.podDisruptionBudget.minAvailable | int/percentage | `""` | Number or percentage of pods that must remain available. |
