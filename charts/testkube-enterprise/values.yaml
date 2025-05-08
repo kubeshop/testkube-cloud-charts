@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 global:
+  testkubeVersion: "1.12.0"
   # -- Run Testkube in enterprise mode (enables enterprise features)
   enterpriseMode: true
   # -- Toggle whether to enable offline license activation in Enterprise mode
@@ -30,7 +31,7 @@ global:
   # -- AI API subdomain which get prepended to the domain
   aiApiSubdomain: "ai"
   # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
-  certificateProvider: "cert-manager"
+  certificateProvider: ""
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
     issuerRef: ""
@@ -473,9 +474,10 @@ testkube-cloud-ui:
     FEATURE_MULTI_AGENT: true
   image:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
-    registry: ""
-    repository: kubeshop/testkube-enterprise-ui
+    registry: registry.depot.dev
+    repository: 8m4mpphf9g
     tag: 2.12.6
+    tagSuffix: -cloud-ui
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -932,7 +934,7 @@ dex:
     #    name: Testkube Cloud - localdev
     #    redirectURIs:
     #      - http://localhost:8090/auth/callback
-    #      - http://localhost:38090/auth/callback    
+    #      - http://localhost:38090/auth/callback
     #    secret: some-secret
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: ""
