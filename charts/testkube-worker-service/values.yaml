@@ -70,6 +70,7 @@ image:
   repository: kubeshop/testkube-enterprise-worker-service
   pullPolicy: IfNotPresent
   tag: "1.12.1"
+  tagSuffix: ""
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
