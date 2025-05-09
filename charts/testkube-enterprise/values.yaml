@@ -3,7 +3,6 @@
 # Declare variables to be passed into your templates.
 
 global:
-  testkubeVersion: "1.12.0"
   # -- Run Testkube in enterprise mode (enables enterprise features)
   enterpriseMode: true
   # -- Toggle whether to enable offline license activation in Enterprise mode
@@ -31,7 +30,7 @@ global:
   # -- AI API subdomain which get prepended to the domain
   aiApiSubdomain: "ai"
   # -- TLS certificate provider. Set to "cert-manager" for integration with cert-manager or leave empty for other methods
-  certificateProvider: ""
+  certificateProvider: "cert-manager"
   certManager:
     # -- Certificate Issuer ref (only used if `provider` is set to `cert-manager`)
     issuerRef: ""
@@ -258,12 +257,12 @@ testkube-cloud-api:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-api
-    tag: 1.12.1
+    tag: 1.12.0
   migrationImage:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-migration
-    tag: 1.12.1
+    tag: 1.12.0
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -474,10 +473,9 @@ testkube-cloud-ui:
     FEATURE_MULTI_AGENT: true
   image:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
-    registry: registry.depot.dev
-    repository: 8m4mpphf9g
-    tag: 1.12.1
-    tagSuffix: -cloud-ui
+    registry: ""
+    repository: kubeshop/testkube-enterprise-ui
+    tag: 2.12.6
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -537,7 +535,7 @@ testkube-worker-service:
     # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
     registry: ""
     repository: kubeshop/testkube-enterprise-worker-service
-    tag: 1.12.1
+    tag: 1.12.0
   # -- Pod Security Context
   podSecurityContext: {}
   # fsGroup: 2000
@@ -584,7 +582,7 @@ testkube-ai-service:
     registry: ""
     repository: kubeshop/testkube-ai-copilot
     pullPolicy: IfNotPresent
-    tag: 1.12.1
+    tag: 2.4.2
   imagePullSecrets: []
   nameOverride: ""
   serviceAccount:
@@ -934,7 +932,7 @@ dex:
     #    name: Testkube Cloud - localdev
     #    redirectURIs:
     #      - http://localhost:8090/auth/callback
-    #      - http://localhost:38090/auth/callback
+    #      - http://localhost:38090/auth/callback    
     #    secret: some-secret
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: ""
