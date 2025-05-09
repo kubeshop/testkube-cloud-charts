@@ -126,14 +126,14 @@ image:
   registry: ""
   repository: kubeshop/testkube-enterprise-api
   pullPolicy: IfNotPresent
-  tag: "1.12.1"
+  tag: "1.13.0"
   tagSuffix: ""
 migrationImage:
   # -- If defined, it will prepend the registry to the image name, if not, default docker.io will be prepended
   registry: ""
   repository: kubeshop/testkube-migration
   pullPolicy: IfNotPresent
-  tag: "1.12.1"
+  tag: "1.13.0"
   tagSuffix: ""
 imagePullSecrets: []
 nameOverride: ""
