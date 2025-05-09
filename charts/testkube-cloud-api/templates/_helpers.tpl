@@ -128,7 +128,7 @@ Get Websockets Ingress host
 {{/*
 Define API image
 */}}
-{{- define "testkube-api.image" -}}
+{{- define "testkube-cp-api.image" -}}
 {{- $registryName := default "docker.io" .Values.image.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
@@ -160,7 +160,7 @@ Define Migration image
 {{- $registryName := default "docker.io" .Values.migrationImage.registry -}}
 {{- $repositoryName := .Values.migrationImage.repository -}}
 {{- $tag := default .Chart.AppVersion .Values.migrationImage.tag | toString -}}
-{{- $tagSuffix := .Values.image.tagSuffix -}}
+{{- $tagSuffix := .Values.migrationImage.tagSuffix -}}
 {{- $separator := ":" -}}
 {{- if .Values.migrationImage.digest }}
     {{- $separator = "@" -}}

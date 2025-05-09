@@ -42,7 +42,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           securityContext: {{ include "testkube-cloud-api.containerSecurityContext" . | nindent 12 }}
-          image: {{ include "testkube-api.image" . }}
+          image: {{ include "testkube-cp-api.image" . }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy | default .Values.image.pullPolicy }}
           env:
             - name: DEMO_ORGANIZATION_ID
