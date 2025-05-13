@@ -45,7 +45,7 @@ spec:
   tls:
     - hosts:
         - {{ include "testkube-cloud-api.ingress.websocketsHost" . | quote }}
-      secretName: {{ .Values.api.tls.tlsSecret }}
+      secretName: {{ .Values.websocketsIngress.tlsSecret }}
   rules:
     {{- $tlsConfig := .Values.api.tls }}
     - host: {{ include "testkube-cloud-api.ingress.websocketsHost" . | quote }}
