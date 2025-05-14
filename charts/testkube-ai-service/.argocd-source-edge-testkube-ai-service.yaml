@@ -4,5 +4,5 @@ helm:
     value: docker.io/kubeshop/testkube-ai-copilot
     forcestring: true
   - name: image.tag
-    value: 1.14.0-dev.15
+    value: 1.14.0-dev.16
     forcestring: true
