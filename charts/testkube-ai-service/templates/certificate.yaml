@@ -11,6 +11,9 @@ spec:
   secretName: {{ .Values.tls.tlsSecret }}
   dnsNames:
     - {{ include "testkube-ai.ingress.host" . | quote }}
+  {{- with .Values.tls.certManager.duration }}
+  duration: {{ . | quote }}
+  {{- end }}
   issuerRef:
     name: {{ required ".Values.global.certManager.issuerRef must be set when provider is cert-manager" .Values.global.certManager.issuerRef }}
     kind: {{ .Values.tls.certManager.issuerKind }}
