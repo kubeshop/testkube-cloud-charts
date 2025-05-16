@@ -268,6 +268,8 @@ api:
       issuerKind: ClusterIssuer
       # -- Certificate Issuer group (only used if `provider` is set to `cert-manager`)
       issuerGroup: cert-manager.io
+      # -- Certificate duration/lifetime. Value must be in units accepted by Go time.ParseDuration: https://golang.org/pkg/time/#ParseDuration
+      duration: ""
     # -- certificate path
     certPath: /tmp/serving-cert/crt.pem
     # -- certificate key path

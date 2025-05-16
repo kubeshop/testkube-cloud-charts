@@ -19,6 +19,9 @@ spec:
     {{- if .Values.websocketsIngress.enabled }}
     - {{ include "testkube-cloud-api.ingress.websocketsHost" . | quote }}
     {{- end }}
+  {{- with .Values.api.tls.certManager.duration }}
+  duration: {{ . | quote }}
+  {{- end }}
   issuerRef:
     name: {{ required ".Values.global.certManager.issuerRef must be set when provider is cert-manager" .Values.global.certManager.issuerRef }}
     kind: {{ .Values.api.tls.certManager.issuerKind }}
