@@ -1,6 +1,6 @@
 # testkube-cloud-api
 
-![Version: 1.175.0](https://img.shields.io/badge/Version-1.175.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.13.0](https://img.shields.io/badge/AppVersion-1.13.0-informational?style=flat-square)
+![Version: 1.176.0](https://img.shields.io/badge/Version-1.176.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.13.0](https://img.shields.io/badge/AppVersion-1.13.0-informational?style=flat-square)
 
 A Helm chart for Testkube Cloud API
 
@@ -107,6 +107,7 @@ A Helm chart for Testkube Cloud API
 | api.storage.cleanup.retentionDays | int | `-1` | Specify the retention period in days for test artifacts. Values lower than 1 disable cleanup. |
 | api.tls.agentPort | int | `8443` | Agent gRPCS port |
 | api.tls.apiPort | int | `9443` | API HTTPS port |
+| api.tls.certManager.duration | string | `""` | Certificate duration/lifetime. Value must be in units accepted by Go time.ParseDuration: https://golang.org/pkg/time/#ParseDuration |
 | api.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
 | api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | api.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | certificate path |

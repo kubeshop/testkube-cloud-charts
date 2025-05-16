@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.318.0](https://img.shields.io/badge/Version-2.318.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.319.0](https://img.shields.io/badge/Version-2.319.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -16,8 +16,8 @@ A Helm chart for Testkube Enterprise
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../testkube-ai-service | testkube-ai-service | 1.19.1 |
-| file://../testkube-cloud-api | testkube-cloud-api | 1.175.0 |
+| file://../testkube-ai-service | testkube-ai-service | 1.20.0 |
+| file://../testkube-cloud-api | testkube-cloud-api | 1.176.0 |
 | file://../testkube-cloud-ui | testkube-cloud-ui | 1.116.0 |
 | file://../testkube-worker-service | testkube-worker-service | 1.79.1 |
 | file://./charts/dex | dex | 0.19.1-9 |
@@ -253,6 +253,7 @@ A Helm chart for Testkube Enterprise
 | testkube-ai-service.serviceAccount.automount | bool | `true` |  |
 | testkube-ai-service.serviceAccount.create | bool | `true` |  |
 | testkube-ai-service.serviceAccount.name | string | `""` |  |
+| testkube-ai-service.tls.certManager.duration | string | `""` | Certificate duration/lifetime. Value must be in units accepted by Go time.ParseDuration: https://golang.org/pkg/time/#ParseDuration |
 | testkube-ai-service.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
 | testkube-ai-service.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | testkube-ai-service.tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | Mount path for the certificate |
@@ -319,6 +320,8 @@ A Helm chart for Testkube Enterprise
 | testkube-cloud-api.api.smtp.username | string | `""` | SMTP username |
 | testkube-cloud-api.api.storage.cleanup.maxStorageSizeGb | int | `-1` | Specify the max storage size in gigabytes after which oldest test artifacts will be rotated until current size <= max storage size. Values lower than 1 disable cleanup. |
 | testkube-cloud-api.api.storage.cleanup.retentionDays | int | `-1` | Specify the retention period in days for test artifacts. Values lower than 1 disable cleanup. |
+| testkube-cloud-api.api.tls.certManager.duration | string | `""` | Certificate duration/lifetime. Value must be in units accepted by Go time.ParseDuration: https://golang.org/pkg/time/#ParseDuration |
+| testkube-cloud-api.api.tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
 | testkube-cloud-api.api.tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | testkube-cloud-api.api.tls.tlsSecret | string | `"testkube-enterprise-api-tls"` |  |
 | testkube-cloud-api.audit.cleanup.cronInterval | string | `"0 3 * * *"` | Cron expression for audit log cleanup. Timezone is UTC. Only simple cron expressions are supported, '/', '-', and ',' expression are not supported. |

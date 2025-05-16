@@ -1,6 +1,6 @@
 # testkube-ai-service
 
-![Version: 1.19.1](https://img.shields.io/badge/Version-1.19.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.13.0](https://img.shields.io/badge/AppVersion-1.13.0-informational?style=flat-square)
+![Version: 1.20.0](https://img.shields.io/badge/Version-1.20.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.13.0](https://img.shields.io/badge/AppVersion-1.13.0-informational?style=flat-square)
 
 A Helm chart for Testkube AI service
 
@@ -89,6 +89,7 @@ A Helm chart for Testkube AI service
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| tls.certManager.duration | string | `""` | Certificate duration/lifetime. Value must be in units accepted by Go time.ParseDuration: https://golang.org/pkg/time/#ParseDuration |
 | tls.certManager.issuerGroup | string | `"cert-manager.io"` | Certificate Issuer group (only used if `provider` is set to `cert-manager`) |
 | tls.certManager.issuerKind | string | `"ClusterIssuer"` | Certificate Issuer kind (only used if `provider` is set to `cert-manager`) |
 | tls.certPath | string | `"/tmp/serving-cert/crt.pem"` | Mount path for the certificate |
