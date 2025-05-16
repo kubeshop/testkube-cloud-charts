@@ -470,9 +470,9 @@ testkube-cloud-ui:
     authStrategy: ""
   ai:
     # -- Enable Testkube AI features
-    enabled: false
+    enabled: true
     # -- Testkube AI service API URI
-    aiServiceApiUri: ""
+    aiServiceApiUri: "" # TODO: make this default to ai.customerDomain.tld, basically domain of testkube-ai-service
   additionalEnv:
     FEATURE_MULTI_AGENT: true
   image:
@@ -575,7 +575,7 @@ testkube-worker-service:
 testkube-ai-service:
   fullnameOverride: testkube-enterprise-ai-service
   # -- Toggle whether to install the Testkube AI service
-  enabled: false
+  enabled: true
   replicaCount: 1
   # -- Topology spread constraints can be used to define how pods should be spread across failure domains within your cluster.
   topologySpreadConstraints: []
@@ -672,8 +672,8 @@ testkube-ai-service:
     secretRefKey: ""
   # -- Configuration for LLM API that supports OpenAI API specification
   llmApi:
-    # -- Optional URL for custom LLM API services (defaults to OpenAI if not provided)
-    url: ""
+    # -- LLM API URL; defaults to "llm.testkube.io", empty for direct OpenAI, or provide any OpenAI API-compatible endpoint.
+    url: "llm.testkube.io"
     # -- OpenAI API Key - can be provided directly or referenced from a secret
     apiKey: ""
     # -- Reference to the secret containing the OpenAI API Key. Place value into `OPENAI_API_KEY` key.
