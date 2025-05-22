@@ -50,7 +50,7 @@ jobs:
             # Remove the repo
             helm repo remove cache
           fi
-          cp ./download/index.yaml index.yamlf
+          cp ./download/index.yaml index.yaml
 
           # Remove chart files
           rm -rf ./download
