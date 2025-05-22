@@ -9542,7 +9542,7 @@ entries:
   testkube-enterprise:
   - apiVersion: v2
     appVersion: 1.14.0-rc.0
-    created: "2025-05-22T08:41:36.97236576Z"
+    created: "2025-05-22T08:42:27.726261295Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -40496,4 +40496,4 @@ entries:
     urls:
     - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.29.0/testkube-worker-service-1.29.0.tgz
     version: 1.29.0
-generated: "2025-05-22T08:41:36.935785829Z"
+generated: "2025-05-22T08:42:27.682145934Z"
