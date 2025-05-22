@@ -62,4 +62,4 @@ jobs:
 
           # Push changes
           git add index.yaml && git commit -m "Update index.yaml"
-          git push origin index --force-with-lease=index:${current_commit_id}
+          git push origin gh-pages --force-with-lease=index:${current_commit_id}
