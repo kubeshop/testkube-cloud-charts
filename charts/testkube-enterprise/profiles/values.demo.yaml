@@ -61,6 +61,9 @@ testkube-cloud-ui:
     apiServerEndpoint: "http://localhost:8090"
     wsServerEndpoint: "ws://localhost:8090"
     rootRoute: "http://testkube-enterprise-ui:8080"
+  ai:
+    enabled: true
+    aiServiceApiUri: "http://testkube-enterprise-ai-service:9090"
   additionalEnv:
     REACT_APP_ENABLE_SIGNUP: "true"
 
@@ -82,6 +85,11 @@ testkube-agent:
 testkube-worker-service:
   additionalEnv:
     USE_MINIO: true
+
+testkube-ai-service:
+  enabled: true
+  llmApi:
+    url: https://llm.testkube.io
 
 nats:
   config:
