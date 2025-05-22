@@ -2,8 +2,6 @@ name: "[Index] Sync index.yaml with OCI releases"
 on:
   workflow_dispatch:
 
-# Remove all permissions by default.
-permissions: {}
 jobs:
   update-index:
     runs-on: ubuntu-latest
@@ -52,7 +50,7 @@ jobs:
             # Remove the repo
             helm repo remove cache
           fi
-          cp ./download/index.yaml index.yaml
+          cp ./download/index.yaml index.yamlf
 
           # Remove chart files
           rm -rf ./download
