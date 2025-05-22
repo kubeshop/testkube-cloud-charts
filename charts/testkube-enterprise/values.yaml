@@ -300,6 +300,11 @@ testkube-cloud-api:
     # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
   audit:
+    logger:
+      # -- Toggle whether to enable logging audit events to console
+      enabled: false
+      # -- If enabled, only user ID will be logged, otherwise username/email will also be added as a logger field
+      forceIdentifyUsersById: false
     cleanup:
       # -- Toggle whether to enable audit log cleanup
       enabled: true
@@ -938,7 +943,7 @@ dex:
     #    name: Testkube Cloud - localdev
     #    redirectURIs:
     #      - http://localhost:8090/auth/callback
-    #      - http://localhost:38090/auth/callback    
+    #      - http://localhost:38090/auth/callback
     #    secret: some-secret
     # -- Additional config which will be appended to the config like `staticClients`, `staticPasswords ,`connectors`...
     additionalConfig: ""
