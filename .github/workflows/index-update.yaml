@@ -61,5 +61,5 @@ jobs:
           current_commit_id=$(git rev-parse index)
 
           # Push changes
-          git add index.yaml && git commit --signoff --amend --no-edit
+          git add index.yaml && git commit -m "Update index.yaml"
           git push origin index --force-with-lease=index:${current_commit_id}
