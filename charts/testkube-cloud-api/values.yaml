@@ -183,6 +183,11 @@ payments:
   # -- Payments portal configuration ID (currently only Stripe is supported)
   portalConfigurationId: ""
 audit:
+  logger:
+    # -- Toggle whether to enable logging audit events to console
+    enabled: false
+    # -- If enabled, only user ID will be logged, otherwise username/email will also be added as a logger field
+    forceIdentifyUsersById: false
   cleanup:
     # -- Toggle whether to enable audit log cleanup
     enabled: true

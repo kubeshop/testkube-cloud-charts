@@ -422,6 +422,10 @@ spec:
               value: "{{ .Values.audit.cleanup.retentionPeriod }}"
             - name: AUDIT_LOG_CLEANUP_CRON_INTERVAL
               value: "{{ .Values.audit.cleanup.cronInterval }}"
+            - name: AUDIT_LOG_ENABLE_LOGGING
+              value: "{{ .Values.audit.logger.enabled }}"
+            - name: AUDIT_LOG_FORCE_IDENTIFY_USERS_BY_ID
+              value: "{{ .Values.audit.logger.forceIdentifyUsersById }}"
             - name: ENTERPRISE_ARTIFACT_RETENTION_DAYS
               value: "{{ .Values.api.storage.cleanup.retentionDays }}"
             - name: ENTERPRISE_ARTIFACT_MAX_STORAGE_SIZE_GB
