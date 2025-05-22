@@ -58,7 +58,7 @@ jobs:
           rm -rf ./download
 
           # Avoid overriding index branch when remote commit does not match our checkout commit
-          current_commit_id=$(git rev-parse index)
+          current_commit_id=$(git rev-parse gh-pages)
 
           # Push changes
           git add index.yaml && git commit -m "Update index.yaml"
