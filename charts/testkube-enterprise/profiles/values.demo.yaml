@@ -62,7 +62,7 @@ testkube-cloud-ui:
     wsServerEndpoint: "ws://localhost:8090"
     rootRoute: "http://testkube-enterprise-ui:8080"
   ai:
-    enabled: true
+    enabled: false
     aiServiceApiUri: "http://testkube-enterprise-ai-service:9090"
   additionalEnv:
     REACT_APP_ENABLE_SIGNUP: "true"
