@@ -90,6 +90,8 @@ testkube-ai-service:
   enabled: true
   llmApi:
     url: https://llm.testkube.io
+  tls:
+    serveHTTPS: false
 
 nats:
   config:
