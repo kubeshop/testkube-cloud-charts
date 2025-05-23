@@ -40,7 +40,7 @@ image:
   registry: ""
   repository: kubeshop/testkube-ai-copilot
   pullPolicy: IfNotPresent
-  tag: "1.15.0"
+  tag: "1.15.1"
   tagSuffix: ""
 imagePullSecrets: []
 nameOverride: ""
