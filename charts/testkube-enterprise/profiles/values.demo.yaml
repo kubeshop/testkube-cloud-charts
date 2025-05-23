@@ -87,7 +87,7 @@ testkube-worker-service:
     USE_MINIO: true
 
 testkube-ai-service:
-  enabled: true
+  enabled: false
   llmApi:
     url: https://llm.testkube.io
   tls:
