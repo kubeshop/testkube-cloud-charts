@@ -1,2 +1,5 @@
 # testkube-cloud-charts
-Internal Helm charts for Testkube Cloud
+
+This repository will no longer be updated.
+
+Please visit https://docs.testkube.io/changelog for the latest changelogs.
