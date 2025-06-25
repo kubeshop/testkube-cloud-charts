@@ -9596,6 +9596,61 @@ entries:
     - oci://registry-1.docker.io/kubeshop/testkube-enterprise:2.323.0-rc.0
     version: 2.323.0-rc.0
   - apiVersion: v2
+    appVersion: 1.16.0-rc.9
+    created: "2025-06-25T08:40:53.555268033Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 2.13.3
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: file://./charts/mongodb
+      version: 16.2.1-2
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-5
+    - condition: minio.enabled
+      name: minio
+      repository: file://./charts/minio
+      version: 14.8.3-3
+    - condition: dex.enabled
+      name: dex
+      repository: file://./charts/dex
+      version: 0.19.1-9
+    - condition: testkube-cloud-api.enabled
+      name: testkube-cloud-api
+      repository: file://components/testkube-cloud-api
+      version: 1.x.x-x
+    - condition: testkube-cloud-ui.enabled
+      name: testkube-cloud-ui
+      repository: file://components/testkube-cloud-ui
+      version: 1.x.x-x
+    - name: testkube-worker-service
+      repository: file://components/testkube-worker-service
+      version: 1.x.x-x
+    - condition: testkube-ai-service.enabled
+      name: testkube-ai-service
+      repository: file://components/testkube-ai-service
+      version: 1.x.x-x
+    - alias: testkube-agent
+      condition: testkube-agent.enabled
+      name: testkube
+      repository: https://kubeshop.github.io/helm-charts
+      version: 2.x.x
+    description: A Helm chart for Testkube Enterprise
+    digest: 4ad7fe173d4b2d704fa98bc43e255470445a77473e66180fca939030528037d1
+    home: https://github.com/kubeshop/testkube-cloud-charts
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    maintainers:
+    - name: testkube
+      url: https://testkube.io
+    name: testkube-enterprise
+    type: application
+    urls:
+    - oci://registry-1.docker.io/kubeshop/testkube-enterprise:2.322.0-rc.9
+    version: 2.322.0-rc.9
+  - apiVersion: v2
     appVersion: 1.16.0-rc.8
     created: "2025-06-10T15:09:53.911850509Z"
     dependencies:
@@ -41211,4 +41266,4 @@ entries:
     urls:
     - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.29.0/testkube-worker-service-1.29.0.tgz
     version: 1.29.0
-generated: "2025-06-19T10:08:08.933420109Z"
+generated: "2025-06-25T08:40:53.514479585Z"
