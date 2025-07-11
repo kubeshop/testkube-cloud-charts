@@ -101,7 +101,7 @@ spec:
             - name: SMTP_PORT
               value: "{{ required ".Values.api.smtp.port is required with .Values.api.inviteMode set to \"email\"" .Values.api.smtp.port }}"
             - name: SMTP_USER
-              value: "{{ required ".Values.api.smtp.username is required with .Values.api.inviteMode set to \"email\"" .Values.api.smtp.username }}"
+              value: "{{ .Values.api.smtp.username }}"
             - name: SMTP_PASS
               {{- if .Values.api.smtp.passwordSecretRef }}
               valueFrom:
@@ -109,7 +109,7 @@ spec:
                   key: SMTP_PASS
                   name: {{ .Values.api.smtp.passwordSecretRef }}
               {{- else }}
-              value: "{{ required ".Values.api.smtp.password or .Values.api.smtp.passwordSecretRef is required with .Values.api.inviteMode set to \"email\"" .Values.api.smtp.password }}"
+              value: "{{ .Values.api.smtp.password }}"
               {{- end }}
             {{- end }}
             {{- end }}
