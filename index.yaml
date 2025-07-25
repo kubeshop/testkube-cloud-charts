@@ -9542,7 +9542,7 @@ entries:
   testkube-enterprise:
   - apiVersion: v2
     appVersion: 1.17.0-rc.0
-    created: "2025-06-16T10:16:47.462223498Z"
+    created: "2025-07-25T14:28:08.713257951Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -9584,7 +9584,7 @@ entries:
       repository: https://kubeshop.github.io/helm-charts
       version: 2.x.x
     description: A Helm chart for Testkube Enterprise
-    digest: 75532013491a18d935a64c7b59e01668c9669f1616cae5ca0b55ea6d98c2c9da
+    digest: 337abc3cd7bfd6634318942d810e81bc9579f7b469fcddb75a604659890eccf5
     home: https://github.com/kubeshop/testkube-cloud-charts
     icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
     maintainers:
@@ -41706,4 +41706,4 @@ entries:
     urls:
     - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.29.0/testkube-worker-service-1.29.0.tgz
     version: 1.29.0
-generated: "2025-07-24T13:40:21.19328305Z"
+generated: "2025-07-25T14:28:08.671698324Z"
