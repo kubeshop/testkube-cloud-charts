@@ -134,7 +134,7 @@ sharedSecretGenerator:
   resources: {}
   image:
     registry: docker.io
-    repository: bitnami/kubectl
+    repository: bitnamilegacy/kubectl
     tag: 1.32.1
 ## MinIO chart parameters
 minio:
@@ -146,14 +146,14 @@ minio:
   # Uncomment if you want to provide different image settings
   image:
     registry: docker.io
-    repository: bitnami/minio
+    repository: bitnamilegacy/minio
     tag: 2025.2.7-debian-12-r1
   # digest: ""
   # pullPolicy: IfNotPresent
   # Uncomment if you want to provide different client image settings
   # clientImage:
   # registry: docker.io
-  # repository: bitnami/minio-client
+  # repository: bitnamilegacy/minio-client
   # tag: 2023.11.20-debian-11-r0
   # digest: ""
   # -- Set resources requests and limits for MinIO
