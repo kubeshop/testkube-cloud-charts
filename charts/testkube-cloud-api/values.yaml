@@ -456,6 +456,7 @@ scimIngress:
 grpcIngress:
   # -- Toggle whether to enable the gRPC API Ingress
   enabled: true
+  tlsSecret: "testkube-enterprise-grpc-tls"
   # -- Additional labels to add to the gRPC Ingress resource
   labels: {}
   # -- Additional annotations to add to the gRPC Ingress resource
@@ -468,6 +469,7 @@ grpcIngress:
 websocketsIngress:
   # -- Toggle whether to enable the Websocket API Ingress
   enabled: true
+  tlsSecret: "testkube-enterprise-websocket-tls"
   # -- Additional labels to add to the WebSocket Ingress resource
   labels: {}
   # -- Additional annotations to add to the WebSocket Ingress resource

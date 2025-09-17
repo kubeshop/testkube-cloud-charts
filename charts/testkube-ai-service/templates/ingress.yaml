@@ -32,6 +32,10 @@ metadata:
     cert-manager.io/cluster-issuer: {{ required ".Values.global.certManager.issuerRef must be provided if provider is cert-manager" .Values.global.certManager.issuerRef }}
     {{- end }}
     {{- end }}
+    {{- if and (eq .Values.ingress.className "nginx") (.Values.tls.serveHTTPS) }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    {{- end }}
     {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -39,10 +43,12 @@ spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
+  {{- if eq .Values.tls.serveHTTPS false }}
   tls:
     - hosts:
         - {{ include "testkube-ai.ingress.host" . | quote }}
       secretName: {{ .Values.tls.tlsSecret }}
+  {{- end }}
   rules:
     - host: {{ include "testkube-ai.ingress.host" . | quote }}
       http:
