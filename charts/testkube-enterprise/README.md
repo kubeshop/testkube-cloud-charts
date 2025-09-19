@@ -1,6 +1,6 @@
 # testkube-enterprise
 
-![Version: 2.319.40](https://img.shields.io/badge/Version-2.319.40-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.319.41](https://img.shields.io/badge/Version-2.319.41-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for Testkube Enterprise
 
@@ -132,7 +132,7 @@ A Helm chart for Testkube Enterprise
 | minio.extraEnvVars | list | `[]` |  |
 | minio.fullnameOverride | string | `"testkube-enterprise-minio"` |  |
 | minio.image.registry | string | `"docker.io"` |  |
-| minio.image.repository | string | `"bitnami/minio"` |  |
+| minio.image.repository | string | `"bitnamilegacy/minio"` |  |
 | minio.image.tag | string | `"2025.2.7-debian-12-r1"` |  |
 | minio.metrics.serviceMonitor.enabled | bool | `false` | Toggle whether to create ServiceMonitor resource for scraping metrics using Prometheus Operator |
 | minio.nodeSelector | object | `{}` | Node labels for pod assignment. |
@@ -194,7 +194,7 @@ A Helm chart for Testkube Enterprise
 | sharedSecretGenerator.containerSecurityContext | object | `{}` | Container Security Context for the Shared Secret Generator Job |
 | sharedSecretGenerator.enabled | bool | `false` | Toggle whether to enable the Shared Secret Generator Job |
 | sharedSecretGenerator.image.registry | string | `"docker.io"` |  |
-| sharedSecretGenerator.image.repository | string | `"bitnami/kubectl"` |  |
+| sharedSecretGenerator.image.repository | string | `"bitnamilegacy/kubectl"` |  |
 | sharedSecretGenerator.image.tag | string | `"1.32.1"` |  |
 | sharedSecretGenerator.resources | object | `{}` | Resources for the Shared Secret Generator Job |
 | sharedSecretGenerator.securityContext | object | `{}` | Pod Security Context for the Shared Secret Generator Job |
