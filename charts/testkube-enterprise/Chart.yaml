@@ -43,6 +43,10 @@ dependencies:
     version: 14.8.3-3
     repository: file://./charts/minio
     condition: minio.enabled
+  - name: postgresql
+    version: 16.3.0
+    repository: file://./charts/postgresql
+    condition: postgresql.enabled
 maintainers:
   - name: testkube
     url: https://testkube.io

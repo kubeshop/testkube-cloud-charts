@@ -29,5 +29,8 @@ dependencies:
 - name: minio
   repository: file://./charts/minio
   version: 14.8.3-3
+- name: postgresql
+  repository: file://./charts/postgresql
+  version: 16.3.0
 digest: sha256:d1f701486d65f98905e5a0bf0348a98868bccda87fc442a7a75731a15ae9dc5d
 generated: "2025-07-08T14:49:48.176422659Z"

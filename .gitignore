@@ -10,6 +10,7 @@ charts/testkube-enterprise/charts/*
 !charts/testkube-enterprise/charts/dex/*
 !charts/testkube-enterprise/charts/minio/*
 !charts/testkube-enterprise/charts/mongodb/*
+!charts/testkube-enterprise/charts/postgresql/*
 !charts/testkube-enterprise/charts/nats/*
 
 # OSX

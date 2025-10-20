@@ -178,8 +178,10 @@ spec:
               value: {{ .Values.analytics.hubspot.apiKey }}
               {{- end }}
             {{- end }}
+            {{- $mongoEnabled := .Values.global.mongo.enabled | default .Values.api.mongo.enabled}}
             {{- $mongoDsnSecretRef := .Values.global.mongo.dsnSecretRef | default .Values.api.mongo.dsnSecretRef }}
             {{- $mongoDsn := .Values.global.mongo.dsn | default .Values.api.mongo.dsn }}
+            {{- if $mongoEnabled }}           
             {{- if $mongoDsnSecretRef }}
             - name: API_MONGO_DSN
               valueFrom:
@@ -190,6 +192,7 @@ spec:
             - name: API_MONGO_DSN
               value: {{ $mongoDsn }}
             {{- end }}
+            {{- end }}
             {{- $mongoDatabase := .Values.global.mongo.database | default .Values.api.mongo.database }}
             - name: API_MONGO_DB
               value: {{ $mongoDatabase }}
@@ -197,6 +200,12 @@ spec:
             - name: API_MONGO_READ_PREFERENCE
               value: {{ $mongoReadPreference }}
               {{- if .Values.api.oauth.secretRef }}
+            {{- $postgresEnabled := .Values.global.postgres.enabled | default .Values.api.postgres.enabled}}
+            {{- $postgresDsn := .Values.global.postgres.dsn | default .Values.api.postgres.dsn }}
+            {{- if postgresEnabled }}
+            - name: API_POSTGRES_URL
+              value: "{{ $postgresDsn }}"
+            {{- end }}
             - name: OAUTH_CLIENT_ID
               valueFrom:
                 secretKeyRef:

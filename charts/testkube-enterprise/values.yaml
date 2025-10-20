@@ -61,6 +61,10 @@ global:
     readPreference: secondaryPreferred
     # -- Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit.
     allowDiskUse: false
+  ## Global PostgreSQL configuration for Testkube Pro
+  postgres: &global_postgres_config
+    ## Define dsn connection string
+    dsn: "postgres://testkube:postgres5432@testkube-enterprise-postgresql:5432/backend?sslmode=disable"
   ## Global NATS configuration for Testkube Pro
   nats: &global_nats_config
     uri: "nats://testkube-enterprise-nats:4222" # -- NATS URI
@@ -400,6 +404,7 @@ testkube-cloud-api:
       # -- TTL for the migration job, defaults to 4 days
       ttlSecondsAfterFinished: 345600
     mongo: *global_mongo_config
+    postgres: *global_postgres_config    
     nats: *global_nats_config
     minio:
       # -- Path to where a Minio credential file should be mounted
@@ -878,6 +883,117 @@ mongodb:
 #    enabled: true
 #    runAsUser: 1001010000
 #    runAsNonRoot: true
+# PostgreSQL chart parameters
+# For more configuration parameters of PostgreSQL chart please look here: https://github.com/bitnami/charts/tree/main/bitnami/postgresql#parameters
+postgresql:
+  # -- Toggle whether to install PostgreSQL
+  enabled: false
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  image:
+    # -- PostgreSQL image registry
+    registry: docker.io
+    # -- PostgreSQL image repository
+    repository: zcube/bitnami-compat-postgresql
+    # -- PostgreSQL image tag
+    tag: 15.2.0-debian-11-r64
+    # -- PostgreSQL image pull Secret
+    pullSecrets: []
+  # -- PostgreSQL fullname override
+  fullnameOverride: "testkube-enterprise-postgresql"
+  # -- PostgreSQL architecture
+  architecture: standalone
+  # -- Common labels which will be added to all PostgreSQL resources  
+  commonLabels: *common_labels 
+
+  # -- Enable external images
+  global:
+    security:
+      allowInsecureImages: true
+
+  # -- PostgreSQL auth settings   
+  auth:
+    enablePostgresUser: true
+    postgresPassword: "postgres1234"
+    username: "testkube"
+    password: "postgres5432"
+    database: "backend"
+
+  # -- PostgreSQL primary configuration
+  primary:
+    # -- PostgreSQL security contexts
+    podSecurityContext: {}
+    #  enabled: true
+    #  fsGroup: 1001
+
+    containerSecurityContext: {}
+    #  enabled: true
+    #  runAsUser: 1001
+    #  runAsNonRoot: true
+    #  readOnlyRootFilesystem: true
+    #  allowPrivilegeEscalation: false
+    #  capabilities:
+    #    drop:
+    #      - ALL
+
+    # -- PostgreSQL resource settings
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 150m
+
+    # -- PostgreSQL persistence
+    persistence:
+      enabled: true
+      size: 1Gi
+      storageClass: ""
+
+    # -- PostgreSQL extra volumes for writable directories
+    extraVolumes:
+      - name: postgresql-run
+        emptyDir: {}
+
+    extraVolumeMounts:
+      - name: postgresql-run
+        mountPath: /var/run/postgresql
+
+    # -- PostgreSQL configuration
+    configuration: |
+      listen_addresses = '*'
+      unix_socket_directories = '/var/run/postgresql'
+      shared_preload_libraries = 'pg_stat_statements'
+      max_connections = 100
+      shared_buffers = 128MB
+ 
+    # -- PostgreSQL service settings
+    service:
+      type: NodePort
+      ports:
+        postgresql: 5432
+      clusterIP: ""
+
+    # -- Settings for readiness and liveness probes
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
+
+    # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+    pdb:
+      create: true
+      # -- Minimum number/percentage of pods that must still be available after the eviction
+      minAvailable: ""
+      # -- Maximum number/percentage of pods that may be made unavailable after the eviction
+      maxUnavailable: ""
 ## Dex chart parameters
 ## For more configuration parameters of Dex chart please look here: https://github.com/dexidp/helm-charts
 dex:
