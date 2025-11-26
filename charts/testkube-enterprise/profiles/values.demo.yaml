@@ -21,7 +21,6 @@ sharedSecretGenerator:
 
 testkube-cloud-api:
   additionalEnv:
-    OAUTH_CLI_CLIENT_ID: testkube-cloud-cli
     OAUTH_ENABLED: true
     OAUTH_SKIP_DISCOVERY: true
     OAUTH_AUTH_URL: http://localhost:5556/auth
