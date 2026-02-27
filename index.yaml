@@ -9600,6 +9600,65 @@ entries:
     - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-enterprise:2.330.0-rc.0
     version: 2.330.0-rc.0
   - apiVersion: v2
+    appVersion: 2.6.4
+    created: "2026-02-27T11:29:21.287388934Z"
+    dependencies:
+    - name: common
+      repository: file://./charts/bitnami-common
+      version: 2.13.3
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 8.2.3-1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 0.1.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-6
+    - condition: minio.enabled
+      name: minio
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 2025.10-0
+    - condition: dex.enabled
+      name: dex
+      repository: file://./charts/dex
+      version: 0.19.1-10
+    - condition: testkube-cloud-api.enabled
+      name: testkube-cloud-api
+      repository: file://components/testkube-cloud-api
+      version: 1.x.x-x
+    - condition: testkube-cloud-ui.enabled
+      name: testkube-cloud-ui
+      repository: file://components/testkube-cloud-ui
+      version: 1.x.x-x
+    - name: testkube-worker-service
+      repository: file://components/testkube-worker-service
+      version: 1.x.x-x
+    - condition: testkube-ai-service.enabled
+      name: testkube-ai-service
+      repository: file://components/testkube-ai-service
+      version: 1.x.x-x
+    - alias: testkube-agent
+      condition: testkube-agent.enabled
+      name: testkube
+      repository: https://kubeshop.github.io/helm-charts
+      version: 2.x.x
+    description: A Helm chart for Testkube Enterprise
+    digest: 8ed204b2ed8b315dae1014b635c3e3103525af4e800767c4f7264d9bf8a034af
+    home: https://github.com/kubeshop/testkube-cloud-charts
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    maintainers:
+    - name: testkube
+      url: https://testkube.io
+    name: testkube-enterprise
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-enterprise:2.329.4
+    version: 2.329.4
+  - apiVersion: v2
     appVersion: 2.6.4-rc.1
     created: "2026-02-20T13:58:43.12601789Z"
     dependencies:
@@ -44622,4 +44681,4 @@ entries:
     urls:
     - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.29.0/testkube-worker-service-1.29.0.tgz
     version: 1.29.0
-generated: "2026-02-25T13:09:05.260547946Z"
+generated: "2026-02-27T11:29:21.254641177Z"
