@@ -90,6 +90,9 @@ testkube-cloud-ui:
     aiServiceApiUri: "http://testkube-enterprise-ai-service:9090"
   additionalEnv:
     REACT_APP_ENABLE_SIGNUP: "true"
+    POSTHOG_KEY: "phc_zNRKh8Ph9Y6JcSoSNQhZuM7BmQPVyGxiwUYbRaC6VYdA"
+    POSTHOG_HOST: "https://us.i.posthog.com"
+    REACT_APP_ENTERPRISE: "true"
 
 testkube-worker-service:
   additionalEnv:
