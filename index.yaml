@@ -9541,6 +9541,92 @@ entries:
     version: 1.1.0
   testkube-enterprise:
   - apiVersion: v2
+    appVersion: 2.13.1-rc.5
+    created: "2026-08-19T10:13:48.36731423Z"
+    dependencies:
+    - name: common
+      repository: file://./charts/bitnami-common
+      version: 2.13.3
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 8.3.4-0
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 18.3-0
+    - condition: cloudnative-pg.enabled
+      name: cloudnative-pg
+      repository: https://cloudnative-pg.github.io/charts
+      version: 0.28.2
+    - alias: postgresqlCluster
+      condition: postgresqlCluster.enabled
+      name: cluster
+      repository: https://cloudnative-pg.github.io/charts
+      version: 0.4.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-6
+    - condition: minio.enabled
+      name: minio
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 2025.10-0
+    - alias: seaweedfs
+      condition: seaweedfs.enabled
+      name: seaweed
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 4.23-0
+    - condition: dex.enabled
+      name: dex
+      repository: file://./charts/dex
+      version: 0.19.1-11
+    - condition: testkube-cloud-api.enabled
+      name: testkube-cloud-api
+      repository: file://components/testkube-cloud-api
+      version: 1.x.x-x
+    - condition: testkube-cloud-ui.enabled
+      name: testkube-cloud-ui
+      repository: file://components/testkube-cloud-ui
+      version: 1.x.x-x
+    - name: testkube-worker-service
+      repository: file://components/testkube-worker-service
+      version: 1.x.x-x
+    - condition: testkube-git-provider-onboarding-worker.enabled
+      name: testkube-git-provider-onboarding-worker
+      repository: file://components/testkube-git-provider-onboarding-worker
+      version: 1.x.x-x
+    - name: testkube-ai-service
+      repository: file://components/testkube-ai-service
+      version: 1.x.x-x
+    - alias: litellm
+      condition: global.testAuthoring.enabled
+      name: testkube-litellm
+      repository: file://components/testkube-litellm
+      version: 0.1.0
+    - alias: agentSandbox
+      condition: global.testAuthoring.enabled
+      name: testkube-agent-sandbox
+      repository: file://components/testkube-agent-sandbox
+      version: 0.1.0
+    - alias: testkube-agent
+      condition: testkube-agent.enabled
+      name: testkube
+      repository: https://kubeshop.github.io/helm-charts
+      version: 2.x.x
+    description: A Helm chart for Testkube Enterprise
+    digest: 2e6bf1badc016132ab0dc81e295f7283f64fdf12d79e28d5b082553bc5c62fb3
+    home: https://github.com/kubeshop/testkube-cloud-charts
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    maintainers:
+    - name: testkube
+      url: https://testkube.io
+    name: testkube-enterprise
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-enterprise:2.336.1-rc.5
+    version: 2.336.1-rc.5
+  - apiVersion: v2
     appVersion: 2.13.1-rc.3
     created: "2026-08-13T10:11:52.161395225Z"
     dependencies:
@@ -48715,4 +48801,4 @@ entries:
     urls:
     - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.29.0/testkube-worker-service-1.29.0.tgz
     version: 1.29.0
-generated: "2026-08-13T16:30:41.104123366Z"
+generated: "2026-08-19T10:13:48.31613729Z"
