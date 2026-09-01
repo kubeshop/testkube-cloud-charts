@@ -389,6 +389,8 @@ testkube-cloud-api:
         # -- Certificate duration/lifetime. Value must be in units accepted by Go time.ParseDuration: https://golang.org/pkg/time/#ParseDuration
         duration: ""
       tlsSecret: testkube-enterprise-api-tls
+      # -- Toggle should the Application terminate TLS instead of the Ingress
+      serveHTTPS: false
     migrations:
       # -- Toggle whether to run database migrations
       enabled: true
@@ -614,7 +616,7 @@ testkube-ai-service:
     port: 9090
   tls:
     # -- Toggle should the Application terminate TLS instead of the Ingress
-    serveHTTPS: true
+    serveHTTPS: false
     # -- TLS secret name which contains the certificate files
     tlsSecret: testkube-ai-tls
     certManager:
