@@ -48034,6 +48034,22 @@ entries:
     version: 1.0.0
   testkube-usage-export:
   - apiVersion: v2
+    appVersion: 2.13.2-rc.0
+    created: "2026-09-08T19:56:23.70680053Z"
+    description: Standalone Helm chart to export Testkube Enterprise plan usage for
+      offline billing
+    digest: 08d91e3cc4e0495da9856c6fa004d86831595e46348cb0ecc90d5173ebc6c28b
+    icon: https://assets.website-files.com/61e00b3936e571a4ea7a5a4c/623b2bb9387ad04955b1f82c_testkube.svg
+    keywords:
+    - testkube
+    - enterprise
+    - usage-export
+    name: testkube-usage-export
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-usage-export:1.1.2-rc.0
+    version: 1.1.2-rc.0
+  - apiVersion: v2
     appVersion: 2.13.1
     created: "2026-08-27T09:24:16.74292684Z"
     description: Standalone Helm chart to export Testkube Enterprise plan usage for
@@ -49212,4 +49228,4 @@ entries:
     urls:
     - https://github.com/kubeshop/testkube-cloud-charts/releases/download/testkube-worker-service-1.29.0/testkube-worker-service-1.29.0.tgz
     version: 1.29.0
-generated: "2026-09-08T13:35:21.667058864Z"
+generated: "2026-09-08T19:56:23.706334866Z"
