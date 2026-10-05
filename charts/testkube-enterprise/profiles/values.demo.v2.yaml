@@ -39,6 +39,7 @@ testkube-cloud-api:
       enabled: true
     features:
       disablePersonalOrgs: true
+      planUsageSyncEnabled: true
       bootstrapConfig:
         enabled: true
         config:
