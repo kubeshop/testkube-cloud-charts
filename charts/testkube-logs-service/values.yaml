@@ -1,6 +1,7 @@
 # Default values for testkube-cloud-api.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+# Chart lint check: drop this line before merging.
 
 global:
   # -- Domain under which to create Ingress rules
