@@ -23,7 +23,34 @@ After the merge, the `enterprise-installation-test` TestWorkflow in the `testkub
 
 ## 2. Reproducing a bug
 
-A demo install problem reproduces with `testkube init demo`, which reads the profile from this repo's `main`. The CLI has no flag for another URL, so a fix on a branch can only be installed with Helm directly: `helm install` the same chart with `-f` pointing at your copy, on a local cluster. The `helm template` command in section 1 catches a profile that does not render.
+A demo install problem reproduces with `testkube init demo`, which reads the profile from this repo's `main`. The CLI has no flag for another URL, so a fix on a branch can only be installed with Helm directly, on a local cluster. The `helm template` command in section 1 catches a profile that does not render.
+
+Installing the enterprise chart with the profile alone gives a Control Plane that starts but runs nothing: there is no runner, and the profile's bootstrap runner keeps its placeholder `secret_key`. To exercise workflow execution, do what `testkube init demo` does (`HelmUpgradeOrInstallTestkubeOnPremDemo` and `HelmUpgradeOrInstallTestkubeOnPremDemoRunner` in `testkube/cmd/kubectl-testkube/commands/common/helper.go`): pass the license, give the bootstrap runner a generated key, and install a separate `testkube-runner` with the same key and the IDs the CLI uses.
+
+```bash
+NS=testkube
+KEY="tkckey_agent_$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 32)"
+helm repo add testkubeenterprise https://kubeshop.github.io/testkube-cloud-charts
+helm repo add kubeshop https://kubeshop.github.io/helm-charts
+helm repo update
+helm upgrade --install testkube testkubeenterprise/testkube-enterprise \
+  --namespace "$NS" --create-namespace --wait \
+  -f charts/testkube-enterprise/profiles/values.demo.v2.yaml \
+  --set global.enterpriseLicenseKey="<license key>" \
+  --set "testkube-cloud-api.api.features.bootstrapConfig.config.organizations[0].runners[0].secret_key=$KEY" \
+  --set testkube-cloud-api.api.agent.host="testkube-enterprise-api.$NS.svc.cluster.local" \
+  --set testkube-cloud-api.api.minio.signing.hostname="testkube-enterprise-minio.$NS.svc.cluster.local:9000"
+helm upgrade --install testkube-demo-runner kubeshop/testkube-runner \
+  --namespace "$NS" --wait \
+  --set fullnameOverride=testkube-demo-runner \
+  --set runner.id=tkcrun_demo-runner --set runner.name=demo-runner \
+  --set runner.orgId=tkcorg_demo --set runner.envId=tkcenv_my-first-environment \
+  --set runner.secret="$KEY" \
+  --set cloud.url="testkube-enterprise-api.$NS.svc.cluster.local:8089" \
+  --set cloud.tls.enabled=false --set listener.enabled=true
+```
+
+The license is the one `testkube init demo` asks for; a trial comes from https://testkube.io/download. The runner IDs must match the bootstrap runner in the profile (section 3). If the CLI's helpers change, follow them rather than this copy.
 
 ## 3. Repository map
 
@@ -68,4 +95,4 @@ There are no Testkube TestWorkflow checks for this repository, so the MCP tools 
 
 ## 7. Skills and starting a component
 
-This repository has no skills. The only thing to start is the demo: `testkube init demo` installs the Control Plane with `values.demo.v2.yaml` and a separate runner.
+This repository has no skills. The only thing to start is the demo: `testkube init demo` installs the Control Plane with `values.demo.v2.yaml` and a separate runner. Section 2 has the same two installs with Helm, for a profile on a branch.
