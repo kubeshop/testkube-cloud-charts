@@ -29,7 +29,16 @@ Installing the enterprise chart with the profile alone gives a Control Plane tha
 
 ```bash
 NS=testkube
-KEY="tkckey_agent_$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 32)"
+# Reuse the key of an existing runner: the Control Plane bootstrapped its runner with it.
+if kubectl get deployment testkube-demo-runner -n "$NS" >/dev/null 2>&1; then
+  KEY="$(kubectl get deployment testkube-demo-runner -n "$NS" \
+    -o jsonpath='{.spec.template.spec.containers[*].env[?(@.name=="TESTKUBE_PRO_API_KEY")].value}')"
+  [ -n "$KEY" ] || { echo "runner key unreadable; delete namespace $NS and start again" >&2; exit 1; }
+elif kubectl get deployment testkube-enterprise-api -n "$NS" >/dev/null 2>&1; then
+  echo "Control Plane without a runner: its key is lost; delete namespace $NS and start again" >&2; exit 1
+else
+  KEY="tkckey_agent_$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 32)"
+fi
 helm repo add testkubeenterprise https://kubeshop.github.io/testkube-cloud-charts
 helm repo add kubeshop https://kubeshop.github.io/helm-charts
 helm repo update
@@ -50,7 +59,7 @@ helm upgrade --install testkube-demo-runner kubeshop/testkube-runner \
   --set cloud.tls.enabled=false --set listener.enabled=true
 ```
 
-The license is the one `testkube init demo` asks for; a trial comes from https://testkube.io/download. The runner IDs must match the bootstrap runner in the profile (section 3). If the CLI's helpers change, follow them rather than this copy.
+The Control Plane bootstraps the runner and its key only once, on an empty database, so a new key on a rerun would be rejected. The first lines therefore reuse the deployed runner's key, and stop when it cannot be recovered, as `ResolveDemoAgentSecretKey` in the CLI does; a fresh namespace starts over with a new key. Run the block as a script with `bash`, since it exits when it stops. The license is the one `testkube init demo` asks for; a trial comes from https://testkube.io/download. The runner IDs must match the bootstrap runner in the profile (section 3). If the CLI's helpers change, follow them rather than this copy.
 
 ## 3. Repository map
 
