@@ -85,18 +85,18 @@ PR titles follow Conventional Commits, with the chart as the scope, for example 
 
 ## 6. Pull request checks and the MCP tools
 
-There are no Testkube TestWorkflow checks for this repository, so the MCP tools do not apply. The GitHub Actions below still run but serve the old charts. Ignore their results for a demo-profile change. Times are from recent runs.
+There are no Testkube TestWorkflow checks for this repository, so the MCP tools do not apply. The GitHub Actions below still run but serve the old charts. Ignore their results for a demo-profile change.
 
-| Workflow | Trigger | What it does | Time |
-| --- | --- | --- | --- |
-| `lint-pr.yaml` | pull request | checks the PR title type | under 10 s |
-| `lint.yaml` | pull request | chart-testing on `charts/` | about 30 s |
-| `test.yaml` | pull request | tests `scripts/update.sh` | about 10 s |
-| `lint-images.yaml` | every push | checks image registries, pull secrets and CVEs; it failed on every push in recent runs | 2.5 to 3 min |
-| `dispatch-sandbox-push.yaml`, `dispatch-sandbox-delete.yaml` | `sandbox/**` branches | dispatch sandbox events to `testkube-deployment` | about 10 s |
-| `dispatch-develop-push.yaml` | push to `main` | dispatches `testkube_charts_push` to `testkube-deployment` | about 10 s |
-| `chart-release.yaml` | manual | releases the old charts | |
-| `update-charts-dispatch.yaml` | repository dispatch | bumps app versions in the old charts | |
+| Workflow | Trigger | What it does |
+| --- | --- | --- |
+| `lint-pr.yaml` | pull request | checks the PR title type |
+| `lint.yaml` | pull request | chart-testing on `charts/` |
+| `test.yaml` | pull request | tests `scripts/update.sh` |
+| `lint-images.yaml` | every push | checks image registries, pull secrets and CVEs; it failed on every push in recent runs |
+| `dispatch-sandbox-push.yaml`, `dispatch-sandbox-delete.yaml` | `sandbox/**` branches | dispatch sandbox events to `testkube-deployment` |
+| `dispatch-develop-push.yaml` | push to `main` | dispatches `testkube_charts_push` to `testkube-deployment` |
+| `chart-release.yaml` | manual | releases the old charts |
+| `update-charts-dispatch.yaml` | repository dispatch | bumps app versions in the old charts |
 
 `index-update.yaml` is the one live workflow; see section 3.
 
