@@ -4,8 +4,6 @@ A legacy repository: the Control Plane charts moved to `testkube-cloud-api`, and
 
 Owner: `@kubeshop/testkube-devops`, per `.github/CODEOWNERS`, which assigns it every path.
 
-The seven sections below are: verifying a change, reproducing a bug, the repository map, the conventions reviewers enforce, what never to do, the pull request checks, and the skills and how to start a component.
-
 ## 1. Verifying a change
 
 The only change worth making here is to the demo profile, and there is no automated check for it. Render it against the current chart:
