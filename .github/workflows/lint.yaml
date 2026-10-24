@@ -13,8 +13,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          # ct diffs against the base branch, so it needs the history, not a shallow clone.
+          # No ref: the default merge ref also works for pull requests from forks, whose head.ref
+          # is a branch in the fork. ct diffs against the base branch, so it needs the history.
           fetch-depth: 0
 
       - name: Set up Helm
