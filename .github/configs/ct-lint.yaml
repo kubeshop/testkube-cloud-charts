@@ -13,6 +13,8 @@ chart-repos:
 helm-extra-args: "--timeout 600s"
 validate-chart-schema: false
 validate-maintainers: true
+# Chart versions are bumped at release by chart-release.yaml (scripts/update.sh), never in a PR.
+check-version-increment: false
 validate-yaml: true
 exclude-deprecated: true
 excluded-charts: []
