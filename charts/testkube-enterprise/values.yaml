@@ -104,7 +104,7 @@ global:
       value: ""
   tls: {}
   # -- Toggle whether to globally skip certificate verification
-  #skipVerify: true
+  # skipVerify: true
   # -- Global security Context for all containers.
   containerSecurityContext: {}
   # -- Global security Context for all pods.
@@ -523,11 +523,11 @@ testkube-agent:
   # See https://docs.testkube.io/articles/install/install-with-helm#shared-secrets
   enabled: false
   # Uncomment the configuration below if testkube-agent is enabled.
-  #testkube-dashboard:
+  # testkube-dashboard:
   #  enabled: false
-  #mongodb:
+  # mongodb:
   #  enabled: false
-  #testkube-api:
+  # testkube-api:
   #  cloud:
   #    url: testkube-enterprise-api:8089
   #    tls:
@@ -885,7 +885,7 @@ dex:
   enabled: true
   fullnameOverride: testkube-enterprise-dex
   # Uncomment if you want to provide different image settings
-  #image:
+  # image:
   #  registry: docker.io
   #  repository: kubeshop/dex
   #  tag: ""
