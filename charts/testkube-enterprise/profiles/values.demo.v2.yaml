@@ -146,6 +146,8 @@ dex:
     enabled: true
   configTemplate:
     customConfig: ""
+    # Demo tests get tokens with the admin email and password.
+    passwordGrant: true
     additionalStaticClients:
       - id: testkube-enterprise
         redirectURIs:
